@@ -1,0 +1,10 @@
+systemctl disable firewalld
+systemctl disable NetworkManager
+yum erase NetworkManager
+systemctl disable network.service
+systemctl disable sysstat
+systemctl enable kdump.service
+systemctl start telnet.socket
+systemctl enable telnet.socket
+timedatectl set-timezone Asia/Taipei
+rm $MNT/var/lib/rsyslog/imjournal.state

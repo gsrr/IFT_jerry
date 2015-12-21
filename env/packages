@@ -1,0 +1,40 @@
+yum install vim
+
+#pam
+yum install oddjob-mkhomedir
+
+#samba & ad
+yum install samba4
+yum install samba-winbind.x86_64
+yum install samba-winbind-clients.x86_64
+yum install samba-client 
+yum install ntpdate
+
+#ldap
+yum install openldap-clients
+yum install nss-pam-ldapd
+
+#kerberos
+yum install pam_krb5
+yum -y install krb5-workstation
+
+yum install nfs-utils.x86_64
+yum install sysstat
+yum install net-tools
+yum install gfs2-utils
+yum install crash
+yum install system-config-kdump
+yum install strace
+yum install xinetd
+yum install telnet-server
+yum install at
+yum install expect
+yum install quota
+yum install avahi
+yum install rsync
+yum install bind-utils
+yum -y install ypbind rpcbind
+yum install pacemaker pcs resource-agents fence-agents-all lvm2-cluster ctdb
+yum install tcpdump
+yum install gdb
+yum install ctdb
