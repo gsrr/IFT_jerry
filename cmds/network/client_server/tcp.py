@@ -6,6 +6,7 @@
  
 # some imports
 import socket, sys
+import struct
 from struct import *
  
 # checksum functions needed for calculation checksum
@@ -25,6 +26,52 @@ def checksum(msg):
      
     return s
  
+
+def ipHeader(source_ip, dest_ip):
+		# ip header fields
+		ip_ihl = 5
+		ip_ver = 4
+		ip_tos = 0
+		ip_tot_len = 0  # kernel will fill the correct total length
+		ip_id = 54321   #Id of this packet
+		ip_frag_off = 0
+		ip_ttl = 255
+		ip_proto = socket.IPPROTO_TCP
+		ip_check = 0    # kernel will fill the correct checksum
+		ip_saddr = socket.inet_aton ( source_ip )   #Spoof the source ip address if you want to
+		ip_daddr = socket.inet_aton ( dest_ip )
+ 
+		ip_ihl_ver = (ip_ver << 4) + ip_ihl
+		 
+		# the ! in the pack format string means network order
+		ip_header = pack('!BBHHHBBH4s4s' , ip_ihl_ver, ip_tos, ip_tot_len, ip_id, ip_frag_off, ip_ttl, ip_proto, ip_check, ip_saddr, ip_daddr)
+		return ip_header
+
+def sniff(host):
+	sock = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)	
+	sock.bind((host, 0))
+	sock.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
+	while True:
+		packet = sock.recvfrom(65535)
+		packet = packet[0]
+		ip_header = packet[0:20]
+		iph = struct.unpack("!BBHHHBBH4s4s", ip_header)
+		
+		ihl = iph[0] & 0xF
+		ihl = (ihl * 32) / 8
+		s_addr = socket.inet_ntoa(iph[8])
+		d_addr = socket.inet_ntoa(iph[9])
+
+		tcp_header = packet[ihl:ihl + 20]
+		tcph = struct.unpack("!HHLLBBHHH", tcp_header)
+		s_port = tcph[0]
+		d_port = tcph[1]
+		seq = tcph[2]
+		ack = tcph[3]
+		
+		print s_addr, d_addr
+		print s_port, d_port, seq, ack
+
 #create a raw socket
 try:
     s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_RAW)
@@ -32,43 +79,30 @@ except socket.error , msg:
     print 'Socket could not be created. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
     sys.exit()
  
+
+
+sniff("127.0.0.1")
 # tell kernel not to put in headers, since we are providing it, when using IPPROTO_RAW this is not necessary
 # s.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
      
 # now start constructing the packet
 packet = '';
  
-source_ip = '172.27.12.37'
-dest_ip = '172.27.112.178' # or socket.gethostbyname('www.google.com')
- 
-# ip header fields
-ip_ihl = 5
-ip_ver = 4
-ip_tos = 0
-ip_tot_len = 0  # kernel will fill the correct total length
-ip_id = 54321   #Id of this packet
-ip_frag_off = 0
-ip_ttl = 255
-ip_proto = socket.IPPROTO_TCP
-ip_check = 0    # kernel will fill the correct checksum
-ip_saddr = socket.inet_aton ( source_ip )   #Spoof the source ip address if you want to
-ip_daddr = socket.inet_aton ( dest_ip )
- 
-ip_ihl_ver = (ip_ver << 4) + ip_ihl
- 
-# the ! in the pack format string means network order
-ip_header = pack('!BBHHHBBH4s4s' , ip_ihl_ver, ip_tos, ip_tot_len, ip_id, ip_frag_off, ip_ttl, ip_proto, ip_check, ip_saddr, ip_daddr)
- 
+source_ip = '127.0.0.1'
+dest_ip = '127.0.0.1' # or socket.gethostbyname('www.google.com')
+ip_header = ipHeader(source_ip, dest_ip)
+
+sys.exit(0)
 # tcp header fields
-tcp_source = 9999    # source port
-tcp_dest = 40346  # destination port
-tcp_seq = 2526746002
-tcp_ack_seq = 1598602420
+tcp_source = 38128    # source port
+tcp_dest = 9999  # destination port
+tcp_seq = 278977315
+tcp_ack_seq = 2277073650
 tcp_doff = 5    #4 bit field, size of tcp header, 5 * 4 = 20 bytes
 #tcp flags
 tcp_fin = 0
 tcp_syn = 0
-tcp_rst = 1
+tcp_rst = 0
 tcp_psh = 0
 tcp_ack = 1
 tcp_urg = 0
@@ -82,7 +116,7 @@ tcp_flags = tcp_fin + (tcp_syn << 1) + (tcp_rst << 2) + (tcp_psh <<3) + (tcp_ack
 # the ! in the pack format string means network order
 tcp_header = pack('!HHLLBBHHH' , tcp_source, tcp_dest, tcp_seq, tcp_ack_seq, tcp_offset_res, tcp_flags,  tcp_window, tcp_check, tcp_urg_ptr)
  
-user_data = 'Hello, how are you'
+user_data = 'attack'
  
 # pseudo header fields
 source_address = socket.inet_aton( source_ip )
