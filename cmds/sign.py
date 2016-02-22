@@ -5,6 +5,7 @@ from urllib import unquote
 
 def sign(cred, secret):
 	msg = base64.urlsafe_b64decode(unquote(cred))
+	print msg
 	s = base64.encodestring(hmac.new(secret, msg, sha1).digest()).strip()
 	return s
 
