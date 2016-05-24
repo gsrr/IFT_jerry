@@ -11,12 +11,13 @@ void test(char *msg)
 
 void print(char* msg)
 {
+        printf("%s\n", "hello print");
         test(msg);
 }
 
 int main()
 {
-        print("This is Hello World\n");
+        print("This is Hello World2\n");
         return 0;
 }
 
