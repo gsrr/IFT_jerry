@@ -1,0 +1,3 @@
+# mytcpdump eth0 9999
+function mytcpdump() { sudo tcpdump -i $1 port $2 -XX;};
+
