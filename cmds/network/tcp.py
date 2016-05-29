@@ -38,8 +38,8 @@ except socket.error , msg:
 # now start constructing the packet
 packet = '';
  
-source_ip = '172.27.112.113'
-dest_ip = '172.27.12.37' # or socket.gethostbyname('www.google.com')
+source_ip = '127.0.0.1'
+dest_ip = '127.0.0.1' # or socket.gethostbyname('www.google.com')
  
 # ip header fields
 ip_ihl = 5
@@ -60,8 +60,8 @@ ip_ihl_ver = (ip_ver << 4) + ip_ihl
 ip_header = pack('!BBHHHBBH4s4s' , ip_ihl_ver, ip_tos, ip_tot_len, ip_id, ip_frag_off, ip_ttl, ip_proto, ip_check, ip_saddr, ip_daddr)
  
 # tcp header fields
-tcp_source = 1234   # source port
-tcp_dest = 80   # destination port
+tcp_source = 44319   # source port
+tcp_dest = 8893   # destination port
 tcp_seq = 0
 tcp_ack_seq = 0
 tcp_doff = 5    #4 bit field, size of tcp header, 5 * 4 = 20 bytes
@@ -82,7 +82,7 @@ tcp_flags = tcp_fin + (tcp_syn << 1) + (tcp_rst << 2) + (tcp_psh <<3) + (tcp_ack
 # the ! in the pack format string means network order
 tcp_header = pack('!HHLLBBHHH' , tcp_source, tcp_dest, tcp_seq, tcp_ack_seq, tcp_offset_res, tcp_flags,  tcp_window, tcp_check, tcp_urg_ptr)
  
-user_data = 'Hello, how are you'
+user_data = 'ls'
  
 # pseudo header fields
 source_address = socket.inet_aton( source_ip )
