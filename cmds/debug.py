@@ -50,6 +50,9 @@ class SYSDEBUG:
 		pid = input("Enter pid number:")
 		cmd = "ls -l /proc/%s/fd"%pid
 		os.system(cmd)
+	
+	def locks(self):
+		pass
 
 	def dispatch(self, name):
 		func = getattr(self, name)
