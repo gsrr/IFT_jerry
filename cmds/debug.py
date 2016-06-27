@@ -2,16 +2,22 @@ import sys
 import os
 import getopt
 
+#----------------------------------------------------------------------------------
 # RSS : 
 '''
 	This is the amount of shared memory plus unshared memory used by each process.
 '''
+#----------------------------------------------------------------------------------
 
+#----------------------------------------------------------------------------------
 # VMS : 
 '''
 	The total accessible address space of a process.
 	(Including the mallocs that have been allocated but not written to)
 '''
+#----------------------------------------------------------------------------------
+
+
 def execmd(desc, cmd):
 	raw_input("Press enter to continue")
 	os.system("clear")
@@ -42,17 +48,20 @@ class SYSDEBUG:
 		self.mem = Memory()
 		self.pid = input("Enter pid number:") if paras.get("pid") == None else paras['pid']
 	
-	def memory(self):
+	def system(self):
+		print "Memory status:"
 		self.mem.system()
-		self.mem.process(self.pid)
 
-	def fd(self):
-		pid = input("Enter pid number:")
-		cmd = "ls -l /proc/%s/fd"%pid
+		print "file locks:"
+		cmd = "lslocks"
 		os.system(cmd)
-	
-	def locks(self):
-		pass
+
+	def process(self):
+		print "Memory status:"
+		self.mem.process(self.pid)
+		print "file descriptor status"	
+		cmd = "ls -l /proc/%s/fd"%self.pid
+		os.system(cmd)
 
 	def dispatch(self, name):
 		func = getattr(self, name)
