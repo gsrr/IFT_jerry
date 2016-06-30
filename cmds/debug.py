@@ -35,7 +35,7 @@ class Memory:
 
 		desc = "System usage: Memory satus for all process"
 		execmd(desc, "ps aux --sort -rss")
-	
+
 	def process(self, pid):
 		desc = "Process usage : VMS(Virtual Memory Size) and RSS(Resident Set Size)"
 		execmd(desc, "cat /proc/%s/status | grep -e 'VmSize' -e 'VmRSS'"%pid)
@@ -52,16 +52,32 @@ class SYSDEBUG:
 		print "Memory status:"
 		self.mem.system()
 
-		print "file locks:"
-		cmd = "lslocks"
-		os.system(cmd)
+		desc = "file locks:"
+		execmd(desc, "lslocks")
+
+		desc = "system resouce limit"
+		execmd(desc, "ulimit -a")
 
 	def process(self):
 		print "Memory status:"
 		self.mem.process(self.pid)
-		print "file descriptor status"	
+		desc = "file descriptor status"	
 		cmd = "ls -l /proc/%s/fd"%self.pid
-		os.system(cmd)
+		execmd(desc, cmd)	
+		desc = "process resource limit"
+		cmd = "prlimit -p %s"%self.pid
+		execmd(desc, cmd)	
+
+	def collect_smb(self):
+		cmds = [
+			'rm -rf /root/samba_debug',
+			'mkdir /root/samba_debug',
+			'ps -ef | grep smb > /root/samba_debug/ps',
+			'cp /var/log/samba/log.smbd /root/samba_debug/log.smbd',
+			'cp /var/log/samba/log.winbindd /root/samba_debug/log.winbindd',
+			"ps -ef | grep smbd | grep -v grep | awk '{print $2}' | sh debug/debug.sh %s > /root/samba_debug/smbStack",
+
+		]
 
 	def dispatch(self, name):
 		func = getattr(self, name)
