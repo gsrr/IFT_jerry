@@ -1,0 +1,1000 @@
+  207  vim ~/.vimrc 
+  208  fg
+  209  vim sftpLogin.py
+  210  python sftpLogin.py 
+  211  fg
+  212  python sftpLogin.py 
+  213  fg
+  214  python sftpLogin.py 
+  215  fg
+  216  python sftpLogin.py 
+  217  fg
+  218  python sftpLogin.py 
+  219  fg
+  220  python sftpLogin.py 
+  221  fg
+  222  python sftpLogin.py 
+  223  fg
+  224  python sftpLogin.py 
+  225  fg
+  226  python sftpLogin.py 
+  227  fg
+  228  python sftpLogin.py 
+  229  fg
+  230  python sftpLogin.py 
+  231  fg
+  232  python sftpLogin.py 
+  233  fg
+  234  python sftpLogin.py 
+  235  fg
+  236  python sftpLogin.py 
+  237  fg
+  238  python sftpLogin.py 
+  239  fg
+  240  python sftpLogin.py 
+  241  fg
+  242  python sftpLogin.py 
+  243  fg
+  244  python sftpLogin.py 
+  245  fg
+  246  python sftpLogin.py 
+  247  fg
+  248  python sftpLogin.py 
+  249  fg
+  250  python sftpLogin.py 
+  251  fg
+  252  python sftpLogin.py 
+  253  fg
+  254  python sftpLogin.py 
+  255  fg
+  256  python sftpLogin.py 
+  257  fg
+  258  python sftpLogin.py 
+  259  fg
+  260  python sftpLogin.py 
+  261  fg
+  262  python sftpLogin.py 
+  263  fg
+  264  python sftpLogin.py 
+  265  fg
+  266  python sftpLogin.py 
+  267  fg
+  268  python sftpLogin.py 
+  269  fg
+  270  git status
+  271  fg
+  272  git add .
+  273  git commit -m 'forkpty for sftp'
+  274  git push
+  275  exit
+  276  sftp jerryc@wm.csie.ntu.edu.tw < JerryC0119
+  277  echo "JerryC0119\n" | sftp jerryc@wm.csie.ntu.edu.tw
+  278  echo "pwd\n" | sftp jerryc@wm.csie.ntu.edu.tw
+  279  echo "pwd" | sftp jerryc@wm.csie.ntu.edu.tw
+  280  lsof -p 4607
+  281  lsof -i -p 4607
+  282  lsof -i -a -p 4607
+  283  function fd2port(){ lsof -i -a -p $1;}; fd2port 4607
+  284  cd Desktop/
+  285  ls
+  286  cd github/
+  287  ls
+  288  cd IFT_jerry/
+  289  ls
+  290  git pull
+  291  ls
+  292  cd bash
+  293  ls
+  294  vim bashrc 
+  295  git add .
+  296  git commit -m 'fd2port:lsof'
+  297  git push
+  298  ls
+  299  cd ..
+  300  ls
+  301  cd cmds/
+  302  ls
+  303  exit
+  304  sftp jerryc@wm.csie.ntu.edu.tw
+  305  ftp jerryc@wm.csie.ntu.edu.tw
+  306  expect
+  307  sftp jerry.cheng@127.0.0.1
+  308  cat /etc/passwd
+  309  passwd test
+  310  sudo passwd test
+  311  sudo useradd test
+  312  sudo passwd test
+  313  sftp test@127.0.0.1
+  314  cat /etc/passwd
+  315  sftp test@127.0.0.1
+  316  sftp -v test@127.0.0.1
+  317  vim /etc/ssh/sshd_config 
+  318  sudo vim /etc/ssh/sshd_config 
+  319  service restart ssh
+  320  /etc/init.d/sshd restart
+  321  sudo service restart ssh
+  322  sudo /etc/init.d/sshd restart
+  323  sftp test@127.0.0.1
+  324  ls /home
+  325  mkdir /home/test
+  326  sudo mkdir /home/test
+  327  sftp test@127.0.0.1
+  328  ssh test@127.0.0.1
+  329  cd /home
+  330  ls -l 
+  331  chown test test
+  332  sudo chown test test
+  333  ls -l 
+  334  ssh test@127.0.0.1
+  335  ls
+  336  echo "test" | sftp test@127.0.0.1
+  337  ssh jerryc@wm.csie.ntu.edu.tw
+  338  ssh jerryc@wm.csie.ntu.edu.tw -p 12345
+  339  ssh jerry.cheng@wm.csie.ntu.edu.tw -p 12345
+  340  ls
+  341  cd Desktop/
+  342  ls
+  343  cd test
+  344  s
+  345  ls
+  346  mkdir c
+  347  ls
+  348  cd c
+  349  ls
+  350  vim sprintf.c
+  351  gcc -o sprintf sprintf.c 
+  352  ./sprintf 
+  353  fg
+  354  gcc -o sprintf sprintf.c 
+  355  ./sprintf 
+  356  fg
+  357  vim strtok.c
+  358  gcc -o strtok strtok.c 
+  359  ./strtok 
+  360  fg
+  361  gcc -o strtok strtok.c 
+  362  fg
+  363  gcc -o strtok strtok.c 
+  364  ./strtok 
+  365  fg
+  366  gcc -o strtok strtok.c 
+  367  fg
+  368  gcc -o strtok strtok.c 
+  369  fg
+  370  gcc -o strtok strtok.c 
+  371  ./strtok 
+  372  fg
+  373  gcc -o strtok strtok.c 
+  374  ./strtok 
+  375  fg
+  376  ./strtok 
+  377  fg
+  378  gcc -o strtok strtok.c 
+  379  ./strtok 
+  380  fg
+  381  gcc -o strtok strtok.c 
+  382  ./strtok 
+  383  fg
+  384  gcc -o strtok strtok.c 
+  385  ./strtok 
+  386  fg
+  387  gcc -o strtok strtok.c 
+  388  ./strtok 
+  389  ccfg
+  390  fg
+  391  gcc -o strtok strtok.c 
+  392  ./strtok 
+  393  fg
+  394  gcc -o strtok strtok.c 
+  395  fg
+  396  gcc -o strtok strtok.c 
+  397  fg
+  398  gcc -o strtok strtok.c 
+  399  ./strtok
+  400  fg
+  401  gcc -o strtok strtok.c 
+  402  ./strtok
+  403  fg
+  404  gcc -o strtok strtok.c 
+  405  ./strtok
+  406  fg
+  407  gcc -o strtok strtok.c 
+  408  ./strtok
+  409  fg
+  410  gcc -o strtok strtok.c 
+  411  ./strtok
+  412  fg
+  413  gcc -o strtok strtok.c 
+  414  ./strtok
+  415  fg
+  416  gcc -o strtok strtok.c 
+  417  ./strtok
+  418  fg
+  419  ./strtok | more
+  420  fg
+  421  gcc -o strtok strtok.c 
+  422  ./strtok | more
+  423  fg
+  424  gcc -o strtok strtok.c 
+  425  ./strtok 
+  426  fg
+  427  gcc -o strtok strtok.c 
+  428  ./strtok 
+  429  fg
+  430  gcc -o strtok strtok.c 
+  431  ./strtok 
+  432  ccfg
+  433  fg
+  434  gcc -o strtok strtok.c 
+  435  ccfg
+  436  ./strtok 
+  437  ./strtok | more
+  438  fg
+  439  ./strtok 
+  440  gcc -o strtok strtok.c 
+  441  ./strtok | more
+  442  fg
+  443  gcc -o strtok strtok.c 
+  444  ./strtok | more
+  445  fg
+  446  gcc -o strtok strtok.c 
+  447  ./strtok | more
+  448  fg
+  449  gcc -o strtok strtok.c 
+  450  ./strtok | more
+  451  fg
+  452  gcc -o strtok strtok.c 
+  453  ./strtok | more
+  454  gcc -o strtok strtok.c 
+  455  ./strtok | more
+  456  fg
+  457  gcc -o strtok strtok.c 
+  458  ./strtok | more
+  459  fg
+  460  gcc -o strtok strtok.c 
+  461  fg
+  462  gcc -o strtok strtok.c 
+  463  ./strtok | more
+  464  fg
+  465  gcc -o strtok strtok.c 
+  466  ./strtok | more
+  467  fg
+  468  gcc -o strtok strtok.c 
+  469  ./strtok | more
+  470  fg
+  471  gcc -o strtok strtok.c 
+  472  ./strtok | more
+  473  fg
+  474  gcc -o strtok strtok.c 
+  475  ./strtok | more
+  476  fg
+  477  gcc -o strtok strtok.c 
+  478  fg
+  479  gcc -o strtok strtok.c 
+  480  fg
+  481  gcc -o strtok strtok.c 
+  482  ./strtok | more
+  483  fg
+  484  gcc -o strtok strtok.c 
+  485  ./strtok | more
+  486  fg
+  487  ./strtok
+  488  fg
+  489  cat strtok.c 
+  490  fg
+  491  vim strtok.c 
+  492  gcc -o strtok strtok.c 
+  493  fg
+  494  gcc -o strtok strtok.c 
+  495  fg
+  496  gcc -o strtok strtok.c 
+  497  ./strtok
+  498  fg
+  499  gcc -o strtok strtok.c 
+  500  ./strtok
+  501  fg
+  502  gcc -o strtok strtok.c 
+  503  ./strtok
+  504  fg
+  505  gcc -o strtok strtok.c 
+  506  ./strtok
+  507  fg
+  508  cat strtok.c 
+  509  sftp jerry.cheng@wm.csie.ntu.edu.tw -p 12345
+  510  sftp jerry.cheng@wm.csie.ntu.edu.tw:12345
+  511  sftp -oPort=12345 jerry.cheng@wm.csie.ntu.edu.tw
+  512  ls
+  513  pwd
+  514  vim passwd.c
+  515  fg
+  516  ssh jerry.cheng@wm.csie.ntu.edu.tw -p 12345
+  517  sftp -oPort=12345 jerry.cheng@wm.csie.ntu.edu.tw
+  518  ls
+  519  cd Desktop/
+  520  ls
+  521  cd tets
+  522  cd test
+  523  ls
+  524  cd c
+  525  ls
+  526  mkdir nslcd
+  527  mv passwd.c nslcd/
+  528  ls
+  529  mv ~/pam.c nslcd/
+  530  mv ~/ifthead.h nslcd/
+  531  ls
+  532  ls 
+  533  ls nslcd/
+  534  sftp jerry.cheng
+  535  sftp jerry.cheng@wm.csie.ntu.edu.tw
+  536  rry.cheng@wm.csie.ntu.edu.tw
+  537  ssh jerryc@wm.csie.ntu.edu.tw
+  538  sftp jerryc@wm.csie.ntu.edu.tw
+  539  fg
+  540  exit
+  541  sftp jerry.cheng@wm.csie.ntu.edu.tw:12345
+  542  history | grep ssh
+  543  ssh jerryc@wm.csie.ntu.edu.tw -p 12345
+  544  ssh jerry.cheng@wm.csie.ntu.edu.tw -p 12345
+  545  fg
+  546  ls
+  547  ssh jerry.cheng@wm.csie.ntu.edu.tw -p 12345
+  548  exit
+  549  exit
+  550  ps -ef | grep cat
+  551  ps aux | grep cat
+  552  ls -l /proc/4555/fd
+  553  ls gdb -p 4555
+  554  gdb -p 4555
+  555  ls -l /proc/4555/fd
+  556  cat
+  557  ps -ef | grep cat
+  558  echo "2345" > /proc/4677/fd/0
+  559  ps -ef | grep cat
+  560  ls -l /proc/4953/fd
+  561  ls -l /proc/4954/fd
+  562  ps -ef | grep cat
+  563  ls -l /proc/4980/fd
+  564  gdb -p 4980
+  565  ps -ef | grep cat
+  566  gdb -p 5001
+  567  cat
+  568  fg
+  569  ls
+  570  cat
+  571  ls /tmp
+  572  cat /tmp/test
+  573  rm -rf /tmp/*
+  574  ls /tmp
+  575  cat
+  576  cat | cat
+  577  cat
+  578  ls /tmp/test
+  579  cat /tmp/test
+  580  echo "12345" > /tmp/test
+  581  cat
+  582  ps -ef | grep cat
+  583  gdb -p 4677
+  584  gdb -p 4678
+  585  gdb -p 4679
+  586  ps -ef | grep cat
+  587  gdb -p 4700
+  588  ps -ef | grep cat
+  589  gdb -p 5011
+  590  ps -ef | grep cat
+  591  gdb -p 5016
+  592  ps -ef | grep cat
+  593  ls -l /proc/5011
+  594  ls -l /proc/5011/fd
+  595  fg
+  596  ps -ef | grep cat
+  597  gdb -p 5037
+  598  utrace
+  599  fg
+  600  exit
+  601  cd Desktop/
+  602  ls
+  603  cd github/
+  604  ls
+  605  fg
+  606  exit
+  607  strace
+  608  strace -c ls
+  609  perf
+  610  top -s cpu -m 10 -d 1
+  611  top
+  612  top -m 10
+  613  ls top -m 10
+  614  top
+  615  man top
+  616  top -m -d 10
+  617  top -s -m -d 10
+  618  man strace
+  619  cd Desktop/
+  620  ls
+  621  cd github/
+  622  ls
+  623  cd Programs/
+  624  ls
+  625  cd ../
+  626  ls
+  627  cd IFT_jerry/
+  628  ls
+  629  cd cmds
+  630  ls
+  631  python fork.py 
+  632  strace -f fork.py 
+  633  cd ..
+  634  ls
+  635  cd test
+  636  ls
+  637  cd Desktop/
+  638  ls
+  639  cd github/
+  640  ls
+  641  cd Python/
+  642  ls
+  643  cd ..
+  644  ls
+  645  git clone https://github.com/gsrr/Dark_Chess
+  646  ls
+  647  mv Python/pygame ../ Dark_Chess/
+  648  ls Dark_Chess/
+  649  cd Dark_Chess/
+  650  ls
+  651  ls pygame/
+  652  ls
+  653  git status
+  654  ls
+  655  mv pygame darkChess
+  656  ls
+  657  git add .
+  658  git commit -m 'add dark chess'
+  659  git push
+  660  cd ..
+  661  ls
+  662  cd Python/
+  663  ls
+  664  git config
+  665  vim .git/config 
+  666  cd ..
+  667  ls
+  668  cd Python/
+  669  ls
+  670  cd ..
+  671  cd Dark_Chess/
+  672  ls
+  673  git seturl 
+  674  cat ../Python/.git/config 
+  675  git remote set-url https://gsrr@github.com/gsrr/Dark_Chess.git
+  676  vim .git/config 
+  677  git push
+  678  git remote set-url origin https://gsrr@github.com/gsrr/Dark_Chess.git
+  679  git push
+  680  fg
+  681  exit
+  682  ls
+  683  cd Desktop/
+  684  ls
+  685  cd github/
+  686  s
+  687  ls
+  688  cd IFT_jerry/
+  689  git pull
+  690  ls
+  691  cd cmd
+  692  cd cmds
+  693  ls
+  694  cd ..
+  695  ls
+  696  cd ..
+  697  ls
+  698  cd Dark_Chess/
+  699  s
+  700  ls
+  701  cd darkChess/
+  702  ls
+  703  cd source/
+  704  ls
+  705  python chessgame.py 
+  706  ls
+  707  vim chessgame.py 
+  708  python chessgame.py 
+  709  ls
+  710  cd Desktop/
+  711  ls
+  712  cd github/
+  713  ls
+  714  cd Dark_Chess/
+  715  ls
+  716  cd darkChess/
+  717  ls
+  718  cd source/
+  719  ls
+  720  vim chessgame.py 
+  721  python chessgame.py 
+  722  fg
+  723  python chessgame.py 
+  724  fg
+  725  python chessgame.py 
+  726  fg
+  727  python chessgame.py 
+  728  fg
+  729  python chessgame.py 
+  730  jobs
+  731  jobs -l
+  732  kill -9 3743
+  733  fg
+  734  vim chessgame.py 
+  735  fg 1
+  736  vim chessgame.py 
+  737  python chessgame.py 
+  738  fg
+  739  python chessgame.py 
+  740  fg
+  741  ls
+  742  vim chess.py
+  743  cd ..
+  744  ls
+  745  vim README 
+  746  cd source/
+  747  ls
+  748  rm -rf *.pyc
+  749  ls
+  750  cd ..
+  751  sl
+  752  ls
+  753  cd source/
+  754  ls
+  755  cd ..
+  756  git status
+  757  git add .
+  758  git status
+  759  git rm source/__init__.pyc
+  760  git rm source/chess.pyc
+  761  git rm source/chesslib.pyc
+  762  git status
+  763  gitgit commit -m 'remove pyc file'
+  764  git commit -m 'remove pyc file'
+  765  git push
+  766  fg
+  767  git status
+  768  git rm source/.chess.py.swp
+  769  git commit -m 'remove temp file'
+  770  git push
+  771  git status
+  772  ls
+  773  python source/chessgame.py 
+  774  cd source
+  775  ls
+  776  python chessgame.py 
+  777  fg
+  778  cd ..
+  779  ls
+  780  vim README 
+  781  git add .
+  782  git commit -m 'update READE'
+  783  git push
+  784  ps -ef | grep cat
+  785  gdb -p 14564
+  786  bt
+  787  bttt
+  788  ps -ef | grep cat
+  789  ps -ef | grep gdb
+  790  ls -l /proc/14564/fd
+  791  tty
+  792  gdb -p 14582
+  793  fg
+  794  ls -l /proc/14564/fd
+  795  ps -ef | grep gdb
+  796  ls -l /proc/14582/fd
+  797  fg
+  798  ls
+  799  fg
+  800  ps -ef | grep gdb
+  801  gdb -p 14693
+  802  touch /tmp/file
+  803  fg
+  804  ps -ef | grep gdb
+  805  ls -l /proc/14721/fd
+  806  gdb -p 14721
+  807  cat /tmp/file
+  808  fg
+  809  ps -ef | grep gdb
+  810  gdb -p 14780
+  811  ps -e | grep gdb
+  812  ps -ef | grep gdb
+  813  echo "bt\n" > /proc/14821/fd/0
+  814  echo > /proc/14821/fd/0
+  815  echo -ne ']n'> /proc/14821/fd/0
+  816  echo -ne '\n'> /proc/14821/fd/0
+  817  echo -ne '\r'> /proc/14821/fd/0
+  818  echo -ne 'bt\r'> /proc/14821/fd/0
+  819  echo -ne 'bt\r\n'> /proc/14821/fd/0
+  820  echo "aaa" > /dev/pts/3
+  821  setsid sh -c 'exec command <> /dev/pts/3 >&0 2>&1'
+  822  exec
+  823  setsid sh -c ls <> /dev/pts/3 >&0 2>&1'
+  824  setsid sh -c 'ls <> /dev/pts/3 >&0 2>&1'
+  825  setsid sh -c 'ls -l <> /dev/pts/3 >&0 2>&1'
+  826  setsid sh -c 'bt <> /proc/14821/fd/0'
+  827  setsid sh -c 'ls -l <> /dev/pts/3 >&0 2>&1'
+  828  echo 'ls -l <> /dev/pts/3 >&0 2>&1'
+  829  sh -c 'ls -l <> /dev/pts/3 >&0 2>&1'
+  830  sh -c 'ls -l > /dev/pts/3 >&0 2>&1'
+  831  sh -c 'ls -l <> /dev/pts/3 >&0 2>&1'
+  832  sh -c 'exit <> /dev/pts/3 >&0 2>&1'
+  833  sh -c 'python <> /dev/pts/3 >&0 2>&1'
+  834  ps -ef | gep python
+  835  ps -ef | grep python
+  836  kill -9 14930
+  837  sh -c 'ls -l <> /dev/pts/3 >&0 2>&1'
+  838  sh -c 'pwd <> /dev/pts/3 >&0 2>&1'
+  839  sh -c 'pwd <> /dev/pts/3 '
+  840  sh -c 'pwd <> /dev/pts/3 >&0'
+  841  sh -c 'pwd > /dev/pts/3 >&0'
+  842  sh -c 'pwd <> /dev/pts/3 >&0'
+  843  setsid sh -c 'pwd <> /dev/pts/3 >&0'
+  844  setsid sh -c 'pythom <> /dev/pts/3 >&0'
+  845  setsid sh -c 'python <> /dev/pts/3 >&0'
+  846  sh -c 'pwd < /dev/pts/3 >&0'
+  847  ls <> file
+  848  cat file
+  849  rm -rf file
+  850  echo "aaa" > file
+  851  ls <> file
+  852  cat file
+  853  rm -rf file
+  854  ls <> file
+  855  ls
+  856  cat file
+  857  rm -rf fie
+  858  ls aaa
+  859  echo "aaa" | ls
+  860  rm -rf file
+  861  ls > file
+  862  ls < file
+  863  cat file
+  864  ls <> file
+  865  cat file
+  866  rm -rf file
+  867  ls <> file
+  868  cat file
+  869  ls < file > file
+  870  cat file
+  871  rm -rf file
+  872  setsid sh -c ls <> /dev/pts/3 '
+  873  setsid sh -c 'ls <> /dev/pts/3'
+  874  setsid sh -c 'ls <> /dev/pts/3 >&0'
+  875  history | grep proc
+  876  echo -ne 'bt\r\n'> /proc/14821/fd/0
+  877  cd Desktop/
+  878  ls
+  879  cd github/
+  880  ls
+  881  cd IFT_jerry/
+  882  ls
+  883  git pull
+  884  cd cmds/
+  885  ls
+  886  vim debug.py 
+  887  python debug.py memory
+  888  fg
+  889  cat /proc/meminfo
+  890  fg
+  891  free-
+  892  python debug.py memory
+  893  free -t
+  894  ps -ef
+  895  cat /proc/14958/status
+  896  cat /proc/14958/stat
+  897  cat /proc/14958/status
+  898  procrank
+  899  ps aux --sort '%mem'
+  900  ps aux --sort '%mem' | more
+  901              
+  902  pmap
+  903  pmap -x
+  904  pmap -x 14958
+  905  smem
+  906  ps aux --sort -rss
+  907  ps aux --sort -rss | more
+  908  fg
+  909  free -m
+  910  ps aux --sort '%mem' | more
+  911  cat /proc/14958/status
+  912  fg
+  913  python debug.py memory
+  914  cat /proc/14958/status
+  915  fg
+  916  cat /proc/14958/status
+  917  python debug.py memory
+  918  fg
+  919  python debug.py memory
+  920  fg
+  921  python debug.py memory
+  922  fg
+  923  history | grep pmap
+  924  fg
+  925  python debug.py memory
+  926  fg
+  927  python debug.py memory
+  928  fg
+  929  python debug.py memory
+  930  fg
+  931  python debug.py memory
+  932  fg
+  933  python debug.py memory
+  934  fg
+  935  python debug.py memory
+  936  f
+  937  fg
+  938  python debug.py memory
+  939  fg
+  940  python debug.py memory
+  941  fg
+  942  python debug.py memory
+  943  fg
+  944  python debug.py memory
+  945  echo "14958" | python debug.py memory
+  946  python debug.py memory
+  947  fg
+  948  python debug.py memory 14958
+  949  fg
+  950  python debug.py memory -p 14958
+  951  fg
+  952  python debug.py memory -p 14958
+  953  gf
+  954  fg
+  955  python debug.py memory -p 14958
+  956  fg
+  957  python debug.py memory -p 14958
+  958  fg
+  959  python debug.py memory -p 14958
+  960  fg
+  961  python debug.py memory -p 14958
+  962  fg
+  963  ls
+  964  git status
+  965  cd ..
+  966  ls
+  967  git status
+  968  git add .
+  969  git commit -m 'update debug'
+  970  git push
+  971  ls
+  972  cd cmds/
+  973  ls
+  974  vim debug.py 
+  975  git add .
+  976  git commit -m 'update debug: add locks function'
+  977  git push
+  978  fg
+  979  exit
+  980  cat
+  981  gdb -p 14564
+  982  tty[
+  983  cd Desktop/[[
+  984  pwd[
+  985  wh[[
+  986  who -a[
+  987  cd /home/jerry.cheng/Dropbox/resume
+  988  ls
+  989  sftp jerryc@wm.csie.ntu.edu.tw
+  990  cd /home/jerry.cheng/Dropbox/resume
+  991  ls
+  992  sftp jerryc@wm.csie.ntu.edu.tw
+  993  lls
+  994  ls
+  995  cd .dropbox
+  996  ls
+  997  cd ..
+  998  cd .dropbox-dist/
+  999  ls
+ 1000  ./dropboxd 
+ 1001  cd Desktop/
+ 1002  ls
+ 1003  cd hlx-interview/
+ 1004  ls
+ 1005  string libCFFEXtraderapi.so 
+ 1006  strings libCFFEXtraderapi.so 
+ 1007  strings libCFFEXtraderapi.so | more
+ 1008  s
+ 1009  ls
+ 1010  string libCFFEXtraderapi.so > strings.log
+ 1011  strings libCFFEXtraderapi.so > strings.log
+ 1012  vim strings.log 
+ 1013  tshark
+ 1014  ls
+ 1015  tshark -ralltraffic.pcap
+ 1016  tshark -v -ralltraffic.pcap
+ 1017  tshark -vx -ralltraffic.pcap
+ 1018  readelf -s libCFFEXtraderapi.so 
+ 1019  readelf -s libCFFEXtraderapi.so  | grep FUNC
+ 1020  readelf -s libCFFEXtraderapi.so  | grep FUNC > readelf.log
+ 1021  vim readelf.log 
+ 1022  readelf -s libCFFEXtraderapi.so  | grep FUNC | grep -v GLIBC> readelf.log
+ 1023  vim readelf.log 
+ 1024  vim hello.c
+ 1025  gcc -o hello hello.c
+ 1026  ./hello 
+ 1027  string hello
+ 1028  strings hello
+ 1029  readelf -s hello
+ 1030  readelf -s hello | grep hello
+ 1031  gdb ./hello
+ 1032  objdump -d -M intel -S hello
+ 1033  objdump -d -M intel -S hello | grep hello
+ 1034  objdump -d -M intel -S hello | more
+ 1035  objdump -x hello | more
+ 1036  ar hello
+ 1037  strace hello
+ 1038  strace ./hello
+ 1039* strace ./hello | 
+ 1040  readelf -s hello | more
+ 1041  readelf -s libCFFEXtraderapi.so | more
+ 1042  readelf -S libCFFEXtraderapi.so | more
+ 1043  strings libCFFEXtraderapi.so 
+ 1044  strings libCFFEXtraderapi.so  | more
+ 1045  nm -s --demangle libCFFEXtraderapi.so 
+ 1046  nm -s --demangle libCFFEXtraderapi.so  | more
+ 1047  nm -s --demangle libCFFEXtraderapi.so  > nm.log
+ 1048  vim nm.log 
+ 1049  nm -s --demangle hello
+ 1050  nm -s --demangle hello | more
+ 1051  vim nm.log
+ 1052  nm -C --demangle hello | more
+ 1053  nm -s -C --demangle hello | more
+ 1054  c++filt 
+ 1055  c++filt libCFFEXtraderapi.so 
+ 1056  c++filt -n libCFFEXtraderapi.so 
+ 1057  c++filt -m libCFFEXtraderapi.so 
+ 1058  c++filt -w libCFFEXtraderapi.so 
+ 1059  c++filt -w 40 libCFFEXtraderapi.so 
+ 1060  c++filt -m -w 40 libCFFEXtraderapi.so 
+ 1061  c++filt hello
+ 1062  nm libCFFEXtraderapi.so 
+ 1063  nm libCFFEXtraderapi.so | c++filt
+ 1064  nm libCFFEXtraderapi.so | c++filt | more
+ 1065  vim nm.log 
+ 1066  fg
+ 1067  ls
+ 1068  vim packet_parser.c 
+ 1069  rm -rf packet_parser.c 
+ 1070  ls
+ 1071  fg
+ 1072  vim nm.log 
+ 1073  yum install libpcap
+ 1074  sudo yum install libpcap
+ 1075  sudo yum check
+ 1076  vim pcap_test.c
+ 1077  gcc -o pcap_test pcap_test.c 
+ 1078  ./pcap_test 
+ 1079  fg
+ 1080  ifconfig -a
+ 1081  ./pcap_test wlan0
+ 1082  fg
+ 1083  gcc -o pcap_test pcap_test.c 
+ 1084  fg
+ 1085  gcc -o pcap_test pcap_test.c -lpcap
+ 1086  ./pcap_test 
+ 1087  ./pcap_test wlan0
+ 1088  ifconfig -a
+ 1089  fg
+ 1090  ./pcap_test wlan0
+ 1091  fg
+ 1092  ls
+ 1093  vim packet_parser.c 
+ 1094  gcc -o packet_parser packet_parser.c 
+ 1095  gcc -o packet_parser packet_parser.c -lpcap
+ 1096  ./packet_parser 
+ 1097  ls
+ 1098  ./packet_parser alltraffic.pcap 
+ 1099  fg
+ 1100  gcc -o packet_parser packet_parser.c -lpcap
+ 1101  fg
+ 1102  gcc -o packet_parser packet_parser.c -lpcap
+ 1103  fg
+ 1104  gcc -o packet_parser packet_parser.c -lpcap
+ 1105  fg
+ 1106  gcc -o packet_parser packet_parser.c -lpcap
+ 1107  fg
+ 1108  gcc -o packet_parser packet_parser.c -lpcap
+ 1109  fg
+ 1110  gcc -o packet_parser packet_parser.c -lpcap
+ 1111  fg
+ 1112  gcc -o packet_parser packet_parser.c -lpcap
+ 1113  fg
+ 1114  gcc -o packet_parser packet_parser.c -lpcap
+ 1115  ./packet_parser alltraffic.pcap 
+ 1116  fg
+ 1117  gcc -o packet_parser packet_parser.c -lpcap
+ 1118  fg
+ 1119  ffg
+ 1120  fg
+ 1121  gcc -o packet_parser packet_parser.c -lpcap
+ 1122  fg
+ 1123  gcc -o packet_parser packet_parser.c -lpcap
+ 1124  fg
+ 1125  gcc -o packet_parser packet_parser.c -lpcap
+ 1126  ./packet_parser alltraffic.pcap 
+ 1127  fg
+ 1128  ./packet_parser alltraffic.pcap | more
+ 1129  fg
+ 1130  ./packet_parser alltraffic.pcap 
+ 1131  gcc -o packet_parser packet_parser.c -lpcap
+ 1132  ./packet_parser alltraffic.pcap | more
+ 1133  fg
+ 1134  gcc -o packet_parser packet_parser.c -lpcap
+ 1135  ./packet_parser alltraffic.pcap | more
+ 1136  fg
+ 1137  ./packet_parser alltraffic.pcap | more
+ 1138  gcc -o packet_parser packet_parser.c -lpcap
+ 1139  ./packet_parser alltraffic.pcap | more
+ 1140  fg
+ 1141  gcc -o packet_parser packet_parser.c -lpcap
+ 1142  ./packet_parser alltraffic.pcap | more
+ 1143  fg
+ 1144  gcc -o packet_parser packet_parser.c -lpcap
+ 1145  ./packet_parser alltraffic.pcap | more
+ 1146  fg
+ 1147  gcc -o packet_parser packet_parser.c -lpcap
+ 1148  ./packet_parser alltraffic.pcap | more
+ 1149  ./packet_parser alltraffic.pcap 
+ 1150  fg
+ 1151  ./packet_parser alltraffic.pcap | more
+ 1152  gcc -o packet_parser packet_parser.c -lpcap
+ 1153  ./packet_parser alltraffic.pcap 
+ 1154  fg
+ 1155  strace ./packet_parser alltraffic.pcap 
+ 1156  fg
+ 1157  strace ./packet_parser alltraffic.pcap 
+ 1158  fg
+ 1159  gcc -o packet_parser packet_parser.c -lpcap
+ 1160  strace ./packet_parser alltraffic.pcap 
+ 1161  fg
+ 1162  gcc -o packet_parser packet_parser.c -lpcap
+ 1163  strace ./packet_parser alltraffic.pcap 
+ 1164  ./packet_parser alltraffic.pcap | more
+ 1165  fg
+ 1166  gcc -o packet_parser packet_parser.c -lpcap
+ 1167  ./packet_parser alltraffic.pcap | more
+ 1168  fg
+ 1169  gcc -o packet_parser packet_parser.c -lpcap
+ 1170  ./packet_parser alltraffic.pcap | more
+ 1171  fg
+ 1172  ./packet_parser alltraffic.pcap | more
+ 1173  gcc -o packet_parser packet_parser.c -lpcap
+ 1174  ./packet_parser alltraffic.pcap | more
+ 1175  fg
+ 1176  gcc -o packet_parser packet_parser.c -lpcap
+ 1177  ./packet_parser alltraffic.pcap | more
+ 1178  fg
+ 1179  gcc -o packet_parser packet_parser.c -lpcap
+ 1180  ./packet_parser alltraffic.pcap | more
+ 1181  yum install wireshark
+ 1182  sudo yum install wireshark
+ 1183  wireshark
+ 1184  sudo yum install wireshark-gnome
+ 1185  vim nm.log 
+ 1186  gdb -p hello
+ 1187  ls
+ 1188  gdb ./hello
+ 1189  ls
+ 1190  vim strings.log
+ 1191  vim readelf.log 
+ 1192  nm -an hello | c++filt
+ 1193  vim hello.c
+ 1194  nm -an hello | c++filt | more
+ 1195  fg
+ 1196  jobs
+ 1197  vim hello.c
+ 1198  gdb -o hello hello.c
+ 1199  gcc -o hello hello.c
+ 1200  gdb ./hello
+ 1201  readelf -wi hello
+ 1202  readelf -c hello
+ 1203  readelf -C hello
+ 1204  readelf -wi libCFFEXtraderapi.so 
+ 1205  history
+ 1206  history > history.log
