@@ -1,11 +1,17 @@
 #!/bin/bash
 
-function show_jobs() {
-        echo $(jobs -l ) 
+function show_jobs1() {
+        echo $(jobs -l | grep "\[1\]" | awk '{print $1 " "$4 " "$5}') 
+}
+function show_jobs2() {
+        echo $(jobs -l | grep "\[2\]" | awk '{print $1 " "$4 " "$5}') 
+}
+function show_jobs3() {
+        echo $(jobs -l | grep "\[3\]" | awk '{print $1 " "$4 " "$5}') 
 }
 
 function prompt_command {
-	let prompt_x=$COLUMNS-36
+	let prompt_x=$COLUMNS-24
 }
 
 PROMPT_COMMAND=prompt_command
@@ -27,10 +33,12 @@ case $TERM in
 esac
 
 PS1="${TITLEBAR}\
-\[\033[s\033[1;\$(echo -n \${prompt_x})H\]\
-$YELLOW"Jobs:"\$(show_jobs)\
+\[\033[s\
+\[\033[1;\$(echo -n \${prompt_x})H\]$YELLOW"Jobs:"\$(show_jobs1)\
+\[\033[2;\$(echo -n \${prompt_x})H\]$YELLOW"Jobs:"\$(show_jobs2)\
+\[\033[3;\$(echo -n \${prompt_x})H\]$YELLOW"Jobs:"\$(show_jobs3)\
 \[\033[u\033[1A\]
-$YELLOW[$LIGHT_RED\u@\h:\w$YELLOW]\
+$YELLOW[$WHITE\u@\h:\w$YELLOW]\
 $WHITE\$$NO_COLOUR "
 PS2='> '
 PS4='+ '
