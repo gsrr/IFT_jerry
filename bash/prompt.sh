@@ -39,3 +39,5 @@ PS4='+ '
 function prompt_recover {
 PS1="[\u@\h:\w]\$ "
 }
+
+#ref : http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x361.html
