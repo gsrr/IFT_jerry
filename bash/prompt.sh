@@ -30,7 +30,7 @@ PS1="${TITLEBAR}\
 \[\033[s\033[1;\$(echo -n \${prompt_x})H\]\
 $YELLOW"Jobs:"\$(show_jobs)\
 \[\033[u\033[1A\]
-$BLUE[$LIGHT_RED\u@\h:\w$BLUE]\
+$YELLOW[$LIGHT_RED\u@\h:\w$YELLOW]\
 $WHITE\$$NO_COLOUR "
 PS2='> '
 PS4='+ '
