@@ -1,17 +1,21 @@
 #!/bin/bash
 
+function num_jobs() {
+        echo $(jobs -l | wc -l) 
+}
+
 function show_jobs1() {
-        echo $(jobs -l | grep "\[1\]" | awk '{print $1 " "$4 " "$5}') 
+        echo $(jobs -l | sed -n 1p | awk '{print $1 " "$4 " "$5}') 
 }
 function show_jobs2() {
-        echo $(jobs -l | grep "\[2\]" | awk '{print $1 " "$4 " "$5}') 
+        echo $(jobs -l | sed -n 2p | awk '{print $1 " "$4 " "$5}') 
 }
 function show_jobs3() {
-        echo $(jobs -l | grep "\[3\]" | awk '{print $1 " "$4 " "$5}') 
+        echo $(jobs -l | sed -n 3p | awk '{print $1 " "$4 " "$5}') 
 }
 
 function prompt_command {
-	let prompt_x=$COLUMNS-24
+	let prompt_x=$COLUMNS-32
 }
 
 PROMPT_COMMAND=prompt_command
@@ -34,9 +38,10 @@ esac
 
 PS1="${TITLEBAR}\
 \[\033[s\
-\[\033[1;\$(echo -n \${prompt_x})H\]$YELLOW"Jobs:"\$(show_jobs1)\
-\[\033[2;\$(echo -n \${prompt_x})H\]$YELLOW"Jobs:"\$(show_jobs2)\
-\[\033[3;\$(echo -n \${prompt_x})H\]$YELLOW"Jobs:"\$(show_jobs3)\
+\[\033[1;\$(echo -n \${prompt_x})H\]$YELLOW"All_Jobs:"\$(num_jobs)\
+\[\033[2;\$(echo -n \${prompt_x})H\]$YELLOW"Jobs:"\$(show_jobs1)\
+\[\033[3;\$(echo -n \${prompt_x})H\]$YELLOW"Jobs:"\$(show_jobs2)\
+\[\033[4;\$(echo -n \${prompt_x})H\]$YELLOW"Jobs:"\$(show_jobs3)\
 \[\033[u\033[1A\]
 $YELLOW[$WHITE\u@\h:\w$YELLOW]\
 $WHITE\$$NO_COLOUR "
