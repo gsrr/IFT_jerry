@@ -1,0 +1,18 @@
+<data>
+	<template category="RR" name="Sch_11" sourceTask="RR_1031">
+		<status>Enable</status>
+		<description>A RR task</description>
+		<create_time>201310141649</create_time>
+		<start_time>201310140000</start_time>
+		<end_time etEnable="0">000000000000</end_time>
+		<type mode="daily">
+			<day>1</day>
+			<period>10m</period>
+		</type>
+		<history>
+			<date>nope</date>
+			<result>nope</result>
+		</history>
+	</template>
+</data>
+
