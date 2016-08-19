@@ -1,5 +1,5 @@
 #src to dst
-nasip=172.27.11
+nasip=[nasip]
 src=/root/github/HA/
 dst=/usr/local/
 file=NAS/misc/agent/python/service/LDAPServer.py

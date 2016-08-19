@@ -1,7 +1,7 @@
 #!/usr/bin/expect
 set timeout -1
 set arg1 [lindex $argv 0]
-spawn rsync -a --timeout=180 /Pool-1/f1/github/HA/NAS/misc/Cmd/NASErrorCode.py root@172.27.112.51:/usr/local/NAS/misc/Cmd/NASErrorCode.py
+spawn rsync -a --timeout=180 /root/github/HA/NAS/misc/Cmd/NASErrorCode.py root@172.27.11:/usr/local/NAS/misc/Cmd/NASErrorCode.py
 match_max 100000
 expect {
 	"*?assword:*" {
