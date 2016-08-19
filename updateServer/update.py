@@ -16,7 +16,7 @@ def parsefiles(data):
     for line in data:
         line = line.strip()
         if line == "":
-            break
+            continue
         [key, value] = line.split("=",1)
         info[key] = value if info.has_key(key) == False else (info[key] + ("," + value))
     return info
