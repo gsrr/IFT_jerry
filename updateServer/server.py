@@ -7,9 +7,9 @@ app = Flask(__name__)
 api = Api(app)
 
 
-def write_config(nasip):
+def write_config(nasip, module):
 	keys = ["[nasip]"]
-	with open("update.config.temp", "r") as fr:
+	with open("update.%s.config"%module, "r") as fr:
 		lines = fr.readlines()
 		with open("update.config", "w") as fw:
 			for line in lines:
@@ -29,7 +29,7 @@ class HelloWorld(Resource):
 	parser.add_argument('module', type=str)
 	args = parser.parse_args()
 	#write_config(request.remote_addr)
-	write_config(args['nasip'])
+	write_config(args['nasip'], args['module'])
 	update_client()
         return {'hello': 'world'}
 
