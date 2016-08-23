@@ -37,7 +37,7 @@ def createExp(info, f):
     
 
 def main():
-    data = readFile("update.%s.config"%sys.argv[1])
+    data = readFile("update.config")
     info = parsefiles(data)
     for f in info['file'].split(","):
         createExp(info, f)

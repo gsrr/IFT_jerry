@@ -28,6 +28,7 @@ class HelloWorld(Resource):
 	parser.add_argument('nasip', type=str)
 	parser.add_argument('module', type=str)
 	args = parser.parse_args()
+	print args
 	#write_config(request.remote_addr)
 	write_config(args['nasip'], args['module'])
 	update_client()
