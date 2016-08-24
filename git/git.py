@@ -58,6 +58,13 @@ class GIT_CREATE:
 				ret = cmd(repos)
 			print "(ret, cmd) = (%d, %s)"%(ret, cmd)
 
+	def mp(self):
+		#git checkout -b $branch-name origin/$branch-name
+		branch = raw_input("Please enter the branch name : ")
+		cmd = "git checkout -b %s origin/%s"%branch
+		ret = os.system(cmd)
+		print "(ret, cmd) = (%d, %s)"%(ret, cmd)
+
 	def dispatch(self, name):
 		func = getattr(self, name)
 		func()
