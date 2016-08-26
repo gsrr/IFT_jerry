@@ -1,0 +1,6 @@
+[Case#1] 
+	The owner of dst will be overwrited by owner of src folder.
+[Description]
+	1. Backup data from source folder to destination folder.
+	2. Type: third party.
+	3. rsync option : -a (perserve owner, but not acl)
