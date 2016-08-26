@@ -1,0 +1,50 @@
+<data>
+	<template category="RR" name="Sch_11" sourceTask="RR_1031">
+		<status>Enable</status>
+		<description>A RR task</description>
+		<create_time>201310141649</create_time>
+		<start_time>201310140000</start_time>
+		<end_time etEnable="0">000000000000</end_time>
+		<type mode="daily">
+			<day>1</day>
+			<period>10m</period>
+		</type>
+		<history>
+			<date />
+			<result />
+		</history>
+	</template>
+<task category="RR" name="Sch_20160831024523" sourceTask="RR_20160831024523">
+		<status>on</status>
+		<description />
+		<create_time>201608310245</create_time>
+		<start_time>201701310000</start_time>
+		<end_time etEnable="off">000000000000</end_time>
+		<type mode="monthly">
+			<day>31</day>
+			<period>None</period>
+		</type>
+	<history><date>nope</date><result>nope</result></history></task>
+<task category="RR" name="Sch_20161031000255" sourceTask="RR_20161031000255">
+		<status>on</status>
+		<description />
+		<create_time>201610310002</create_time>
+		<start_time>201701310000</start_time>
+		<end_time etEnable="off">000000000000</end_time>
+		<type mode="monthly">
+			<day>31</day>
+			<period>None</period>
+		</type>
+	<history><date>nope</date><result>nope</result></history></task>
+<task category="RR" name="Sch_20161031000304" sourceTask="RR_20161031000304">
+		<status>on</status>
+		<description />
+		<create_time>201610310003</create_time>
+		<start_time>201701150000</start_time>
+		<end_time etEnable="off">000000000000</end_time>
+		<type mode="monthly">
+			<day>15,31</day>
+			<period>None</period>
+		</type>
+	<history><date>nope</date><result>nope</result></history></task>
+</data>
