@@ -1,0 +1,13 @@
+#Installation:
+yum -y install epel-release
+yum -y install ppp pptpd
+
+#Related files:
+/etc/pptpd.conf
+/etc/ppp/options.pptpd
+/etc/ppp/chap-secrets
+
+#commands
+systemctl enable pptpd
+systemctl start pptpd
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE && iptables-save
