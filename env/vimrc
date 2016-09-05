@@ -1,51 +1,32 @@
-set nocompatible
-set bs=2
+syntax on
 set bg=dark
 set number
+set ts=4
+set expandtab
+set shiftwidth=4
+set cursorline
 set autoindent
 
-"tab setting
-set expandtab   "Replace tab by space
-set tabstop=4   "set the width of tab
-set shiftwidth=4        "set the shift width
+" enable beep
+set novisualbell
 
-""set variable
-let HAdir="/usr/local/NAS/misc/HAAgent/"
+" show the matching part of the pair for [] {} and ()
+set showmatch
+set matchtime=0
 
-"set alias command
-command Chha execute 'cd' HAdir
-"command Chlib execute 'cd' HAlib
-"command Chex execute 'cd' HAex
-"
-""set tab color
-hi TabLineFill ctermfg=Yellow ctermbg=Black
-hi TabLine ctermfg=Black ctermbg=White
-hi TabLineSel ctermfg=Black ctermbg=LightGreen
 
-nmap <C-R> zL
-nmap <C-L> zH
+execute pathogen#infect()
 
-"Move to end of line
-inoremap <C-A> <Esc>A    
+" syntactic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
-"Auto complete
-inoremap ( ()<Esc>i
-inoremap { {}<ESC>i
-inoremap " ""<Esc>i
-inoremap " ""<Esc>i
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
-nnoremap <F5> :buffers<CR>:buffer<Space>
+let python_highlight_all = 1
 
-function Hello()
-    echom "Hello World!"
-endfunction
 
-function Dirs()
-    let var1="Hello World"
-    echom var1
-endfunction
-
-function Test(name)
-    echom "My name is:"
-    echom a:name
-endfunction
