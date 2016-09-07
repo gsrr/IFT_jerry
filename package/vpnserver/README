@@ -1,13 +1,16 @@
-#Installation:
+[Installation]
 yum -y install epel-release
 yum -y install ppp pptpd
+#L2pd
+yum install xl2tpd
+yum install strongswan
 
-#Related files:
+[Related files]
 /etc/pptpd.conf
 /etc/ppp/options.pptpd
 /etc/ppp/chap-secrets
 
-#commands
+[commands]
 systemctl enable pptpd
 systemctl start pptpd
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE && iptables-save
