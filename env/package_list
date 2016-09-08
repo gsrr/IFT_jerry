@@ -1,1 +1,8 @@
+yum install vim
+
+yum install ctags
+[git]
+yum install git
+
 yum install wget
+yum install bash-completion
