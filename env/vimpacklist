@@ -1,2 +1,10 @@
 Pathogen
-Syntastic
+ctrlp.vim
+jedi-vim
+nerdtree
+supertab
+syntastic
+tagbar
+vim-airline
+vim-fugitive
+vim-powerline

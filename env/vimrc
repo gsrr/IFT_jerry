@@ -6,6 +6,8 @@ set expandtab
 set shiftwidth=4
 set cursorline
 set autoindent
+set foldmethod=indent
+set foldlevel=99
 
 " enable beep
 set novisualbell
@@ -26,6 +28,18 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+set laststatus=2
+set t_Co=256
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
+
+" tarbar
+nmap <F8> :TagbarToggle<CR>
+
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 let python_highlight_all = 1
 
