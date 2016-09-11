@@ -28,6 +28,11 @@ class ConfigLoader:
                     key,data[key] = MyString.splitTwo(line, None)
         self.cfg = data
 
+    def unload(self, path, tabs=2):
+        with open(path, "w") as fw:
+            for key, value in self.cfg.items():
+                fw.write(key + " " + value + "\n")
+
     def setcfg(self, key, value):
         self.cfg[key] = value
     
