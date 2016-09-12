@@ -6,8 +6,6 @@ set expandtab
 set shiftwidth=4
 set cursorline
 set autoindent
-set foldmethod=indent
-set foldlevel=99
 
 " enable beep
 set novisualbell
