@@ -6,7 +6,6 @@ def decor_test(func):
     def wrap_func():
         vpnobj = vpnL2tp.VPNL2TP()
         vpnobj.getcfg()
-        #vpnobj.enableRequireAttr()
         func(vpnobj)
         vpnobj.unload()
         vpnobj.restart()
@@ -16,6 +15,7 @@ def decor_test(func):
 
 @decor_test
 def test_enablePAP(vpnobj):
+    vpnobj.enableRequireAttr()
     vpnobj.enablePAP()
    
 @decor_test

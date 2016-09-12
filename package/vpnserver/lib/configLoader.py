@@ -15,7 +15,8 @@ class MyString:
 
 class ConfigLoader:
     def __init__(self, **paras):
-        self.cfg = {}
+        self.cfg_dict = {}
+        self.cfg_list = []
         self.cfgpath = paras['cfg']
     
     def load(self):
@@ -25,28 +26,49 @@ class ConfigLoader:
             for line in lines:
                 line = line.strip()
                 if line != "" and line.startswith("#") == False:
-                    key,data[key] = MyString.splitTwo(line, None)
-        self.cfg = data
+                    key,value = MyString.splitTwo(line, None)
+                    if len(self.cfg_list) == 0 or self.cfg_list[-1] != key:
+                        self.cfg_list.append(key)
+                         
+                    if data.has_key(key) == False:
+                        data[key] = value
+                    else:
+                        if type(data[key]) == list:
+                            data[key].append(value)
+                        else:
+                            data[key] = [data[key]]
+                            data[key].append(value)
+        self.cfg_dict = data
 
     def unload(self, path, tabs=2):
         with open(path, "w") as fw:
-            for key, value in self.cfg.items():
-                fw.write(key + " " + value + "\n")
+            for key in self.cfg_list:
+                value = self.cfg_dict.get(key)
+                if value != None:
+                    if type(value) == list:
+                        for v in value:
+                            fw.write(key + " " + v + "\n")
+                    else:
+                        fw.write(key + " " + value + "\n")
+                    del self.cfg_dict[key]
 
     def setcfg(self, key, value):
-        self.cfg[key] = value
+        self.cfg_dict[key] = value
     
-    def remove(self, key):
-        del self.cfg[key]
-        
+    def add(self, key, value):
+        self.cfg_dict[key] = value
 
+    def remove(self, key):
+        if self.cfg_dict.has_key(key):
+            del self.cfg_dict[key]
+        
 class ConfigVPNL2TP(ConfigLoader):
     def __init__(self, **paras):
         ConfigLoader.__init__(self, **paras)
         self.title = "["
         self.delimit = "="
         self.mark = ";"
-
+    
     def _subload(self, lines, data):
         cnt = 0
         while cnt < len(lines):
@@ -77,14 +99,15 @@ class ConfigVPNL2TP(ConfigLoader):
 
 
     def unload(self, path, tabs=2):
+        delimit = self.delimit if self.delimit != None else " "
         with open(path, "w") as fw:
             for key, value in self.cfg.items():
                 if type(self.cfg[key]) == dict:
                     fw.write("\n" + key + "\n")
                     for key, value in self.cfg[key].items():
-                        fw.write( key + "=" + value + "\n")
+                        fw.write( "\t" + key + delimit + value + "\n")
                 else:
-                    fw.write(key + "=" + value + "\n")
+                    fw.write(key + delimit + value + "\n")
 
     def add(self, section, key, value):
         self.cfg[section][key] = value
@@ -93,6 +116,13 @@ class ConfigVPNL2TP(ConfigLoader):
         if self.cfg[section].has_key(key) == True:
             del self.cfg[section][key]
 
+class ConfigIPSec(ConfigVPNL2TP):
+    def __init__(self, **paras):
+        ConfigVPNL2TP.__init__(self, **paras)
+        self.mark = "#"
+        self.title = ["config", "conn"]
+        self.delimit = "="
+        
 def main():
     obj = Config(cfg="/etc/pptpd.conf.default", mark="#", delimit=None)
     obj.load()
