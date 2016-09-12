@@ -1,10 +1,19 @@
 [Installation]
 yum -y install epel-release
-yum -y install ppp pptpd
+yum install ppp
+
+#pptp
+yum -y install pptpd
+
 #L2pd
 yum install xl2tpd
 yum install strongswan
 yum install freeradius freeradius-utils
+
+#radius
+yum install freeradius
+yum install freeradius-utils
+yum install radiusclient-ng
 
 [Related files]
 /etc/pptpd.conf
