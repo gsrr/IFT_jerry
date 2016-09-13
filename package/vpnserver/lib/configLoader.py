@@ -65,16 +65,22 @@ class ConfigLoader:
 class ConfigVPNL2TP(ConfigLoader):
     def __init__(self, **paras):
         ConfigLoader.__init__(self, **paras)
-        self.title = "["
+        self.title = ["["]
         self.delimit = "="
         self.mark = ";"
     
+
+    def isTitle(self, line):
+        for t in self.title:
+            if line.startswith(t):
+                return True
+
     def _subload(self, lines, data):
         cnt = 0
         while cnt < len(lines):
             line = lines[cnt].strip()
             if line != "" and line.startswith(self.mark) == False:
-                if line.startswith(self.title):
+                if self.isTitle(line) == True:
                     return cnt
                 else:
                     key,data[key] = MyString.splitTwo(line, self.delimit)
@@ -89,7 +95,7 @@ class ConfigVPNL2TP(ConfigLoader):
             while cnt < len(lines):
                 line = lines[cnt].strip()
                 if line != "" and line.startswith(self.mark) == False:
-                    if self.title != None and line.startswith(self.title):
+                    if self.title != None and self.isTitle(line):
                         data[line.strip()] = {}
                         cnt += self._subload(lines[cnt+1:], data[line.strip()])
                     else:

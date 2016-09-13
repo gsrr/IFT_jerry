@@ -24,8 +24,12 @@ connect-delay 5000
 # You need to join the domain on the server, for example using samba:
 # http://rootmanager.com/ubuntu-ipsec-l2tp-windows-domain-auth/setting-up-openswan-xl2tpd-with-native-windows-clients-lucid.html
 
+refuse-chap
+refuse-pap
+require-chap
+require-pap
 require-mschap-v2
-plugin radius.so
-plugin radattr.so
-radius-config-file /etc/radiusclient-ng/radiusclient.conf
+#plugin radius.so
+#plugin radattr.so
+#radius-config-file /etc/radiusclient-ng/radiusclient.conf
 

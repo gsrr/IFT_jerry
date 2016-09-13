@@ -8,7 +8,6 @@ yum -y install pptpd
 #L2pd
 yum install xl2tpd
 yum install strongswan
-yum install freeradius freeradius-utils
 
 #radius
 yum install freeradius
@@ -25,6 +24,9 @@ yum install radiusclient-ng
 systemctl enable pptpd
 systemctl start pptpd
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE && iptables-save
+printf '%s' "$pw" | iconv -t utf16le | openssl md4
+cat /etc/passwd | mksmbpasswd.sh > /usr/local/samba/private/smbpasswd
+/usr/bin/ntlm_auth --request-nt-key --username=EVT1\\administrator --challenge=d1a199faf35d74ff --nt-response=90a31a0fc714967a8e28580f4fc728432d162711b082c20c
 
 [syno]
 /usr/syno/etc/packages/VPNCenter/l2tp/options.xl2tpd
@@ -38,3 +40,12 @@ udp        0      0 127.0.0.1:31067         0.0.0.0:*                           
 udp        0      0 127.0.0.1:31068         0.0.0.0:*                           20948/vpnauthd
 root     20948     1  0 Sep07 ?        00:00:00 /var/packages/VPNCenter/target/sbin/vpnauthd -t
 
+CREATE TABLE synovpn_con_tb(
+        id INTEGER PRIMARY KEY,
+        user TEXT,
+        ip_from TEXT,
+        ip_as TEXT,
+        prtltype INTEGER,
+        login_time INTEGER
+        );
+)

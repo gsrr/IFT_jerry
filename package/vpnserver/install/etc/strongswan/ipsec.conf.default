@@ -1,0 +1,47 @@
+# ipsec.conf - strongSwan IPsec configuration file
+
+# basic configuration
+
+config setup
+
+conn %default
+    ikelifetime=60m
+    keylife=20m
+    rekeymargin=3m
+    keyingtries=1
+
+conn l2tp
+    keyexchange=ikev1 # IKE版本
+    left=%any
+    leftsubnet=0.0.0.0/0
+    leftprotoport=17/1701 # l2tp udp流量
+    authby=secret # PSK驗證
+    leftfirewall=no # 不要讓strongswan更改防火牆
+    right=%any # 任意IP
+    rightprotoport=17/%any # 任意port udp流量
+    type=transport # ipsec transport mode
+    auto=add
+
+# strictcrlpolicy=yes
+# uniqueids = no
+
+# Add connections here.
+
+# Sample VPN connections
+
+#conn sample-self-signed
+#      leftsubnet=10.1.0.0/16
+#      leftcert=selfCert.der
+#      leftsendcert=never
+#      right=192.168.0.2
+#      rightsubnet=10.2.0.0/16
+#      rightcert=peerCert.der
+#      auto=start
+
+#conn sample-with-ca-cert
+#      leftsubnet=10.1.0.0/16
+#      leftcert=myCert.pem
+#      right=192.168.0.2
+#      rightsubnet=10.2.0.0/16
+#      rightid="C=CH, O=Linux strongSwan CN=peer name"
+#      auto=start

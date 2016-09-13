@@ -6,9 +6,8 @@ import configLoader
 def make_replace_func(src, dst):
     def wrap_func(items):
         with open(src, "r") as fr:
-            lines = fr.readlines()
             with open(dst, "w") as fw:
-                for line in readlines:
+                for line in fr.readlines():
                     line = line.strip()
                     for key in items.keys():
                         if key in line:
@@ -36,9 +35,9 @@ class IPSec:
         self.clobj.remove(key)
         
     def replacePSK(self, *paras):
-        src = "/etc/strongswan/ipsec.secret.default"
-        dst = "/etc/strongswan/ipsec.secret"
-        items = {'PSK' : paras[0]}
+        src = "/etc/strongswan/ipsec.secrets.default"
+        dst = "/etc/strongswan/ipsec.secrets"
+        items = {'[PSK]' : paras[0]}
         func = make_replace_func(src, dst)
         func(items) 
 
