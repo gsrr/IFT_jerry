@@ -7,6 +7,8 @@ set shiftwidth=4
 set cursorline
 set autoindent
 
+au BufNewFile *.py r ~/.vim/template.py
+
 " enable beep
 set novisualbell
 
@@ -38,6 +40,16 @@ nmap <F8> :TagbarToggle<CR>
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+"Nerdtree
+"autocmd VimEnter * NERDTree
+"autocmd VimEnter * wincmd p
+map <C-n> :NERDTreeToggle<CR>
+
+" solarized
+set t_Co=256
+let g:solarized_termcolors=256
+colorscheme solarized
 
 let python_highlight_all = 1
 
