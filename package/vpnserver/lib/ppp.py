@@ -39,6 +39,12 @@ class PPP:
         self._add("refuse-chap", "")
         self._add("require-pap", "")
         
+    def setDns(self, *paras):
+        self._add("dns", paras[0])
+
+    def removeDns(self):
+        self._remove("dns")
+
     def unload(self):
         self.clobj.unload(self.conf)
 

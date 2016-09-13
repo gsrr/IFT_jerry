@@ -2,6 +2,21 @@ import sys
 import os
 import configLoader
 
+
+def make_replace_func(src, dst):
+    def wrap_func(items):
+        with open(src, "r") as fr:
+            lines = fr.readlines()
+            with open(dst, "w") as fw:
+                for line in readlines:
+                    line = line.strip()
+                    for key in items.keys():
+                        if key in line:
+                            line = line.replace(key, items[key])
+                            break
+                    fw.write(line + "\n")
+    return wrap_func
+
 class IPSec:
     def __init__(self, conf):
         self.conf = conf
@@ -20,6 +35,13 @@ class IPSec:
         key = paras[0]
         self.clobj.remove(key)
         
+    def replacePSK(self, *paras):
+        src = "/etc/strongswan/ipsec.secret.default"
+        dst = "/etc/strongswan/ipsec.secret"
+        items = {'PSK' : paras[0]}
+        func = make_replace_func(src, dst)
+        func(items) 
+
     def unload(self):
         self.clobj.unload(self.conf)
 

@@ -10,6 +10,7 @@ class VPNL2TP:
             'global' : '[global]',
             'lns' : '[lns default]'
         }
+        self.services = ['xl2tpd', 'strongswan']
 
     def getcfg(self):
         print self.clobj.cfg
@@ -44,20 +45,27 @@ class VPNL2TP:
         self._add('lns', 'require chap', 'yes')
         self._add('lns', 'refuse pap', 'yes')
 
+    def setLocalip(self, *paras):
+        ip = paras[0]
+        iphead = ip[::-1].split(".",1)[1][::-1]
+        iprange = "%s.1-%s.254"%(iphead, iphead)
+        self._add('lns', 'local ip', paras[0])
+        self._add('lns', 'ip range', iprange)
+        
     def unload(self):
         self.clobj.unload("/etc/xl2tpd/xl2tpd.conf")
 
     def start(self):
-        os.system("systemctl start xl2tpd")    
-        os.system("systemctl start strongswan")    
+        for srv in self.services:
+            os.system("systemctl start %s"%srv)    
     
     def stop(self):
-        os.system("systemctl stop xl2tpd")    
-        os.system("systemctl stop strongswan")    
+        for srv in self.services:
+            os.system("systemctl stop %s"%srv)    
         
     def restart(self):
-        os.system("systemctl restart xl2tpd")    
-        os.system("systemctl restart strongswan")    
+        for srv in self.services:
+            os.system("systemctl restart %s"%srv)    
 
     def showconf(self):
         os.system("cat /etc/xl2tpd/xl2tpd.conf")
