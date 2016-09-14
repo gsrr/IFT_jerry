@@ -24,14 +24,14 @@ def update_client():
 
 class HelloWorld(Resource):
     def get(self):
-    	parser = reqparse.RequestParser()
-	parser.add_argument('nasip', type=str)
-	parser.add_argument('module', type=str)
-	args = parser.parse_args()
-	print args
-	#write_config(request.remote_addr)
-	write_config(args['nasip'], args['module'])
-	update_client()
+        parser = reqparse.RequestParser()
+        parser.add_argument('nasip', type=str)
+        parser.add_argument('module', type=str)
+        args = parser.parse_args()
+        print args
+        #write_config(request.remote_addr)
+        write_config(args['nasip'], args['module'])
+        update_client()
         return {'hello': 'world'}
 
 api.add_resource(HelloWorld, '/')

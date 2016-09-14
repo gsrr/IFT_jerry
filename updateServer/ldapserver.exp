@@ -1,7 +1,7 @@
 #!/usr/bin/expect
 set timeout -1
 set arg1 [lindex $argv 0]
-spawn rsync -a --timeout=180 /root/github/HA/NAS/misc/Cmd/Exec/Backup/scheduleRR.py root@172.27.112.81:/usr/local/NAS/misc/Cmd/Exec/Backup/scheduleRR.py
+spawn rsync -a --timeout=180 /root/github/HA/NAS/misc/HAAgent/Lib/Service/ldapLib.py root@172.27.113.170:/usr/local/NAS/misc/HAAgent/Lib/Service/ldapLib.py
 match_max 100000
 expect {
 	"*?assword:*" {
