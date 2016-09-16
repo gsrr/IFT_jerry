@@ -30,3 +30,12 @@ git clone https://github.com/tpope/vim-fugitive ~/.vim/bundle/vim-fugitive
 # vim-powerline
 pip install powerline
 #git clone https://github.com/Lokaltog/powerline ~/.vim/bundle/powerline
+
+# auto-close
+https://github.com/Townk/vim-autoclose
+
+# Zenburn
+https://github.com/jnurmine/Zenburn
+
+# minibufexpl.vim
+https://github.com/fholgado/minibufexpl.vim

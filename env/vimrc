@@ -46,11 +46,6 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 "autocmd VimEnter * wincmd p
 map <C-n> :NERDTreeToggle<CR>
 
-" solarized
-set t_Co=256
-let g:solarized_termcolors=256
-colorscheme solarized
-
 let python_highlight_all = 1
 
 
