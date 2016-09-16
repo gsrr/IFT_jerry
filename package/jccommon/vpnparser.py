@@ -4,7 +4,6 @@ class VPNParser:
     def __init__(self):
         self.cmds = ['vpn_config', 'vpn_act', 'vpn_cut', 'vpn_view', 'vpn_status']
         self.parser_vpn = argparse.ArgumentParser(prog="vpn", add_help=False)
-
         self.parser_vpn_config = argparse.ArgumentParser(prog="vpn_config", add_help=False)
         self.parser_vpn_config.add_argument("-z", nargs="?", required=True)
         self.parser_vpn_config.add_argument("-p", nargs="?")
