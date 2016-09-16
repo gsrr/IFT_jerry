@@ -1,0 +1,28 @@
+#!/usr/bin/gdb -x
+file /usr/bin/gdb
+start
+set $e = 2.7182818284590452354
+set $pi = 3.14159265358979323846
+set $fabs = (double (*)(double)) fabs
+set $sqrt = (double (*)(double)) sqrt
+set $cbrt = (double (*)(double)) cbrt
+set $exp = (double (*)(double)) exp
+set $exp2 = (double (*)(double)) exp2
+set $exp10 = (double (*)(double)) exp10
+set $log = (double (*)(double)) log
+set $log2 = (double (*)(double)) log2
+set $log10 = (double (*)(double)) log10
+set $pow = (double (*)(double, double)) pow
+set $sin = (double (*)(double)) sin
+set $cos = (double (*)(double)) cos
+set $tan = (double (*)(double)) tan
+set $asin = (double (*)(double)) asin
+set $acos = (double (*)(double)) acos
+set $atan = (double (*)(double)) atan
+set $atan2 = (double (*)(double, double)) atan
+set $sinh = (double (*)(double)) sinh
+set $cosh = (double (*)(double)) cosh
+set $tanh = (double (*)(double)) tanh
+set $asinh = (double (*)(double)) asinh
+set $acosh = (double (*)(double)) acosh
+set $atanh = (double (*)(double)) atanh

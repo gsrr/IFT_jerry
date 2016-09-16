@@ -1,0 +1,3 @@
+vpn config <-z {a|b}@serviceID> [-p ip_pool] [-x max_conn] [-a {chap|pap}] [-k psk] [-d dns_ip]
+vpn act <-z {a|b}@serviceID> <-a {start|stop|restart}>
+

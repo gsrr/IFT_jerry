@@ -1,0 +1,51 @@
+[Installation]
+yum -y install epel-release
+yum install ppp
+
+#pptp
+yum -y install pptpd
+
+#L2pd
+yum install xl2tpd
+yum install strongswan
+
+#radius
+yum install freeradius
+yum install freeradius-utils
+yum install radiusclient-ng
+
+[Related files]
+/etc/pptpd.conf
+/etc/ppp/options.pptpd
+/etc/ppp/chap-secrets
+/usr/lib64/pppd/2.4.5/winbind.so
+
+[commands]
+systemctl enable pptpd
+systemctl start pptpd
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE && iptables-save
+printf '%s' "$pw" | iconv -t utf16le | openssl md4
+cat /etc/passwd | mksmbpasswd.sh > /usr/local/samba/private/smbpasswd
+/usr/bin/ntlm_auth --request-nt-key --username=EVT1\\administrator --challenge=d1a199faf35d74ff --nt-response=90a31a0fc714967a8e28580f4fc728432d162711b082c20c
+
+[syno]
+/usr/syno/etc/packages/VPNCenter/l2tp/options.xl2tpd
+/usr/syno/etc/packages/VPNCenter/l2tp/xl2tpd.conf
+
+[syno:vpnauthd]
+./volume1/@appstore/VPNCenter/etc/raddb/proxy.conf
+./volume1/@appstore/VPNCenter/etc/raddb/radiusd.conf
+./volume1/@appstore/VPNCenter/etc/radiusclient/radiusclient.conf
+udp        0      0 127.0.0.1:31067         0.0.0.0:*                           20948/vpnauthd
+udp        0      0 127.0.0.1:31068         0.0.0.0:*                           20948/vpnauthd
+root     20948     1  0 Sep07 ?        00:00:00 /var/packages/VPNCenter/target/sbin/vpnauthd -t
+
+CREATE TABLE synovpn_con_tb(
+        id INTEGER PRIMARY KEY,
+        user TEXT,
+        ip_from TEXT,
+        ip_as TEXT,
+        prtltype INTEGER,
+        login_time INTEGER
+        );
+)

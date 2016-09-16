@@ -1,0 +1,10 @@
+define hello
+        printf "Hello World\n"
+end
+
+def btfork
+        d 
+        catch fork
+        run
+        bt
+end

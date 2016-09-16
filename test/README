@@ -1,0 +1,10 @@
+example:
+	sh measure.sh hello/test_hello.py
+
+
+Reference:
+[1] coverage
+	http://coverage.readthedocs.io/en/coverage-4.1/
+
+[2] unittest 
+	http://pythontesting.net/framework/unittest/unittest-introduction/
