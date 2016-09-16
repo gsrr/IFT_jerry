@@ -6,3 +6,4 @@ yum install git
 
 yum install wget
 yum install bash-completion
+yum install net-tools
