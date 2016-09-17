@@ -17,6 +17,13 @@ sys.path.append("/root/jccommon")
 import vpnparser
 import vpncmd
 
+class HALIBFace(vpncmd.LIBFace):
+    def __init__(self):
+        pass
+    
+    def call(self, args):
+        print "HA Lib Interface"
+
 class vpn(cmd.Cmd):
 
     def __init__(self):
@@ -24,7 +31,7 @@ class vpn(cmd.Cmd):
         self.name = 'vpn'
         self.cmd_log = cmd_log()
         self.parsers = vpnparser.VPNParser()
-        self.vpncmd = vpncmd.VPNCmd()
+        self.vpncmd = vpncmd.VPNCmd(HALIBFace())
 
     @complete_twolevel
     def complete_vpn(self, args):
