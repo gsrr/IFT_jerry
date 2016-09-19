@@ -29,10 +29,10 @@ git clone https://github.com/tpope/vim-fugitive ~/.vim/bundle/vim-fugitive
 
 # vim-powerline
 pip install powerline
-#git clone https://github.com/Lokaltog/powerline ~/.vim/bundle/powerline
+git clone https://github.com/Lokaltog/powerline ~/.vim/bundle/powerline
 
 # auto-close
-https://github.com/Townk/vim-autoclose
+git clone https://github.com/Townk/vim-autoclose
 
 # vim-monokai
 git clone https://github.com/sickill/vim-monokai
