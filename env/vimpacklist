@@ -34,8 +34,14 @@ pip install powerline
 # auto-close
 https://github.com/Townk/vim-autoclose
 
-# Zenburn
-https://github.com/jnurmine/Zenburn
+# vim-monokai
+git clone https://github.com/sickill/vim-monokai
 
 # minibufexpl.vim
-https://github.com/fholgado/minibufexpl.vim
+git clone https://github.com/fholgado/minibufexpl.vim
+
+# snipmate
+git clone https://github.com/tomtom/tlib_vim.git
+git clone https://github.com/MarcWeber/vim-addon-mw-utils.git
+git clone https://github.com/garbas/vim-snipmate.git
+git clone https://github.com/honza/vim-snippets.git
