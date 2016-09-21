@@ -1,6 +1,7 @@
 import sys
 import os
 import configLoader
+import mcommon
 
 
 def make_replace_func(src, dst):
@@ -33,6 +34,11 @@ class IPSec:
     def _remove(self, *paras):
         key = paras[0]
         self.clobj.remove(key)
+
+    def status(self):
+        cmd = "systemctl is-active strongswan"
+        output = mcommon.call_cmdstr(cmd)[0]
+        return output
         
     def replacePSK(self, *paras):
         src = "/etc/strongswan/ipsec.secrets.default"

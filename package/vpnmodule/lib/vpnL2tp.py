@@ -1,6 +1,8 @@
 import sys
 import os
+import copy
 import configLoader
+import mcommon
 
 class VPNL2TP:
     def __init__(self):
@@ -69,6 +71,41 @@ class VPNL2TP:
         for srv in self.services:
             os.system("systemctl restart %s"%srv)    
 
+    def status(self):
+        cmd = "systemctl is-active xl2tpd"
+        output = mcommon.call_cmdstr(cmd)[0]
+        return output
+        
+    def view(self):
+        output = []
+        cmd = "ps -ef | grep pppd | grep -v grep | awk '{print $2}'"
+        pids = mcommon.call_cmdstr(cmd)
+        if len(pids) > 0:
+            for pid in pids:
+                data = {}
+                cmd = "tdbdump -k pppd%s /run/ppp/pppd2.tdb"%pid
+                raw = mcommon.call_cmdstr(cmd)[0]
+                for line in raw.split(";"):
+                    if "PEERNAME" in line: 
+                        key, data[key] = line.split("=", 1)
+                    elif "IPREMOTE" in line:
+                        key, data[key] = line.split("=", 1)
+                        data[key] = data[key].split("\\")[0]
+                cmd = "ps -p %s -o etime="%pid                
+                raw = mcommon.call_cmdstr(cmd)[0]
+                data['uptime'] = raw.strip()
+                output.append(copy.deepcopy(data))
+        return output
+
+    def cut(self, *paras):
+        vpnip = paras[0]
+        cmd = "ps -ef | grep pppd | grep -v grep | grep 20.10.0.1 | awk '{print $2}'"
+        pid = mcommon.call_cmdstr(cmd)
+        if len(pid) > 0:
+            cmd = "kill -9 %s"%pid[0]
+            mcommon.call_cmdstr(cmd)
+        return {'status' : 0}
+
     def showconf(self):
         os.system("cat /etc/xl2tpd/xl2tpd.conf")
 
@@ -91,6 +128,10 @@ def test_enablePAP(vpnobj):
 @decor_test
 def test_enableCHAP(vpnobj):
     vpnobj.enableCHAP()
+
+def test_status():
+    vpnobj = VPNL2TP()
+    print vpnobj.status()
 
 def main():
     func=getattr(sys.modules[__name__], sys.argv[1])

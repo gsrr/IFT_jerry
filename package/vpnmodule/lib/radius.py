@@ -1,6 +1,7 @@
 import sys
 import os
 import configLoader
+import mcommon
 
 
 def make_replace_func(src, dst):
@@ -48,7 +49,12 @@ class RADIUS:
         self.start()
 
     def status(self):
-        
+        cmd = "ps -ef | grep radiusd | grep -v grep"
+        output = mcommon.call_cmdstr(cmd)
+        if len(output) > 0 and "radiusd -t" in output[0]:
+            return "active"
+        else:
+            return "failed"
 
 def decor_test(func):
     def wrap_func():

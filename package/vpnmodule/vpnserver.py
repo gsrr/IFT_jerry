@@ -1,7 +1,11 @@
-from vpnmodule.lib import vpnL2tp
-from vpnmodule.lib import ppp
-from vpnmodule.lib import ipsec
-from vpnmodule.lib import radius
+from lib import vpnL2tp
+from lib import ppp
+from lib import ipsec
+from lib import radius
+
+
+STATUS_FAILED = 1001
+
 
 class VPNFace:
     def __init__(self):
@@ -16,22 +20,39 @@ class VPNServer:
         self.paras = paras['paras']
         self.vpnobj = vpnL2tp.VPNL2TP()
         self.radiusobj = radius.RADIUS()
+        self.ipsecobj = ipsec.IPSec()
     
-    def act_start(self):
+    def xl2tpd_start(self):
         self.vpnobj.start()
         self.radiusobj.start()
+        return {'status' : 0}
 
-    def act_stop(self):
+    def xl2tpd_stop(self):
         self.vpnobj.stop()
         self.radiusobj.stop()
+        return {'status' : 0}
 
-    def act_restart(self):
+    def act_xl2tpd_restart(self):
         self.vpnobj.restart()
         self.radiusobj.restart()
 
-    def act_status(self):
-        self.vpnobj.status()
-        self.radiusobj.status()
+    def xl2tpd_status(self):
+        ret = []
+        ret.append(self.vpnobj.status())
+        ret.append(self.ipsecobj.status())
+        ret.append(self.radiusobj.status())
+        if ret[0] == "active" and ret[1] == "active" and ret[2] == "active":
+            return {'status': 0, 'data' : {"status" : "active"} }
+        else:
+            return {'status': STATUS_FAILED, 'data' : {"status" : "failed"} }
+            
+    def xl2tpd_view(self):
+        data = self.vpnobj.view()
+        return {'status' : 0, 'data' : data}
+
+    def xl2tpd_cut(self):
+        ret = self.vpnobj.cut(self.paras['vpnip'])
+        return {'status' : 0}
 
     def xl2tpd_options_chap(self):
         print "xl2tpd_options_chap"
@@ -48,6 +69,8 @@ class VPNServer:
         self.radiusobj.enableCHAP()
         self.vpnobj.unload()
         pppobj.unload()
+
+        self.interface.saveConfig(self.paras, "write")
 
         return {'status' : 0}
 
@@ -71,6 +94,7 @@ class VPNServer:
 
         vpnobj.start()
         radiusobj.start()
+        self.interface.saveConfig(self.paras, "write")
         return {'status' : 0}
 
     def __call__(self):
@@ -78,12 +102,3 @@ class VPNServer:
         self.interface.log(str(self.paras))
         func = getattr(self, self.paras['op'])
         return func()
-
-    def setconns(self):
-        pass
-
-    def setpsk(self):
-        pass
-
-    def setdns(self):
-        pass
