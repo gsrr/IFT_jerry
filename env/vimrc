@@ -1,5 +1,9 @@
+execute pathogen#infect()
+
 syntax on
 set bg=dark
+set t_Co=256
+
 set number
 set ts=4
 set expandtab
@@ -17,7 +21,6 @@ set showmatch
 set matchtime=0
 
 
-execute pathogen#infect()
 
 " syntactic
 set statusline+=%#warningmsg#
@@ -30,7 +33,6 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 set laststatus=2
-set t_Co=256
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
 python del powerline_setup
@@ -48,6 +50,11 @@ map <C-n> :NERDTreeToggle<CR>
 
 " jedi
 autocmd FileType python setlocal completeopt-=preview
+
+colorscheme monokai
+let g:molokai_original = 1
+let g:rehash256 = 1
+" highlight Normal ctermfg=grey ctermbg=darkblue
 
 let python_highlight_all = 1
 
