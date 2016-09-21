@@ -49,7 +49,6 @@ map <C-n> :NERDTreeToggle<CR>
 " jedi
 autocmd FileType python setlocal completeopt-=preview
 
-colors zenburn
 let python_highlight_all = 1
 
 
