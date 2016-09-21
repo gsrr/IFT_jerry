@@ -1,3 +1,6 @@
 [Browser]
 http://172.27.112.138:5000/?nasip=172.27.113.235&module=rsyncd
 
+[curl]
+curl http://172.27.112.138:5000?nasip=172.27.113.157\&module=vim
+
