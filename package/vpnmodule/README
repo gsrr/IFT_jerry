@@ -1,3 +1,6 @@
+[Build]
+yum install -y net-snmp-devel net-snmp-utils libpcap-devel tncfhh-devel mysql-devel postgresql-devel sqlite-devel unixODBC-devel
+
 [Installation]
 yum -y install epel-release
 yum install ppp

@@ -17,7 +17,7 @@ def make_replace_func(src, dst):
     return wrap_func
 
 class IPSec:
-    def __init__(self, conf):
+    def __init__(self, conf = "/etc/strongswan/ipsec.conf"):
         self.conf = conf
         self.clobj = configLoader.ConfigIPSec(cfg=self.conf + ".default")
         self.clobj.load()

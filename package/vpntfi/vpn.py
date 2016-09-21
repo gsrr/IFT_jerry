@@ -1,6 +1,5 @@
-import os
-import sys
 import cmd
+import sys
 import traceback
 import re
 sys.path.append("/var/apache/tomcat/webapps/NAS/misc/HAAgent/")
@@ -21,8 +20,12 @@ class HALIBFace(vpncmd.LIBFace):
     def __init__(self):
         pass
     
+    def setHA(self, ha):
+        self.ha = ha
+
     def call(self, args):
-        print "HA Lib Interface"
+        ret = self.ha.callGetLocalFunc("vpnLib", args)  
+        return ret
 
 class vpn(cmd.Cmd):
 
@@ -55,7 +58,7 @@ class vpn(cmd.Cmd):
 
     @require_ha_server
     def do_vpn(self, args, HA=None):
-        self.ha = HA
+        self.vpncmd.libface.setHA(HA)   
         ret = {'status': SYS_SUCCESSFUL}
         try:
             args_list = shlex.split(args)
@@ -71,4 +74,10 @@ class vpn(cmd.Cmd):
 
     @check_ctrl_parameter
     def adapter_cmd(self, args, func_name):
-        return getattr(self.vpncmd, func_name)(args)
+        args['controller'] = args['ctrl']
+        args['serviceId'] = args['wwn']
+        ret = getattr(self.vpncmd, func_name)(args)
+        if ret['status'] == 0:
+            return {'status' : 'SYS_SUCCESSFUL'}
+        else:
+            return {'status' : 'SYS_FAILED'}

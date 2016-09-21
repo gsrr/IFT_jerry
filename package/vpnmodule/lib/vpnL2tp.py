@@ -36,6 +36,7 @@ class VPNL2TP:
         self._add('lns', 'unix authentication', 'yes')
 
     def enablePAP(self):
+        print "enablePAP"
         self._clearEncAttr()
         self._add('lns', 'require pap', 'yes')
         self._add('lns', 'refuse chap', 'yes')
@@ -47,8 +48,9 @@ class VPNL2TP:
 
     def setLocalip(self, *paras):
         ip = paras[0]
+        max_conns = paras[1]
         iphead = ip[::-1].split(".",1)[1][::-1]
-        iprange = "%s.1-%s.254"%(iphead, iphead)
+        iprange = "%s.1-%s.%s"%(iphead, iphead, max_conns)
         self._add('lns', 'local ip', paras[0])
         self._add('lns', 'ip range', iprange)
         
@@ -69,6 +71,7 @@ class VPNL2TP:
 
     def showconf(self):
         os.system("cat /etc/xl2tpd/xl2tpd.conf")
+
 
 def decor_test(func):
     def wrap_func():

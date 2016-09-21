@@ -13,7 +13,7 @@ class VPNCmd:
 
     def cmd_vpn_config(self,args):
         print "cmd_vpn_config", args
-        self.libface.call(args)
+        return self.libface.call(args)
 
     def cmd_vpn_act(self,args):
         print "cmd_vpn_act", args
