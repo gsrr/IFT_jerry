@@ -4,6 +4,8 @@ syntax on
 set bg=dark
 set t_Co=256
 
+set binary
+set noeol
 set number
 set ts=4
 set expandtab
