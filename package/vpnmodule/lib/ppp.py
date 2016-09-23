@@ -3,7 +3,7 @@ import os
 import configLoader
 
 class PPP:
-    def __init__(self, conf):
+    def __init__(self, conf = "/etc/ppp/options.xl2tpd"):
         self.conf = conf
         self.clobj = configLoader.ConfigLoader(cfg=self.conf + ".default")
         self.clobj.load()
@@ -36,11 +36,17 @@ class PPP:
     
     def enablePAP(self):
         self.cleanProtoAttr()
+        #self._remove("plugin")
+        #self._remove("radius-config-file")
         self._add("refuse-chap", "")
         self._add("require-pap", "")
+        print self.getcfg()
         
     def setDns(self, *paras):
-        self._add("dns", paras[0])
+        if paras[0] == None:
+            self._remove("dns")
+        else:
+            self._add("dns", paras[0])
 
     def removeDns(self):
         self._remove("dns")
@@ -64,6 +70,10 @@ def decor_test(func):
 @decor_test
 def test_ppp_enablePAP(obj):
     obj.enablePAP()
+
+@decor_test
+def test_ppp_enableCHAP(obj):
+    obj.enableCHAP()
 
 def main():
     func=getattr(sys.modules[__name__], sys.argv[1])

@@ -1,3 +1,6 @@
+[Build]
+yum install -y net-snmp-devel net-snmp-utils libpcap-devel tncfhh-devel mysql-devel postgresql-devel sqlite-devel unixODBC-devel
+
 [Installation]
 yum -y install epel-release
 yum install ppp
@@ -24,6 +27,7 @@ yum install radiusclient-ng
 systemctl enable pptpd
 systemctl start pptpd
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE && iptables-save
+vi /etc/sysctl.conf && net.ipv4.ip_forward = 1 && sysctl -p
 printf '%s' "$pw" | iconv -t utf16le | openssl md4
 cat /etc/passwd | mksmbpasswd.sh > /usr/local/samba/private/smbpasswd
 /usr/bin/ntlm_auth --request-nt-key --username=EVT1\\administrator --challenge=d1a199faf35d74ff --nt-response=90a31a0fc714967a8e28580f4fc728432d162711b082c20c
