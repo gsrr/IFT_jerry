@@ -99,7 +99,7 @@ class VPNL2TP:
 
     def cut(self, *paras):
         vpnip = paras[0]
-        cmd = "ps -ef | grep pppd | grep -v grep | grep 20.10.0.1 | awk '{print $2}'"
+        cmd = "ps -ef | grep pppd | grep -v grep | grep %s | awk '{print $2}'"%vpnip
         pid = mcommon.call_cmdstr(cmd)
         if len(pid) > 0:
             cmd = "kill -9 %s"%pid[0]

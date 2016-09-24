@@ -16,8 +16,8 @@ class VPNFace:
 
 class VPNServer:
     def __init__(self, **paras):
+        reload(vpnL2tp)
         self.interface = paras['interface']
-        self.paras = paras['paras']
         self.vpnobj = vpnL2tp.VPNL2TP()
         self.radiusobj = radius.RADIUS()
         self.ipsecobj = ipsec.IPSec()
@@ -25,12 +25,12 @@ class VPNServer:
     def xl2tpd_start(self):
         self.vpnobj.start()
         self.radiusobj.start()
-        return {'status' : 0}
+        return self.interface.saveConfig({'proto':'xl2tpd', 'enabled' : "True"}, "write")
 
     def xl2tpd_stop(self):
         self.vpnobj.stop()
         self.radiusobj.stop()
-        return {'status' : 0}
+        return self.interface.saveConfig({'proto': 'xl2tpd', 'enabled' : "False"}, "write")
 
     def act_xl2tpd_restart(self):
         self.vpnobj.restart()
@@ -51,11 +51,11 @@ class VPNServer:
         return {'status' : 0, 'data' : data}
 
     def xl2tpd_cut(self):
+        self.interface.log("xl2tpd_cut:" + self.paras['vpnip'])
         ret = self.vpnobj.cut(self.paras['vpnip'])
         return {'status' : 0}
 
-    def xl2tpd_options_chap(self):
-        print "xl2tpd_options_chap"
+    def xl2tpd_options_mschap(self):
         pppobj = ppp.PPP()
         ipsecobj = ipsec.IPSec()
 
@@ -69,36 +69,44 @@ class VPNServer:
         self.radiusobj.enableCHAP()
         self.vpnobj.unload()
         pppobj.unload()
-
-        self.interface.saveConfig(self.paras, "write")
-
         return {'status' : 0}
 
+    def config2paras(self, config):
+        for key in config:
+            if self.paras.has_key(key) == False:
+                self.paras[key] = config[key]
+
     def xl2tpd_options_pap(self):
-        vpnobj = vpnL2tp.VPNL2TP()
         pppobj = ppp.PPP()
         ipsecobj = ipsec.IPSec()
         radiusobj = radius.RADIUS()
 
-        vpnobj.setLocalip(self.paras['ip_pool'], self.paras['max_conns'])
-        vpnobj.enablePAP()
+        self.vpnobj.setLocalip(self.paras['ip_pool'], self.paras['max_conns'])
+        self.vpnobj.enablePAP()
         
         pppobj.enablePAP()
         pppobj.setDns(self.paras['dns'])
         ipsecobj.replacePSK(self.paras['psk'])
 
-        vpnobj.unload()
-        pppobj.unload()
-        
         radiusobj.enablePAP()
-
-        vpnobj.start()
-        radiusobj.start()
-        self.interface.saveConfig(self.paras, "write")
+        self.vpnobj.unload()
+        pppobj.unload()
         return {'status' : 0}
+    
+    def xl2tpd_options(self):
+        ret = self.interface.getConfig(self.paras, "getter")
+        self.config2paras(ret['data'])
+        getattr(self, 'xl2tpd_options_%s'%self.paras['auth'])()
+        ret = self.interface.saveConfig(self.paras, "write")
+        ret = self.interface.getConfig(self.paras, "getter")
+        self.interface.log(str(ret))
+        return ret
+    
+    def setParas(self, paras):
+        self.paras = paras
 
     def __call__(self):
         self.interface.log("It is a VPNLibTest")
-        self.interface.log(str(self.paras))
+        self.interface.log("receive paras:" + str(self.paras))
         func = getattr(self, self.paras['op'])
         return func()

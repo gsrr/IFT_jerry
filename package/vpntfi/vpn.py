@@ -12,7 +12,7 @@ import subprocess
 import shlex
 
 
-sys.path.append("/root/jccommon")
+sys.path.append("/Pool-1/f1/github/IFT_jerry/package/vpnmodule")
 import vpnparser
 import vpncmd
 
@@ -74,10 +74,9 @@ class vpn(cmd.Cmd):
 
     @check_ctrl_parameter
     def adapter_cmd(self, args, func_name):
-        args['controller'] = args['ctrl']
-        args['serviceId'] = args['wwn']
         ret = getattr(self.vpncmd, func_name)(args)
         if ret['status'] == 0:
-            return {'status' : 'SYS_SUCCESSFUL'}
+            ret['status'] = "SYS_SUCCESSFUL"
         else:
             return {'status' : 'SYS_FAILED'}
+        return ret

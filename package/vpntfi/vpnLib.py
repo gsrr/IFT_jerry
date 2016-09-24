@@ -18,8 +18,11 @@ class HAVPNFace(vpnserver.VPNFace):
 
     def saveConfig(self, paras, op):
         paras['configop'] = op
-        self.ha.setConfig("VPNConfig", "vpnobj", paras)
+        return self.ha.setConfig("VPNConfig", "vpnobj", paras)
 
+    def getConfig(self, paras, op):
+        paras['configop'] = op
+        return self.ha.getConfig("VPNConfig", "vpnobj", paras)
 
 class NASHAVPNFace(vpnserver.VPNFace):
     def __init__(self):
@@ -33,12 +36,14 @@ class NASHAVPNFace(vpnserver.VPNFace):
 
 def vpnLib(HAServer, paraList):
     try:
+        HAServer.log(1, "In Lib:" + str(paraList))
         global lib_vpnObj
         if lib_vpnObj == None:
             reload(vpnserver)
             haface = HAVPNFace()
             haface.setHA(HAServer)
-            lib_vpnObj = vpnserver.VPNServer(interface = haface, paras = paraList)
+            lib_vpnObj = vpnserver.VPNServer(interface = haface)
+        lib_vpnObj.setParas(paraList)
         HAServer.log(1, "call vpnLib")
         return lib_vpnObj()
     except:
@@ -68,6 +73,18 @@ def test_xl2tpd_options_pap(localHA):
     print ret
     return
 
+def test_xl2tpd_options_pap_dns(localHA):
+    paraList = {
+        'op' : 'xl2tpd_options_pap',
+        'dns' : '9.9.9.9',
+        'proto' : "xl2tpd",
+        'controller' : 'A',
+        'serviceId' : '0'
+    }
+    ret = localHA.callGetLocalFunc("vpnLib", paraList)
+    print ret
+    return
+
 @decor_test
 def test_xl2tpd_options_chap(haface):
     paraList = {
@@ -83,25 +100,23 @@ def test_xl2tpd_options_chap(haface):
     lib_vpnObj = vpnserver.VPNServer(interface = haface, paras = paraList)
     return lib_vpnObj 
 
-@decor_test
-def test_xl2tpd_start(haface):
+def test_xl2tpd_start(localHA):
     paraList = {
         'op' : 'xl2tpd_start',
         'controller' : 'A',
         'serviceId' : '0'
     }
-    lib_vpnObj = vpnserver.VPNServer(interface = haface, paras = paraList)
-    return lib_vpnObj 
+    ret = localHA.callGetLocalFunc("vpnLib", paraList)
+    return ret
 
-@decor_test
-def test_xl2tpd_stop(haface):
+def test_xl2tpd_stop(localHA):
     paraList = {
         'op' : 'xl2tpd_stop',
         'controller' : 'A',
         'serviceId' : '0'
     }
-    lib_vpnObj = vpnserver.VPNServer(interface = haface, paras = paraList)
-    return lib_vpnObj 
+    ret = localHA.callGetLocalFunc("vpnLib", paraList)
+    return ret
 
 @decor_test
 def test_act_xl2tpd_restart(haface):
@@ -137,11 +152,12 @@ def test_xl2tpd_view(haface):
 def test_xl2tpd_cut(haface):
     paraList = {
         'op' : 'xl2tpd_cut',
-        'vpnip' : "20.10.0.1",
+        'vpnip' : "20.0.0.1",
         'controller' : 'A',
         'serviceId' : '0'
     }
-    lib_vpnObj = vpnserver.VPNServer(interface = haface, paras = paraList)
+    lib_vpnObj = vpnserver.VPNServer(interface = haface)
+    lib_vpnObj.setParas(paraList)
     return lib_vpnObj 
 
 def clean_env(haface):

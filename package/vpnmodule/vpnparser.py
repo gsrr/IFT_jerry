@@ -8,7 +8,7 @@ class VPNParser:
         self.parser_vpn_config.add_argument("-z", nargs="?", required=True)
         self.parser_vpn_config.add_argument("-p", nargs="?")
         self.parser_vpn_config.add_argument("-x", nargs="?")
-        self.parser_vpn_config.add_argument("-a", nargs="?", choices=["chap", "pap"])
+        self.parser_vpn_config.add_argument("-a", nargs="?", choices=["mschap", "pap"])
         self.parser_vpn_config.add_argument("-k", nargs="?")
         self.parser_vpn_config.add_argument("-d", nargs="?")
 

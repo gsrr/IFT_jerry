@@ -2,12 +2,11 @@ class VPNConfig:
     def __init__(self, root):
         self.root = root
     
-    def get(self, paras):
+    def getter(self, paras = None):
         data = {}
         node = self.root.find("./setting[@module='%s']"%paras['proto'])
         for child in node:
             data[child.tag] = child.text
-
         return {'status' : 0, 'data' : data}
 
     def write(self, paras):

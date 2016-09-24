@@ -1,4 +1,8 @@
 import subprocess
+import filecmp
+
+def compareFile(src, dst):
+    return filecmp.cmp(src,dst)
 
 def call_cmdlist(cmd):
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
