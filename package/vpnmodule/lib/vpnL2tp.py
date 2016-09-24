@@ -76,6 +76,12 @@ class VPNL2TP:
         output = mcommon.call_cmdstr(cmd)[0]
         return output
         
+    def _captureSrcIP(self, ipremote):
+        files = os.listdir("/cfpool/vpnserver/connection")
+        for f in files:
+            if ipremote in f:
+                return f.split("_")[1].strip()
+
     def view(self):
         output = []
         cmd = "ps -ef | grep pppd | grep -v grep | awk '{print $2}'"
@@ -94,6 +100,7 @@ class VPNL2TP:
                 cmd = "ps -p %s -o etime="%pid                
                 raw = mcommon.call_cmdstr(cmd)[0]
                 data['uptime'] = raw.strip()
+                data['src_ip'] = self._captureSrcIP(data['IPREMOTE'])
                 output.append(copy.deepcopy(data))
         return output
 

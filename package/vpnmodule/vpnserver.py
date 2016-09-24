@@ -17,11 +17,17 @@ class VPNFace:
 class VPNServer:
     def __init__(self, **paras):
         reload(vpnL2tp)
+        reload(ppp)
+        reload(radius)
         self.interface = paras['interface']
         self.vpnobj = vpnL2tp.VPNL2TP()
+        self.pppobj = ppp.PPP()
         self.radiusobj = radius.RADIUS()
         self.ipsecobj = ipsec.IPSec()
     
+    def log(self, msg):
+        self.interface.log(msg)
+
     def xl2tpd_start(self):
         self.vpnobj.start()
         self.radiusobj.start()
@@ -56,19 +62,17 @@ class VPNServer:
         return {'status' : 0}
 
     def xl2tpd_options_mschap(self):
-        pppobj = ppp.PPP()
-        ipsecobj = ipsec.IPSec()
-
         self.vpnobj.setLocalip(self.paras['ip_pool'], self.paras['max_conns'])
         self.vpnobj.enableCHAP()
 
-        pppobj.enableCHAP()
-        pppobj.setDns(self.paras['dns'])
-        ipsecobj.replacePSK(self.paras['psk'])
+        self.pppobj.enableCHAP()
+        self.pppobj.setDns(self.paras['dns'])
+        self.ipsecobj.replacePSK(self.paras['psk'])
 
         self.radiusobj.enableCHAP()
         self.vpnobj.unload()
-        pppobj.unload()
+        self.log(str(self.pppobj.getcfg()))
+        self.pppobj.unload()
         return {'status' : 0}
 
     def config2paras(self, config):
@@ -104,6 +108,14 @@ class VPNServer:
     
     def setParas(self, paras):
         self.paras = paras
+
+    def mschap_adduser(self):
+        self.radiusobj.NTLMPasswd_adduser(self.paras['user'], self.paras['passwd'])
+        return self.radiusobj.restart()
+
+    def mschap_deleteuser(self):
+        self.radiusobj.NTLMPasswd_deleteuser(self.paras['user'])
+        return self.radiusobj.restart()
 
     def __call__(self):
         self.interface.log("It is a VPNLibTest")

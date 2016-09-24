@@ -47,6 +47,7 @@ class RADIUS:
     def restart(self):
         self.stop()
         self.start()
+        return {'status' : 0}
 
     def status(self):
         cmd = "ps -ef | grep radiusd | grep -v grep"
@@ -55,6 +56,29 @@ class RADIUS:
             return "active"
         else:
             return "failed"
+
+    def NTLMPasswd_adduser(self, *paras):
+        user = paras[0]
+        passwd = paras[1]
+        cmd = "printf '%s'| iconv -t utf16le | openssl md4"%passwd
+        output = mcommon.call_cmdstr(cmd)[0]
+        ntlm_passwd = output.split("=", 1)[1].strip()
+        with open("/cfpool/smbpasswd", 'a') as fw:
+            template = "%s:0:%s:%s:[U         ]:LCT-00000000:%s"%(user, ntlm_passwd, ntlm_passwd, user)
+            fw.write(template + "\n")
+        return {'status' : 0}
+
+    def NTLMPasswd_deleteuser(self, *paras):
+        user = paras[0]
+        fr = open("/cfpool/smbpasswd", "r")
+        lines = fr.readlines()
+        fr.close()
+        fw = open("/cfpool/smbpasswd", "w")
+        for line in lines:
+            if user not in line:
+                fw.write(line)
+        fw.close()
+        return {'status' : 0}
 
 def decor_test(func):
     def wrap_func():

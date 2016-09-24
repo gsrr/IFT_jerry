@@ -1,6 +1,7 @@
 import sys
 import os
 import configLoader
+import mcommon
 
 class PPP:
     def __init__(self, conf = "/etc/ppp/options.xl2tpd"):
@@ -9,8 +10,7 @@ class PPP:
         self.clobj.load()
 
     def getcfg(self):
-        print self.clobj.cfg_dict
-        print self.clobj.cfg_list
+        return {'status' : 0, 'cfg' : [self.clobj.cfg_dict, self.clobj.cfg_list]}
 
     def _add(self, *paras):
         key = paras[0]
@@ -40,7 +40,6 @@ class PPP:
         #self._remove("radius-config-file")
         self._add("refuse-chap", "")
         self._add("require-pap", "")
-        print self.getcfg()
         
     def setDns(self, *paras):
         if paras[0] == None:
@@ -56,6 +55,7 @@ class PPP:
 
     def showconf(self):
         os.system("cat %s"%self.conf)
+
 
 def decor_test(func):
     def wrap_func():

@@ -29,7 +29,7 @@ refuse-pap
 require-chap
 require-pap
 require-mschap-v2
-#plugin radius.so
-#plugin radattr.so
-#radius-config-file /etc/radiusclient-ng/radiusclient.conf
+plugin radius.so
+plugin radattr.so
+radius-config-file /etc/radiusclient-ng/radiusclient.conf
 

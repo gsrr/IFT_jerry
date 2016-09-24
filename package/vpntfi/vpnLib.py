@@ -1,7 +1,7 @@
 import sys
 import traceback
 
-sys.path.append("/Pool-1/f1/github/IFT_jerry/package/vpnmodule")
+sys.path.append("/usr/local/NAS/misc/agent/python/vpnmodule")
 import vpnserver
 
 lib_vpnObj = None
@@ -159,6 +159,27 @@ def test_xl2tpd_cut(haface):
     lib_vpnObj = vpnserver.VPNServer(interface = haface)
     lib_vpnObj.setParas(paraList)
     return lib_vpnObj 
+
+def test_mschap_adduser(localHA):
+    paraList = {
+        'op' : 'mschap_adduser',
+        'user' : 'test123',
+        'passwd' : 'test123',
+        'controller' : 'A',
+        'serviceId' : '0'
+    }
+    ret = localHA.callGetLocalFunc("vpnLib", paraList)
+    return ret
+
+def test_mschap_deleteuser(localHA):
+    paraList = {
+        'op' : 'mschap_deleteuser',
+        'user' : 'test123',
+        'controller' : 'A',
+        'serviceId' : '0'
+    }
+    ret = localHA.callGetLocalFunc("vpnLib", paraList)
+    return ret
 
 def clean_env(haface):
     os.system("ps -ef | grep radiusd | grep -v grep | awk '{print $2}' | kill -9}")

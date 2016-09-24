@@ -12,7 +12,7 @@ import subprocess
 import shlex
 
 
-sys.path.append("/Pool-1/f1/github/IFT_jerry/package/vpnmodule")
+sys.path.append("/usr/local/NAS/misc/agent/python/vpnmodule")
 import vpnparser
 import vpncmd
 
