@@ -49,3 +49,6 @@ git clone https://github.com/honza/vim-snippets.git
 # auto format
 pip install yapf
 git clone https://github.com/Chiel92/vim-autoformat
+
+# easymotion
+git clone https://github.com/easymotion/vim-easymotion

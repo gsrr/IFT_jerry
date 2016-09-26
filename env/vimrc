@@ -61,6 +61,9 @@ let g:rehash256 = 1
 "auto format
 noremap <F3> :Autoformat<CR>
 
+" Easy motion
+map ,, <Plug>(easymotion-prefix)
+
 let python_highlight_all = 1
 
 
