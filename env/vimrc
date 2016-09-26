@@ -58,6 +58,9 @@ let g:molokai_original = 1
 let g:rehash256 = 1
 " highlight Normal ctermfg=grey ctermbg=darkblue
 
+"auto format
+noremap <F3> :Autoformat<CR>
+
 let python_highlight_all = 1
 
 
