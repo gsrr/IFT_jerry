@@ -1,0 +1,17 @@
+<data>
+	<setting module="xl2tpd">
+		<enabled>False</enabled>
+		<ip_pool>10.0.0.0</ip_pool>
+		<max_conns>10</max_conns>
+		<auth>pap</auth>
+		<psk></psk>
+		<dns></dns>
+	</setting>
+</data>
+
+
+
+
+
+
+
