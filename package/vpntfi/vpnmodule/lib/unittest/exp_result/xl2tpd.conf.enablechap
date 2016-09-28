@@ -1,0 +1,13 @@
+
+[lns default]
+	ip range=20.0.0.100-20.0.0.254
+	local ip=20.0.0.1
+	ppp debug=yes
+	name=xl2tpd
+	require chap=yes
+	require authentication=yes
+	refuse pap=yes
+	length bit=yes
+	pppoptfile=/etc/ppp/options.xl2tpd
+
+[global]

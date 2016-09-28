@@ -1,8 +1,7 @@
 import sys
 import traceback
 
-sys.path.append("/usr/local/NAS/misc/agent/python/vpnmodule")
-import vpnserver
+from vpnmodule import vpnserver
 
 lib_vpnObj = None
 

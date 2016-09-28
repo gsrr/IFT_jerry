@@ -6,8 +6,7 @@ import copy
 import sys
 import traceback
 
-sys.path.append("/usr/local/NAS/misc/agent/python/vpnmodule")
-import vpnconfig
+from vpnmodule import vpnconfig
 
 class VPNConfig(ConfigTemplate):
 

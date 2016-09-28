@@ -11,10 +11,8 @@ from argparse import *
 import subprocess
 import shlex
 
-
-sys.path.append("/usr/local/NAS/misc/agent/python/vpnmodule")
-import vpnparser
-import vpncmd
+from vpnmodule import vpnparser
+from vpnmodule import vpncmd
 
 class HALIBFace(vpncmd.LIBFace):
     def __init__(self):
