@@ -1,0 +1,2 @@
+python setup.py sdist
+pip install /srv/pkg/mypackage/mypackage-0.1.0.tar.gz
