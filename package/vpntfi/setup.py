@@ -11,11 +11,22 @@ def walkall(rootdir):
             data.append(("/" + dirpath.split("/", 1)[1], [dirpath + "/" + f for f in filenames]))
     return data
 
+def walkall2(rootdir):
+    data = []
+    for (dirpath, dirnames, filenames) in os.walk(rootdir):
+        print dirpath, dirnames, filenames
+        if len(filenames) != 0:
+            for f in filenames:
+                data.append(dirpath.split("/", 1)[1] + "/" + f)
+    return data
+    
+
 def callSetup():
     setup(
         name='vpntfi',
         version='0.1',
-        packages=['vpnmodule', 'vpnmodule.lib', 'vpnmodule.conf'],
+        packages=['vpnmodule', 'vpnmodule.lib'],
+        package_data = {'vpnmodule' : walkall2('vpnmodule/conf') },
         license='Creative Commons Attribution-Noncommercial-Share Alike license',
         long_description=open('README.txt').read(),
         data_files=[
@@ -46,8 +57,7 @@ def uninstall():
             removefile(line)
 
 def test():
-    for item in walkall("buildroot"):
-        print item
+    print walkall2('vpnmodule/conf')
 
 def main():
     try:
