@@ -11,6 +11,9 @@ class PPP:
 
     def getcfg(self):
         return {'status' : 0, 'cfg' : [self.clobj.cfg_dict, self.clobj.cfg_list]}
+    
+    def reloadcfg(self):
+        self.clobj.load()
 
     def _add(self, *paras):
         key = paras[0]
@@ -28,10 +31,10 @@ class PPP:
         self._remove("require-pap")
         self._remove("require-mschap-v2")
         
-    def enableCHAP(self):
+    def enableMSCHAP(self):
         self.cleanProtoAttr()
         self._add("refuse-pap", "")
-        self._add("require-chap", "")
+        self._add("refuse-chap", "")
         self._add("require-mschap-v2", "")
     
     def enablePAP(self):

@@ -358,11 +358,11 @@ authorize {
 	#  to read /etc/passwd or /etc/shadow directly, see the
 	#  passwd module in radiusd.conf.
 	#
-	unix
+#	unix
 
 	#
 	#  Read the 'users' file
-	#files
+	files
 
 	#
 	#  Look in an SQL database.  The schema of the database
@@ -375,7 +375,7 @@ authorize {
 	#  If you are using /etc/smbpasswd, and are also doing
 	#  mschap authentication, the un-comment this line, and
 	#  configure the 'smbpasswd' module.
-	#smbpasswd
+#	smbpasswd
 
 	#
 	#  The ldap module reads passwords from the LDAP database.

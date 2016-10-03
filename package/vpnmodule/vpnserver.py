@@ -63,7 +63,7 @@ class VPNServer:
 
     def xl2tpd_options_mschap(self):
         self.vpnobj.setLocalip(self.paras['ip_pool'], self.paras['max_conns'])
-        self.vpnobj.enableCHAP()
+        self.vpnobj.enableMSCHAP()
 
         self.pppobj.enableCHAP()
         self.pppobj.setDns(self.paras['dns'])

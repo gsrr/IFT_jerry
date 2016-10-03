@@ -64,7 +64,8 @@
 #DEFAULT	Group == "disabled", Auth-Type := Reject
 #		Reply-Message = "Your account has been disabled."
 #
-DEFAULT Auth-Type = [ATUH-MODE]
+DEFAULT Auth-Type = MSCHAP
+
 #
 # This is a complete entry for "steve". Note that there is no Fall-Through
 # entry so that no DEFAULT entry will be used, and the user will NOT
@@ -87,6 +88,7 @@ DEFAULT Auth-Type = [ATUH-MODE]
 #bob	Cleartext-Password := "hello"
 #	Reply-Message := "Hello, %{User-Name}"
 #
+
 #
 # This is an entry for a user with a space in their name.
 # Note the double quotes surrounding the name.  If you have

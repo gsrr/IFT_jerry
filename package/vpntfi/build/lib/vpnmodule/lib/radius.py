@@ -2,6 +2,7 @@ import sys
 import os
 import configLoader
 import mcommon
+import shutil
 
 
 def make_replace_func(src, dst):
@@ -13,7 +14,7 @@ def make_replace_func(src, dst):
                         if key in line:
                             line = line.replace(key, items[key])
                             break
-                    fw.write(line + "\n")
+                    fw.write(line)
     return wrap_func
 
 class RADIUS:
@@ -36,8 +37,21 @@ class RADIUS:
     
     def enableCHAP(self):
         self.replaceAuthType("SYSTEM") 
-        self.enablePAM()
 
+    def disableAuthAD(self):
+        src = "/etc/raddb/mods-available/mschap.default"
+        dst = "/etc/raddb/mods-available/mschap"
+        shutil.copyfile(src, dst)
+        self.restart()
+        
+    def enableAuthAD(self):
+        src = "/etc/raddb/mods-available/mschap.default"
+        dst = "/etc/raddb/mods-available/mschap"
+        items = {'#[ntlm_auth]' : 'ntlm_auth'}
+        func = make_replace_func(src, dst)
+        func(items) 
+        self.restart()
+         
     def start(self):
         os.system("radiusd -t")
 
@@ -80,18 +94,13 @@ class RADIUS:
         fw.close()
         return {'status' : 0}
 
-def decor_test(func):
-    def wrap_func():
-        obj = IPSec("/etc/strongswan/ipsec.conf")
-        obj.getcfg()
-        obj.unload()
-        obj.showconf()
-        
-    return wrap_func
+def test_disableAuthAD():
+    obj = RADIUS()
+    obj.disableAuthAD()
 
-@decor_test
-def test_ipsec(obj):
-    pass
+def test_enableAuthAD():
+    obj = RADIUS()
+    obj.enableAuthAD()
 
 def main():
     func=getattr(sys.modules[__name__], sys.argv[1])

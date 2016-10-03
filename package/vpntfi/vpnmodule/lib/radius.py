@@ -2,7 +2,10 @@ import sys
 import os
 import configLoader
 import mcommon
+import shutil
 
+
+VPNMODULE_CONF = "/usr/local/NAS/misc/agent/python/vpnmodule/conf/"
 
 def make_replace_func(src, dst):
     def wrap_func(items):
@@ -13,7 +16,7 @@ def make_replace_func(src, dst):
                         if key in line:
                             line = line.replace(key, items[key])
                             break
-                    fw.write(line + "\n")
+                    fw.write(line)
     return wrap_func
 
 class RADIUS:
@@ -23,22 +26,56 @@ class RADIUS:
     def enablePAM(self):
         os.system("ln -s /etc/raddb/mods-available/pam /etc/raddb/mods-enabled/pam")
 
+    def enableNTLM(self):
+        os.system("ln -s /etc/raddb/mods-available/smbpasswd /etc/raddb/mods-enabled/smbpasswd")
+
     def replaceAuthType(self, auth):
-        src = "/etc/raddb/users.default"
-        dst = "/etc/raddb/users"
-        items = {'[AuthType]' : auth}
-        func = make_replace_func(src, dst)
-        func(items) 
-        
+        if auth == "PAM":
+            src = VPNMODULE_CONF + "/etc/raddb/users.pap"
+            dst = "/etc/raddb/users"
+            shutil.copyfile(src, dst)
+
+            src = VPNMODULE_CONF + "/etc/raddb/sites-available/default.pap"
+            dst = "/etc/raddb/sites-available/default"
+            shutil.copyfile(src, dst)
+        elif auth == "SYSTEM":
+            src = VPNMODULE_CONF + "/etc/raddb/users.mschap"
+            dst = "/etc/raddb/users"
+            shutil.copyfile(src, dst)
+            src = VPNMODULE_CONF + "/etc/raddb/sites-available/default.mschap"
+            dst = "/etc/raddb/sites-available/default"
+            shutil.copyfile(src, dst)
+            
+    def cleanSetting(self):
+        os.system("rm -rf /etc/raddb/mods-enabled/pam")
+        os.system("rm -rf /etc/raddb/mods-enabled/smbpasswd")
+
     def enablePAP(self):
+        self.cleanSetting()
         self.replaceAuthType("PAM") 
         self.enablePAM()
     
     def enableCHAP(self):
+        self.cleanSetting()
         self.replaceAuthType("SYSTEM") 
-        self.enablePAM()
+        self.enableNTLM()
 
+    def disableAuthAD(self):
+        src = "/etc/raddb/mods-available/mschap.default"
+        dst = "/etc/raddb/mods-available/mschap"
+        shutil.copyfile(src, dst)
+        self.restart()
+        
+    def enableAuthAD(self):
+        src = "/etc/raddb/mods-available/mschap.default"
+        dst = "/etc/raddb/mods-available/mschap"
+        items = {'#[ntlm_auth]' : 'ntlm_auth'}
+        func = make_replace_func(src, dst)
+        func(items) 
+        self.restart()
+         
     def start(self):
+        os.system("mkdir /var/run/radiusd")
         os.system("radiusd -t")
 
     def stop(self):
@@ -70,28 +107,27 @@ class RADIUS:
 
     def NTLMPasswd_deleteuser(self, *paras):
         user = paras[0]
-        fr = open("/cfpool/smbpasswd", "r")
+        fr = open("/etc/smbpasswd", "r")
         lines = fr.readlines()
         fr.close()
-        fw = open("/cfpool/smbpasswd", "w")
+        fw = open("/etc/smbpasswd", "w")
         for line in lines:
             if user not in line:
                 fw.write(line)
         fw.close()
         return {'status' : 0}
 
-def decor_test(func):
-    def wrap_func():
-        obj = IPSec("/etc/strongswan/ipsec.conf")
-        obj.getcfg()
-        obj.unload()
-        obj.showconf()
-        
-    return wrap_func
+def test_disableAuthAD():
+    obj = RADIUS()
+    obj.disableAuthAD()
 
-@decor_test
-def test_ipsec(obj):
-    pass
+def test_enableAuthAD():
+    obj = RADIUS()
+    obj.enableAuthAD()
+
+def test_start():
+    obj = RADIUS()
+    obj.start()
 
 def main():
     func=getattr(sys.modules[__name__], sys.argv[1])

@@ -63,15 +63,14 @@ class VPNServer:
 
     def xl2tpd_options_mschap(self):
         self.vpnobj.setLocalip(self.paras['ip_pool'], self.paras['max_conns'])
-        self.vpnobj.enableCHAP()
+        self.vpnobj.enableMSCHAP()
 
-        self.pppobj.enableCHAP()
+        self.pppobj.enableMSCHAP()
         self.pppobj.setDns(self.paras['dns'])
         self.ipsecobj.replacePSK(self.paras['psk'])
 
         self.radiusobj.enableCHAP()
         self.vpnobj.unload()
-        self.log(str(self.pppobj.getcfg()))
         self.pppobj.unload()
         return {'status' : 0}
 
@@ -118,6 +117,7 @@ class VPNServer:
         return self.radiusobj.restart()
 
     def __call__(self):
+        self.pppobj.reloadcfg()
         self.interface.log("It is a VPNLibTest")
         self.interface.log("receive paras:" + str(self.paras))
         func = getattr(self, self.paras['op'])

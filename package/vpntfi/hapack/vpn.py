@@ -11,6 +11,7 @@ from argparse import *
 import subprocess
 import shlex
 
+sys.path.append("/usr/local/NAS/misc/agent/python/")
 from vpnmodule import vpnparser
 from vpnmodule import vpncmd
 

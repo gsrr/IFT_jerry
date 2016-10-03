@@ -43,9 +43,9 @@ class VPNL2TP:
         self._add('lns', 'require pap', 'yes')
         self._add('lns', 'refuse chap', 'yes')
 
-    def enableCHAP(self):
+    def enableMSCHAP(self):
         self._clearEncAttr()
-        self._add('lns', 'require chap', 'yes')
+        self._add('lns', 'refuse chap', 'yes')
         self._add('lns', 'refuse pap', 'yes')
 
     def setLocalip(self, *paras):
