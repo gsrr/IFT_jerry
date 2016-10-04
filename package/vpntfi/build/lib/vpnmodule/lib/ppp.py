@@ -39,8 +39,8 @@ class PPP:
     
     def enablePAP(self):
         self.cleanProtoAttr()
-        #self._remove("plugin")
-        #self._remove("radius-config-file")
+        self._remove("plugin")
+        self._remove("radius-config-file")
         self._add("refuse-chap", "")
         self._add("require-pap", "")
         
