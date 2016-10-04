@@ -6,6 +6,7 @@ import shutil
 
 
 VPNMODULE_CONF = "/usr/local/NAS/misc/agent/python/vpnmodule/conf/"
+VPNMODULE_DATA = "/usr/local/NAS/misc/agent/python/vpnmodule/data/"
 
 def make_replace_func(src, dst):
     def wrap_func(items):
@@ -21,7 +22,7 @@ def make_replace_func(src, dst):
 
 class RADIUS:
     def __init__(self, conf = None):
-        pass
+        os.system("/etc/raddb/certs/bootstrap")
     
     def enablePAM(self):
         os.system("ln -s /etc/raddb/mods-available/pam /etc/raddb/mods-enabled/pam")
@@ -60,20 +61,37 @@ class RADIUS:
         self.replaceAuthType("SYSTEM") 
         self.enableNTLM()
 
-    def disableAuthAD(self):
-        src = "/etc/raddb/mods-available/mschap.default"
+    def disableAD(self):
+        src = VPNMODULE_DATA + "/" + "mschap.default"
         dst = "/etc/raddb/mods-available/mschap"
         shutil.copyfile(src, dst)
-        self.restart()
         
-    def enableAuthAD(self):
-        src = "/etc/raddb/mods-available/mschap.default"
+    def enableAD(self):
+        self.disableLDAP()
+        src = VPNMODULE_DATA + "/" + "mschap.ad"
         dst = "/etc/raddb/mods-available/mschap"
-        items = {'#[ntlm_auth]' : 'ntlm_auth'}
+        shutil.copyfile(src, dst)
+         
+    def enableLDAP(self, paras):
+        self.disableAD()
+        src = VPNMODULE_DATA + "/" + "ldap.default"
+        dst = "/etc/raddb/mods-available/ldap"
+        items = {
+                '[ldapip]' : paras[0],
+                '[rootdn]' : paras[1],
+                '[passwd]' : paras[2],
+                '[basedn]' : paras[3],
+        }
         func = make_replace_func(src, dst)
         func(items) 
-        self.restart()
-         
+        os.system("ln -s /etc/raddb/mods-available/ldap /etc/raddb/mods-enabled/ldap")
+
+    def disableLDAP(self):
+        src = VPNMODULE_DATA + "/" + "ldap.disable"
+        dst = "/etc/raddb/mods-available/ldap"
+        shutil.copyfile(src, dst)
+        os.system("rm -rf /etc/raddb/mods-enabled/ldap")
+
     def start(self):
         os.system("mkdir /var/run/radiusd")
         os.system("radiusd -t")
@@ -100,7 +118,7 @@ class RADIUS:
         cmd = "printf '%s'| iconv -t utf16le | openssl md4"%passwd
         output = mcommon.call_cmdstr(cmd)[0]
         ntlm_passwd = output.split("=", 1)[1].strip()
-        with open("/cfpool/smbpasswd", 'a') as fw:
+        with open("/etc/smbpasswd", 'a') as fw:
             template = "%s:0:%s:%s:[U         ]:LCT-00000000:%s"%(user, ntlm_passwd, ntlm_passwd, user)
             fw.write(template + "\n")
         return {'status' : 0}
@@ -117,14 +135,28 @@ class RADIUS:
         fw.close()
         return {'status' : 0}
 
-def test_disableAuthAD():
+def test_disableAD():
     obj = RADIUS()
-    obj.disableAuthAD()
+    obj.disableAD()
 
-def test_enableAuthAD():
+def test_enableAD():
     obj = RADIUS()
-    obj.enableAuthAD()
+    obj.enableAD()
 
+def test_enableLDAP():
+    obj = RADIUS()
+    paras = [
+        '172.27.112.241',
+        'uid=root,cn=users,dc=test,dc=ift,dc=com',
+        'ABcd_1234',
+        'dc=test,dc=ift,dc=com'
+    ]
+    obj.enableLDAP(paras)
+
+def test_NTLMPasswd_adduser():
+    obj = RADIUS()
+    obj.NTLMPasswd_adduser('test001', '11111111')
+    
 def test_start():
     obj = RADIUS()
     obj.start()

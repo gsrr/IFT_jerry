@@ -26,7 +26,7 @@ def callSetup():
         name='vpntfi',
         version='0.1',
         packages=['vpnmodule', 'vpnmodule.lib'],
-        package_data = {'vpnmodule' : walkall2('vpnmodule/conf') },
+        package_data = {'vpnmodule' : walkall2('vpnmodule/conf') + walkall2('vpnmodule/data')},
         license='Creative Commons Attribution-Noncommercial-Share Alike license',
         long_description=open('README.txt').read(),
         data_files=[
