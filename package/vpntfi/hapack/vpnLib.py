@@ -181,6 +181,16 @@ def test_mschap_deleteuser(localHA):
     ret = localHA.callGetLocalFunc("vpnLib", paraList)
     return ret
 
+def test_xl2tpd_restore(localHA):
+    paraList = {
+        'op' : 'xl2tpd_restore',
+        'proto' : "xl2tpd",
+        'controller' : 'A',
+        'serviceId' : '0'
+    }
+    ret = localHA.callGetLocalFunc("vpnLib", paraList)
+    return ret
+
 def clean_env(haface):
     os.system("ps -ef | grep radiusd | grep -v grep | awk '{print $2}' | kill -9}")
 

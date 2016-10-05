@@ -22,7 +22,13 @@ class HALIBFace(vpncmd.LIBFace):
     def setHA(self, ha):
         self.ha = ha
 
+    def setCtrl(self, ctrl, wwn):
+        self.ctrl = ctrl
+        self.wwn = wwn
+
     def call(self, args):
+        args['controller'] = self.ctrl
+        args['serviceId'] = self.wwn
         ret = self.ha.callGetLocalFunc("vpnLib", args)  
         return ret
 
@@ -73,6 +79,10 @@ class vpn(cmd.Cmd):
 
     @check_ctrl_parameter
     def adapter_cmd(self, args, func_name):
+        if args['ctrl'] != HardwareInfoDict['ControlSlot']:
+            return {'status' : 'SYS_SUCCESSFUL'}
+
+        self.vpncmd.libface.setCtrl(args['ctrl'], args['wwn'])
         ret = getattr(self.vpncmd, func_name)(args)
         if ret['status'] == 0:
             ret['status'] = "SYS_SUCCESSFUL"
