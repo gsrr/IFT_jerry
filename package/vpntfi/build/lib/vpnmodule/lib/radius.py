@@ -74,7 +74,7 @@ class RADIUS:
          
     def enableLDAP(self, paras):
         self.disableAD()
-        src = VPNMODULE_DATA + "/" + "ldap.default"
+        src = VPNMODULE_DATA + "/" + "ldap.enable"
         dst = "/etc/raddb/mods-available/ldap"
         items = {
                 '[ldapip]' : paras[0],
@@ -84,11 +84,17 @@ class RADIUS:
         }
         func = make_replace_func(src, dst)
         func(items) 
+        src = VPNMODULE_CONF + "/etc/raddb/sites-available/default.ldap"
+        dst = "/etc/raddb/sites-available/default"
+        shutil.copyfile(src, dst)
         os.system("ln -s /etc/raddb/mods-available/ldap /etc/raddb/mods-enabled/ldap")
 
     def disableLDAP(self):
         src = VPNMODULE_DATA + "/" + "ldap.disable"
         dst = "/etc/raddb/mods-available/ldap"
+        shutil.copyfile(src, dst)
+        src = VPNMODULE_CONF + "/etc/raddb/sites-available/default.mschap"
+        dst = "/etc/raddb/sites-available/default"
         shutil.copyfile(src, dst)
         os.system("rm -rf /etc/raddb/mods-enabled/ldap")
 
@@ -111,7 +117,7 @@ class RADIUS:
             return "active"
         else:
             return "failed"
-
+        
     def NTLMPasswd_adduser(self, *paras):
         user = paras[0]
         passwd = paras[1]

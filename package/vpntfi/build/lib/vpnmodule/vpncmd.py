@@ -62,6 +62,14 @@ class VPNCmd:
         self.paraList['op'] = "xl2tpd_status"
         return self.libface.call(self.paraList)
 
+    def cmd_vpn_mschap(self,args):
+        para_map = {
+            'u' : 'usertype',
+        }
+        args2paraList(para_map, args, self.paraList)
+        self.paraList['op'] = "xl2tpd_mschap"
+        return self.libface.call(self.paraList)
+
 def main():
     lf = LIBFace()
     vpn = VPNCmd(lf)

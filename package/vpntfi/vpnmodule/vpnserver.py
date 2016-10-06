@@ -6,6 +6,7 @@ import os
 
 
 STATUS_FAILED = 1001
+CANT_GET_LDAPCONFIG = 1002
 
 
 class VPNFace:
@@ -135,8 +136,7 @@ class VPNServer:
         self.radiusobj.disableAD()
         return self.radiusobj.restart()
 
-    def enableLDAP(self):
-        paras = [self.paras['ldapip'], self.paras['rootdn'], self.paras['passwd'], self.paras['basedn']]
+    def enableLDAP(self, paras):
         self.radiusobj.enableLDAP(paras)
         return self.radiusobj.restart()
 
@@ -156,6 +156,36 @@ class VPNServer:
                 self.xl2tpd_restart()
         return {'status' : 0}
         
+    def mschap_set_local(self):
+        return self.radiusobj.restart()
+
+    def mschap_set_ad(self):
+        return self.enableAD()
+    
+    def mschap_set_ldap(self):
+        ret = self.interface.getLDAPConfig(self.paras)
+        if ret['status'] != 0:
+            return {"status" : CANT_GET_LDAPCONFIG}
+        cfg = ret['data']
+        return self.enableLDAP([cfg['ipAddress'], cfg['rootDN'], cfg['password'], cfg['baseDN']])
+        
+    def xl2tpd_mschap(self):
+        self.radiusobj.disableAD()
+        self.radiusobj.disableLDAP()
+        func = getattr(self, "mschap_set_" + self.paras['usertype'])
+        return func()
+
+    def mschapAuth_local(self):
+        return {'status' : 0}
+
+    def mschapAuth_ad(self):
+        self.enableAD()
+        return {'status' : 0}
+
+    def mschapAuth_ldap(self):
+        self.enableLDAP()
+        return {'status' : 0}
+
     def enable_postrouting(self):
         os.system("iptables -t nat -A POSTROUTING -j MASQUERADE")
         return {'status' : 0}

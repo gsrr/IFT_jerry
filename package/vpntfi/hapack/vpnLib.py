@@ -23,7 +23,18 @@ class HAVPNFace(vpnserver.VPNFace):
     def getConfig(self, paras, op):
         paras['configop'] = op
         return self.ha.getConfig("VPNConfig", "vpnobj", paras)
-
+    
+    def getLDAPConfig(self, paraList):
+        paras = {}
+        paras['ipAddress'] = ''
+        paras['baseDN'] = ''
+        paras['rootDN'] = ''
+        paras['password'] = ''
+        paras['controller'] = paraList.get('controller')
+        paras['serviceId'] = paraList.get('serviceId')
+        ret = self.ha.getConfig('AuthConfig', 'getLDAPConfig', paras)
+        return ret
+        
 class NASHAVPNFace(vpnserver.VPNFace):
     def __init__(self):
         self.ha = None
