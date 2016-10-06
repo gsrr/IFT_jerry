@@ -18,7 +18,7 @@ class VPNParser:
 
         self.parser_vpn_cut = argparse.ArgumentParser(prog="vpn_cut", add_help=False)
         self.parser_vpn_cut.add_argument("-z", nargs="?", required=True)
-        self.parser_vpn_cut.add_argument("-c", nargs="?")
+        self.parser_vpn_cut.add_argument("-c", nargs="*")
 
         self.parser_vpn_view = argparse.ArgumentParser(prog="vpn_view", add_help=False)
         self.parser_vpn_view.add_argument("-z", nargs="?", required=True)

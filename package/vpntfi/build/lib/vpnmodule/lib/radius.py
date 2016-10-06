@@ -155,7 +155,7 @@ def test_enableLDAP():
 
 def test_NTLMPasswd_adduser():
     obj = RADIUS()
-    obj.NTLMPasswd_adduser('test001', '11111111')
+    obj.NTLMPasswd_adduser('root', '111111')
     
 def test_start():
     obj = RADIUS()

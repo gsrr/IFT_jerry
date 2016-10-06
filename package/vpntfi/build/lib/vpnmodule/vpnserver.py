@@ -2,6 +2,7 @@ from lib import vpnL2tp
 from lib import ppp
 from lib import ipsec
 from lib import radius
+import os
 
 
 STATUS_FAILED = 1001
@@ -31,11 +32,13 @@ class VPNServer:
     def xl2tpd_start(self):
         self.vpnobj.start()
         self.radiusobj.start()
+        self.enable_postrouting()
         return self.interface.saveConfig({'proto':'xl2tpd', 'enabled' : "True"}, "write")
 
     def xl2tpd_stop(self):
         self.vpnobj.stop()
         self.radiusobj.stop()
+        self.disable_postrouting()
         return self.interface.saveConfig({'proto': 'xl2tpd', 'enabled' : "False"}, "write")
 
     def xl2tpd_restart(self):
@@ -49,18 +52,21 @@ class VPNServer:
         ret.append(self.ipsecobj.status())
         ret.append(self.radiusobj.status())
         if ret[0] == "active" and ret[1] == "active" and ret[2] == "active":
-            return {'status': 0, 'data' : {"status" : "active"} }
+            return {'status': 0, 'data' : {"status" : True} }
         else:
-            return {'status': 0, 'data' : {"status" : "failed"} }
+            return {'status': 0, 'data' : {"status" : False} }
             
     def xl2tpd_view(self):
         data = self.vpnobj.view()
         return {'status' : 0, 'data' : data}
 
     def xl2tpd_cut(self):
-        self.interface.log("xl2tpd_cut:" + self.paras['vpnip'])
-        ret = self.vpnobj.cut(self.paras['vpnip'])
+        for vpnip in self.paras['vpnip']:
+            ret = self.vpnobj.cut(vpnip)
         return {'status' : 0}
+
+    def xl2tpd_config(self):
+        return self.interface.getConfig(self.paras, "getter")
 
     def xl2tpd_options_mschap(self):
         self.vpnobj.setLocalip(self.paras['ip_pool'], self.paras['max_conns'])
@@ -137,6 +143,26 @@ class VPNServer:
     def disableLDAP(self):
         self.radiusobj.disableLDAP()
         return self.radiusobj.restart()
+
+    def xl2tpd_restore(self):
+        ret = self.interface.getConfig(self.paras, "getter")
+        cfg = ret['data']
+        self.config2paras(cfg)
+        self.paras['proto'] = "xl2tpd"
+        if self.paras['enabled'] == "True":
+            ret = self.xl2tpd_status()
+            if ret['data']['status'] == False:
+                getattr(self, 'xl2tpd_options_%s'%self.paras['auth'])()
+                self.xl2tpd_restart()
+        return {'status' : 0}
+        
+    def enable_postrouting(self):
+        os.system("iptables -t nat -A POSTROUTING -j MASQUERADE")
+        return {'status' : 0}
+
+    def disable_postrouting(self):
+        os.system("iptables -t nat -D POSTROUTING -j MASQUERADE")
+        return {'status' : 0}
 
     def __call__(self):
         self.pppobj.reloadcfg()

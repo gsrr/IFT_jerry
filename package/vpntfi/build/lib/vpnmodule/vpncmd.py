@@ -24,29 +24,26 @@ class VPNCmd:
             'a' : 'auth',
             'k' : 'psk',
             'd' : 'dns',
-            'ctrl' : 'controller',
-            'wwn' : 'serviceId',
         }
         args2paraList(para_map, args, self.paraList)
-        self.paraList['proto'] = "xl2tpd"
-        self.paraList['op'] = "xl2tpd_options"
+        if len(self.paraList) == 0:
+            self.paraList['proto'] = "xl2tpd"
+            self.paraList['op'] = "xl2tpd_config"
+        else:
+            self.paraList['proto'] = "xl2tpd"
+            self.paraList['op'] = "xl2tpd_options"
         return self.libface.call(self.paraList)
 
     def cmd_vpn_act(self,args):
         para_map = {
             'a' : 'op',
-            'ctrl' : 'controller',
-            'wwn' : 'serviceId',
         }
         args2paraList(para_map, args, self.paraList)
         self.paraList['op'] = "xl2tpd_%s"%self.paraList['op']
         return self.libface.call(self.paraList)
 
     def cmd_vpn_view(self,args):
-        para_map = {
-            'ctrl' : 'controller',
-            'wwn' : 'serviceId',
-        }
+        para_map = {}
         args2paraList(para_map, args, self.paraList)
         self.paraList['op'] = "xl2tpd_view"
         return self.libface.call(self.paraList)
@@ -54,18 +51,13 @@ class VPNCmd:
     def cmd_vpn_cut(self,args):
         para_map = {
             'c' : 'vpnip',
-            'ctrl' : 'controller',
-            'wwn' : 'serviceId',
         }
         args2paraList(para_map, args, self.paraList)
         self.paraList['op'] = "xl2tpd_cut"
         return self.libface.call(self.paraList)
 
     def cmd_vpn_status(self,args):
-        para_map = {
-            'ctrl' : 'controller',
-            'wwn' : 'serviceId',
-        }
+        para_map = {}
         args2paraList(para_map, args, self.paraList)
         self.paraList['op'] = "xl2tpd_status"
         return self.libface.call(self.paraList)

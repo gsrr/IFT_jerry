@@ -89,9 +89,11 @@ class VPNL2TP:
         if len(pids) > 0:
             for pid in pids:
                 data = {}
-                cmd = "tdbdump -k pppd%s /run/ppp/pppd2.tdb"%pid
+                cmd = "tdbdump -k pppd%s /var/run/ppp/pppd2.tdb"%pid
                 raw = mcommon.call_cmdstr(cmd)[0]
                 for line in raw.split(";"):
+                    if "PPPLOGNAME" in line: 
+                        key, data[key] = line.split("=", 1)
                     if "PEERNAME" in line: 
                         key, data[key] = line.split("=", 1)
                     elif "IPREMOTE" in line:
@@ -99,9 +101,12 @@ class VPNL2TP:
                         data[key] = data[key].split("\\")[0]
                 cmd = "ps -p %s -o etime="%pid                
                 raw = mcommon.call_cmdstr(cmd)[0]
-                data['uptime'] = raw.strip()
-                data['src_ip'] = self._captureSrcIP(data['IPREMOTE'])
-                output.append(copy.deepcopy(data))
+                conninfo = {}
+                conninfo['uptime'] = raw.strip()
+                conninfo['src_ip'] = self._captureSrcIP(data['IPREMOTE'])
+                conninfo['user'] = data['PEERNAME'] if data.get('PEERNAME') != None else data.get('PPPLOGNAME')
+                conninfo['lan_ip'] = data['IPREMOTE']
+                output.append(copy.deepcopy(conninfo))
         return output
 
     def cut(self, *paras):
