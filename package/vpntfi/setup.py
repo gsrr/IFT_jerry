@@ -9,6 +9,7 @@ def walkall(rootdir):
     for (dirpath, dirnames, filenames) in os.walk(rootdir):
         if len(filenames) != 0:
             data.append(("/" + dirpath.split("/", 1)[1], [dirpath + "/" + f for f in filenames]))
+            data.append(("/usr/local/NAS/misc/SystemFiles/" + dirpath.split("/", 1)[1], [dirpath + "/" + f for f in filenames]))
     return data
 
 def walkall2(rootdir):
@@ -26,13 +27,14 @@ def callSetup():
         name='vpntfi',
         version='0.1',
         packages=['vpnmodule', 'vpnmodule.lib'],
-        package_data = {'vpnmodule' : walkall2('vpnmodule/conf') },
+        package_data = {'vpnmodule' : walkall2('vpnmodule/conf') + walkall2('vpnmodule/data')},
         license='Creative Commons Attribution-Noncommercial-Share Alike license',
         long_description=open('README.txt').read(),
         data_files=[
             ('/usr/local/NAS/misc/HAAgent/Config', ['hapack/VPNConfig.py']),
             ('/usr/local/NAS/misc/HAAgent/Config', ['hapack/VPNConfig.xml']),
             ('/usr/local/NAS/misc/HAAgent/Lib/Service', ['hapack/vpnLib.py']),
+            ('/usr/local/NAS/misc/HAAgent/Lib/Service', ['hapack/restoreVpn.py']),
             ('/usr/local/NAS/misc/Cmd/Exec/Service', ['hapack/vpn.py']),
         ] + walkall("buildroot"),
      )

@@ -23,7 +23,18 @@ class HAVPNFace(vpnserver.VPNFace):
     def getConfig(self, paras, op):
         paras['configop'] = op
         return self.ha.getConfig("VPNConfig", "vpnobj", paras)
-
+    
+    def getLDAPConfig(self, paraList):
+        paras = {}
+        paras['ipAddress'] = ''
+        paras['baseDN'] = ''
+        paras['rootDN'] = ''
+        paras['password'] = ''
+        paras['controller'] = paraList.get('controller')
+        paras['serviceId'] = paraList.get('serviceId')
+        ret = self.ha.getConfig('AuthConfig', 'getLDAPConfig', paras)
+        return ret
+        
 class NASHAVPNFace(vpnserver.VPNFace):
     def __init__(self):
         self.ha = None
@@ -175,6 +186,16 @@ def test_mschap_deleteuser(localHA):
     paraList = {
         'op' : 'mschap_deleteuser',
         'user' : 'test123',
+        'controller' : 'A',
+        'serviceId' : '0'
+    }
+    ret = localHA.callGetLocalFunc("vpnLib", paraList)
+    return ret
+
+def test_xl2tpd_restore(localHA):
+    paraList = {
+        'op' : 'xl2tpd_restore',
+        'proto' : "xl2tpd",
         'controller' : 'A',
         'serviceId' : '0'
     }

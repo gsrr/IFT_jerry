@@ -2,7 +2,7 @@ import argparse
 
 class VPNParser:
     def __init__(self):
-        self.cmds = ['vpn_config', 'vpn_act', 'vpn_cut', 'vpn_view', 'vpn_status']
+        self.cmds = ['vpn_config', 'vpn_act', 'vpn_cut', 'vpn_view', 'vpn_status', 'vpn_mschap']
         self.parser_vpn = argparse.ArgumentParser(prog="vpn", add_help=False)
         self.parser_vpn_config = argparse.ArgumentParser(prog="vpn_config", add_help=False)
         self.parser_vpn_config.add_argument("-z", nargs="?", required=True)
@@ -18,13 +18,17 @@ class VPNParser:
 
         self.parser_vpn_cut = argparse.ArgumentParser(prog="vpn_cut", add_help=False)
         self.parser_vpn_cut.add_argument("-z", nargs="?", required=True)
-        self.parser_vpn_cut.add_argument("-c", nargs="?")
+        self.parser_vpn_cut.add_argument("-c", nargs="*")
 
         self.parser_vpn_view = argparse.ArgumentParser(prog="vpn_view", add_help=False)
         self.parser_vpn_view.add_argument("-z", nargs="?", required=True)
 
         self.parser_vpn_status = argparse.ArgumentParser(prog="vpn_status", add_help=False)
         self.parser_vpn_status.add_argument("-z", nargs="?", required=True)
+
+        self.parser_vpn_mschap = argparse.ArgumentParser(prog="vpn_mschap", add_help=False)
+        self.parser_vpn_mschap.add_argument("-z", nargs="?", required=True)
+        self.parser_vpn_mschap.add_argument("-u", nargs="?", choices=["local", "ad", "ldap"])
 
     def find(self, args):
         cnt = 0
