@@ -1,0 +1,11 @@
+[1] ldap generate samba information:
+http://www.ibm.com/support/knowledgecenter/ST5Q4U/com.ibm.storwize.v7000.unified.143.doc/mng_ldap_srvr_prereqs_samba.html
+
+[2] samba attribute must for ldap:
+objectClass: sambaSamAccount
+sambaNTPassword: 02EE3086A97FD9B7DD5FCF896B393F29
+sambaSID: S-1-5-21-3249194241-2910945941-2765268210-1009
+(sid is generated randomly as same as synology)
+
+
+
