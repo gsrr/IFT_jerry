@@ -39,6 +39,7 @@ class VPNCmd:
             'a' : 'op',
         }
         args2paraList(para_map, args, self.paraList)
+        self.paraList['proto'] = "xl2tpd"
         self.paraList['op'] = "xl2tpd_%s"%self.paraList['op']
         return self.libface.call(self.paraList)
 

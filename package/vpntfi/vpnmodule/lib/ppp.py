@@ -46,12 +46,12 @@ class PPP:
         
     def setDns(self, *paras):
         if paras[0] == None:
-            self._remove("dns")
+            self._remove("ms-dns")
         else:
-            self._add("dns", paras[0])
+            self._add("ms-dns", paras[0])
 
     def removeDns(self):
-        self._remove("dns")
+        self._remove("ms-dns")
 
     def unload(self):
         self.clobj.unload(self.conf)

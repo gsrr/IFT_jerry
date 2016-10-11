@@ -31,12 +31,16 @@ class VPNServer:
         self.interface.log(msg)
 
     def xl2tpd_start(self):
+        ret = self.interface.getConfig(self.paras, "getter")
+        self.config2paras(ret['data'])
         self.vpnobj.start()
         self.radiusobj.start()
         self.enable_postrouting()
         return self.interface.saveConfig({'proto':'xl2tpd', 'enabled' : "True"}, "write")
 
     def xl2tpd_stop(self):
+        ret = self.interface.getConfig(self.paras, "getter")
+        self.config2paras(ret['data'])
         self.vpnobj.stop()
         self.radiusobj.stop()
         self.disable_postrouting()
@@ -187,11 +191,11 @@ class VPNServer:
         return {'status' : 0}
 
     def enable_postrouting(self):
-        os.system("iptables -t nat -A POSTROUTING -j MASQUERADE")
+        os.system("iptables -t nat -A POSTROUTING -s %s/24 -j MASQUERADE"%self.paras['ip_pool'])
         return {'status' : 0}
 
     def disable_postrouting(self):
-        os.system("iptables -t nat -D POSTROUTING -j MASQUERADE")
+        os.system("iptables -t nat -D POSTROUTING -s %s/24 -j MASQUERADE"%self.paras['ip_pool'])
         return {'status' : 0}
 
     def __call__(self):
