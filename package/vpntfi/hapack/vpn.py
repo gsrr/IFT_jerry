@@ -71,9 +71,8 @@ class vpn(cmd.Cmd):
             func_name = "cmd_" + cmd
             ret = self.adapter_cmd(namespace, func_name)
         except:
-            print traceback.format_exc()
-            ret = {'status': CMD_UNKNOWN_PARAM}
             self.cmd_log.cmd_except()
+            ret = {'status': CMD_UNKNOWN_PARAM}
         finally:
             return ret
 

@@ -26,6 +26,7 @@ connect-delay 5000
 
 refuse-chap
 refuse-pap
+refuse-mschap-v2
 require-chap
 require-pap
 require-mschap-v2

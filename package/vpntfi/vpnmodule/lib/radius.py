@@ -3,6 +3,7 @@ import os
 import configLoader
 import mcommon
 import shutil
+import base64
 
 
 VPNMODULE_CONF = "/usr/local/NAS/misc/agent/python/vpnmodule/conf/"
@@ -100,10 +101,10 @@ class RADIUS:
 
     def start(self):
         os.system("mkdir /var/run/radiusd")
-        os.system("radiusd -t")
+        os.system("systemctl start radiusd")
 
     def stop(self):
-        os.system("ps -ef | grep radiusd | grep -v grep | awk '{print $2}' | xargs kill -9")
+        os.system("systemctl stop radiusd")
 
     def restart(self):
         self.stop()
@@ -118,6 +119,14 @@ class RADIUS:
         else:
             return "failed"
         
+    def ntlm_create_localusers(self, dicpara):
+        src = VPNMODULE_DATA + "/" + "smbpasswd.default"
+        dst = "/etc/smbpasswd"
+        shutil.copyfile(src, dst)
+        for user in dicpara.keys():
+            self.NTLMPasswd_adduser(user, base64.b64decode(dicpara[user][0]))
+        return {'status' : 0}
+
     def NTLMPasswd_adduser(self, *paras):
         user = paras[0]
         passwd = paras[1]

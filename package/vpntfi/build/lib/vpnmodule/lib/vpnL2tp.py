@@ -38,7 +38,6 @@ class VPNL2TP:
         self._add('lns', 'unix authentication', 'yes')
 
     def enablePAP(self):
-        print "enablePAP"
         self._clearEncAttr()
         self._add('lns', 'require pap', 'yes')
         self._add('lns', 'refuse chap', 'yes')

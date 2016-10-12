@@ -1,0 +1,9 @@
+[Unit]
+Description=freeradius service
+
+[Service]
+Type=forking
+ExecStart=/usr/sbin/radiusd -t
+
+[Install]
+WantedBy=multi-user.target
