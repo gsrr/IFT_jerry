@@ -34,6 +34,14 @@ class HAVPNFace(vpnserver.VPNFace):
         paras['serviceId'] = paraList.get('serviceId')
         ret = self.ha.getConfig('AuthConfig', 'getLDAPConfig', paras)
         return ret
+
+    def getLocalUsers(self, paraList):
+        paras = {}
+        paras['operation'] = "getPasswdHistory"
+        paras['controller'] = paraList.get('controller')
+        paras['serviceId'] = paraList.get('serviceId')
+        ret = self.ha.callGetLocalFunc("userOperation", paras)
+        return ret
         
 class NASHAVPNFace(vpnserver.VPNFace):
     def __init__(self):
@@ -51,6 +59,7 @@ def vpnLib(HAServer, paraList):
         global lib_vpnObj
         if lib_vpnObj == None:
             reload(vpnserver)
+            HAServer.log(1, "reload vpnLib")
             haface = HAVPNFace()
             haface.setHA(HAServer)
             lib_vpnObj = vpnserver.VPNServer(interface = haface)
@@ -196,6 +205,24 @@ def test_xl2tpd_restore(localHA):
     paraList = {
         'op' : 'xl2tpd_restore',
         'proto' : "xl2tpd",
+        'controller' : 'A',
+        'serviceId' : '0'
+    }
+    ret = localHA.callGetLocalFunc("vpnLib", paraList)
+    return ret
+
+def test_enable_debug(localHA):
+    paraList = {
+        'op' : 'enable_debug',
+        'controller' : 'A',
+        'serviceId' : '0'
+    }
+    ret = localHA.callGetLocalFunc("vpnLib", paraList)
+    return ret
+
+def test_disable_debug(localHA):
+    paraList = {
+        'op' : 'disable_debug',
         'controller' : 'A',
         'serviceId' : '0'
     }

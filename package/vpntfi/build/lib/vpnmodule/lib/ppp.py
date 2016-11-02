@@ -8,6 +8,10 @@ class PPP:
         self.conf = conf
         self.clobj = configLoader.ConfigLoader(cfg=self.conf + ".default")
         self.clobj.load()
+    
+    def log(self, msg):
+        with open("/var/log/ppp.log", "a") as fw:
+            fw.write(msg + "\n")
 
     def getcfg(self):
         return {'status' : 0, 'cfg' : [self.clobj.cfg_dict, self.clobj.cfg_list]}
@@ -27,6 +31,7 @@ class PPP:
     def cleanProtoAttr(self):
         self._remove("refuse-chap")
         self._remove("refuse-pap")
+        self._remove("refuse-mschap-v2")
         self._remove("require-chap")
         self._remove("require-pap")
         self._remove("require-mschap-v2")
@@ -39,19 +44,20 @@ class PPP:
     
     def enablePAP(self):
         self.cleanProtoAttr()
-        self._remove("plugin")
-        self._remove("radius-config-file")
+        #self._remove("plugin")
+        #self._remove("radius-config-file")
         self._add("refuse-chap", "")
+        self._add("refuse-mschap-v2", "")
         self._add("require-pap", "")
         
     def setDns(self, *paras):
-        if paras[0] == None:
-            self._remove("dns")
+        if paras[0] == None or paras[0] == "None":
+            self._add("ms-dns", "8.8.8.8")
         else:
-            self._add("dns", paras[0])
+            self._add("ms-dns", paras[0])
 
     def removeDns(self):
-        self._remove("dns")
+        self._remove("ms-dns")
 
     def unload(self):
         self.clobj.unload(self.conf)

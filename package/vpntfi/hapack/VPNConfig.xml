@@ -6,6 +6,7 @@
 		<auth></auth>
 		<psk></psk>
 		<dns></dns>
+		<domain>local</domain>
 	</setting>
 </data>
 

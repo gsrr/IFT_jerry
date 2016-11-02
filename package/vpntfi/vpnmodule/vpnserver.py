@@ -7,7 +7,16 @@ import os
 
 STATUS_FAILED = 1001
 CANT_GET_LDAPCONFIG = 1002
+DISABLE_ROUTING_FAIL = 1003
 
+CMD_DISABLE_ROUTING = "iptables -t nat -D POSTROUTING -s %s/24 -j MASQUERADE"
+
+def decor_vpn(func):
+    def wrap_func(self):
+        ret = self.interface.getConfig(self.paras, "getter")
+        self.config2paras(ret['data'])
+        return func(self)
+    return wrap_func
 
 class VPNFace:
     def __init__(self):
@@ -26,25 +35,39 @@ class VPNServer:
         self.pppobj = ppp.PPP()
         self.radiusobj = radius.RADIUS()
         self.ipsecobj = ipsec.IPSec()
-    
-    def log(self, msg):
-        self.interface.log(msg)
+        self.debug = False
+   
+    def enable_debug(self):
+        self.debug = True
+        return {'status' : 0}
 
+    def disable_debug(self):
+        self.debug = False
+        return {'status' : 0}
+
+    def log(self, msg):
+        if self.debug == True:
+            self.interface.log("[VPNServer:] " + msg)
+
+    @decor_vpn
     def xl2tpd_start(self):
         self.vpnobj.start()
         self.radiusobj.start()
         self.enable_postrouting()
         return self.interface.saveConfig({'proto':'xl2tpd', 'enabled' : "True"}, "write")
 
+    @decor_vpn
     def xl2tpd_stop(self):
         self.vpnobj.stop()
         self.radiusobj.stop()
-        self.disable_postrouting()
+        ret = self.disable_postrouting()
+        if ret['status'] != 0:
+            return ret
         return self.interface.saveConfig({'proto': 'xl2tpd', 'enabled' : "False"}, "write")
 
     def xl2tpd_restart(self):
-        self.vpnobj.restart()
-        self.radiusobj.restart()
+        self.xl2tpd_stop()
+        self.xl2tpd_start()
         return {'status' : 0}
 
     def xl2tpd_status(self):
@@ -69,6 +92,10 @@ class VPNServer:
     def xl2tpd_config(self):
         return self.interface.getConfig(self.paras, "getter")
 
+    def ntlm_create_localusers(self):
+        ret = self.interface.getLocalUsers(self.paras)
+        return self.radiusobj.ntlm_create_localusers(ret['data'])
+
     def xl2tpd_options_mschap(self):
         self.vpnobj.setLocalip(self.paras['ip_pool'], self.paras['max_conns'])
         self.vpnobj.enableMSCHAP()
@@ -81,6 +108,14 @@ class VPNServer:
         self.ipsecobj.unload()
         self.vpnobj.unload()
         self.pppobj.unload()
+        
+        if self.paras['domain'] == "ad":
+            self.mschap_set_ad()
+        elif self.paras['domain'] == "ldap":
+            self.mschap_set_ldap()
+        else:
+            self.ntlm_create_localusers()
+            
         return {'status' : 0}
 
     def config2paras(self, config):
@@ -93,19 +128,18 @@ class VPNServer:
 
         self.vpnobj.setLocalip(self.paras['ip_pool'], self.paras['max_conns'])
         self.vpnobj.enablePAP()
-        
         pppobj.enablePAP()
         pppobj.setDns(self.paras['dns'])
         self.ipsecobj.replacePSK(self.paras['psk'])
 
+        self.radiusobj.enablePAP()
         self.vpnobj.unload()
         self.ipsecobj.unload()
         pppobj.unload()
         return {'status' : 0}
     
+    @decor_vpn
     def xl2tpd_options(self):
-        ret = self.interface.getConfig(self.paras, "getter")
-        self.config2paras(ret['data'])
         getattr(self, 'xl2tpd_options_%s'%self.paras['auth'])()
         ret = self.interface.saveConfig(self.paras, "write")
         ret = self.interface.getConfig(self.paras, "getter")
@@ -144,10 +178,8 @@ class VPNServer:
         self.radiusobj.disableLDAP()
         return self.radiusobj.restart()
 
+    @decor_vpn
     def xl2tpd_restore(self):
-        ret = self.interface.getConfig(self.paras, "getter")
-        cfg = ret['data']
-        self.config2paras(cfg)
         self.paras['proto'] = "xl2tpd"
         if self.paras['enabled'] == "True":
             ret = self.xl2tpd_status()
@@ -169,34 +201,37 @@ class VPNServer:
         cfg = ret['data']
         return self.enableLDAP([cfg['ipAddress'], cfg['rootDN'], cfg['password'], cfg['baseDN']])
         
+    @decor_vpn
     def xl2tpd_mschap(self):
+        if self.paras['auth'] == "pap":
+            return {'status' : 0}
+        
         self.radiusobj.disableAD()
         self.radiusobj.disableLDAP()
         func = getattr(self, "mschap_set_" + self.paras['usertype'])
-        return func()
-
-    def mschapAuth_local(self):
-        return {'status' : 0}
-
-    def mschapAuth_ad(self):
-        self.enableAD()
-        return {'status' : 0}
-
-    def mschapAuth_ldap(self):
-        self.enableLDAP()
-        return {'status' : 0}
+        ret = func()
+        if ret['status'] == 0:
+            self.paras['domain'] = self.paras['usertype']
+            ret = self.interface.saveConfig(self.paras, "write")
+        return ret
 
     def enable_postrouting(self):
-        os.system("iptables -t nat -A POSTROUTING -j MASQUERADE")
+        ret = os.system("iptables -t nat -A POSTROUTING -s %s/24 -j MASQUERADE"%self.paras['ip_pool'])
+        if ret != 0:
+            self.log("Enable routing fail")
+            return {'status' : ENABLE_ROUTING_FAIL}
         return {'status' : 0}
 
     def disable_postrouting(self):
-        os.system("iptables -t nat -D POSTROUTING -j MASQUERADE")
-        return {'status' : 0}
+        cmd = CMD_DISABLE_ROUTING%self.paras['ip_pool']
+        ret = os.system(cmd)
+        if ret != 0:
+            self.log("(%s,%s)"%(str(ret), cmd))
+            return {'status' : DISABLE_ROUTING_FAIL}
+        return {'status' : ret}
 
     def __call__(self):
         self.pppobj.reloadcfg()
-        self.interface.log("It is a VPNLibTest")
         self.interface.log("receive paras:" + str(self.paras))
         func = getattr(self, self.paras['op'])
         return func()
