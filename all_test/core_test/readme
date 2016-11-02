@@ -1,0 +1,90 @@
+有時候程式當掉了，想找 core dump 來看一下出了什麼問題，
+
+卻發現沒有 core dump 檔案...
+
+
+
+查了一下 Linux Programmer's Manual - core dump file，原來要先 enable core dump...
+
+可以先用 ulimit -c 看看目前的值，如果是 0 的話，表示目前是關掉的。
+
+執行 ulimit -c unlimited 開啟：
+
+testuser@localhost ~ $ ulimit -c
+0
+
+testuser@localhost ~ $ ulimit -c unlimited
+
+testuser@localhost ~ $ ulimit -c
+unlimited
+
+
+開啟之後，看一下 /proc/sys/kernel/core_pattern 這個檔案的內容，
+
+裡面記錄了 core dump 檔案的名稱 (像 core)～
+
+也有另一種寫法是 | 後面接一個程式，表示會被 core dump 的內容送給這個程式處理，
+
+例如在我的 CentOS 7 上面，預設是將 core dump 丟給 abrt-hook-ccpp 這個程式處理：
+
+testuser@localhost ~ $ cat /proc/sys/kernel/core_pattern 
+
+|/usr/libexec/abrt-hook-ccpp %s %c %p %u %g %t e
+
+
+這上面有一堆奇怪的 % 開頭的參數，其實在 core dump file 那邊都有定義，節錄如下：
+
+%%  a single % character
+%c  core file size soft resource limit of crashing process (since
+        Linux 2.6.24)
+    %d  dump mode—same as value returned by prctl(2) PR_GET_DUMPABLE
+    (since Linux 3.7)
+%e  executable filename (without path prefix)
+    %E  pathname of executable, with slashes ('/') replaced by
+    exclamation marks ('!') (since Linux 3.0).
+    %g  (numeric) real GID of dumped process
+%h  hostname (same as nodename returned by uname(2))
+    %p  PID of dumped process, as seen in the PID namespace in which
+    the process resides
+    %P  PID of dumped process, as seen in the initial PID namespace
+(since Linux 3.12)
+    %s  number of signal causing dump
+    %t  time of dump, expressed as seconds since the Epoch,
+    1970-01-01 00:00:00 +0000 (UTC)
+    %u  (numeric) real UID of dumped process
+
+
+    可以寫一個簡單的 C++ 程式，來測試一下 crash dump 是否設定成功：
+
+#include <string.h>
+
+int main()
+{
+    char* p = NULL;
+    strcpy(p, "copy string to null pointer and cause crash");
+    return 0;
+}
+
+
+這個程式一執行後就會立刻產生 segmentation fault，
+
+而 abrt-hook-ccpp 看來是會在當前目錄下，產生一個叫 core.<pid> 的 core dump 檔案： 
+
+    testuser@localhost ~/Downloads $ ./testcrash 
+Segmentation fault (core dumped)
+
+    testuser@localhost ~/Downloads $ ll core*
+    -rw-------. 1 jeff_lai jeff_lai 413696 Dec 24 11:57 core.22146
+
+
+    你也可以自己寫一個 core dump 的處理程式，
+
+    寫好之後只要修改 /proc/sys/kernel/core_pattern，
+
+    讓系統在遇到 crash 時呼叫自己寫的處理程式就行了～
+
+    像下面是一個自己寫的 crash dump 處理程式，它會用 xz 把 core dump 的內容壓縮起來： 
+
+#!/bin/sh
+
+    cat <&0 | xz -cf >coredump.xz
