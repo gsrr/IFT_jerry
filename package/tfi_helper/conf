@@ -1,0 +1,3 @@
+module_name=test
+cli_position=Service
+lib_position=Service
