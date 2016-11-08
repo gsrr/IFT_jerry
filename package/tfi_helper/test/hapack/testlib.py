@@ -3,13 +3,13 @@ import sys
 import os
 import subprocess
 
-def [module_name]_lib_test(HAServer, paraList):
+def test_lib_test(HAServer, paraList):
     paras = {}
-    ret = HAServer.setConfig("[module_name_upper]Config", "config_test", paras)
-    HAServer.log(1, "[[module_name]lib]%s"%str(ret))  
+    ret = HAServer.setConfig("TESTConfig", "config_test", paras)
+    HAServer.log(1, "[testlib]%s"%str(ret))  
     return {'status' : 0 , 'data' : "call lib successfully:%s"%str(ret)}
     
-def [module_name]lib(HAServer, paraList):
+def testlib(HAServer, paraList):
 	try:
 		op = paraList['op']
 		func = getattr(sys.modules[__name__], op)

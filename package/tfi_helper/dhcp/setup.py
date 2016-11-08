@@ -14,18 +14,18 @@ def walkall(rootdir, deployMnt):
 def callSetup(deployMnt):
     sys.argv.pop(1)
     setup(
-        name="[module_name]",
+        name="dhcp",
         version='0.1',
         packages=[],
         license='Creative Commons Attribution-Noncommercial-Share Alike license',
         long_description=open('README').read(),
         data_files=[
-            (deployMnt + '/NAS/misc/Cmd/Exec/[cli_position]', ['hapack/[module_name].py']),
-            (deployMnt + '/NAS/misc/Cmd/CmdTool/Parser', ['hapack/[module_name]parser.py']),
-            (deployMnt + '/NAS/misc/HAAgent/Lib/[lib_position]', ['hapack/[module_name]lib.py']),
-            (deployMnt + '/NAS/misc/HAAgent/Lib/[lib_position]', ['hapack/[module_name]restore.py']),
-            (deployMnt + '/NAS/misc/HAAgent/Config', ['hapack/[module_name_upper]Config.py']),
-            (deployMnt + '/NAS/misc/HAAgent/Config', ['hapack/[module_name_upper]Config.xml']),
+            (deployMnt + '/NAS/misc/Cmd/Exec/Service', ['hapack/dhcp.py']),
+            (deployMnt + '/NAS/misc/Cmd/CmdTool/Parser', ['hapack/dhcpparser.py']),
+            (deployMnt + '/NAS/misc/HAAgent/Lib/Service', ['hapack/dhcplib.py']),
+            (deployMnt + '/NAS/misc/HAAgent/Lib/Service', ['hapack/dhcprestore.py']),
+            (deployMnt + '/NAS/misc/HAAgent/Config', ['hapack/DHCPConfig.py']),
+            (deployMnt + '/NAS/misc/HAAgent/Config', ['hapack/DHCPConfig.xml']),
         ] + walkall("buildroot", deployMnt),
      )
 

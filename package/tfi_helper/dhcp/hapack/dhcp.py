@@ -9,27 +9,27 @@ sys.path.append("/var/apache/tomcat/webapps/NAS/misc/HAAgent/")
 sys.path.append(WEB_ROOT+"misc/Cmd/CmdTool/")
 from cmdtool import *
 sys.path.append(WEB_ROOT+"misc/Cmd/CmdTool/Parser/")
-import [module_name]parser
+import dhcpparser
 
-class [module_name](cmd.Cmd):
+class dhcp(cmd.Cmd):
 
     def __init__(self):
         cmd.Cmd.__init__(self)
-        self.name = [module_name]
+        self.name = dhcp
         self.cmd_log = cmd_log()
         self.ha = None
-        self.parsers = [module_name]parser.[module_name_upper]Parser()
+        self.parsers = dhcpparser.DHCPParser()
 
     @complete_twolevel
-    def complete_[module_name](self, args):
+    def complete_dhcp(self, args):
         pass
 
     @print_cmd_manual
-    def man_[module_name](self, args):
+    def man_dhcp(self, args):
         pass
 
     @print_cmd_usage
-    def help_[module_name](self, args):
+    def help_dhcp(self, args):
         pass
 
     @print_cmd_postcmd
@@ -41,7 +41,7 @@ class [module_name](cmd.Cmd):
         return stop
 
     @require_ha_server
-    def do_[module_name](self, args, HA=None):
+    def do_dhcp(self, args, HA=None):
         self.ha = HA
         ret = {'status': SYS_SUCCESSFUL}
         try:
@@ -64,11 +64,11 @@ class [module_name](cmd.Cmd):
             return {'status' : 'SYS_FAILED'}
         return ret
 
-    def cmd_[module_name]_test(self, args):
+    def cmd_dhcp_test(self, args):
         paras = {}
-        paras['op'] = "[module_name]_lib_test"
+        paras['op'] = "dhcp_lib_test"
         paras['controller'] = args['ctrl']
         paras['serviceId'] = args['wwn']
-        ret = self.ha.callGetLocalFunc("[module_name]lib", paras)
+        ret = self.ha.callGetLocalFunc("dhcplib", paras)
         return ret
 

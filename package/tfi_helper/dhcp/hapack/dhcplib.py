@@ -3,13 +3,13 @@ import sys
 import os
 import subprocess
 
-def [module_name]_lib_test(HAServer, paraList):
+def dhcp_lib_test(HAServer, paraList):
     paras = {}
-    ret = HAServer.setConfig("[module_name_upper]Config", "config_test", paras)
-    HAServer.log(1, "[[module_name]lib]%s"%str(ret))  
+    ret = HAServer.setConfig("DHCPConfig", "config_test", paras)
+    HAServer.log(1, "[dhcplib]%s"%str(ret))  
     return {'status' : 0 , 'data' : "call lib successfully:%s"%str(ret)}
     
-def [module_name]lib(HAServer, paraList):
+def dhcplib(HAServer, paraList):
 	try:
 		op = paraList['op']
 		func = getattr(sys.modules[__name__], op)

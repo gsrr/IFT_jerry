@@ -1,6 +1,6 @@
 import argparse
 
-class VPNParser:
+class [module_name_upper]Parser:
     def __init__(self):
         self.cmds = ['[module_name]_test']
         self.parser_[module_name] = argparse.ArgumentParser(prog="[module_name]", add_help=False)
