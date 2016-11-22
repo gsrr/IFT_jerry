@@ -1,0 +1,7 @@
+[Installation]
+ffmpeg:
+    1. Install the nux-dextop repository
+    2. yum install ffmpeg
+
+moviepy:
+    1. pip install moviepy
