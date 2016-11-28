@@ -1,7 +1,7 @@
 #!/usr/bin/expect
 set timeout -1
 set arg1 [lindex $argv 0]
-spawn rsync -a --timeout=180 /root/.vim/autoload/pathogen.vim root@172.27.113.157:/root/.vim/autoload/pathogen.vim
+spawn rsync -a --timeout=180 /usr/bin/rsync root@[nasip]:/usr/bin/rsync
 match_max 100000
 expect {
 	"*?assword:*" {

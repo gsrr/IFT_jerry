@@ -21,17 +21,17 @@ def parsefiles(data):
         info[key] = value if info.has_key(key) == False else (info[key] + ("," + value))
     return info
 
-def createExp(info, f):
+def createExp(info, f1, f2):
     with open("./template.exp", "r") as fr:
         lines = fr.readlines()
-        with open("ldapserver.exp" , "w") as fw:
+        with open("update.exp" , "w") as fw:
             for line in lines:
                 if "[nasip]" in line:
                     line = line.replace("[nasip]", info['nasip'])
-                if "[src]" in line:
-                    line = line.replace("[src]", info['src'] + f)
-                if "[dst]" in line:
-                    line = line.replace("[dst]", info['dst'] + f)
+                if "[from]" in line:
+                    line = line.replace("[from]", f1)
+                if "[to]" in line:
+                    line = line.replace("[to]", f2)
                 fw.write(line)
     return 0
     
@@ -39,9 +39,9 @@ def createExp(info, f):
 def main():
     data = readFile("update.config")
     info = parsefiles(data)
-    for f in info['file'].split(","):
-        createExp(info, f)
-        os.system("expect ldapserver.exp")
+    for f1, f2 in zip(info['from'].split(","), info['to'].split(",")):
+        createExp(info, f1, f2)
+        #os.system("expect update.exp")
 
 if __name__ == "__main__":
     main()
