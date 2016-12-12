@@ -10,6 +10,9 @@ def usage():
     return "Format: python %s %s"%(prog_name, arg_type)
 
 def nullscan(args):
+    '''
+    any packet not containing SYN, RST, or ACK bits will result in a returned RST if the port is closed and no response at all if the port is open
+    '''
     ip = args[1]
     subprocess.call("nmap -sN %s"%ip, shell = True)
 
