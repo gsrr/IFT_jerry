@@ -41,7 +41,7 @@ def main():
     info = parsefiles(data)
     for f1, f2 in zip(info['from'].split(","), info['to'].split(",")):
         createExp(info, f1, f2)
-        #os.system("expect update.exp")
+        os.system("expect update.exp")
 
 if __name__ == "__main__":
     main()
