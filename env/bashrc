@@ -20,3 +20,11 @@ alias ga='git add'
 alias gb='git branch'
 alias gcm='git commit -m'
 alias gp='git push'
+
+alias sb="source ~/.bashrc"
+alias viba="vim ~/.bashrc"
+alias sls="systemctl status"
+alias slst="systemctl start"
+alias slstop="systemctl stop"
+alias gitdiff="git difftool HEAD^"
+alias tmux="tmux -2" # -2 Force tmux to assume the terminal supports 256 colours.
