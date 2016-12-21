@@ -1,0 +1,7 @@
+[Installation]
+pip install robotframework
+pip install docutils
+
+
+Demo:
+https://github.com/robotframework/QuickStartGuide/blob/master/QuickStart.rst#executing-this-guide
