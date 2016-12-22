@@ -1,0 +1,2 @@
+# post method
+curl -d "user=nickwolfe&password=12345" http://172.27.113.7:5000/update
