@@ -22,11 +22,40 @@ tz = EWSTimeZone.timezone('UTC')
 print tz.localize(EWSDateTime(year, month, day + 10))
 print tz.localize(EWSDateTime(year, month, day))
 
+'''
 items = account.calendar.filter(
     start__gt=tz.localize(EWSDateTime(year, month, day + 1)),
     )
 print len(items)
 for item in items:
-    #print (item.subject, item.body, item.attachments)
+    print item.subject.encode("utf-8")
+
+items = account.inbox.filter(subject__contains='Debby')
+print len(items)
+for item in items:
+    print item.subject.encode("utf-8")
+
+n = account.inbox.all().count()
+print n
+
+all_subjects = account.inbox.all().values_list('subject', flat=True)
+for subject in all_subjects:
+    print subject
+
+items = account.calendar.filter(start__range=(tz.localize(EWSDateTime(2016, 1, 1)), tz.localize(EWSDateTime(2017, 1, 1))))
+for item in items:
+    print item.subject.encode("utf-8")
+
+items = account.inbox.filter(subject__contains='Debby')
+print len(items)
+for item in items:
+    print item.subject.encode("utf-8")
+    print dir(item)
+    print item.datetime_received
+'''
+
+items = account.inbox.filter(datetime_received__range=(tz.localize(EWSDateTime(2016, 12, 22)), tz.localize(EWSDateTime(2016, 12, 23))))
+print len(items)
+for item in items:
     print item.subject.encode("utf-8")
 
