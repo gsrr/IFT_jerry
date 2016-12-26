@@ -7,6 +7,7 @@ import os
 import datetime
 from argparse import *
 import ssl
+import datetime
 
 SSL_ENABLE = False
 
@@ -23,7 +24,6 @@ class Client:
 
     def init_tcp_socket(self):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.s = ssl.wrap_socket(self.s, cert_reqs=ssl.CERT_NONE)
         self.s.connect(("localhost", self.port))
         
     def init_udp_socket(self):
@@ -78,13 +78,17 @@ def parser_init():
     return parser
 
 def main():
+    t = datetime.datetime.now()
     parser = parser_init()
     paras = parser.parse_args(sys.argv[1:]).__dict__
     if paras['udp']:
         cli = Client(int(paras['port']), paras['udp'])
         if paras['broadcast']:
             cli.set_broadcase()
-    cli.send(paras['command'])
+    else:
+        cli = Client(int(paras['port']), paras['udp'])
+        cli.send(paras['command'])
+    print datetime.datetime.now() - t
 
 if __name__ == "__main__":
     main()

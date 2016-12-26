@@ -1,0 +1,4 @@
+#!/bin/bash
+[tcp - echo_server]
+python echo_server.py
+python echo_client.py -p 8888 -c test
