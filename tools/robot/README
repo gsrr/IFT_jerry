@@ -1,6 +1,7 @@
 [Installation]
 pip install robotframework
 pip install docutils
+pip install robotframework-hub
 
 
 Demo:

@@ -1,0 +1,13 @@
+[Reference]
+https://timothy-quinn.com/building-dokuwiki-on-centos-7/
+
+[Installation]
+yum install yum-cron httpd php php-gd php-ldap openssl mod_ssl wget -y
+wget http://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
+tar -xzf dokuwiki-stable.tgz
+mv dokuwiki-* /var/www/html/dokuwiki
+chown -R apache:root /var/www/html/dokuwiki
+chmod -R 664 /var/www/html/dokuwiki/
+find /var/www/html/dokuwiki/ -type d -exec chmod 775 {} \;
+systemctl start httpd.service  
+ln -s $PWD/dokuwiki /var/www/html/dokuwiki
