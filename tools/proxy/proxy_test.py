@@ -22,10 +22,13 @@ class Proxy:
         self.conn, addr = self.left.accept()
         print 'Connected with ' + addr[0] + ':' + str(addr[1])
         self.right.connect((self.dest, 23))
+        print "connected to ptt"
         
     def handle(self):
+        print "recv from left"
         send_data = self.conn.recv(1024)
         self.right.send(send_data)
+        print "recv from right"
         recv_data = self.right.recv(1024)
         self.conn.send(recv_data)
         
@@ -34,7 +37,7 @@ class Proxy:
         self.right.close()
         
 def main():
-    p = Proxy("localhost", "ptt.cc")
+    p = Proxy("0.0.0.0", "ptt.cc")
     p.start()
     p.handle()
 
