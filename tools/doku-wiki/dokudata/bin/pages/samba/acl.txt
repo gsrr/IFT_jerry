@@ -1,0 +1,17 @@
+**attr**
+<file>
+[root@nas_8739448_a tmp]# attr -l iptbl_routing_tmp
+Attribute "SGI_ACL_FILE" has a 76 byte value for iptbl_routing_tmp
+Attribute "NTACL" has a 312 byte value for iptbl_routing_tmp
+</file>
+<file>
+[root@nas_8739448_a tmp]# attr -l -q  iptbl_routing_tmp
+SGI_ACL_FILE
+NTACL
+</file>
+<file>
+[root@nas_8739448_a tmp]# attr -Rqg SGI_ACL_FILE iptbl_routing_tmp
+▒▒▒▒▒▒▒▒▒▒▒ ▒▒▒▒[root@nas_8739448_a tmp]#
+</file>
+
+**ntacls.py**

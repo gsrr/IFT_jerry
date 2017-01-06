@@ -1,0 +1,6 @@
+  * insert sort
+  * bubble sort
+  * quick sort
+  * merge sort
+  * binary search tree
+  * heap sort

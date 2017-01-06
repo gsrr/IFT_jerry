@@ -1,0 +1,5 @@
+  * yum install yum-utils
+  * yumdownloader --source xxx
+  * rpm -ivh xxx.rpm
+  * rpmbuild -bp ~/rpmbuild/SPECS/xxx
+  * cd ~/rpmbuild/BUILD/xxx
