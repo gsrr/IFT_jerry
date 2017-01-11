@@ -3,4 +3,6 @@ https://github.com/scragg0x/realms-wiki
 http://realms.io/
 
 [Installation]
+yum install -y python-pip python-devel.x86_64 libxslt-devel.x86_64 libxml2-devel.x86_64 libffi-devel.x86_64 libyaml-devel.x86_64 libxslt-devel.x86_64 zlib-devel.x86_64 openssl-devel.x86_64 openldap2-devel cyrus-sasl-devel python-pbr gcc
+pip install realms-wiki
 
