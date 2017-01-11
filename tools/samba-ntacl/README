@@ -1,0 +1,6 @@
+[files]
+/usr/lib64/python2.7/site-packages/samba/ntacls.py
+
+[Reference]
+http://172.27.112.239/dokuwiki/doku.php?id=samba:ntacl:samba-tool
+
