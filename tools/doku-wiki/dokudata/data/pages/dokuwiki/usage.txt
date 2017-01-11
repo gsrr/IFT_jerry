@@ -1,0 +1,15 @@
+Create namespace:
+
+  * Type the Namespace first and then the page name separating them with a : in the search box. 
+
+list:
+
+  * 2 spaces and * in front of line
+
+new line:
+
+  * Separate by a new line.
+
+delete a page:
+
+  * If you save an empty page, then DokuWiki will delete the page,

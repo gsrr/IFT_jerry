@@ -1,0 +1,10 @@
+[Unit]
+Description=test length by executing command
+
+[Service]
+Type=forking
+ExecStart=/bin/sh -c "./test.sh"
+Environment=COLUMNS=120             # set environment variable
+
+[Install]
+WantedBy=multi-user.target

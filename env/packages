@@ -38,3 +38,9 @@ yum install pacemaker pcs resource-agents fence-agents-all lvm2-cluster ctdb
 yum install tcpdump
 yum install gdb
 yum install ctdb
+yum install pexpect
+yum install epel-release
+yum install -y python-pip
+yum install fail2ban
+pip install netaddr
+yum install -y openldap-devel openldap-servers openldap openldap-clients
