@@ -1,0 +1,26 @@
+[Reference]
+http://pydoing.blogspot.tw/2012/12/Python-encryptguipy.html
+
+http://yhhuang1966.blogspot.tw/2016/05/python-gui-tkinter.html
+Tkinter 提供了下列 21 種 GUI 元件 (稱為 widget 或 control)  :
+    Label
+    Button
+    Radiobutton
+    Checkbutton
+    Entry
+    Frame
+    LabelFrame
+    Listbox
+    Text
+    Message
+    PanedWindow
+    Scrollbar
+    Scale
+    Spinbox
+    Menu
+    OptionMenu
+    Menubutton
+    Canvas
+    Image
+    Bitmap
+    Toplevel
