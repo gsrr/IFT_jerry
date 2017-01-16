@@ -1,3 +1,14 @@
+[python script to exe file - py2exe]
+1. install py2exe-0.6.9
+2. create setup_centos_utility.py
+3. python setup_centos_utility.py py2exe
+
+[python script to exe file - pyinstaller]
+1. download pyinstaller , https://github.com/pyinstaller/pyinstaller/releases/download/v3.2.1/PyInstaller-3.2.1.zip
+2. install pyinstaller , python setup.py install
+3. back to directory of pyinstaller
+4. execute command, python pyinstaller.py -F -w centos_utility.py
+
 [Reference]
 http://pydoing.blogspot.tw/2012/12/Python-encryptguipy.html
 
