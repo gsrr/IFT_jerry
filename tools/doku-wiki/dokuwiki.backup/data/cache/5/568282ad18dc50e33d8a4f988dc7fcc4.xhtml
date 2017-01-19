@@ -1,0 +1,104 @@
+
+<p>
+python-vim <a href="http://vimdoc.sourceforge.net/htmldoc/if_pyth.html#python-vim" class="urlextern" title="http://vimdoc.sourceforge.net/htmldoc/if_pyth.html#python-vim" rel="nofollow">http://vimdoc.sourceforge.net/htmldoc/if_pyth.html#python-vim</a>
+</p>
+
+<p>
+vim - pass argument to python script
+</p>
+<pre class="file">:py import sys
+:py sys.argv = [&quot;foo&quot;, &quot;bar&quot;]
+:pyfile mypythonscript.py
+
+&quot; pass argument with variable
+function! Markdown2HTML()
+        python import sys; import vim; sys.argv = [vim.eval(&quot;a:arg&quot;), &quot;bar&quot;]
+	pyfile markdown2html.py
+endfunc
+</pre>
+
+<p>
+vim - get input from user
+</p>
+<pre class="file">function! Demo()
+  let curline = getline(&#039;.&#039;)
+  call inputsave()
+  let name = input(&#039;Enter name: &#039;)
+  call inputrestore()
+  call setline(&#039;.&#039;, curline . &#039; &#039; . name)
+endfunction</pre>
+
+<p>
+vim - execute by python script
+</p>
+<pre class="file">if !has(&#039;python&#039;)
+	finish
+endif
+ 
+function! Markdown2HTML()
+	pyfile markdown2html.py
+endfunc
+ 
+command! MKD2HTML call Markdown2HTML()</pre>
+
+<p>
+<a href="http://www.terminally-incoherent.com/blog/2013/05/06/vriting-vim-plugins-in-python/" class="urlextern" title="http://www.terminally-incoherent.com/blog/2013/05/06/vriting-vim-plugins-in-python/" rel="nofollow">http://www.terminally-incoherent.com/blog/2013/05/06/vriting-vim-plugins-in-python/</a>
+vim - redraw screen
+</p>
+<pre class="file">:redraw!</pre>
+
+<p>
+vim - loop
+</p>
+<pre class="file">:let c = 0
+:for i in [1, 2, 3, 4]
+:  let c += i
+:endfor
+:echom c
+
+:let c = 1
+:let total = 0
+:while c &lt;= 4
+:  let total += c
+:  let c += 1
+:endwhile
+:echom total</pre>
+
+<p>
+<a href="http://learnvimscriptthehardway.stevelosh.com/chapters/36.html" class="urlextern" title="http://learnvimscriptthehardway.stevelosh.com/chapters/36.html" rel="nofollow">http://learnvimscriptthehardway.stevelosh.com/chapters/36.html</a>
+vim -send function by user command
+</p>
+<pre class="file">command! -nargs=1 MyCommand call s:MyFunc(&lt;f-args&gt;)</pre>
+
+<p>
+vim - if else
+</p>
+<pre class="file">:if 10 == 11
+:    echom &quot;first&quot;
+:elseif 10 == 10
+:    echom &quot;second&quot;
+:endif
+
+:if &quot;foo&quot; == &quot;bar&quot;
+:    echom &quot;one&quot;
+:elseif &quot;foo&quot; == &quot;foo&quot;
+:    echom &quot;two&quot;
+:endif
+[[http://learnvimscriptthehardway.stevelosh.com/chapters/22.html]]</pre>
+
+<p>
+vim - write a function
+</p>
+<pre class="file">:function DisplayName(name)
+:  echom &quot;Hello!  My name is:&quot;
+:  echom a:name
+:endfunction</pre>
+
+<p>
+vim - run the function
+</p>
+<pre class="file">:call DisplayName(&quot;Your Name&quot;)</pre>
+
+<p>
+<a href="http://learnvimscriptthehardway.stevelosh.com/chapters/24.html" class="urlextern" title="http://learnvimscriptthehardway.stevelosh.com/chapters/24.html" rel="nofollow">http://learnvimscriptthehardway.stevelosh.com/chapters/24.html</a>
+</p>

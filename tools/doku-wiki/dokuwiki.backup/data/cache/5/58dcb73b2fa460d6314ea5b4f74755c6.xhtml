@@ -1,0 +1,134 @@
+<div class="table sectionedit1"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> admin by NAS (super user) </td><td class="col1"> admin by Eonone </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0">—</td><td class="col1">The owner of file is root (File Explorer)</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">—</td><td class="col1">Can not see admin user in user list</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">Can edit file of other users?</td><td class="col1"> Can edit any file </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"> Need to change owner for syslog log file</td><td class="col1">Need to create a account for admin to use</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0"> Need to change owner for ldapserver backup file</td><td class="col1">Need to add a account to share folder to user</td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">Need to add admin account to samba</td><td class="col1">–</td>
+	</tr>
+	<tr class="row7">
+		<td class="col0">Need to add admin account to syncClound</td><td class="col1">–</td>
+	</tr>
+	<tr class="row8">
+		<td class="col0">Need to add admin account to file explorer</td><td class="col1">–</td>
+	</tr>
+	<tr class="row9">
+		<td class="col0">Need to add admin account to file share folder</td><td class="col1">–</td>
+	</tr>
+</table></div>
+<!-- EDIT1 TABLE [1-558] --><div class="table sectionedit2"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> – </td><td class="col1">admin by EonOne</td><td class="col2">admin by NAS (general user)</td><td class="col3">admin by NAS (avatar of root, uid=0,gid=0)</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0">user view</td><td class="col1"> strange(login by admin but no admin user) </td><td class="col2"> normal </td><td class="col3"> normal </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">NAS user list</td><td class="col1"> no </td><td class="col2"> yes </td><td class="col3"> yes </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">Access network service by admin (cifs, sftp, ftp,…)</td><td class="col1"> Need to create account </td><td class="col2"> no need to create account</td><td class="col3"> no need to create account </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">file owner in file explorer</td><td class="col1"> root </td><td class="col2"> admin </td><td class="col3"> admin </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">manipulate share folder</td><td class="col1"> Need to add acl to share folder </td><td class="col2"> Need to add acl to share folder </td><td class="col3"> no need to add acl</td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">security (network service)</td><td class="col1"> do something </td><td class="col2"> do something </td><td class="col3"> do anything</td>
+	</tr>
+	<tr class="row7">
+		<td class="col0">project scope</td><td class="col1"> No need to modify </td><td class="col2">some files should change owner(syslog, ldapserver…)</td><td class="col3"> Need to add admin to samba account </td>
+	</tr>
+</table></div>
+<!-- EDIT2 TABLE [561-1263] -->
+<p>
+admin by EonOne
+</p>
+<ul>
+<li class="level1 node"><div class="li"> cons:</div>
+<ul>
+<li class="level3"><div class="li"> There is no admin user in NAS user list.</div>
+</li>
+<li class="level3"><div class="li"> Administrator need to create a new account(general user) for network services.(cifs, sftp, ftp,… etc)</div>
+</li>
+<li class="level3"><div class="li"> Administrator should add the account permission to share folder if he want to manipulate the share folder.</div>
+</li>
+<li class="level3"><div class="li"> The file owner create by administrator in file explorer is root user.</div>
+</li>
+<li class="level3"><div class="li"> May have some security problem</div>
+</li>
+</ul>
+</li>
+<li class="level1 node"><div class="li"> pros:</div>
+<ul>
+<li class="level3"><div class="li"> The project does not to do anything.</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+admin by NAS (general user)
+</p>
+<ul>
+<li class="level1 node"><div class="li"> pros:</div>
+<ul>
+<li class="level2"><div class="li"> There is a admin user in NAS user list.</div>
+</li>
+<li class="level2"><div class="li"> Administrator does not need to create a new account for network service.</div>
+</li>
+<li class="level2"><div class="li"> The file owner create by administrator in file explorer is admin user.</div>
+</li>
+</ul>
+</li>
+<li class="level1 node"><div class="li"> cons:</div>
+<ul>
+<li class="level2"><div class="li"> Administrator should add the account permission to share folder if he want to manipulate the share folder.</div>
+</li>
+<li class="level2"><div class="li"> The files created in NAS Service should be changed owner to admin user. (ex: ldapserver, syslog)</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+admin by NAS (avatar of root, uid=0,gid=0)
+</p>
+<ul>
+<li class="level1 node"><div class="li"> pros:</div>
+<ul>
+<li class="level2"><div class="li"> There is a admin user in NAS user list.</div>
+</li>
+<li class="level2"><div class="li"> Administrator does not need to create a new account for network service.</div>
+</li>
+<li class="level2"><div class="li"> The file owner create by administrator in file explorer is admin user.</div>
+</li>
+<li class="level2"><div class="li"> Administrator does not need to add the account permission to share folder if he want to manipulate the share folder.</div>
+</li>
+<li class="level2"><div class="li"> The files created in NAS Service does not need to be changed owner to admin user.</div>
+</li>
+</ul>
+</li>
+<li class="level1 node"><div class="li"> cons:</div>
+<ul>
+<li class="level2"><div class="li"> May have some security problem</div>
+</li>
+</ul>
+</li>
+</ul>

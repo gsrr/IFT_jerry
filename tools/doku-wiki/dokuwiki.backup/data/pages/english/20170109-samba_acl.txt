@@ -1,0 +1,10 @@
+在明天(1/12), 禮拜四, 又到了線上家教交換的時候, 不過自從上個禮拜寫了兩個sort演算法後(insertion sort and quick sort), 我就沒有再動過了. 不過我想這只是交換, 又不是家教, 所以基本上只要我可以解答他的問題就好了, 最主要還是他自己要去練習.
+交換有好處的地方就是可以練習講英文, 不然以前都只有input, 缺乏output與feedback, 練久了難免沒有動力, 而且也不知道自己的缺點在哪裡. 現在的想法就是每天練習寫一篇文章, 然後再去看美劇熟悉一些基本的用法, 再試著去講出來.
+
+
+----
+
+Tomorrow is the Thursday that It is a day for exchanging knowledge between Algorithm and English.
+I did not update the algorithm status since last Thursday, but I think the point is to answer his question to help him can move forwards.
+The benefit for me during this process is that I can practice speaking. I only practice by myself for reading and listening before so there is no output from myself so that I did not know the drawback.
+Now, I try to write a article per day and understand some syntax by watching drama.

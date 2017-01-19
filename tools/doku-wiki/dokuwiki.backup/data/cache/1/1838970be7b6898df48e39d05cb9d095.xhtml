@@ -1,0 +1,20 @@
+
+<h1 class="sectionedit1" id="object_analysis">object analysis</h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> vars(object) , but not all objects have a <em class="u">dict</em> member</div>
+</li>
+<li class="level1"><div class="li"> dir(object)</div>
+</li>
+<li class="level1"><div class="li"> getattr()</div>
+</li>
+<li class="level1"><div class="li"> type()</div>
+</li>
+<li class="level1"><div class="li"> </div>
+</li>
+</ul>
+<pre class="file">def dump(obj):
+  for attr in dir(obj):
+    print &quot;obj.%s = %s&quot; % (attr, getattr(obj, attr))</pre>
+
+</div>

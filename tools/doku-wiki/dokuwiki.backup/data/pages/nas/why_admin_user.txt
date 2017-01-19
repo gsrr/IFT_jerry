@@ -1,0 +1,48 @@
+| admin by NAS (super user) | admin by Eonone |
+|---|The owner of file is root (File Explorer)|
+|---|Can not see admin user in user list|
+|Can edit file of other users?| Can edit any file |
+| Need to change owner for syslog log file|Need to create a account for admin to use|
+| Need to change owner for ldapserver backup file|Need to add a account to share folder to user|
+|Need to add admin account to samba|--|
+|Need to add admin account to syncClound|--|
+|Need to add admin account to file explorer|--|
+|Need to add admin account to file share folder|--|
+
+
+| -- |admin by EonOne|admin by NAS (general user)|admin by NAS (avatar of root, uid=0,gid=0)|
+|user view| strange(login by admin but no admin user) | normal | normal |
+|NAS user list| no | yes | yes |
+|Access network service by admin (cifs, sftp, ftp,...)| Need to create account | no need to create account| no need to create account |
+|file owner in file explorer| root | admin | admin |
+|manipulate share folder| Need to add acl to share folder | Need to add acl to share folder | no need to add acl|
+|security (network service)| do something | do something | do anything|
+|project scope| No need to modify |some files should change owner(syslog, ldapserver...)| Need to add admin to samba account |
+admin by EonOne
+  * cons:
+      * There is no admin user in NAS user list.
+      * Administrator need to create a new account(general user) for network services.(cifs, sftp, ftp,... etc)
+      * Administrator should add the account permission to share folder if he want to manipulate the share folder.
+      * The file owner create by administrator in file explorer is root user.
+      * May have some security problem
+  * pros:
+      * The project does not to do anything.
+
+admin by NAS (general user)
+  * pros:
+    * There is a admin user in NAS user list.
+    * Administrator does not need to create a new account for network service.
+    * The file owner create by administrator in file explorer is admin user.
+  * cons:
+    * Administrator should add the account permission to share folder if he want to manipulate the share folder.
+    * The files created in NAS Service should be changed owner to admin user. (ex: ldapserver, syslog)
+
+admin by NAS (avatar of root, uid=0,gid=0)
+  * pros:
+    * There is a admin user in NAS user list.
+    * Administrator does not need to create a new account for network service.
+    * The file owner create by administrator in file explorer is admin user.
+    * Administrator does not need to add the account permission to share folder if he want to manipulate the share folder.
+    * The files created in NAS Service does not need to be changed owner to admin user.
+  * cons:
+    * May have some security problem

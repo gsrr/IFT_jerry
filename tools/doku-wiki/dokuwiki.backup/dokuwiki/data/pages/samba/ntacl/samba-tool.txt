@@ -1,0 +1,17 @@
+**system_session**
+<file>
+</file>
+** requirement **
+  * mark #import samba.xattr_native, samba.xattr_tdb, samba.posix_eadb
+    * /usr/lib64/python2.7/site-packages/samba/ntacls.py
+  * replace "tdbsam" with "samba_dsdb" when setting ntacl (optional?)
+    * /usr/lib64/python2.7/site-packages/samba/netcmd/ntacl.py
+    
+<file>
+# get ntacl from file
+[root@nas_824366_a ~]# ./samba-tool ntacl get /tmp/user.ldif --as-sddl
+O:S-1-5-21-2896997548-2896997548-2896997548-1003G:BAD:(A;;0x001f019f;;;S-1-5-21-2896997548-2896997548-2896997548-1003)(A;;0x00120089;;;BA)(A;;0x00120089;;;WD)
+
+# set ntacl to file
+[root@nas_824366_a ~]# ./samba-tool ntacl set "O:S-1-5-21-2896997548-2896997548-2896997548-1003G:BAD:(A;;0x001f019f;;;S-1-5-21-2896997548-2896997548-2896997548-1003)(A;;0x00120089;;;BA)(A;;0x00120089;;;WD)" /tmp/test.txt
+</file>

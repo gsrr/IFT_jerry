@@ -1,0 +1,62 @@
+
+<p>
+Emacs - basic<a href="http://ithelp.ithome.com.tw/articles/10135755" class="urlextern" title="http://ithelp.ithome.com.tw/articles/10135755" rel="nofollow">http://ithelp.ithome.com.tw/articles/10135755</a>
+</p>
+
+<p>
+[emacs - hello world(function)]
+</p>
+<pre class="file">(defun say-hello ()
+    &quot;hello world&quot;)
+;; `C-xC-e&#039; =&gt; say-hello
+
+(say-hello)
+;; `C-xC-e&#039; =&gt; &quot;hello world&quot;
+</pre>
+
+<p>
+[emacs - hello world]
+</p>
+<pre class="file">(setq my-name &quot;Jerry&quot;)
+;; `C-xC-e&#039; =&gt; &quot;Bastien&quot; (displayed in the mini-buffer)
+
+(insert &quot;Hello World!&quot;)
+;; `C-xC-e&#039; =&gt; &quot;Hello world!&quot;
+
+(insert &quot;Hello World! &quot; my-name)
+;; `C-xC-e&#039; =&gt; &quot;Hello world! Jerry&quot;
+</pre>
+
+<p>
+[window &amp; buffer]
+</p>
+<div class="table sectionedit1"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign">C-x 0  </td><td class="col1">(close current window)</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign">C-x k  </td><td class="col1">(close current buffer)</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign">C-x C-c  </td><td class="col1">(leave emacs)</td>
+	</tr>
+</table></div>
+<!-- EDIT1 TABLE [480-571] -->
+<p>
+<a href="https://github.com/emacs-tw/emacs-101/blob/master/03-%E7%86%9F%E6%82%89%E5%9F%BA%E6%9C%AC%E6%8C%89%E9%8D%B5(key-binding).org#window-相關" class="urlextern" title="https://github.com/emacs-tw/emacs-101/blob/master/03-%E7%86%9F%E6%82%89%E5%9F%BA%E6%9C%AC%E6%8C%89%E9%8D%B5(key-binding).org#window-相關" rel="nofollow">https://github.com/emacs-tw/emacs-101/blob/master/03-%E7%86%9F%E6%82%89%E5%9F%BA%E6%9C%AC%E6%8C%89%E9%8D%B5(key-binding).org#window-相關</a>
+</p>
+
+<p>
+[elim]
+</p>
+<pre class="file">M-x elim</pre>
+
+<p>
+[M-x]
+</p>
+<ul>
+<li class="level1"><div class="li"> In Emacs, “M-x command” means press M-x, then type the name of the command, and then press Enter. </div>
+</li>
+<li class="level1"><div class="li"> The M stands for the Meta key, which you can emulate on most keyboards by pressing the Esc key.</div>
+</li>
+</ul>

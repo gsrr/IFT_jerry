@@ -1,0 +1,31 @@
+  * The nascmd_client.py is under /usr/local/NAS/misc/Cmd/
+  * 
+<file>
+Start service:
+  * systemctl start nascli
+
+Stop Service:
+  * systemctl stop nascli
+
+batch test: (example)
+  * python nascmd_client.py -f Script/ldapserver.txt -o output.log
+
+debug mode:
+  * python nascmd_client.py -c "enable_debug" (No limit in log message)
+  * python nascmd_client.py -c "disable_debug" (log message is limited in 300 bytes)
+
+check alive:
+  * python nascmd_client.py -c "check_alive -z a@0"
+
+reload module:
+  * python nascmd_client.py -c "reload_module $module_name"
+
+interactive mode:
+  * python nascmd_client.py -i
+
+ssl transporation:
+  * python nascmd_client.py --ssl -c "ha status -z a@0"
+
+unit test:
+  * Unordered List Itempython nascmd_client.py --test
+</file>

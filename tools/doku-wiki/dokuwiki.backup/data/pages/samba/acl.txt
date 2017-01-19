@@ -1,0 +1,285 @@
+**packages**
+  * yum install -y samba4-python
+  * yum install -y samba*
+
+**file location**
+  * /usr/lib64/python2.7/site-packages/samba/
+
+**Actions**
+  * Remove the extended attribute stored in file, the advanced acl of the file is not affected.
+
+**Access Right**
+
+{{:samba:ic493699.png?600|}}
+| bit | Access Right String  | 
+| 19 | WO |
+| 18 | WD |
+| 17 | RC |      
+| 16 | SD |  
+| 5 | RP | 0x00100010 |
+| 9 | CR | 0x00100100 |   
+| 3 | LC |  
+| 2 | DC |
+| 4 | SW |
+| 8 | LO |
+| 1 | CC |
+| 6 | WP | 0x00100020 |
+
+
+
+**samba-tool**
+<file>
+[root@localhost bin]# ./samba-tool ntacl get /tmp/ccc.txt --as-sddl
+O:S-1-5-21-3863028735-649080503-733086412-1000G:DUD:AI(D;;0x001f01ff;;;S-1-5-21-3863028735-649080503-733086412-1000)(A;;0x001f01ff;;;DU)(A;ID;0x001f01ff;;;S-1-5-21-3863028735-649080503-733086412-1000)(A;ID;0x001200a9;;;DU)(A;ID;0x001200a9;;;WD)
+</file>
+
+**sddl format (Security Descriptor Definition Language)**
+<file>
+The following is an example SDDL string:
+O:S-1-5-21-3863028735-649080503-733086412-1000G:DUD:AI(D;;0x001f01ff;;;S-1-5-21-3863028735-649080503-733086412-1000)(A;;0x001f01ff;;;DU)(A;ID;0x001f01ff;;;S-1-5-21-3863028735-649080503-733086412-1000)(A;ID;0x001200a9;;;DU)(A;ID;0x001200a9;;;WD)
+
+To better view the various part:
+O:S-1-5-21-3863028735-649080503-733086412-1000 
+G:DU 
+D:AI
+  (D;;0x001f01ff;;;S-1-5-21-3863028735-649080503-733086412-1000)
+  (A;;0x001f01ff;;;DU)
+  (A;ID;0x001f01ff;;;S-1-5-21-3863028735-649080503-733086412-1000)
+  (A;ID;0x001200a9;;;DU)
+  (A;ID;0x001200a9;;;WD)
+</file>
+<file>
+Main Part Format:
+  O: SID string := Owner
+  G: SID string := Group
+  D: ACE String := DACL (Discretionary Access Control List)
+  S: ACE String := SACL (Security Access Control List) (optional)(optional)
+</file>
+<file>
+SID String Chart:
+  SID                 String Account alias
+  "AN"                Anonymous logon.
+  "AU"                Authenticated users.
+  "BA"                Built-in administrators.
+  "BG"                Built-in guests.
+  "BU"                Built-in users.
+  “CO”                Creator Owner
+  "DA"                Domain administrators.
+  "DG"                Domain guests.
+  "DU"                Domain users
+  "EA"                Enterprise administrators
+  "WD"                Everyone
+  "IU"                Interactively logged-on user.
+  "LA"                Local administrator.
+  "LG"                Local guest.
+  "LS"                Local service account.
+  "SY"                Local system
+  "NU"                Network logon user
+  "NS"                Network service account
+  "PU"                Power users
+  "RD"                Terminal server users (Remote Desktop)
+</file>
+<file>
+ace_type;ace_flags;rights;object_guid;inherit_object_guid;account_sid;(resource_attribute)
+ace_flags:
+"IO"                 SDDL_INHERIT_ONLY
+"ID"                 SDDL_INHERITED
+</file>
+ACE String Format[[http://172.27.112.239/dokuwiki/lib/exe/fetch.php?media=samba:ace_strings_windows_.pdf]]
+[[https://web.archive.org/web/20150810083345/http://networkadminkb.com/KB/a152/how-to-read-a-sddl-string.aspx]]
+ACE String Format: [[https://web.archive.org/web/20141228035833/http://msdn.microsoft.com/en-us/library/aa374928.aspx]]
+
+**Security Descriptor**
+  * Security Descriptor --> DACL --> ACE Header --> ACCESS_MASK
+  * The SECURITY_DESCRIPTOR structure defines the security attributes of an object.
+  * These attributes specify who owns the object; who can access the object and what they can do with it.
+  * OffsetDacl
+    * An unsigned 32-bit integer that specifies the offset to the ACL that contains ACEs that control access. 
+
+[[https://msdn.microsoft.com/en-us/library/cc230366.aspx]]
+
+**DACL**
+<file>
+typedef struct _ACL {
+  BYTE AclRevision;
+  BYTE Sbz1;
+  WORD AclSize;
+  WORD AceCount;
+  WORD Sbz2;
+} ACL, *PACL;
+</file>
+[[https://msdn.microsoft.com/en-us/library/windows/desktop/aa374931(v=vs.85).aspx]]
+
+**ACE**
+<file>
+typedef struct _ACE_HEADER {
+  BYTE AceType;
+  BYTE AceFlags;
+  WORD AceSize;
+} ACE_HEADER, *PACE_HEADER;
+</file>
+
+**ACCESS MASK**
+  * Control the access permission of a file.
+[[https://msdn.microsoft.com/en-us/library/cc230294.aspx]]
+
+**Example of Security Descriptor**
+<file>
+    security_descriptor: struct security_descriptor
+        revision                 : SECURITY_DESCRIPTOR_REVISION_1 (1)
+        type                     : 0x8c04 (35844)
+               0: SEC_DESC_OWNER_DEFAULTED
+               0: SEC_DESC_GROUP_DEFAULTED
+               1: SEC_DESC_DACL_PRESENT
+               0: SEC_DESC_DACL_DEFAULTED
+               0: SEC_DESC_SACL_PRESENT
+               0: SEC_DESC_SACL_DEFAULTED
+               0: SEC_DESC_DACL_TRUSTED
+               0: SEC_DESC_SERVER_SECURITY
+               0: SEC_DESC_DACL_AUTO_INHERIT_REQ
+               0: SEC_DESC_SACL_AUTO_INHERIT_REQ
+               1: SEC_DESC_DACL_AUTO_INHERITED
+               1: SEC_DESC_SACL_AUTO_INHERITED
+               0: SEC_DESC_DACL_PROTECTED
+               0: SEC_DESC_SACL_PROTECTED
+               0: SEC_DESC_RM_CONTROL_VALID
+               1: SEC_DESC_SELF_RELATIVE
+        owner_sid                : *
+            owner_sid                : S-1-5-21-3863028735-649080503-733086412-1000
+        group_sid                : *
+            group_sid                : S-1-5-21-3863028735-649080503-733086412-513
+        sacl                     : NULL
+        dacl                     : *
+            dacl: struct security_acl
+                revision                 : SECURITY_ACL_REVISION_NT4 (2)
+                size                     : 0x0078 (120)
+                num_aces                 : 0x00000004 (4)
+                aces: ARRAY(4)
+                    aces: struct security_ace
+                        type                     : SEC_ACE_TYPE_ACCESS_DENIED (1)
+                        flags                    : 0x00 (0)
+                               0: SEC_ACE_FLAG_OBJECT_INHERIT
+                               0: SEC_ACE_FLAG_CONTAINER_INHERIT
+                               0: SEC_ACE_FLAG_NO_PROPAGATE_INHERIT
+                               0: SEC_ACE_FLAG_INHERIT_ONLY
+                               0: SEC_ACE_FLAG_INHERITED_ACE
+                            0x00: SEC_ACE_FLAG_VALID_INHERIT (0)
+                               0: SEC_ACE_FLAG_SUCCESSFUL_ACCESS
+                               0: SEC_ACE_FLAG_FAILED_ACCESS
+                        size                     : 0x0014 (20)
+                        access_mask              : 0x000f011e (983326)
+                        object                   : union security_ace_object_ctr(case 1)
+                        trustee                  : S-1-1-0
+                    aces: struct security_ace
+                        type                     : SEC_ACE_TYPE_ACCESS_ALLOWED (0)
+                        flags                    : 0x10 (16)
+                               0: SEC_ACE_FLAG_OBJECT_INHERIT
+                               0: SEC_ACE_FLAG_CONTAINER_INHERIT
+                               0: SEC_ACE_FLAG_NO_PROPAGATE_INHERIT
+                               0: SEC_ACE_FLAG_INHERIT_ONLY
+                               1: SEC_ACE_FLAG_INHERITED_ACE
+                            0x00: SEC_ACE_FLAG_VALID_INHERIT (0)
+                               0: SEC_ACE_FLAG_SUCCESSFUL_ACCESS
+                               0: SEC_ACE_FLAG_FAILED_ACCESS
+                        size                     : 0x0024 (36)
+                        access_mask              : 0x001f01ff (2032127)
+                        object                   : union security_ace_object_ctr(case 0)
+                        trustee                  : S-1-5-21-3863028735-649080503-733086412-1000
+                    aces: struct security_ace
+                        type                     : SEC_ACE_TYPE_ACCESS_ALLOWED (0)
+                        flags                    : 0x10 (16)
+                               0: SEC_ACE_FLAG_OBJECT_INHERIT
+                               0: SEC_ACE_FLAG_CONTAINER_INHERIT
+                               0: SEC_ACE_FLAG_NO_PROPAGATE_INHERIT
+                               0: SEC_ACE_FLAG_INHERIT_ONLY
+                               1: SEC_ACE_FLAG_INHERITED_ACE
+                            0x00: SEC_ACE_FLAG_VALID_INHERIT (0)
+                               0: SEC_ACE_FLAG_SUCCESSFUL_ACCESS
+                               0: SEC_ACE_FLAG_FAILED_ACCESS
+                        size                     : 0x0024 (36)
+                        access_mask              : 0x001200a9 (1179817)
+                        object                   : union security_ace_object_ctr(case 0)
+                        trustee                  : S-1-5-21-3863028735-649080503-733086412-513
+                    aces: struct security_ace
+                        type                     : SEC_ACE_TYPE_ACCESS_ALLOWED (0)
+                        flags                    : 0x10 (16)
+                               0: SEC_ACE_FLAG_OBJECT_INHERIT
+                               0: SEC_ACE_FLAG_CONTAINER_INHERIT
+                               0: SEC_ACE_FLAG_NO_PROPAGATE_INHERIT
+                               0: SEC_ACE_FLAG_INHERIT_ONLY
+                               1: SEC_ACE_FLAG_INHERITED_ACE
+                            0x00: SEC_ACE_FLAG_VALID_INHERIT (0)
+                               0: SEC_ACE_FLAG_SUCCESSFUL_ACCESS
+                               0: SEC_ACE_FLAG_FAILED_ACCESS
+                        size                     : 0x0014 (20)
+                        access_mask              : 0x001200a9 (1179817)
+                        object                   : union security_ace_object_ctr(case 0)
+                        trustee                  : S-1-1-0
+</file>
+<file>
+Their are two kinds of acl in samba file:
+security.NTACL and system.posix_acl_access
+
+Get value of acl:
+getfattr -n system.posix_acl_access iptbl_routing_tmp
+getfattr -n security.NTACL iptbl_routing_tmp
+
+Remove attribute
+getfattr -x system.posix_acl iptbl_routing_tmp
+setfattr -x security.NTACL  iptbl_routing_tmp
+
+</file>
+
+** python xattr **
+<file>
+>>> import xattr
+>>> xattr.listxattr("file.txt")
+['user.mime_type']
+>>> xattr.getxattr("file.txt", "user.mime_type")
+'text/plain'
+>>> xattr.setxattr("file.txt", "user.comment", "Simple text file")
+>>> xattr.listxattr("file.txt")
+['user.mime_type', 'user.comment']
+>>> xattr.removexattr ("file.txt", "user.comment")
+
+>>> import xattr
+>>> xattr.listxattr("iptbl_routing_tmp")
+(u'trusted.SGI_ACL_FILE', u'security.NTACL', u'system.posix_acl_access')
+>>> xattr.getxattr("/tmp/aaa.txt", "security.NTACL")
+'\x04\x00\x04\x00\x00\x00\x02\x00\x04\x00\x02\x00\x01\x00\xc3\xa9x\x96L\xd3{\x9b\xa6\x8a\x9e\x97\xf2\xb2\xf5\x83\xcb\x93\xc2\x8d\xc8\xcc9\xa5\xc8\x89\xa4#\xee\xce\x14\xc4\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00posix_acl\x00d\xbf\xfe]\xf0j\xd2\x01\x8e\xc4 \xd8Zlu.\xa0\xdc\xe5\x05\xe8\x93\x93\xc3\xe7\\e\xd0\xdf\xc9(V\xc4\xabT\xc7\xb2\x93>\x0c\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x04\x8c\xb4\x00\x00\x00\xd0\x00\x00\x00\x00\x00\x00\x00\xec\x00\x00\x00\x01\x05\x00\x00\x00\x00\x00\x05\x15\x00\x00\x00\xff#A\xe6\xb7.\xb0&\xcc\x02\xb2+\xe8\x03\x00\x00\x01\x05\x00\x00\x00\x00\x00\x05\x15\x00\x00\x00\xff#A\xe6\xb7.\xb0&\xcc\x02\xb2+\x01\x02\x00\x00\x02\x00x\x00\x04\x00\x00\x00\x01\x00\x14\x00\x1e\x01\x0f\x00\x01\x01\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x10$\x00\xff\x01\x1f\x00\x01\x05\x00\x00\x00\x00\x00\x05\x15\x00\x00\x00\xff#A\xe6\xb7.\xb0&\xcc\x02\xb2+\xe8\x03\x00\x00\x00\x10$\x00\xa9\x00\x12\x00\x01\x05\x00\x00\x00\x00\x00\x05\x15\x00\x00\x00\xff#A\xe6\xb7.\xb0&\xcc\x02\xb2+\x01\x02\x00\x00\x00\x10\x14\x00\xa9\x00\x12\x00\x01\x01\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00'
+
+</file>
+[[http://pyxattr.k1024.org/module.html]]
+
+**getfattr**
+<file>
+[root@nas_8739448_a tmp]# getfattr -n security.NTACL iptbl_routing_tmp
+# file: iptbl_routing_tmp
+security.NTACL=0sBAAEAAAAAgAEAAIAAQCgPPxFRKKf60tg7eMr3o2YCABj0ryLFTbz/WLezJUMOwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcG9zaXhfYWNsAOY0mev7Z9IB5zfZZ+WOJ9bNEn25ikX0nyceXW1OjYfXDcDf4n7o+hYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEABJy0AAAA0AAAAAAAAADgAAAAAQUAAAAAAAUVAAAArKysrKysrKysrKys6AMAAAECAAAAAAAWAgAAAAAAAAACAFgAAwAAAAAAJACfAR8AAQUAAAAAAAUVAAAArKysrKysrKysrKys6AMAAAAAGACJABIAAQIAAAAAABYCAAAAAAAAAAAAFACfAR8AAQEAAAAAAAEAAAAA
+
+(that this attribute is not shown by the getfattr -d filename, it can only be retreived by naming it as in: getfattr -n security.NTACL filename.)
+</file>
+[[https://www.samba.org/samba/docs/man/manpages-3/vfs_acl_xattr.8.html]]
+<file>
+root@nas_8739448_a tmp]# getfattr -n system.posix_acl_access iptbl_routing_tmp
+# file: iptbl_routing_tmp
+system.posix_acl_access=0sAgAAAAEABwD/////AgAHAAAAAAACAAYANwAAAAQABAD/////CAAEAAAAAAAQAAcA/////yAABwD/////
+</file>
+
+**attr**
+<file>
+[root@nas_8739448_a tmp]# attr -l iptbl_routing_tmp
+Attribute "SGI_ACL_FILE" has a 76 byte value for iptbl_routing_tmp
+Attribute "NTACL" has a 312 byte value for iptbl_routing_tmp
+</file>
+<file>
+[root@nas_8739448_a tmp]# attr -l -q  iptbl_routing_tmp
+SGI_ACL_FILE
+NTACL
+</file>
+<file>
+[root@nas_8739448_a tmp]# attr -Rqg SGI_ACL_FILE iptbl_routing_tmp
+▒▒▒▒▒▒▒▒▒▒▒ ▒▒▒▒[root@nas_8739448_a tmp]#
+</file>
+
+**ntacls.py**

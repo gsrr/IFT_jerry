@@ -1,0 +1,4 @@
+1484206155	172.27.12.71	C	nas:test:cifs_restart_fail		created		74
+1484206237	172.27.12.71	E	nas:test:cifs_restart_fail				4
+1484206465	172.27.12.71	E	nas:test:cifs_restart_fail				38
+1484209786	172.27.12.71	E	nas:test:cifs_restart_fail				284

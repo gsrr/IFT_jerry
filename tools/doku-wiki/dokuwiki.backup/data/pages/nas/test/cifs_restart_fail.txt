@@ -1,0 +1,8 @@
+
+|smb.conf | AD  | DNS           | smb service after reset|
+|trunk*   | No  | 172.27.120.130| OK                     |
+|trunk*   | Yes | 172.27.120.130| OK                     |
+|trunk*   | No  | 192.168.99.14| OK                     |
+|trunk*   | Yes | 192.168.99.14| FAIL                     |
+|   | Yes | 192.168.99.14| OK                     |
+|   | Yes | 172.27.120.130| OK                     |
