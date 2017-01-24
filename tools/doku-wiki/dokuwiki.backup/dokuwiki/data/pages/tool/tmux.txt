@@ -1,4 +1,0 @@
-|put the session to background|tmux detach|C-b, d|
-|put the session to foreground|tmux attach| |
-|list all session|tmux ls| |
-|rename session| |C-b, :rename-session [-t current-name] [new-name] |

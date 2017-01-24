@@ -1,0 +1,29 @@
+====== Remote ssh with tmux ======
+<file>
+## execute shell command in tmux.conf
+#(shell-command)
+## set status bar
+set -g window-status-format '#I:#(pwd="#{pane_current_path}"; echo ${pwd####*/})#F'
+set -g window-status-current-format '#I:#(pwd="#{pane_current_path}"; echo ${pwd####*/})#F'
+set-option -g status-interval 1
+
+## set session name and execute ssh command
+function tmux-ssh() { tmux new -s $1 "ssh root@$1"; }
+</file>
+|shell command in tmux.conf|  |
+|取出tmux的variable|  #{pane_current_path}|
+|set length of session name|  set -g status-left-length 20 [[http://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/]]|
+
+====== cmd list ======
+|session operation|||
+|put the session to background|tmux detach|C-b, d|
+|put the session to foreground|tmux attach| |
+|list all session|tmux ls| |
+|rename session| |C-b, $ |
+|pane operation|||
+|split pane vertically|rename-session | Ctrl+b, %|
+|split pane horizontally| | Ctrl+b, "|
+|switch pane| |Ctrl+b, arrow key|
+|list windows| |Ctrl+b, w|
+|hide pane| |Ctrl+b, break-pane -dP|
+|get pane| |Ctrl+b, join-pane -vs 1 (1 is panel index)|

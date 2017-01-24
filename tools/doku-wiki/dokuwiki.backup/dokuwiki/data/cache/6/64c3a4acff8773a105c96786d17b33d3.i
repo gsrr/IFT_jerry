@@ -1,4 +1,0 @@
-a:10:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:102:"
-tcpdump -i <interface> -s 65535 -w <some-file>
-  * Capturing with tcpdump for viewing with Wireshark
-";i:1;N;i:2;N;}i:2;i:6;}i:2;a:3:{i:0;s:10:"listu_open";i:1;a:0:{}i:2;i:116;}i:3;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:116;}i:4;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:116;}i:5;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:" ";}i:2;i:120;}i:6;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:121;}i:7;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:121;}i:8;a:3:{i:0;s:11:"listu_close";i:1;a:0:{}i:2;i:121;}i:9;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:121;}}

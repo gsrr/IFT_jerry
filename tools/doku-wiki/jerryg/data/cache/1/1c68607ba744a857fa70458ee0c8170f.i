@@ -1,0 +1,9 @@
+a:15:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:10:"listu_open";i:1;a:0:{}i:2;i:0;}i:2;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:0;}i:3;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:0;}i:4;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:69:" python /usr/local/NAS/misc/HAAgent/MBCmd.py getPoolnameByVVID serial";}i:2;i:4;}i:5;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:73;}i:6;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:73;}i:7;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:73;}i:8;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:73;}i:9;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:31:" disk list (python DiskInfo.py)";}i:2;i:77;}i:10;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:108;}i:11;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:108;}i:12;a:3:{i:0;s:11:"listu_close";i:1;a:0:{}i:2;i:108;}i:13;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:681:"
+disk['driveName']+':'+disk['jbodID']+':'+disk['slotID']+':'+disk['slotIndex']+':'+disk['serial']
+
+sda:0:0:A:00000001FFFFF100:JBOD0 Slot0:System Slot0:Normal:IFT GSe 3000 Series:SSDDrive:10737418240:SAS:512:512:121B
+sdb:0:1:A:00000000FFFFF100:JBOD0 Slot1:System Slot1:Normal:IFT GSe 3000 Series:SSDDrive:1073741824:SAS:512:512:121B
+sdc:0:3:A:00000002FFFFF100:JBOD0 Slot3:System Slot3:Normal:IFT GSe 3000 Series:SSDDrive:5368709120:SAS:512:512:121B
+sdd:0:4:A:00000003FFFFF100:JBOD0 Slot4:System Slot4:Normal:IFT GSe 3000 Series:SSDDrive:5973213184:SAS:512:512:121B
+sde:0:6:A:503D2C2758CE90E5:JBOD0 Slot6:System Slot6:Normal:IFT GSe 3000 Series:MagDrive:10737418240:SAS:512:512:121B
+";i:1;N;i:2;N;}i:2;i:114;}i:14;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:114;}}

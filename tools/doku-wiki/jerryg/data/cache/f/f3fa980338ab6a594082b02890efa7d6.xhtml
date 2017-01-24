@@ -1,0 +1,33 @@
+
+<h1 class="sectionedit1" id="create_a_remote_git_branch">create a remote Git branch</h1>
+<div class="level1">
+<pre class="file">git checkout -b &lt;branch-name&gt;
+git push &lt;remote-name&gt; &lt;branch-name&gt; or git push &lt;remote-name&gt; &lt;local-branch-name&gt;:&lt;remote-branch-name&gt;</pre>
+
+</div>
+<!-- EDIT1 SECTION "create a remote Git branch" [1-190] -->
+<h1 class="sectionedit2" id="compare_two_branches">compare two branches</h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> git diff branch_1..branch_2</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT2 SECTION "compare two branches" [191-257] -->
+<h1 class="sectionedit3" id="rollback">rollback</h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> rollback push</div>
+</li>
+</ul>
+<pre class="file">git revert $hash  # It will create a new commit automatically.
+git push</pre>
+<ul>
+<li class="level1"><div class="li"> Revert to a specific commit id</div>
+</li>
+</ul>
+<pre class="file">git reset --hard 9bc9775a51432ae4a0ecc57423dd9791a22ea9c0</pre>
+
+</div>
+<!-- EDIT3 SECTION "rollback" [258-] -->

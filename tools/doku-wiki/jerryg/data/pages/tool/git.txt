@@ -1,0 +1,18 @@
+====== create a remote Git branch ======
+<file>
+git checkout -b <branch-name>
+git push <remote-name> <branch-name> or git push <remote-name> <local-branch-name>:<remote-branch-name>
+</file>
+====== compare two branches ======
+  * git diff branch_1..branch_2
+====== rollback ======
+
+  * rollback push
+<file>
+git revert $hash  # It will create a new commit automatically.
+git push
+</file>
+  * Revert to a specific commit id
+<file>
+git reset --hard 9bc9775a51432ae4a0ecc57423dd9791a22ea9c0
+</file>

@@ -1,0 +1,106 @@
+how to check and install?
+<file>
+</file>
+playbook for github
+<file>
+- hosts: 127.0.0.1
+  roles:
+    - davidkarban.git
+
+  tasks:
+    - name: clone project from git repo
+      git: repo={{ project_git_repo }} dest={{ project_source_path }}
+
+    - name: install prerequisite libs
+      yum: name=openssl-devel state=installed
+
+    - name: compile
+      command: make
+      args:
+        chdir: "{{ project_source_path }}"
+        creates: "{{ project_source_path }}/wrk"
+
+    - name: install
+      command: cp wrk /usr/local/bin
+      args:
+        chdir: "{{ project_source_path }}"
+        creates: /usr/local/bin/wrk
+
+  vars:
+    - project_git_repo: https://github.com/wg/wrk.git
+    - project_source_path: /tmp/wrk
+</file>
+playbook for yum install
+
+[[http://docs.ansible.com/ansible/yum_module.html]]
+<file>
+- name: install the latest version of Apache
+  yum:
+    name: httpd
+    state: latest
+
+- name: remove the Apache package
+  yum:
+    name: httpd
+    state: absent
+
+- name: install the latest version of Apache from the testing repo
+  yum:
+    name: httpd
+    enablerepo: testing
+    state: present
+
+- name: install one specific version of Apache
+  yum:
+    name: httpd-2.2.29-1.4.amzn1
+    state: present
+
+- name: upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+
+- name: install the nginx rpm from a remote repo
+  yum:
+    name: http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
+    state: present
+
+- name: install nginx rpm from a local file
+  yum:
+    name: /usr/local/src/nginx-release-centos-6-0.el6.ngx.noarch.rpm
+    state: present
+
+- name: install the 'Development tools' package group
+  yum:
+    name: "@Development tools"
+    state: present
+
+- name: install the 'Gnome desktop' environment group
+  yum:
+    name: "@^gnome-desktop-environment"
+    state: present
+</file>
+
+Commands
+<file>
+ansible-playbook playbook_sample.yml
+
+</file>
+What is Ansible?
+<file>
+Ansible is an open-source automation engine that automates cloud provisioning, 
+configuration management, and application deployment.
+
+[cloud provisioning]
+cloud provisioning refers to the deployment of a company's cloud computing strategy, 
+which typically involves selecting which applications and services will reside in the public cloud.
+
+[role]
+Role is a set of tasks and additional files to configure host to serve for a certain role.
+
+[playbook]
+Ansible playbooks are a way to send commands to remote computers in a scripted way. 
+</file>
+example:
+
+[[http://www.codedata.com.tw/social-coding/ansible-github/]]

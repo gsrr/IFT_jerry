@@ -1,0 +1,118 @@
+
+<p>
+how to check and install?
+</p>
+<pre class="file"></pre>
+
+<p>
+playbook for github
+</p>
+<pre class="file">- hosts: 127.0.0.1
+  roles:
+    - davidkarban.git
+
+  tasks:
+    - name: clone project from git repo
+      git: repo={{ project_git_repo }} dest={{ project_source_path }}
+
+    - name: install prerequisite libs
+      yum: name=openssl-devel state=installed
+
+    - name: compile
+      command: make
+      args:
+        chdir: &quot;{{ project_source_path }}&quot;
+        creates: &quot;{{ project_source_path }}/wrk&quot;
+
+    - name: install
+      command: cp wrk /usr/local/bin
+      args:
+        chdir: &quot;{{ project_source_path }}&quot;
+        creates: /usr/local/bin/wrk
+
+  vars:
+    - project_git_repo: https://github.com/wg/wrk.git
+    - project_source_path: /tmp/wrk</pre>
+
+<p>
+playbook for yum install
+</p>
+
+<p>
+<a href="http://docs.ansible.com/ansible/yum_module.html" class="urlextern" title="http://docs.ansible.com/ansible/yum_module.html" rel="nofollow">http://docs.ansible.com/ansible/yum_module.html</a>
+</p>
+<pre class="file">- name: install the latest version of Apache
+  yum:
+    name: httpd
+    state: latest
+
+- name: remove the Apache package
+  yum:
+    name: httpd
+    state: absent
+
+- name: install the latest version of Apache from the testing repo
+  yum:
+    name: httpd
+    enablerepo: testing
+    state: present
+
+- name: install one specific version of Apache
+  yum:
+    name: httpd-2.2.29-1.4.amzn1
+    state: present
+
+- name: upgrade all packages
+  yum:
+    name: &#039;*&#039;
+    state: latest
+
+- name: install the nginx rpm from a remote repo
+  yum:
+    name: http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
+    state: present
+
+- name: install nginx rpm from a local file
+  yum:
+    name: /usr/local/src/nginx-release-centos-6-0.el6.ngx.noarch.rpm
+    state: present
+
+- name: install the &#039;Development tools&#039; package group
+  yum:
+    name: &quot;@Development tools&quot;
+    state: present
+
+- name: install the &#039;Gnome desktop&#039; environment group
+  yum:
+    name: &quot;@^gnome-desktop-environment&quot;
+    state: present</pre>
+
+<p>
+Commands
+</p>
+<pre class="file">ansible-playbook playbook_sample.yml
+</pre>
+
+<p>
+What is Ansible?
+</p>
+<pre class="file">Ansible is an open-source automation engine that automates cloud provisioning, 
+configuration management, and application deployment.
+
+[cloud provisioning]
+cloud provisioning refers to the deployment of a company&#039;s cloud computing strategy, 
+which typically involves selecting which applications and services will reside in the public cloud.
+
+[role]
+Role is a set of tasks and additional files to configure host to serve for a certain role.
+
+[playbook]
+Ansible playbooks are a way to send commands to remote computers in a scripted way. </pre>
+
+<p>
+example:
+</p>
+
+<p>
+<a href="http://www.codedata.com.tw/social-coding/ansible-github/" class="urlextern" title="http://www.codedata.com.tw/social-coding/ansible-github/" rel="nofollow">http://www.codedata.com.tw/social-coding/ansible-github/</a>
+</p>
