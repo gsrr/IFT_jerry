@@ -1,0 +1,16 @@
+- hosts: 127.0.0.1
+#use priviledge (default : root)
+  become: yes
+# the way to use priviledge
+  become_method: sudo
+# define tasks
+  tasks:
+  - name: httpd is installed
+    yum: name=httpd state=installed
+  - name: httpd is running and enabled
+    service: name=httpd state=started enabled=yes
+  - name: install the 'Development tools' package group
+    yum:
+      name: "@Development tools"
+      state: installed
+#      state: present

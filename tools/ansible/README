@@ -1,0 +1,7 @@
+[requirement]
+pip install ansible
+
+
+[command]
+ansible-galaxy install -f  -r requirements.yml
+
