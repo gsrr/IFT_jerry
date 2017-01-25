@@ -1,0 +1,14 @@
+- hosts: all
+  roles:
+    - davidkarban.git
+
+  tasks:
+    - name: install pathogen
+      action: shell mkdir -p ~/.vim/autoload ~/.vim/bundle && curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+
+    - name: clone ctrlp.vim
+      git: repo={{ vim_git_repo_ctrlp }} dest={{ vim_source_path_ctrlp }}
+
+  vars:
+    - vim_git_repo_ctrlp: https://github.com/kien/ctrlp.vim
+    - vim_source_path_ctrlp: ~/.vim/bundle/ctrlp.vim
