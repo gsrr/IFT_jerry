@@ -1,0 +1,9 @@
+[Installation]
+pip install luigi
+
+[Reference]
+https://marcobonzanini.com/2015/10/24/building-data-pipelines-with-python-and-luigi/
+https://challenging.gitbooks.io/luigi-for-clickstream/content/
+
+沒有local-schedule參數不會紀錄到UI上.
+
