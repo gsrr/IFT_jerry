@@ -6,9 +6,32 @@
     - name: install pathogen
       action: shell mkdir -p ~/.vim/autoload ~/.vim/bundle && curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
+    - name: download vimrc
+      action: shell curl -o ~/.vimrc --remote-name http://172.27.12.189/dotfiles/vimrc
+
     - name: clone ctrlp.vim
-      git: repo={{ vim_git_repo_ctrlp }} dest={{ vim_source_path_ctrlp }}
+      git: repo={{ ctrlp }} dest={{ path_ctrlp }}
+
+    - name: clone nerdtree.vim
+      git: repo={{ nerdtree }} dest={{ path_nerdtree }}
+
+    - name: clone syntastic.vim
+      git: repo={{ syntastic }} dest={{ path_syntastic }}
+
+    - name: download powerline
+      git: repo={{ powerline }} dest={{ path_powerline }}
+
+    - name: install powerline
+      action: shell python setup.py install
+      args:
+        chdir: "{{ path_powerline }}"
 
   vars:
-    - vim_git_repo_ctrlp: https://github.com/kien/ctrlp.vim
-    - vim_source_path_ctrlp: ~/.vim/bundle/ctrlp.vim
+    - ctrlp: https://github.com/kien/ctrlp.vim
+    - path_ctrlp: ~/.vim/bundle/ctrlp.vim
+    - nerdtree: https://github.com/scrooloose/nerdtree 
+    - path_nerdtree: ~/.vim/bundle/nerdtree
+    - syntastic: https://github.com/scrooloose/syntastic 
+    - path_syntastic: ~/.vim/bundle/syntastic
+    - powerline: https://github.com/Lokaltog/powerline
+    - path_powerline: /tmp/powerline
