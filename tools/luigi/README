@@ -1,1 +1,6 @@
+[Installation]
 pip install luigi
+
+[command]
+python run_luigi.py SquaredNumbers --local-scheduler
+python run_luigi.py SquaredNumbers
