@@ -1,0 +1,1 @@
+split-window -v "python /root/.tmux/python/tmux_ssh.py"

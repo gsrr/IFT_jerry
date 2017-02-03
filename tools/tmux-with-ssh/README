@@ -1,0 +1,17 @@
+[bashrc]
+mkdir /root/.tmux/commands
+function tmux-ssh() { cd /root/.tmux/commands;tmux new -s $1 "ssh root@$1"; } 
+
+[tmux.conf]
+set -g status-left-length 20
+set -g window-status-format '#I:#(pwd="#{pane_current_path}"; echo ${pwd####*/})#F'
+set -g window-status-current-format '#I:#(pwd="#{pane_current_path}"; echo ${pwd####*/})#F'
+set-option -g status-interval 1
+
+[python]
+tmux_ssh.py, ssh connection by python
+
+[/root/.tmux/commands]
+C-b, :so $filename
+
+
