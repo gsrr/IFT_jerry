@@ -33,3 +33,8 @@ tool:mount
 tool:programming_style
 tool:ansible
 tool:systemctl
+samba:ldap:add_user_nodomain
+samba:ldap:add_user_ldap
+english:20170126
+english:continuous_delivery
+software:continuous_delivery

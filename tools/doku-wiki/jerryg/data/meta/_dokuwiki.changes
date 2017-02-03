@@ -1,87 +1,3 @@
-1484634824	172.27.12.71	E	samba:ntacl:samba-tool				34
-1484639140	172.27.12.71	C	nas:why_admin_user		created		17
-1484639271	172.27.12.71	E	nas:why_admin_user				45
-1484639663	172.27.12.71	E	nas:why_admin_user				17
-1484639671	172.27.12.71	E	nas:why_admin_user				3
-1484639975	172.27.12.71	E	nas:why_admin_user				42
-1484642514	172.27.12.71	E	nas:why_admin_user				66
-1484643808	172.27.12.71	E	nas:why_admin_user				223
-1484643837	172.27.12.71	E	nas:why_admin_user				44
-1484643875	172.27.12.71	E	nas:why_admin_user				48
-1484643961	172.27.12.71	E	nas:why_admin_user				52
-1484703532	172.27.12.71	C	samba:ldb		created		36
-1484703541	172.27.12.71	E	samba:ldb				4
-1484704818	172.27.12.71	E	samba:ldb				42
-1484705390	172.27.12.71	E	samba:ldb				60
-1484706053	172.27.12.71	E	samba:ldb				133
-1484710431	172.27.12.71	E	samba:ldb				1627
-1484710451	172.27.12.71	E	samba:ldb				-15
-1484719699	172.27.12.71	E	nas:why_admin_user				385
-1484720488	172.27.12.71	E	nas:why_admin_user				1060
-1484720516	172.27.12.71	E	nas:why_admin_user				-14
-1484720575	172.27.12.71	E	nas:why_admin_user				25
-1484720628	172.27.12.71	E	nas:why_admin_user				95
-1484720637	172.27.12.71	E	nas:why_admin_user				-2
-1484720682	172.27.12.71	E	nas:why_admin_user				32
-1484720785	172.27.12.71	E	nas:why_admin_user				112
-1484720809	172.27.12.71	E	nas:why_admin_user				24
-1484720858	172.27.12.71	E	nas:why_admin_user				53
-1484721049	172.27.12.71	E	nas:why_admin_user				142
-1484721663	172.27.12.71	E	nas:why_admin_user				177
-1484721681	172.27.12.71	E	nas:why_admin_user				-7
-1484721798	172.27.12.71	E	nas:why_admin_user				1
-1484722083	172.27.12.71	E	nas:why_admin_user				74
-1484722320	172.27.12.71	E	nas:why_admin_user				3
-1484793827	172.27.12.71	E	tool:gdb				88
-1484793982	172.27.12.71	E	tool:gdb				877
-1484794266	172.27.12.71	C	tool:python		created		219
-1484794346	172.27.12.71	E	tool:python				25
-1484794472	172.27.12.71	E	tool:git				67
-1484795209	172.27.12.71	E	tool:vim				80
-1484795892	172.27.12.71	E	tool:vim				1510
-1484795905	172.27.12.71	E	tool:vim				2
-1484795930	172.27.12.71	E	tool:vim				28
-1484805129	172.27.12.71	C	tool:tmux		created		50
-1484805179	172.27.12.71	E	tool:tmux				73
-1484805189	172.27.12.71	E	tool:tmux				2
-1484805342	172.27.12.71	E	tool:tmux				70
-1484813891	127.0.0.1	E	tool:tmux		external edit		0
-1484816173	172.27.12.71	E	tool:tmux				76
-1484816223	172.27.12.71	E	tool:tmux				34
-1484816284	172.27.12.71	E	tool:tmux				17
-1484816294	172.27.12.71	E	tool:tmux				0
-1484816349	172.27.12.71	E	tool:tmux				1
-1484816357	172.27.12.71	E	tool:tmux				1
-1484816380	172.27.12.71	E	tool:tmux				22
-1484875577	172.27.12.71	E	tool:tmux				-43
-1484875592	172.27.12.71	E	tool:tmux				14
-1484877193	172.27.12.71	E	tool:tmux				46
-1484877259	172.27.12.71	E	tool:tmux				54
-1484884063	172.27.12.71	E	tool:tmux				112
-1484884082	172.27.12.71	E	tool:tmux				3
-1484884220	172.27.12.71	E	tool:tmux				29
-1484884301	172.27.12.71	E	tool:tmux				-15
-1484884314	172.27.12.71	E	tool:tmux				22
-1484884388	172.27.12.71	E	tool:tmux				132
-1484884781	172.27.12.71	E	tool:tmux				241
-1484884818	172.27.12.71	E	tool:tmux				39
-1484884985	172.27.12.71	E	tool:tmux				2
-1484892176	172.27.12.71	C	nas:mbcmd		created		708
-1484892204	172.27.12.71	E	nas:mbcmd				94
-1484896582	172.27.12.71	E	tool:tmux				28
-1484896668	172.27.12.71	E	tool:tmux				93
-1484896832	172.27.12.71	C	tool:bash		created		107
-1484896840	172.27.12.71	E	tool:bash				0
-1484899531	172.27.12.71	C	tool:mount		created		3270
-1484899561	172.27.12.71	E	tool:mount				50
-1484956182	10.141.141.125	C	tool:programming_style		created		104
-1484813891	127.0.0.1	E	tool:git		external edit		0
-1485164847	172.27.12.71	E	tool:git				190
-1485226784	172.27.12.71	C	tool:ansible		created		372
-1485226793	172.27.12.71	E	tool:ansible				1
-1485226805	172.27.12.71	E	tool:ansible				1
-1485228807	172.27.12.71	E	tool:ansible				98
-1485243126	172.27.12.71	E	tool:ansible				1063
 1485243295	172.27.12.71	E	tool:ansible				89
 1485243452	172.27.12.71	E	tool:ansible				134
 1485243931	172.27.12.71	E	tool:ansible				700
@@ -89,3 +5,19 @@
 1485244034	172.27.12.71	E	tool:ansible				40
 1485244181	172.27.12.71	E	tool:ansible				97
 1485244703	172.27.12.71	C	tool:systemctl		created		45
+1485246939	172.27.12.71	E	samba:ldb				678
+1485246947	172.27.12.71	E	samba:ldb				1
+1485247725	172.27.12.71	C	samba:ldap:add_user_nodomain		created		11815
+1485247937	172.27.12.71	C	samba:ldap:add_user_ldap		created		10891
+1485329256	172.27.12.71	E	samba:ldb				255
+1485329267	172.27.12.71	E	samba:ldb				1
+1485329343	172.27.12.71	E	samba:ldb				144
+1485445142	10.141.141.112	C	english:20170126		created		1690
+1486024442	172.27.12.71	C	english:continuous_delivery		created		326
+1486026683	172.27.12.71	E	english:continuous_delivery				691
+1486029207	172.27.12.71	E	english:continuous_delivery				140
+1486031085	172.27.12.71	E	english:continuous_delivery				121
+1486032553	172.27.12.71	E	english:continuous_delivery				1715
+1486091515	172.27.12.71	C	software:continuous_delivery		created		637
+1486091590	172.27.12.71	E	software:continuous_delivery				77
+1486091706	172.27.12.71	E	software:continuous_delivery				305

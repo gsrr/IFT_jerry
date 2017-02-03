@@ -1,0 +1,283 @@
+<file>
+INFO: Current debug levels:
+  all: 10
+  tdb: 10
+  printdrivers: 10
+  lanman: 10
+  smb: 10
+  rpc_parse: 10
+  rpc_srv: 10
+  rpc_cli: 10
+  passdb: 10
+  sam: 10
+  auth: 10
+  winbind: 10
+  vfs: 10
+  idmap: 10
+  quota: 10
+  acls: 10
+  locking: 10
+  msdfs: 10
+  dmapi: 10
+  registry: 10
+  scavenger: 10
+  dns: 10
+  ldb: 10
+doing parameter map acl inherit = No
+doing parameter multicast dns register = no
+doing parameter netbios name = TEST
+doing parameter nfs4:acedup = merge
+doing parameter nfs4:mode = special
+doing parameter posix locking = no
+doing parameter printcap name = /dev/null
+doing parameter printing = bsd
+doing parameter smb2 max credits = 32768
+doing parameter store dos attributes = yes
+doing parameter template shell = /bin/nassh
+doing parameter use client driver = yes
+doing parameter vfs objects = /usr/lib64/samba/vfs/acl_xattr.so
+doing parameter winbind enum groups = yes
+doing parameter winbind enum users = yes
+doing parameter winbind expand groups = 1
+doing parameter winbind nss info = rfc2307
+doing parameter winbind refresh tickets = true
+doing parameter winbind request timeout = 60
+doing parameter winbind trusted domains only = no
+doing parameter winbind use default domain = no
+doing parameter wins server =
+doing parameter workgroup = Workgroup
+pm_process() returned Yes
+lp_servicenumber: couldn't find homes
+Netbios name list:-
+my_netbios_names[0]="TEST"
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+vnn pid 26841 = 0
+Registering messaging pointer for type 2 - private_data=(nil)
+Registering messaging pointer for type 9 - private_data=(nil)
+Registered MSG_REQ_POOL_USAGE
+Registering messaging pointer for type 11 - private_data=(nil)
+Registering messaging pointer for type 12 - private_data=(nil)
+Registered MSG_REQ_DMALLOC_MARK and LOG_CHANGED
+Registering messaging pointer for type 1 - private_data=(nil)
+Registering messaging pointer for type 5 - private_data=(nil)
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+db_open_ctdb: opened database 'g_lock.tdb' with dbid 0x4d2a432b
+db_open_ctdb: opened database 'secrets.tdb' with dbid 0x7132c184
+Attempting to find a passdb backend to match tdbsam (tdbsam)
+No builtin backend found, trying to load plugin
+Probing module 'tdbsam'
+Probing module 'tdbsam': Trying to load from /usr/lib64/samba/pdb/tdbsam.so
+Module 'tdbsam' loaded
+Attempting to register passdb backend tdbsam
+Successfully added passdb backend 'tdbsam'
+Found pdb backend tdbsam
+pdb backend tdbsam has a valid init
+check lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:g_lock.tdb 3:<none>
+Locking db 1294615339 key 7472616E73616374696F
+ctdb_data.dptr = (nil), dmaster = 4294967295 (0) 0
+ctdbd_migrate: Sending ctdb packet
+Locking db 1294615339 key 7472616E73616374696F
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+db_open_ctdb: opened database 'dbwrap_watchers.tdb' with dbid 0x6afb8c09
+Unlocking db 1294615339 key 7472616E73616374696F
+release lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:<none> 3:<none>
+../source3/lib/dbwrap/dbwrap_ctdb.c:364 transaction started on db 0x7132c184
+check lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:g_lock.tdb 3:<none>
+Locking db 1294615339 key 7472616E73616374696F
+ctdbd_control: Sending ctdb packet
+Unlocking db 1294615339 key 7472616E73616374696F
+release lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:<none> 3:<none>
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+db_open_ctdb: opened database 'g_lock.tdb' with dbid 0x4d2a432b
+db_open_ctdb: opened database 'passdb.tdb' with dbid 0x3ef19640
+tdbsam_open: successfully opened /var/lib/samba/private/passdb.tdb
+pdb_getsampwnam (TDB): error fetching database.
+ Key: USER_nas_smb004
+Finding user nas_smb004
+Trying _Get_Pwnam(), username as lowercase is nas_smb004
+Get_Pwnam_internals did find user [nas_smb004]!
+pdb_set_username: setting username nas_smb004, was
+pdb_set_full_name: setting full name , was
+pdb_set_domain: setting domain TEST, was
+Home server: test
+pdb_set_profile_path: setting profile path \\test\nas_smb004\profile, was
+Home server: test
+pdb_set_homedir: setting home dir \\test\nas_smb004, was
+pdb_set_dir_drive: setting dir drive , was NULL
+pdb_set_logon_script: setting logon script , was
+check lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:g_lock.tdb 3:<none>
+Locking db 1294615339 key 7472616E73616374696F
+ctdb_data.dptr = (nil), dmaster = 4294967295 (0) 0
+ctdbd_migrate: Sending ctdb packet
+Locking db 1294615339 key 7472616E73616374696F
+Unlocking db 1294615339 key 7472616E73616374696F
+release lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:<none> 3:<none>
+../source3/lib/dbwrap/dbwrap_ctdb.c:364 transaction started on db 0x3ef19640
+check lock order 1 for passdb.tdb
+lock order:  1:passdb.tdb 2:<none> 3:<none>
+release lock order 1 for passdb.tdb
+lock order:  1:<none> 2:<none> 3:<none>
+../source3/lib/dbwrap/dbwrap_ctdb.c:753 transaction commit on db 0x3ef19640
+ctdbd_control: Sending ctdb packet
+check lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:g_lock.tdb 3:<none>
+Locking db 1294615339 key 7472616E73616374696F
+ctdbd_control: Sending ctdb packet
+Unlocking db 1294615339 key 7472616E73616374696F
+release lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:<none> 3:<none>
+pdb_set_user_sid: setting user sid S-1-5-21-4106897981-1158876546-2369908411-1000
+pdb_set_username: setting username nas_smb004, was nas_smb004
+check lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:g_lock.tdb 3:<none>
+Locking db 1294615339 key 7472616E73616374696F
+Unlocking db 1294615339 key 7472616E73616374696F
+release lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:<none> 3:<none>
+../source3/lib/dbwrap/dbwrap_ctdb.c:364 transaction started on db 0x3ef19640
+Opening cache file at /var/lib/samba/gencache.tdb
+Opening cache file at /var/lib/samba/gencache_notrans.tdb
+gid_to_sid: winbind failed to find a sid for gid 1001
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+db_open_ctdb: opened database 'g_lock.tdb' with dbid 0x4d2a432b
+db_open_ctdb: opened database 'group_mapping.tdb' with dbid 0xa1413774
+LEGACY: gid 1001 -> sid S-1-22-2-1001
+Forcing Primary Group to 'Domain Users' for nas_smb004
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+ctdbd_control: Sending ctdb packet
+db_open_ctdb: opened database 'g_lock.tdb' with dbid 0x4d2a432b
+db_open_ctdb: opened database 'account_policy.tdb' with dbid 0x2ca251cf
+account_policy_get: name: password history, val: 0
+Storing (new) account nas_smb004 with RID 1000
+check lock order 1 for passdb.tdb
+lock order:  1:passdb.tdb 2:<none> 3:<none>
+release lock order 1 for passdb.tdb
+lock order:  1:<none> 2:<none> 3:<none>
+tdb_update_sam: Inserting key for RID 1000
+check lock order 1 for passdb.tdb
+lock order:  1:passdb.tdb 2:<none> 3:<none>
+release lock order 1 for passdb.tdb
+lock order:  1:<none> 2:<none> 3:<none>
+../source3/lib/dbwrap/dbwrap_ctdb.c:753 transaction commit on db 0x3ef19640
+ctdbd_control: Sending ctdb packet
+check lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:g_lock.tdb 3:<none>
+Locking db 1294615339 key 7472616E73616374696F
+ctdbd_control: Sending ctdb packet
+Unlocking db 1294615339 key 7472616E73616374696F
+release lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:<none> 3:<none>
+pdb_set_username: setting username nas_smb004, was
+pdb_set_domain: setting domain TEST, was
+pdb_set_nt_username: setting nt username , was
+pdb_set_full_name: setting full name , was
+Home server: test
+pdb_set_homedir: setting home dir \\test\nas_smb004, was
+pdb_set_dir_drive: setting dir drive , was NULL
+pdb_set_logon_script: setting logon script , was
+Home server: test
+pdb_set_profile_path: setting profile path \\test\nas_smb004\profile, was
+pdb_set_workstations: setting workstations , was
+account_policy_get: name: password history, val: 0
+pdb_set_user_sid: setting user sid S-1-5-21-4106897981-1158876546-2369908411-1000
+pdb_set_user_sid_from_rid:
+        setting user sid S-1-5-21-4106897981-1158876546-2369908411-1000 from rid 1000
+Finding user nas_smb004
+Trying _Get_Pwnam(), username as lowercase is nas_smb004
+Get_Pwnam_internals did find user [nas_smb004]!
+gid_to_sid: winbind failed to find a sid for gid 1001
+LEGACY: gid 1001 -> sid S-1-22-2-1001
+Forcing Primary Group to 'Domain Users' for nas_smb004
+account_policy_get: name: password history, val: 0
+pdb_set_username: setting username nas_smb004, was
+pdb_set_domain: setting domain TEST, was
+pdb_set_nt_username: setting nt username , was
+pdb_set_full_name: setting full name , was
+Home server: test
+pdb_set_homedir: setting home dir \\test\nas_smb004, was
+pdb_set_dir_drive: setting dir drive , was NULL
+pdb_set_logon_script: setting logon script , was
+Home server: test
+pdb_set_profile_path: setting profile path \\test\nas_smb004\profile, was
+pdb_set_workstations: setting workstations , was
+account_policy_get: name: password history, val: 0
+pdb_set_user_sid: setting user sid S-1-5-21-4106897981-1158876546-2369908411-1000
+pdb_set_user_sid_from_rid:
+        setting user sid S-1-5-21-4106897981-1158876546-2369908411-1000 from rid 1000
+pdb_set_group_sid: setting group sid S-1-5-21-4106897981-1158876546-2369908411-513
+check lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:g_lock.tdb 3:<none>
+Locking db 1294615339 key 7472616E73616374696F
+Unlocking db 1294615339 key 7472616E73616374696F
+release lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:<none> 3:<none>
+../source3/lib/dbwrap/dbwrap_ctdb.c:364 transaction started on db 0x3ef19640
+pdb_set_username: setting username nas_smb004, was
+pdb_set_domain: setting domain TEST, was
+pdb_set_nt_username: setting nt username , was
+pdb_set_full_name: setting full name , was
+Home server: test
+pdb_set_homedir: setting home dir \\test\nas_smb004, was
+pdb_set_dir_drive: setting dir drive , was NULL
+pdb_set_logon_script: setting logon script , was
+Home server: test
+pdb_set_profile_path: setting profile path \\test\nas_smb004\profile, was
+pdb_set_workstations: setting workstations , was
+account_policy_get: name: password history, val: 0
+pdb_set_user_sid: setting user sid S-1-5-21-4106897981-1158876546-2369908411-1000
+pdb_set_user_sid_from_rid:
+        setting user sid S-1-5-21-4106897981-1158876546-2369908411-1000 from rid 1000
+account_policy_get: name: password history, val: 0
+Storing account nas_smb004 with RID 1000
+check lock order 1 for passdb.tdb
+lock order:  1:passdb.tdb 2:<none> 3:<none>
+release lock order 1 for passdb.tdb
+lock order:  1:<none> 2:<none> 3:<none>
+tdb_update_sam: Updating key for RID 1000
+check lock order 1 for passdb.tdb
+lock order:  1:passdb.tdb 2:<none> 3:<none>
+release lock order 1 for passdb.tdb
+lock order:  1:<none> 2:<none> 3:<none>
+../source3/lib/dbwrap/dbwrap_ctdb.c:753 transaction commit on db 0x3ef19640
+ctdbd_control: Sending ctdb packet
+check lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:g_lock.tdb 3:<none>
+Locking db 1294615339 key 7472616E73616374696F
+ctdbd_control: Sending ctdb packet
+Unlocking db 1294615339 key 7472616E73616374696F
+release lock order 2 for g_lock.tdb
+lock order:  1:<none> 2:<none> 3:<none>
+Added user nas_smb004.
+</file>

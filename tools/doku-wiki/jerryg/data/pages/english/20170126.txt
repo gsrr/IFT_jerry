@@ -1,0 +1,30 @@
+I want to talk about something about my job.
+在工作上(software developer), 我想很多公司都已經試著將工作自動化, 尤其是外商.
+但是在我們公司, 很多動作依然都是靠著人工在進行處理.
+
+I think that many company are try to automate their work(something like build package , test progress, or release progress), especially in foreign company.
+but we still do these job manually in my company. 
+I think these things are important in developing software although it can not earn money for company.
+But it can save a lot of time and improve the quality of software.`
+
+Can you post your sentence.
+
+my company is 23 years old, the manager does not know these things sufficiently.
+They still use their old concept to develop a software.
+
+I think there are many things to do, it should do step by step, the first thing I will automate the test process to let the test can run automatically everyday.
+
+we do have man power, even if we does not have, we still should do right things even that is a small step because I think it is a trend due to the scale of software is too big to test manually.
+
+find a way out,
+I am trying to find a way out to improve myself.
+
+I am looking for DevOps(developer operation), It is a position to integrate things in develop progress.
+I hope that I can become more professional by managing a software. 
+
+Yes, this is the object that this position want to do.
+
+I do not have a detail procedure, i need to know some tools (like ansible, a automated deploy tool), may be I need to spend few months to study these tools.
+
+I think that I can not think very smoothly, I need time to think about what I want to say and translate it.
+

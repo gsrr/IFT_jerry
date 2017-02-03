@@ -1,0 +1,78 @@
+
+<p>
+[Installation]
+</p>
+<ul>
+<li class="level1"><div class="li"> yum install ldb-tools</div>
+</li>
+</ul>
+
+<p>
+[problem need to solve]
+</p>
+
+<p>
+add user problem - local user will be sync to ldap server
+</p>
+<pre class="file">use another smb.conf for smbpasswd. (no ldap information in smb.conf)</pre>
+
+<p>
+rid problem
+</p>
+<pre class="file">ldap server can not use rid due to the follow parameter : idmap backend = ldap:ldap://172.27.112.241
+ldap user rid is from 1001. (same as synloogy and qnap)
+local user rid is from 1000001.</pre>
+
+<p>
+ldap user with domain information can not login smb service. (user@domain.com)
+</p>
+<pre class="file">Need to modify the source code of samba</pre>
+
+<p>
+The ldap user will be created when creating a local user account.
+</p>
+<pre class="file">ldapsam_update_sam_account: user nas_smb003 to be modified has dn: uid=nas_smb003,cn=users,dc=test,dc=ift,dc=com
+init_ldap_from_sam: Setting entry for user: nas_smb003
+smbldap_make_mod: deleting attribute |sambaAcctFlags| values |[DU         ]|
+smbldap_make_mod: adding attribute |sambaAcctFlags| value |[NDU        ]|
+smbldap_modify: dn =&gt; [uid=nas_smb003,cn=users,dc=test,dc=ift,dc=com]
+ldapsam_update_sam_account: successfully modified uid = nas_smb003 in the LDAP database</pre>
+
+<p>
+[LDB]
+</p>
+<ul>
+<li class="level1"><div class="li"> LDB basically sits on top of TDB and manipulates the data into an LDAP-like structure.</div>
+</li>
+<li class="level1"><div class="li"> </div>
+</li>
+</ul>
+
+<p>
+[TDB]
+</p>
+<ul>
+<li class="level1"><div class="li"> TDB is the Trivial DataBase. </div>
+</li>
+<li class="level1"><div class="li"> This is a very simple key/value pair database . </div>
+</li>
+<li class="level1"><div class="li"> TDB stores data in binary format.</div>
+</li>
+</ul>
+
+<p>
+where is samba domain_dn?
+</p>
+<pre class="file">get_default_basedn, /ift-utils/samba-4.2.3/lib/ldb/pyldb.c
+
+username@computername:~/Samba/samba-master$ tdbdump st/dc/private/secrets.ldb
+{
+   key(12) = &quot;DN=@MODULES\00&quot;
+   data(45) = &quot;g\19\01&amp;\01\00\00\00@MODULES\00@LIST\00\01\00\00\00\0D\00\00\00samba_secrets\00&quot;
+}
+{
+   key(43) = &quot;DN=FLATNAME=SAMBADOMAIN,CN=PRIMARY DOMAINS\00&quot;
+   data(702) = &quot;g\19\01&amp;\11\00\00\00flatname=SAMBADOMAIN,cn=Primary Domains\00msDS-KeyVersionNumber\00\01\00\00\00\01\00\00\001\00objectClass\00\03\00\00\00\03\00\00\00top\00\0D\00\00\00primaryDomain\00\0E\00\00\00kerberosSecret\00objectSid\00\01\00\00\00\18\00\00\00\01\04\00\00\00\00\00\05\15\00\00\00\013\BE\F5\DB\E8\C33\B4\9C\1E\ED\00privateKeytab\00\01\00\00\00\0E\00\00\00secrets.keytab\00realm\00\01\00\00\00\11\00\00\00SAMBA.EXAMPLE.COM\00saltPrincipal\00\01\00\00\000\00\00\00host/localdc.samba.example.com@SAMBA.EXAMPLE.COM\00samAccountName\00\01\00\00\00\08\00\00\00LOCALDC$\00secret\00\01\00\00\00\11\00\00\00machinelocDCpass1\00secureChannelType\00\01\00\00\00\01\00\00\006\00servicePrincipalName\00\02\00\00\00\0C\00\00\00HOST/localdc\00\1E\00\00\00HOST/localdc.samba.example.com\00objectGUID\00\01\00\00\00\10\00\00\00H\D9_\D5+\E3\C0G\B7\CF\F6\FB\B1m\EB\1E\00whenCreated\00\01\00\00\00\11\00\00\0020111005000140.0Z\00whenChanged\00\01\00\00\00\11\00\00\0020111005000140.0Z\00uSNCreated\00\01\00\00\00\01\00\00\007\00uSNChanged\00\01\00\00\00\01\00\00\007\00name\00\01\00\00\00\0B\00\00\00SAMBADOMAIN\00flatname\00\01\00\00\00\0B\00\00\00SAMBADOMAIN\00&quot;
+}
+   
+join AD (or LDAP), there is still no Primary Domains information.</pre>

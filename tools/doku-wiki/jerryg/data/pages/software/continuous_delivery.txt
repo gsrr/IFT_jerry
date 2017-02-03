@@ -1,0 +1,22 @@
+Deployment pipeline
+<file>
+commit stage -> Automated acceptance testing -> Automated capacity testing -> Manual testing (Exploratory testing) -> Release
+</file>
+
+commit stage
+<file>
+Including: Unit test, 
+</file>
+Acceptance testing
+<file>
+驗收測試（Acceptance Testing）是系統行為與功能面的規範，用來說明某一個user story，系統在特定情況下應該完成什麼樣功能，以及針對某一些輸入，應該具備怎樣的輸出結果。
+從使用者的角度來檢視，系統是否能正常運作.
+</file>
+Capacity testing
+<file>
+A capacity test is a test to determine how many users your application can handle before either performance or stability becomes unacceptable. 
+</file>
+Exploratory testing
+<file>
+As its name implies, exploratory testing is about exploring, finding out about the software, what it does, what it doesn’t do, what works and what doesn’t work. The tester is constantly making decisions about what to test next and where to spend the (limited) time.
+</file>

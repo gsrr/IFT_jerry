@@ -4,3 +4,6 @@ networkadminkb
 administrators
 mypythonscript
 initialisation
+sambaacctflags
+sambalogontime
+sambahomedrive

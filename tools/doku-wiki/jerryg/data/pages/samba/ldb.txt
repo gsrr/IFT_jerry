@@ -1,6 +1,34 @@
 [Installation]
   * yum install ldb-tools
 
+[problem need to solve]
+
+add user problem - local user will be sync to ldap server
+<file>
+use another smb.conf for smbpasswd. (no ldap information in smb.conf)
+</file>
+
+rid problem
+<file>
+ldap server can not use rid due to the follow parameter : idmap backend = ldap:ldap://172.27.112.241
+ldap user rid is from 1001. (same as synloogy and qnap)
+local user rid is from 1000001.
+</file>
+
+ldap user with domain information can not login smb service. (user@domain.com)
+<file>
+Need to modify the source code of samba
+</file>
+The ldap user will be created when creating a local user account.
+<file>
+ldapsam_update_sam_account: user nas_smb003 to be modified has dn: uid=nas_smb003,cn=users,dc=test,dc=ift,dc=com
+init_ldap_from_sam: Setting entry for user: nas_smb003
+smbldap_make_mod: deleting attribute |sambaAcctFlags| values |[DU         ]|
+smbldap_make_mod: adding attribute |sambaAcctFlags| value |[NDU        ]|
+smbldap_modify: dn => [uid=nas_smb003,cn=users,dc=test,dc=ift,dc=com]
+ldapsam_update_sam_account: successfully modified uid = nas_smb003 in the LDAP database
+</file>
+
 [LDB]
   * LDB basically sits on top of TDB and manipulates the data into an LDAP-like structure.
   * 
