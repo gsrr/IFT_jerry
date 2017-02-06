@@ -1,2 +1,2 @@
 [target]
-172.27.120.7     ansible_connection=ssh        ansible_user=root    ansible_ssh_pass=111111
+172.27.112.181     ansible_connection=ssh        ansible_user=root    ansible_ssh_pass=root111

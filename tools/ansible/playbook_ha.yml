@@ -1,0 +1,61 @@
+- hosts: all
+  become: yes
+  become_method: sudo
+  roles:
+    - davidkarban.git
+
+  tasks:
+    - name: epel-release
+      yum: name=epel-release state=installed
+
+    - name: fail2ban
+      yum: name=fail2ban state=installed
+
+    - name: python-pip
+      yum: name=python-pip state=installed
+
+    - name: pexpect
+      yum: name=pexpect state=installed
+
+    - name: expect
+      yum: name=expect state=installed
+
+    - name: vim
+      yum: name=vim state=installed
+
+    - name: net-tools(ifconfig)
+      yum: name=net-tools state=installed
+
+    - name: samba service
+      yum: name=samba state=installed
+
+    - name: ldap client
+      yum: name=nss-pam-ldapd state=installed
+
+    - name: ldap server
+      yum: name=openldap-servers state=installed
+
+    - pip: 
+        name: netaddr
+
+    - name: git clone ha repository
+      git: repo={{ path_ha }} dest={{ dest_ha }}
+
+    - name: copy ha repository
+      action: shell cp -R /root/HA/NAS /usr/local/
+
+    - name: create nastmp
+      file: path=/nastmp state=directory
+      
+    - name: create related files in nastmp
+      file:
+        path=/nastmp/getCPUModelCache 
+        state=touch
+
+    - name: create related files in nastmp
+      file:
+        path=/nastmp/getCPUModelCache 
+        state=touch
+  vars:
+    - path_ha: http://jerry.cheng:infor%40135@scm.infortrend/HA.git
+    - dest_ha: /root/HA
