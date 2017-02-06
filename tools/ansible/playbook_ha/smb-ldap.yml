@@ -5,5 +5,45 @@
     - davidkarban.git
 
   tasks:
+    - name: gcc
+      yum: name=gcc state=installed
+
+    - name: yum-utils
+      yum: name=yum-utils state=installed
+
+    - name: rpm-build
+      yum: name=rpm-build state=installed
+
+    - name: openldap-devel
+      yum: name=openldap-devel state=installed
+
+    - name: krb5-devel
+      yum: name=krb5-devel state=installed
+
+    - name: pam-devel
+      yum: name=pam-devel state=installed
+
+    - name: autoconf
+      yum: name=autoconf state=installed
+
+    - name: automake
+      yum: name=automake state=installed
+
+    - name: leave ldap server
+      action: shell echo -e "service stop ldap -z a@0\nexit\n" | NASCLI 
+
+    - name: build nss_pam_ldap
+      action: shell python build_nss_pam_ldapd.py make
+      args:
+        chdir: "{{ buildpath_nss_pam }}"
+
+    - name: deploy nss_pam_ldap
+      action: shell python build_nss_pam_ldapd.py deploy /
+      args:
+        chdir: "{{ buildpath_nss_pam }}"
+
     - name: join ldap
       action: shell echo -e "service options ldap -z a@0 -a 172.27.112.241 -b dc=test,dc=ift,dc=com -r uid=root,cn=users,dc=test,dc=ift,dc=com -p ABcd_1234\nexit\n" | NASCLI 
+
+  vars:
+    - buildpath_nss_pam: /root/ift-utils/nss-pam-ldapd-0.8.13/ 
