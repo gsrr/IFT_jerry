@@ -1,0 +1,9 @@
+- hosts: all
+  become: yes
+  become_method: sudo
+  roles:
+    - davidkarban.git
+
+  tasks:
+    - name: join ldap
+      action: shell echo -e "service options ldap -z a@0 -a 172.27.112.241 -b dc=test,dc=ift,dc=com -r uid=root,cn=users,dc=test,dc=ift,dc=com -p ABcd_1234\nexit\n" | NASCLI 
