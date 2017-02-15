@@ -1,23 +1,28 @@
 import os
 import time
-import trace_ex2
+import trace_recipe
 
-def hello():
-    ret = {"status" : 0, "data" : "return value"}
-    return ret
+class HELLO:
+    def __init__(self):
+        pass
 
-def print_str(dic):
-    print dic['cnt'], "trace_ex2", hello()
+    def hello(self):
+        ret = {"status" : 0, "data" : "return value"}
+        return ret
+
+def print_str(dic, hl):
+    print dic['cnt'], "trace_ex2", hl.hello()
     print "-" * 16
 
 def loop():
     cnt = 0
+    hl = HELLO()
     while True:
         cnt += 1
-        print_str({"cnt" : cnt})
+        print_str({"cnt" : cnt}, hl)
         time.sleep(1)
 
 if __name__ == '__main__':
-    trace_ex2.trace_listen()
+    trace_recipe.trace_listen()
     print(os.getpid())
     loop()

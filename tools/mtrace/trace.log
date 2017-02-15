@@ -1,3 +1,80 @@
+-->::enter::print_str::{'dic': {'cnt': 21}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 22}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 23}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 24}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 25}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 26}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 27}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 28}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 29}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 30}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 7}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 8}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 9}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 10}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::handle_trace::{'frame': <frame object at 0x1b63ba0>, 'sig': 10}
+-->::enter::print_str::{'dic': {'cnt': 14}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 15}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 16}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 17}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 18}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
 -->::enter::print_str::{'dic': {'cnt': 19}}
 ---->::enter::hello::{}
 <----::exit::hello::{'status': 0, 'data': 'return value'}
@@ -82,15 +159,423 @@
 ---->::enter::hello::{}
 <----::exit::hello::{'status': 0, 'data': 'return value'}
 <--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 23}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 24}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 25}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 26}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 27}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 28}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 29}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 30}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 31}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 32}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 33}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 34}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 35}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 36}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 37}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 38}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 39}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
 -->::enter::print_str::{'dic': {'cnt': 40}}
----->::enter::hello::{}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
 <----::exit::hello::{'status': 0, 'data': 'return value'}
 <--::exit::print_str::None
 -->::enter::print_str::{'dic': {'cnt': 41}}
----->::enter::hello::{}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
 <----::exit::hello::{'status': 0, 'data': 'return value'}
 <--::exit::print_str::None
 -->::enter::print_str::{'dic': {'cnt': 42}}
----->::enter::hello::{}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
 <----::exit::hello::{'status': 0, 'data': 'return value'}
 <--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 43}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 44}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 45}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 46}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 47}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 48}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 49}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 50}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 51}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 52}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 53}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 54}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 55}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 56}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 57}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 58}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 59}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 60}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 61}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 62}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 63}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 64}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 65}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 66}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 67}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 68}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 69}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 70}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 71}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 72}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 73}}
+---->::enter::__init__::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::__init__::None
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7fa0ffe38c20>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 9}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 10}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 11}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 12}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 13}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 14}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 15}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 16}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 17}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 18}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 19}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 20}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 21}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 22}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 23}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 24}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 25}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 26}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f9b72fc3b90>, 'dic': {'cnt': 27}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f9b72fc3b90>}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 10}}
+---->::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+------>::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 11}}
+-------->::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+---------->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 12}}
+------------>::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+-------------->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 13}}
+---------------->::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+------------------>::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 14}}
+-------------------->::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+---------------------->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 15}}
+------------------------>::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+-------------------------->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 16}}
+---------------------------->::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+------------------------------>::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 17}}
+-------------------------------->::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+---------------------------------->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 18}}
+------------------------------------>::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+-------------------------------------->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 19}}
+---------------------------------------->::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+------------------------------------------>::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 20}}
+-------------------------------------------->::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+---------------------------------------------->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 21}}
+------------------------------------------------>::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+-------------------------------------------------->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 22}}
+---------------------------------------------------->::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+------------------------------------------------------>::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 23}}
+-------------------------------------------------------->::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+---------------------------------------------------------->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 24}}
+------------------------------------------------------------>::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+-------------------------------------------------------------->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 25}}
+---------------------------------------------------------------->::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+------------------------------------------------------------------>::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 26}}
+-------------------------------------------------------------------->::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+---------------------------------------------------------------------->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 27}}
+------------------------------------------------------------------------>::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
+-------------------------------------------------------------------------->::enter::print_str::{'hl': <__main__.HELLO instance at 0x7f2c6f481bd8>, 'dic': {'cnt': 28}}
+---------------------------------------------------------------------------->::enter::hello::{'self': <__main__.HELLO instance at 0x7f2c6f481bd8>}
