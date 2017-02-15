@@ -1,0 +1,96 @@
+-->::enter::print_str::{'dic': {'cnt': 19}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 20}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 21}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 22}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 23}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 24}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 25}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 26}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 27}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 28}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 29}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 30}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 31}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 32}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 33}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 34}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 35}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 36}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 37}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 38}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 39}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 40}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 41}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
+-->::enter::print_str::{'dic': {'cnt': 42}}
+---->::enter::hello::{}
+<----::exit::hello::{'status': 0, 'data': 'return value'}
+<--::exit::print_str::None
