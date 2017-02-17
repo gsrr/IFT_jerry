@@ -63,7 +63,7 @@ class Proxy:
                 break
     
     def _handle_client_ptt(self, client, server):
-        fw = open("data2.log", "w")
+        #fw = open("data2.log", "w")
         cnt = 0
         while True:
             try:
@@ -83,13 +83,13 @@ class Proxy:
                 print "left:", send_data.encode("hex"), "size:", len(send_data)
                 server.send(send_data)
                 print "recv from right"
-                recv_data = server.recv(8192).encode("hex")
+                recv_data = server.recv(8192)
                 for cchar in CONTROL_CHARS :
                     recv_data = re.sub(cchar, "", recv_data)
-                fw.write(recv_data)
-                fw.write("------------------------")
-                fw.write(recv_data.decode("hex"))
-                fw.flush()
+                #fw.write(recv_data)
+                #fw.write("------------------------")
+                #fw.write(recv_data.decode("hex"))
+                #fw.flush()
                 print "right:", recv_data
                 client.send(recv_data)
             except socket.timeout:

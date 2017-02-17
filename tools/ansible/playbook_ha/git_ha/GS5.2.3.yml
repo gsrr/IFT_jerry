@@ -1,0 +1,13 @@
+- hosts: test
+  become: yes
+  become_method: sudo
+  roles:
+    - davidkarban.git
+
+  tasks:
+    - name: git clone ha repository
+      git: repo={{ path_ha }} dest={{ dest_ha }}
+
+  vars:
+    - path_ha: http://jerry.cheng:infor%40135@scm.infortrend/HA.git
+    - dest_ha: /root/HA
