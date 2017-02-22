@@ -1,0 +1,70 @@
+
+<h1 class="sectionedit1" id="structpack">struct.pack</h1>
+<div class="level1">
+<pre class="file"># pack string (char array)
+&gt;&gt;&gt; s1 = struct.pack(&quot;I9sI&quot;, 12, &quot;Eononestr&quot;, 11)
+&gt;&gt;&gt; s1
+&#039;\x0c\x00\x00\x00Eononestr\x00\x00\x00\x0b\x00\x00\x00&#039;
+&gt;&gt;&gt; struct.unpack(&quot;I9sI&quot;, s1)
+(12, &#039;Eononestr&#039;, 11)
+
+&gt;&gt;&gt; struct.unpack(&quot;I8sI&quot;,s2)
+(12, &#039;Eononest&#039;, 11)
+&gt;&gt;&gt; s2 = struct.pack(&quot;I&quot;, 12) + &quot;Eononest&quot; + struct.pack(&quot;I&quot;, 11)
+&gt;&gt;&gt; s2
+&#039;\x0c\x00\x00\x00Eononest\x0b\x00\x00\x00&#039;
+&gt;&gt;&gt; struct.unpack(&quot;I8sI&quot;,s2)
+(12, &#039;Eononest&#039;, 11)
+(The packet should be padded if the char array is not divided by 2)</pre>
+
+</div>
+<!-- EDIT1 SECTION "struct.pack" [1-518] -->
+<h1 class="sectionedit2" id="debug_with_gdb">debug with gdb</h1>
+<div class="level1">
+
+<p>
+py-fields<a href="https://gist.github.com/kouk/5c2e725bef8b54aae6e0" class="urlextern" title="https://gist.github.com/kouk/5c2e725bef8b54aae6e0" rel="nofollow">https://gist.github.com/kouk/5c2e725bef8b54aae6e0</a>
+</p>
+
+<p>
+Extended gdb using python <a href="https://sourceware.org/gdb/onlinedocs/gdb/Python.html" class="urlextern" title="https://sourceware.org/gdb/onlinedocs/gdb/Python.html" rel="nofollow">https://sourceware.org/gdb/onlinedocs/gdb/Python.html</a>
+</p>
+
+<p>
+<a href="https://docs.python.org/devguide/gdb.html" class="urlextern" title="https://docs.python.org/devguide/gdb.html" rel="nofollow">https://docs.python.org/devguide/gdb.html</a>
+</p>
+<pre class="file"></pre>
+
+</div>
+<!-- EDIT2 SECTION "debug with gdb" [519-757] -->
+<h1 class="sectionedit3" id="trace_module">trace module</h1>
+<div class="level1">
+
+<p>
+<a href="https://pymotw.com/2/trace/" class="urlextern" title="https://pymotw.com/2/trace/" rel="nofollow">https://pymotw.com/2/trace/</a>
+</p>
+<pre class="file"># For a simple list of the functions called
+python -m trace --listfuncs trace_example/main.py</pre>
+
+</div>
+<!-- EDIT3 SECTION "trace module" [758-925] -->
+<h1 class="sectionedit4" id="object_analysis">object analysis</h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> vars(object) , but not all objects have a <em class="u">dict</em> member</div>
+</li>
+<li class="level1"><div class="li"> dir(object)</div>
+</li>
+<li class="level1"><div class="li"> getattr()</div>
+</li>
+<li class="level1"><div class="li"> type()</div>
+</li>
+<li class="level1"><div class="li"> </div>
+</li>
+</ul>
+<pre class="file">def dump(obj):
+  for attr in dir(obj):
+    print &quot;obj.%s = %s&quot; % (attr, getattr(obj, attr))</pre>
+
+</div>
+<!-- EDIT4 SECTION "object analysis" [926-] -->

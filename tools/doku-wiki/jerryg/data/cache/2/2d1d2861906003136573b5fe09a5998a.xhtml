@@ -1,0 +1,44 @@
+
+<h1 class="sectionedit1" id="commands">Commands</h1>
+<div class="level1">
+<pre class="file"># Add NASROUTING into PREROUTING
+iptables -t nat -A PREROUTING -j NASROUTING -p all
+
+# Show all information
+iptables -t nat -L -vn # show all information
+</pre>
+<pre class="file"># Example:
+Chain PREROUTING (policy ACCEPT 65670 packets, 9723K bytes)
+ pkts bytes target     prot opt in     out     source               destination
+84404   11M NASROUTING  all  --  *      *       0.0.0.0/0            0.0.0.0/0
+20517 1071K DOCKER     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type LOCAL
+
+Chain DOCKER (2 references)
+ pkts bytes target     prot opt in     out     source               destination
+    0     0 RETURN     all  --  docker0 *       0.0.0.0/0            0.0.0.0/0
+18643  969K DNAT       tcp  --  mgmt0   *       0.0.0.0/0            0.0.0.0/0            tcp to:10.253.253.2
+
+policy:
+當您的封包不在您設定的規則之內時，則該封包的通過與否，以 Policy 的設定為準
+
+target:
+代表進行的動作， ACCEPT 是放行，而 REJECT 則是拒絕，此外，尚有 DROP (丟棄) 的項目！
+RETURN -&gt; 結束目前table, 回到上一層table.
+DNAT 
+-&gt; stands for destination network address translation.
+-&gt; 註明要轉送封包的destination, 在此例子是將mgmt0進來的封包都轉送到10.253.253.2.
+-&gt; (防火牆會把這個封包的報頭改寫一次，將目標地址改寫成內網ip,然後再把這個封包發送到內網ip的服務器上)
+SNAT:
+-&gt; stands for source network address translation.
+-&gt; 是把要出去的封包, 其source address進行轉換.
+  example:
+    iptables -t nat -A POSTROUTING -o iftnic3 -j SNAT --to-source 172.27.112.200
+    就是將從iftnic3出去的封包, 其source address都轉成172.27.112.200
+
+MASQUERADE:
+iptables -t nat -A POSTROUTING -o iftnic3 -j MASQUERADE
+跟SNAT類似, 也是將出去的封包轉換其source address, 差別是在SNAT需要指定to-source, 而MASQUERADE不需要.
+
+</pre>
+
+</div>

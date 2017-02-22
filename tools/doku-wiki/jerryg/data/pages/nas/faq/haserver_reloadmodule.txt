@@ -1,0 +1,4 @@
+====== How to reload module in HAServer ======
+<file>
+python testHA.py 99 $module_name
+</file>

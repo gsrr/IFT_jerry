@@ -1,0 +1,4 @@
+====== set static ip ======
+<file>
+>> ifconfig inet mgmt0 static 172.27.112.183 netmask 255.255.240.0 gateway 172.27.127.254 -z a@0
+</file>

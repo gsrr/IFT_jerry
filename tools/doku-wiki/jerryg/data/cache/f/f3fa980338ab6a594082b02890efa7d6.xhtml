@@ -1,12 +1,42 @@
 
-<h1 class="sectionedit1" id="create_a_remote_git_branch">create a remote Git branch</h1>
+<h1 class="sectionedit1" id="config_related">config related</h1>
+<div class="level1">
+<pre class="file"># login with escape password
+http.proxy=http://userId:pwd%40123@ipaddress:port
+</pre>
+
+</div>
+<!-- EDIT1 SECTION "config related" [1-124] -->
+<h1 class="sectionedit2" id="see_the_change">see the change</h1>
+<div class="level1">
+<pre class="file"># see the change in a commit
+git diff COMMIT^ COMMIT</pre>
+
+</div>
+<!-- EDIT2 SECTION "see the change" [125-221] -->
+<h1 class="sectionedit3" id="list_remote_branch">list remote branch</h1>
+<div class="level1">
+<pre class="file">git branch -a</pre>
+
+</div>
+<!-- EDIT3 SECTION "list remote branch" [222-283] -->
+<h1 class="sectionedit4" id="overwrite_local_files">overwrite local files</h1>
+<div class="level1">
+<pre class="file">git fetch --all
+git reset --hard origin/master
+
+# git-fetch - Download objects and refs from another repository</pre>
+
+</div>
+<!-- EDIT4 SECTION "overwrite local files" [284-446] -->
+<h1 class="sectionedit5" id="create_a_remote_git_branch">create a remote Git branch</h1>
 <div class="level1">
 <pre class="file">git checkout -b &lt;branch-name&gt;
 git push &lt;remote-name&gt; &lt;branch-name&gt; or git push &lt;remote-name&gt; &lt;local-branch-name&gt;:&lt;remote-branch-name&gt;</pre>
 
 </div>
-<!-- EDIT1 SECTION "create a remote Git branch" [1-190] -->
-<h1 class="sectionedit2" id="compare_two_branches">compare two branches</h1>
+<!-- EDIT5 SECTION "create a remote Git branch" [447-636] -->
+<h1 class="sectionedit6" id="compare_two_branches">compare two branches</h1>
 <div class="level1">
 <ul>
 <li class="level1"><div class="li"> git diff branch_1..branch_2</div>
@@ -14,8 +44,8 @@ git push &lt;remote-name&gt; &lt;branch-name&gt; or git push &lt;remote-name&gt;
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "compare two branches" [191-257] -->
-<h1 class="sectionedit3" id="rollback">rollback</h1>
+<!-- EDIT6 SECTION "compare two branches" [637-703] -->
+<h1 class="sectionedit7" id="rollback">rollback</h1>
 <div class="level1">
 <ul>
 <li class="level1"><div class="li"> rollback push</div>
@@ -30,4 +60,4 @@ git push</pre>
 <pre class="file">git reset --hard 9bc9775a51432ae4a0ecc57423dd9791a22ea9c0</pre>
 
 </div>
-<!-- EDIT3 SECTION "rollback" [258-] -->
+<!-- EDIT7 SECTION "rollback" [704-] -->

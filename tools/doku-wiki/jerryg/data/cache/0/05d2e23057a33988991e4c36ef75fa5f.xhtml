@@ -1,0 +1,96 @@
+
+<h1 class="sectionedit1" id="mount_lvm_volume">mount lvm volume</h1>
+<div class="level1">
+
+<p>
+lsblk (find the partition of lvm)
+</p>
+<pre class="file">NAME                             MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
+fd0                                2:0    1    4K  0 disk
+sda                                8:0    0   40G  0 disk
+├─sda1                             8:1    0  500M  0 part  /boot
+└─sda2                             8:2    0  3.5G  0 part
+  ├─centos_centos7--minimal-root 253:0    0  3.1G  0 lvm   /
+  └─centos_centos7--minimal-swap 253:1    0  412M  0 lvm   [SWAP]
+sdb                                8:16   0    3G  0 disk
+└─md127                            9:127  0    3G  0 raid1
+sdc                                8:32   0    3G  0 disk
+sdd                                8:48   0   16G  0 disk
+sde                                8:64   0   40G  0 disk
+├─sde1                             8:65   0  500M  0 part  /backup_drive
+└─sde2                             8:66   0 39.5G  0 part
+  ├─centos-swap                  253:2    0  3.9G  0 lvm
+  └─centos-root                  253:3    0 35.6G  0 lvm   /backup_drive2
+sr0                               11:0    1 1024M  0 rom
+</pre>
+
+<p>
+pvscan
+</p>
+<pre class="file">[root@nas_824366_a ~]# pvscan
+  connect() failed on local socket: No such file or directory
+  Internal cluster locking initialisation failed.
+  WARNING: Falling back to local file-based locking.
+  Volume Groups with the clustered attribute will be inaccessible.
+  PV /dev/sde2   VG centos                   lvm2 [39.51 GiB / 44.00 MiB free]
+  PV /dev/sda2   VG centos_centos7-minimal   lvm2 [3.51 GiB / 40.00 MiB free]
+  Total: 2 [43.02 GiB] / in use: 2 [43.02 GiB] / in no VG: 0 [0   ]
+</pre>
+
+<p>
+lvscan (check lvm status)
+</p>
+<pre class="file">termcb:~ # lvscan
+inactive &#039;/dev/VolGroup00/LogVol00&#039; [26.06 GB] inherit
+inactive &#039;/dev/VolGroup00/LogVol01&#039; [1.75 GB] inherit</pre>
+
+<p>
+vgchange -ay (active lvm)
+</p>
+<pre class="file">termcb:~ # lvscan
+ACTIVE &#039;/dev/VolGroup00/LogVol00&#039; [26.06 GB] inherit
+ACTIVE &#039;/dev/VolGroup00/LogVol01&#039; [1.75 GB] inherit</pre>
+
+<p>
+lvdisplay (get the LV Path, LV Name and VG Name)
+</p>
+<pre class="file"> --- Logical volume ---
+  LV Path                /dev/centos_centos7-minimal/swap
+  LV Name                swap
+  VG Name                centos_centos7-minimal
+  LV UUID                EeWHu7-Dmsp-fG7Q-WO8T-1jJP-sxAr-npvAt4
+  LV Write Access        read/write
+  LV Creation host, time localhost, 2015-08-10 03:05:45 +0000
+  LV Status              available
+  # open                 2
+  LV Size                412.00 MiB
+  Current LE             103
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:1
+
+  --- Logical volume ---
+  LV Path                /dev/centos_centos7-minimal/root
+  LV Name                root
+  VG Name                centos_centos7-minimal
+  LV UUID                6EUXGX-Ug4s-v4PG-9HEV-LoWP-07lT-4k0fNd
+  LV Write Access        read/write
+  LV Creation host, time localhost, 2015-08-10 03:05:45 +0000
+  LV Status              available
+  # open                 1
+  LV Size                3.07 GiB
+  Current LE             785
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:0
+</pre>
+
+<p>
+mount /dev/centos_centos7-minimal/root /mnt/data
+</p>
+
+</div>

@@ -1,5 +1,103 @@
 
 <p>
+[Note]
+</p>
+<pre class="file">[Get_Pwnam_alloc]
+[pdb_getsampwnam]
+struct pdb_methods *pdb = pdb_get_methods();
+[make_pdb_method_name]
+</pre>
+
+<p>
+[ldap user - stack]
+</p>
+<pre class="file">#0  ldapsam_getsampwnam (my_methods=0x7fd737a96ce0, user=0x7fd737a8de70, sname=0x7fd737ac6870 &quot;test001@test.ift.com&quot;) at ../source3/passdb/pdb_ldap.c:1472
+#1  0x00007fd734d24fbd in pdb_getsampwnam (sam_acct=sam_acct@entry=0x7fd737a8de70, username=0x7fd737ac6870 &quot;test001@test.ift.com&quot;)
+    at ../source3/passdb/pdb_interface.c:334
+#2  0x00007fd7348ed576 in check_sam_security (challenge=challenge@entry=0x7fd737ab98d0, mem_ctx=mem_ctx@entry=0x7fd737ab3380,
+    user_info=user_info@entry=0x7fd737ac6710, server_info=server_info@entry=0x7ffdded3f0b8) at ../source3/auth/check_samsec.c:395
+#3  0x00007fd7348e1bb1 in auth_samstrict_auth (auth_context=0x7fd737ab98d0, my_private_data=&lt;optimized out&gt;, mem_ctx=0x7fd737ab3380,
+    user_info=0x7fd737ac6710, server_info=&lt;optimized out&gt;) at ../source3/auth/auth_sam.c:102
+#4  0x00007fd7348e5f2a in auth_check_ntlm_password (mem_ctx=mem_ctx@entry=0x7fd737ab9f90, auth_context=auth_context@entry=0x7fd737ab98d0,
+    user_info=0x7fd737ac6710, pserver_info=pserver_info@entry=0x7ffdded3f168) at ../source3/auth/auth.c:225
+#5  0x00007fd7348e78e7 in auth3_check_password (auth4_context=&lt;optimized out&gt;, mem_ctx=0x7fd737ab9f90, user_info=0x7fd737abba50,
+    server_returned_info=0x7fd737ab9f90, session_key=0x7fd737ab3240, lm_session_key=0x7fd737ab3250) at ../source3/auth/auth_ntlmssp.c:179
+#6  0x00007fd72ef2dedd in ntlmssp_server_check_password (lm_session_key=0x7fd737ab3250, user_session_key=0x7fd737ab3240, mem_ctx=0x7fd737ab3240,
+    gensec_ntlmssp=0x7fd737ab9f90, gensec_security=0x7fd737aba330) at ../auth/ntlmssp/ntlmssp_server.c:729
+#7  gensec_ntlmssp_server_auth (gensec_security=0x7fd737aba330, out_mem_ctx=&lt;optimized out&gt;, in=..., out=&lt;optimized out&gt;)
+    at ../auth/ntlmssp/ntlmssp_server.c:1014
+#8  0x00007fd72ef29713 in gensec_ntlmssp_update (gensec_security=0x7fd737aba330, out_mem_ctx=0x7fd737aaaf10, ev=&lt;optimized out&gt;, input=...,
+    out=0x7ffdded3f450) at ../auth/ntlmssp/ntlmssp.c:176
+#9  0x00007fd72ef311c0 in gensec_update_ev (gensec_security=0x7fd737aba330, out_mem_ctx=out_mem_ctx@entry=0x7fd737aaaf10, ev=ev@entry=0x7fd737a8e4e0,
+    in=..., out=out@entry=0x7ffdded3f450) at ../auth/gensec/gensec.c:303
+#10 0x00007fd72ef2617e in gensec_spnego_update (gensec_security=gensec_security@entry=0x7fd737ab30c0, out_mem_ctx=out_mem_ctx@entry=0x7fd737aaaf10,
+    ev=ev@entry=0x7fd737a8e4e0, in=..., out=out@entry=0x7fd737aaaf70) at ../auth/gensec/spnego.c:963
+#11 0x00007fd72ef27580 in gensec_spnego_update_wrapper (gensec_security=0x7fd737ab30c0, out_mem_ctx=0x7fd737abad60, ev=0x7fd737a8e4e0, in=...,
+    out=0x7fd737abad78) at ../auth/gensec/spnego.c:1473
+#12 0x00007fd72ef308ac in gensec_update_async_trigger (ctx=0x7fd737a8e4e0, im=&lt;optimized out&gt;, private_data=&lt;optimized out&gt;) at ../auth/gensec/gensec.c:458
+#13 0x00007fd7330c7c34 in tevent_common_loop_immediate (ev=ev@entry=0x7fd737a8e4e0) at ../tevent_immediate.c:135
+#14 0x00007fd7346a02fc in run_events_poll (ev=0x7fd737a8e4e0, pollrtn=0, pfds=0x0, num_pfds=0) at ../source3/lib/events.c:192
+#15 0x00007fd7346a05e4 in s3_event_loop_once (ev=0x7fd737a8e4e0, location=&lt;optimized out&gt;) at ../source3/lib/events.c:303
+#16 0x00007fd7330c740d in _tevent_loop_once (ev=ev@entry=0x7fd737a8e4e0, location=location@entry=0x7fd73687ab40 &quot;../source3/smbd/process.c:4117&quot;)
+    at ../tevent.c:533
+#17 0x00007fd7330c75ab in tevent_common_loop_wait (ev=0x7fd737a8e4e0, location=0x7fd73687ab40 &quot;../source3/smbd/process.c:4117&quot;) at ../tevent.c:637
+#18 0x00007fd7367306d1 in smbd_process (ev_ctx=ev_ctx@entry=0x7fd737a8e4e0, msg_ctx=msg_ctx@entry=0x7fd737a8e5d0, sock_fd=sock_fd@entry=38,
+    interactive=interactive@entry=false) at ../source3/smbd/process.c:4117
+#19 0x00007fd73721b304 in smbd_accept_connection (ev=0x7fd737a8e4e0, fde=&lt;optimized out&gt;, flags=&lt;optimized out&gt;, private_data=&lt;optimized out&gt;)
+    at ../source3/smbd/server.c:762
+#20 0x00007fd7346a042c in run_events_poll (ev=0x7fd737a8e4e0, pollrtn=&lt;optimized out&gt;, pfds=0x7fd737a8e7a0, num_pfds=6) at ../source3/lib/events.c:257
+#21 0x00007fd7346a0680 in s3_event_loop_once (ev=0x7fd737a8e4e0, location=&lt;optimized out&gt;) at ../source3/lib/events.c:326
+#22 0x00007fd7330c740d in _tevent_loop_once (ev=ev@entry=0x7fd737a8e4e0, location=location@entry=0x7fd73721e776 &quot;../source3/smbd/server.c:1127&quot;)
+    at ../tevent.c:533
+#23 0x00007fd7330c75ab in tevent_common_loop_wait (ev=0x7fd737a8e4e0, location=0x7fd73721e776 &quot;../source3/smbd/server.c:1127&quot;) at ../tevent.c:637
+#24 0x00007fd737216ad4 in smbd_parent_loop (parent=&lt;optimized out&gt;, ev_ctx=0x7fd737a8e4e0) at ../source3/smbd/server.c:1127</pre>
+
+<p>
+[local user - stack]
+</p>
+<pre class="file">#0  tdbsam_getsampwnam (my_methods=0x7fbbe64b1510, user=0x7fbbe64d9cc0, sname=0x7fbbe64d74c0 &quot;abcd001&quot;) at ../source3/passdb/pdb_tdb.c:569
+#1  0x00007fbbe1e09fbd in pdb_getsampwnam (sam_acct=sam_acct@entry=0x7fbbe64d9cc0, username=0x7fbbe64d74c0 &quot;abcd001&quot;)
+    at ../source3/passdb/pdb_interface.c:334
+#2  0x00007fbbe19d2576 in check_sam_security (challenge=challenge@entry=0x7fbbe64d30d0, mem_ctx=mem_ctx@entry=0x7fbbe64ae4e0,
+    user_info=user_info@entry=0x7fbbe64d7370, server_info=server_info@entry=0x7ffe9f7c5ce8) at ../source3/auth/check_samsec.c:395
+#3  0x00007fbbe19c6bb1 in auth_samstrict_auth (auth_context=0x7fbbe64d30d0, my_private_data=&lt;optimized out&gt;, mem_ctx=0x7fbbe64ae4e0,
+    user_info=0x7fbbe64d7370, server_info=&lt;optimized out&gt;) at ../source3/auth/auth_sam.c:102
+#4  0x00007fbbe19caf2a in auth_check_ntlm_password (mem_ctx=mem_ctx@entry=0x7fbbe64d37a0, auth_context=auth_context@entry=0x7fbbe64d30d0,
+    user_info=0x7fbbe64d7370, pserver_info=pserver_info@entry=0x7ffe9f7c5d98) at ../source3/auth/auth.c:225
+#5  0x00007fbbe19cc8e7 in auth3_check_password (auth4_context=&lt;optimized out&gt;, mem_ctx=0x7fbbe64d37a0, user_info=0x7fbbe64d6fb0,
+    server_returned_info=0x7fbbe64d37a0, session_key=0x7fbbe64d1e00, lm_session_key=0x7fbbe64d1e10) at ../source3/auth/auth_ntlmssp.c:179
+#6  0x00007fbbdc012edd in ntlmssp_server_check_password (lm_session_key=0x7fbbe64d1e10, user_session_key=0x7fbbe64d1e00, mem_ctx=0x7fbbe64d1e00,
+    gensec_ntlmssp=0x7fbbe64d37a0, gensec_security=0x7fbbe64d3c40) at ../auth/ntlmssp/ntlmssp_server.c:729
+#7  gensec_ntlmssp_server_auth (gensec_security=0x7fbbe64d3c40, out_mem_ctx=&lt;optimized out&gt;, in=..., out=&lt;optimized out&gt;)
+    at ../auth/ntlmssp/ntlmssp_server.c:1014
+#8  0x00007fbbdc00e713 in gensec_ntlmssp_update (gensec_security=0x7fbbe64d3c40, out_mem_ctx=0x7fbbe64d1550, ev=&lt;optimized out&gt;, input=...,
+    out=0x7ffe9f7c6080) at ../auth/ntlmssp/ntlmssp.c:176
+#9  0x00007fbbdc0161c0 in gensec_update_ev (gensec_security=0x7fbbe64d3c40, out_mem_ctx=out_mem_ctx@entry=0x7fbbe64d1550, ev=ev@entry=0x7fbbe64a9470,
+    in=..., out=out@entry=0x7ffe9f7c6080) at ../auth/gensec/gensec.c:303
+#10 0x00007fbbdc00b17e in gensec_spnego_update (gensec_security=gensec_security@entry=0x7fbbe64d1470, out_mem_ctx=out_mem_ctx@entry=0x7fbbe64d1550,
+    ev=ev@entry=0x7fbbe64a9470, in=..., out=out@entry=0x7fbbe64d15b0) at ../auth/gensec/spnego.c:963
+#11 0x00007fbbdc00c580 in gensec_spnego_update_wrapper (gensec_security=0x7fbbe64d1470, out_mem_ctx=0x7fbbe64d6ac0, ev=0x7fbbe64a9470, in=...,
+    out=0x7fbbe64d6ad8) at ../auth/gensec/spnego.c:1473
+#12 0x00007fbbdc0158ac in gensec_update_async_trigger (ctx=0x7fbbe64a9470, im=&lt;optimized out&gt;, private_data=&lt;optimized out&gt;) at ../auth/gensec/gensec.c:458
+#13 0x00007fbbe01acc34 in tevent_common_loop_immediate (ev=ev@entry=0x7fbbe64a9470) at ../tevent_immediate.c:135
+#14 0x00007fbbe17852fc in run_events_poll (ev=0x7fbbe64a9470, pollrtn=0, pfds=0x0, num_pfds=0) at ../source3/lib/events.c:192
+#15 0x00007fbbe17855e4 in s3_event_loop_once (ev=0x7fbbe64a9470, location=&lt;optimized out&gt;) at ../source3/lib/events.c:303
+#16 0x00007fbbe01ac40d in _tevent_loop_once (ev=ev@entry=0x7fbbe64a9470, location=location@entry=0x7fbbe395fb40 &quot;../source3/smbd/process.c:4117&quot;)
+    at ../tevent.c:533
+#17 0x00007fbbe01ac5ab in tevent_common_loop_wait (ev=0x7fbbe64a9470, location=0x7fbbe395fb40 &quot;../source3/smbd/process.c:4117&quot;) at ../tevent.c:637
+#18 0x00007fbbe38156d1 in smbd_process (ev_ctx=ev_ctx@entry=0x7fbbe64a9470, msg_ctx=msg_ctx@entry=0x7fbbe64a9560, sock_fd=sock_fd@entry=39,
+    interactive=interactive@entry=false) at ../source3/smbd/process.c:4117
+#19 0x00007fbbe4300304 in smbd_accept_connection (ev=0x7fbbe64a9470, fde=&lt;optimized out&gt;, flags=&lt;optimized out&gt;, private_data=&lt;optimized out&gt;)
+    at ../source3/smbd/server.c:762
+#20 0x00007fbbe178542c in run_events_poll (ev=0x7fbbe64a9470, pollrtn=&lt;optimized out&gt;, pfds=0x7fbbe64a9740, num_pfds=6) at ../source3/lib/events.c:257
+#21 0x00007fbbe1785680 in s3_event_loop_once (ev=0x7fbbe64a9470, location=&lt;optimized out&gt;) at ../source3/lib/events.c:326
+#22 0x00007fbbe01ac40d in _tevent_loop_once (ev=ev@entry=0x7fbbe64a9470, location=location@entry=0x7fbbe4303776 &quot;../source3/smbd/server.c:1127&quot;)
+    at ../tevent.c:533
+#23 0x00007fbbe01ac5ab in tevent_common_loop_wait (ev=0x7fbbe64a9470, location=0x7fbbe4303776 &quot;../source3/smbd/server.c:1127&quot;) at ../tevent.c:637
+#24 0x00007fbbe42fbad4 in smbd_parent_loop (parent=&lt;optimized out&gt;, ev_ctx=0x7fbbe64a9470) at ../source3/smbd/server.c:1127</pre>
+<hr />
+
+<p>
 [Installation]
 </p>
 <ul>

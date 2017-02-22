@@ -1,0 +1,57 @@
+
+<p>
+ldap client
+</p>
+<pre class="file">service options ldap -z a@0 -a 172.27.112.154 -b dc=test,dc=ift,dc=com -r cn=admin,dc=test,dc=ift,dc=com -p ABcd_1234</pre>
+
+<p>
+ldapserver command:
+</p>
+<pre class="file"># start ldapserver
+ldapserver host options -d aaa.com -p ABcd_1234 -z a@0
+ldapserver host start -z a@0</pre>
+
+<p>
+schedule command:
+</p>
+<pre class="file">schedule create -c rr -s RR_20170210101057 -n New_Schedule_20170210_181330 -z A@0 -t daily -sd 20170210 -ed 00000000 -T 1813 -E off -et 0000
+
+replicate create /Pool-1/Volume_1/test001 -z A@0 -D /Pool-1/Volume_1/UserHome/cc/ -a 127.0.0.1 -P 22 -n off -e on -T nas -p=XXXXX -c off -u=&quot;root&quot; -s off -A None -r off
+
+#Third party, encryption off
+replicate create /mnt/f1/f1 -T rsync -a 127.0.0.1 -u admin -p admin -D aaa -z a@0
+
+scheduleRR create -tp single -sf /Pool-1/Volume_1/test001 -n New_Schedule_20170210_181330 -st nas -e on -a 127.0.0.1 -P 22 -u root -pw XXXXXX -D /Pool-1/Volume_1/UserHome/cc/ -c off -s off -t daily -T 1813 -sd 20170210 -ed 00000000 -r off -et 0000 -E off -z a@8709770</pre>
+<ul>
+<li class="level1"><div class="li"> The nascmd_client.py is under /usr/local/NAS/misc/Cmd/</div>
+</li>
+<li class="level1"><div class="li"> </div>
+</li>
+</ul>
+<pre class="file">Start service:
+  * systemctl start nascli
+
+Stop Service:
+  * systemctl stop nascli
+
+batch test: (example)
+  * python nascmd_client.py -f Script/ldapserver.txt -o output.log
+
+debug mode:
+  * python nascmd_client.py -c &quot;enable_debug&quot; (No limit in log message)
+  * python nascmd_client.py -c &quot;disable_debug&quot; (log message is limited in 300 bytes)
+
+check alive:
+  * python nascmd_client.py -c &quot;check_alive -z a@0&quot;
+
+reload module:
+  * python nascmd_client.py -c &quot;reload_module $module_name&quot;
+
+interactive mode:
+  * python nascmd_client.py -i
+
+ssl transporation:
+  * python nascmd_client.py --ssl -c &quot;ha status -z a@0&quot;
+
+unit test:
+  * Unordered List Itempython nascmd_client.py --test</pre>

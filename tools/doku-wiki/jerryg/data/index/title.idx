@@ -1,6 +1,7 @@
 
 
 
+Commands
 
 
 
@@ -12,8 +13,7 @@
 
 
 
-
-create a remote Git branch
+config related
 
 
 
@@ -25,7 +25,7 @@ Vim 的纵向编辑模式
 
 
 
-object analysis
+struct.pack
 Remote ssh with tmux
 
 
@@ -37,4 +37,18 @@ mount lvm volume
 
 
 
+
+
+route related
+set static ip
+test scope for upgrade
+Frequently Asked Questions
+Gui send A/B controller in G-Model, How to handle it?
+
+How to reload module in HAServer
+How to init xml config file in HAServer
+
+what is devops?
+Automation tools
+Create file
 

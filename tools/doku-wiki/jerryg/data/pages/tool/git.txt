@@ -1,3 +1,25 @@
+====== config related ======
+<file>
+# login with escape password
+http.proxy=http://userId:pwd%40123@ipaddress:port
+
+</file>
+====== see the change ======
+<file>
+# see the change in a commit
+git diff COMMIT^ COMMIT
+</file>
+====== list remote branch ======
+<file>
+git branch -a
+</file>
+====== overwrite local files ======
+<file>
+git fetch --all
+git reset --hard origin/master
+
+# git-fetch - Download objects and refs from another repository
+</file>
 ====== create a remote Git branch ======
 <file>
 git checkout -b <branch-name>

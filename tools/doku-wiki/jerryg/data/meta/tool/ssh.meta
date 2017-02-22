@@ -1,0 +1,12 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1486352376;s:8:"modified";i:1486362513;}s:11:"last_change";a:8:{s:4:"date";i:1486362513;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:8:"tool:ssh";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:115;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:256:"Restrict root login
+
+
+# do not allow user login by root in sshd_config
+PermitRootLogin no
+
+# do not allow user login by password in sshd_config
+PasswordAuthentication yes  
+
+# remove password of root
+1. passwd -d root
+2. debug : login by iftsup and su root";}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1486352376;s:8:"modified";i:1486362513;}s:11:"last_change";a:8:{s:4:"date";i:1486362513;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:8:"tool:ssh";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:115;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

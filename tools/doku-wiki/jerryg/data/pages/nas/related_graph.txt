@@ -1,0 +1,31 @@
+<graphviz dot right 800x400>
+digraph ATN {
+rankdir=LR;
+user[fontsize=11, label="user", shape=circle, fixedsize=false];
+userhome[fontsize=11, label="userhome", shape=circle, fixedsize=false];
+importedUserhome[fontsize=11, label="importedUserHome", shape=circle, fixedsize=false];
+share[fontsize=11, label="share", shape=circle, fixedsize=false];
+join_ad[fontsize=11, label="join_ad", shape=circle, fixedsize=false];
+join_ldap[fontsize=11, label="join_ldap", shape=circle, fixedsize=false];
+dns_set[fontsize=11, label="dns_set", shape=circle, fixedsize=false];
+local_user[fontsize=11,label="local user", shape=circle, fixedsize=false, peripheries=1];
+domain_user[fontsize=11,label="domain user", shape=circle, fixedsize=false, peripheries=1];
+create_localuser[fontsize=11,label="create_localuser", shape=circle, fixedsize=false, peripheries=1];
+edit_localuser[fontsize=11,label="edit_localuser", shape=circle, fixedsize=false, peripheries=1];
+display_user[fontsize=11,label="display_user", shape=circle, fixedsize=false, peripheries=1];
+local_user -> user[fontname="Times-Italic", label="&epsilon;"];
+domain_user -> user[fontname="Times-Italic", label="&epsilon;"];
+create_localuser -> local_user [fontname="Times-Italic", label="&epsilon;"];
+edit_localuser -> local_user [fontname="Times-Italic", label="&epsilon;"];
+display_user -> local_user [fontname="Times-Italic", label="&epsilon;"];
+domain_user -> join_ad[fontname="Times-Italic", label="&epsilon;"];
+domain_user -> join_ldap[fontname="Times-Italic", label="&epsilon;"];
+join_ad -> dns_set[fontname="Times-Italic", label="&epsilon;"];
+userhome -> create_localuser [fontname="Times-Italic", label="set"];
+userhome -> edit_localuser [fontname="Times-Italic", label="display"];
+userhome -> share [fontname="Times-Italic", label=""];
+importedUserhome -> share [fontname="Times-Italic", label=""];
+importedUserhome  -> join_ad[fontname="Times-Italic", label="&epsilon;"];
+importedUserhome -> join_ldap[fontname="Times-Italic", label="&epsilon;"];
+}
+</graphviz>

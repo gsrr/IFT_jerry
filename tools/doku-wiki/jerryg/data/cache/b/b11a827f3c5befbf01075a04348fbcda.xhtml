@@ -1,0 +1,18 @@
+
+<h1 class="sectionedit1" id="gui_send_a_b_controller_in_g-model_how_to_handle_it">Gui send A/B controller in G-Model, How to handle it?</h1>
+<div class="level1">
+<pre class="file"># Description
+The NASCLI receive primary controller in Primary controller, 
+then send the command to HA Lib according to controller parameter of command.
+
+# Example
+def func(HAServer, paraList):
+    if paraList[&#039;controller&#039;] != HA.currentController():
+        return {&#039;status&#039; : 0}
+
+# Attention
+A:Successful , B: Successful -&gt; GUI Successful
+A:Successful , B: Fail -&gt; GUI Fail
+A:Fail , B: Successful -&gt; GUI Fail</pre>
+
+</div>

@@ -1,3 +1,35 @@
+====== struct.pack ======
+<file>
+# pack string (char array)
+>>> s1 = struct.pack("I9sI", 12, "Eononestr", 11)
+>>> s1
+'\x0c\x00\x00\x00Eononestr\x00\x00\x00\x0b\x00\x00\x00'
+>>> struct.unpack("I9sI", s1)
+(12, 'Eononestr', 11)
+
+>>> struct.unpack("I8sI",s2)
+(12, 'Eononest', 11)
+>>> s2 = struct.pack("I", 12) + "Eononest" + struct.pack("I", 11)
+>>> s2
+'\x0c\x00\x00\x00Eononest\x0b\x00\x00\x00'
+>>> struct.unpack("I8sI",s2)
+(12, 'Eononest', 11)
+(The packet should be padded if the char array is not divided by 2)
+</file>
+====== debug with gdb ======
+py-fields[[https://gist.github.com/kouk/5c2e725bef8b54aae6e0]]
+
+Extended gdb using python [[https://sourceware.org/gdb/onlinedocs/gdb/Python.html]]
+
+[[https://docs.python.org/devguide/gdb.html]]
+<file>
+</file>
+====== trace module ======
+[[https://pymotw.com/2/trace/]]
+<file>
+# For a simple list of the functions called
+python -m trace --listfuncs trace_example/main.py
+</file>
 ====== object analysis======
   * vars(object) , but not all objects have a __dict__ member
   * dir(object)

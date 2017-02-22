@@ -1,3 +1,6 @@
+add host's fingerprint automatically
+<file>
+</file>
 how to check and install?
 <file>
 </file>

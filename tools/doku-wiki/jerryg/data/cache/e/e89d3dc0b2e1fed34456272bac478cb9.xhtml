@@ -1,0 +1,42 @@
+
+<h1 class="sectionedit1" id="route_related">route related</h1>
+<div class="level1">
+<pre class="file"># delete routing rule
+route del -net 169.254.0.0 netmask 255.255.0.0 dev eth0
+</pre>
+
+</div>
+<!-- EDIT1 SECTION "route related" [1-122] -->
+<h1 class="sectionedit2" id="set_static_ip">set static ip</h1>
+<div class="level1">
+<pre class="file"># set config: /etc/sysconfig/network-scripts/ifcfg-mgmt0
+DEVICE=mgmt0
+TYPE=Ethernet
+ONBOOT=yes
+BOOTPROTO=static
+NM_CONTROLLED=no
+IPADDR=172.27.112.183
+NETMASK=255.255.240.0
+GATEWAY=172.27.127.254
+IPv6INIT=no
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_PEERDNS=yes
+IPV6_PEERROUTES=yes
+IPV6_FAILURE_FATAL=no
+IPV6ADDR=
+IPV6_DEFAULTGW=
+NETWORKING_IPV6=no
+MTU=1500
+USERCTL=no  
+
+# restart network
+systemctl restart network
+
+# set route rule:
+ip route add default via 172.27.127.254 dev mgmt0
+
+</pre>
+
+</div>
+<!-- EDIT2 SECTION "set static ip" [123-] -->
