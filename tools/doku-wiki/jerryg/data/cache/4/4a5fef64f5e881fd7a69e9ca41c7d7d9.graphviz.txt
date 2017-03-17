@@ -1,0 +1,13 @@
+digraph ATN {
+rankdir=LR;
+user[fontsize=11, label="user", shape=rectangle, fixedsize=false];
+set_folder[fontsize=11, label="set_folder", shape=rectangle, fixedsize=false];
+download_rpm_package[fontsize=11, label="download_rpm_package", shape=rectangle, fixedsize=false];
+upload_rpm_package[fontsize=11, label="upload_rpm_package", shape=rectangle, fixedsize=false];
+exec_install[fontsize=11, label="exec_install", shape=rectangle, fixedsize=false];
+
+set_folder-> download_rpm_package[fontname="Times-Italic", label=""];
+download_rpm_package-> upload_rpm_package[fontname="Times-Italic", label=""];
+upload_rpm_package-> exec_install[fontname="Times-Italic", label=""];
+
+}

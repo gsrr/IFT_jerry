@@ -1,3 +1,5 @@
+  * [[tool:python:time_module|Usage of time module]]
+
 ====== struct.pack ======
 <file>
 # pack string (char array)

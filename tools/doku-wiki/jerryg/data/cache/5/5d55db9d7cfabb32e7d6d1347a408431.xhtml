@@ -1,0 +1,81 @@
+<pre class="file">log level in HA
+0 - error
+1 - warning
+2 - info
+
+log level in syslog
+LOG_ERR
+LOG_WARNING
+LOG_INFO
+
+Modify debug level(HA):
+1. python /usr/local/NAS/misc/HAAgent/testHA.py 101 2
+
+Modify debug level(syslog):
+local6.*                                                /var/log/NASCmd_debugLog
+local5.*                                                /var/log/NAS_message
+
+local6.info                                                /var/log/NASCmd_debugLog
+local5.info                                                /var/log/NAS_message
+
+local6.warning                                                /var/log/NASCmd_debugLog
+local5.warning                                                /var/log/NAS_message
+
+local6.err                                                /var/log/NASCmd_debugLog
+local5.err                                                /var/log/NAS_message</pre>
+
+<p>
+iftcron.py - original
+</p>
+<pre class="file">def cronlog(msg):
+        try:
+                fd = open(&quot;/var/log/iftcron.log&quot;, &quot;a&quot;)
+                fd.write(&quot;[&quot; + time.strftime(&#039;%Y-%m-%d %H:%M:%S&#039;, time.localtime(time.time())) + &quot;] &quot;)
+                fd.write(&quot;%s&quot;%(msg))
+                fd.write(&quot;\n&quot;)
+                fd.close()
+        except:
+                print &#039;[CronDaemon.log] exception: %s&#039; % traceback.format_exc()
+</pre>
+
+<p>
+iftcron.py - new
+</p>
+<pre class="file">            
+import iftsyslog
+def cronlog(level = iftsyslog.LOG_INFO, msg = &quot;&quot;):
+        iftsyslog.log(&quot;iftcron&quot;, level, msg)</pre>
+<pre class="file">&gt;&gt;&gt; import iftsyslog
+&gt;&gt;&gt; iftsyslog.enable_msg(&quot;info&quot;)
+local5.*  to local5.info
+0
+&gt;&gt;&gt; iftsyslog.enable_cli(&quot;err&quot;)
+local6.info  to local6.err
+0
+&gt;&gt;&gt; iftsyslog.enable_msg(&quot;warning&quot;)
+local5.err to local5.warning
+0
+&gt;&gt;&gt; iftsyslog.enable_msg(&quot;all&quot;)
+local5.warning to local5.*
+0
+&gt;&gt;&gt; iftsyslog.enable_ha()
+python /usr/local/NAS/misc/HAAgent/testHA.py 101 2
+0
+&gt;&gt;&gt; iftsyslog.enable_ha(&quot;err&quot;)
+python /usr/local/NAS/misc/HAAgent/testHA.py 101 0
+0
+&gt;&gt;&gt; iftsyslog.enable_ha(&quot;warning&quot;)
+python /usr/local/NAS/misc/HAAgent/testHA.py 101 1
+0
+&gt;&gt;&gt; iftsyslog.enable_all()
+local5.info  to local5.info
+local6.info  to local6.info
+python /usr/local/NAS/misc/HAAgent/testHA.py 101 2
+0
+&gt;&gt;&gt; iftsyslog.enable_all(&quot;err&quot;)
+local5.info  to local5.err
+local6.info  to local6.err
+python /usr/local/NAS/misc/HAAgent/testHA.py 101 0
+0
+
+</pre>

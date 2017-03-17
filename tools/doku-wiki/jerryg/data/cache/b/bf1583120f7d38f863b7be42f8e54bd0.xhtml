@@ -1,0 +1,90 @@
+
+<p>
+[Reference]
+</p>
+
+<p>
+<a href="https://www.puritys.me/docs-blog/article-71-%E4%BD%BF%E7%94%A8-RPM-Build-%EF%BC%8C%E5%9C%A8Linux-%E6%89%93%E5%8C%85-Package.html" class="urlextern" title="https://www.puritys.me/docs-blog/article-71-%E4%BD%BF%E7%94%A8-RPM-Build-%EF%BC%8C%E5%9C%A8Linux-%E6%89%93%E5%8C%85-Package.html" rel="nofollow">https://www.puritys.me/docs-blog/article-71-%E4%BD%BF%E7%94%A8-RPM-Build-%EF%BC%8C%E5%9C%A8Linux-%E6%89%93%E5%8C%85-Package.html</a>
+</p>
+
+<h1 class="sectionedit1" id="rpm_usage">rpm usage</h1>
+<div class="level1">
+<pre class="file"># list files in rpm package
+[root@CentOS7-Build SPECS]# rpm -ql mypackage
+/mnt/test/mytest
+/mnt/test/test/mytest
+
+# search rpm package
+[root@CentOS7-Build SPECS]# rpm -qa mypackage
+mypackage-3.0-1.x86_64
+
+# create rpm package
+[root@CentOS7-Build SPECS]# rpmbuild -bb example.spec
+
+# remove rpm package
+[root@CentOS7-Build SPECS]# rpm -e mypackage
+
+# install rpm package
+[root@CentOS7-Build SPECS]# rpm -ivh ../RPMS/x86_64/mypackage-3.0-1.x86_64.rpm
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:mypackage-3.0-1                  ################################# [100%]
+
+# list rpm package by vendor name
+[root@CentOS7-Build SPECS]# rpm -qa --qf &#039;%{NAME}-%{VERSION}::%{VENDOR}\n&#039; | grep Infortrend
+mypackage-3.0::Infortrend
+
+</pre>
+
+</div>
+<!-- EDIT1 SECTION "rpm usage" [145-972] -->
+<h1 class="sectionedit2" id="content_of_examplespec">content of example.spec</h1>
+<div class="level1">
+<pre class="file">[root@CentOS7-Build SPECS]# cat example.spec
+#將設定的RPM名稱、版號、路徑，以變數的方式指定
+%define _topdir /root/myrpm/
+%define Version 3.0
+%define RPM_BUILD_ROOT _topdir
+%define Name mypackage
+#RPM相關資料
+Summary:        My First RPM Package
+Name:           %{Name}
+Version:        %{Version}
+Release:        1
+Vendor:         Infortrend
+Packager:       myName &lt;mail@gmail.com&gt;
+License:        GPL
+Group:          develope
+Source :        mypackage.tar.gz
+Prefix:         /tmp
+
+%description
+其他相關說明
+
+%prep
+%setup -q
+
+%build
+
+%install
+#設定安裝的實際路徑與檔案
+install -d %{buildroot}/tmp/test/
+install -d %{buildroot}/tmp/test/test
+cp mytest %{buildroot}/tmp/test/
+cp test/mytest %{buildroot}/tmp/test/test
+
+%files
+#安裝時:設定預設的檔案權限
+%defattr(755,root,root)
+#安裝時:設定檔案的屬性 chmod,chown,chgrp
+%attr(755,root,root) /tmp/test/mytest
+%attr(755,root,root) /tmp/test/test/mytest
+
+%clean
+rm -rf %{buildroot}
+
+%postun
+rm -rf /tmp/test</pre>
+
+</div>
+<!-- EDIT2 SECTION "content of example.spec" [973-] -->

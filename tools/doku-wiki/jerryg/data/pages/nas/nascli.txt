@@ -50,5 +50,5 @@ ssl transporation:
   * python nascmd_client.py --ssl -c "ha status -z a@0"
 
 unit test:
-  * Unordered List Itempython nascmd_client.py --test
+  * python nascmd_client.py --test
 </file>

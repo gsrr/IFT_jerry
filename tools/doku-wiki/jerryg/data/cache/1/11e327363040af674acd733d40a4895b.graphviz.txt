@@ -1,0 +1,12 @@
+digraph ATN {
+rankdir=LR;
+binary_search_tree[fontsize=11, label="bst", shape=circle, fixedsize=false];
+preorder [fontsize=11, label="preorder ", shape=circle, fixedsize=false];
+inorder[fontsize=11, label="inorder", shape=circle, fixedsize=false];
+postorder [fontsize=11, label="postorder ", shape=circle, fixedsize=false];
+levelorder [fontsize=11, label="levelorder ", shape=circle, fixedsize=false];
+preorder -> binary_search_tree[fontname="Times-Italic", label="&epsilon;"];
+inorder-> binary_search_tree[fontname="Times-Italic", label="&epsilon;"];
+postorder -> binary_search_tree[fontname="Times-Italic", label="&epsilon;"];
+levelorder -> binary_search_tree[fontname="Times-Italic", label="&epsilon;"];
+}

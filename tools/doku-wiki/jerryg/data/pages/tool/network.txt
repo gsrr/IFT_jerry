@@ -1,5 +1,8 @@
 ====== route related ======
 <file>
+# set route rule:
+ip route add default via 172.27.127.254 dev mgmt0
+
 # delete routing rule
 route del -net 169.254.0.0 netmask 255.255.0.0 dev eth0
 
@@ -29,9 +32,6 @@ USERCTL=no
 
 # restart network
 systemctl restart network
-
-# set route rule:
-ip route add default via 172.27.127.254 dev mgmt0
 
 
 </file>

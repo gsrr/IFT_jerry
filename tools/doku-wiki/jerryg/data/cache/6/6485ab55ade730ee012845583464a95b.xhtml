@@ -1,0 +1,39 @@
+
+<p>
+Q2 : The days of self-certificate is limited?
+</p>
+<pre class="file"></pre>
+
+<p>
+Q1 : what is ssl?
+</p>
+
+<p>
+<a href="http://www.ntu.edu.sg/home/ehchua/programming/webprogramming/http_ssl.html" class="urlextern" title="http://www.ntu.edu.sg/home/ehchua/programming/webprogramming/http_ssl.html" rel="nofollow">http://www.ntu.edu.sg/home/ehchua/programming/webprogramming/http_ssl.html</a>
+</p>
+<pre class="file">ssl is stands for secure socket layer, it provides secure communication between client and server.
+The protocol stack is as below.</pre>
+
+<p>
+<a href="/jerryg/lib/exe/detail.php?id=tool%3Aopenssl&amp;media=tool:np110614000811061414250101.png" class="media" title="tool:np110614000811061414250101.png"><img src="/jerryg/lib/exe/fetch.php?w=400&amp;tok=608814&amp;media=tool:np110614000811061414250101.png" class="media" alt="" width="400" /></a>
+</p>
+
+<p>
+由stack看起來, application layer的訊息會先被ssl加密, 變成ssl的header, 這個header再放在tcp stack上面進行傳輸.
+</p>
+
+<p>
+主要有3種資料, 分別是:SSL Handshake、SSL Change Cipher spec及SSL Alert.
+</p>
+
+<p>
+SSL Handshake是一開始雙方交換資料所需的一些訊息,
+</p>
+
+<p>
+SSL Change Cipher則是指定雙方加解密的演算法.
+</p>
+
+<p>
+SSL Alert 則是當錯誤發生時, 送給對方的error message.
+</p>
