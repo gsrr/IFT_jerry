@@ -1,0 +1,13 @@
+[reference]
+http://nlpforhackers.io/building-a-simple-inverted-index-using-nltk/
+
+[installation]
+pip install -U nltk
+pip install -U numpy
+
+[download-1]
+python -m nltk.downloader all
+
+[download-2]
+>>> import nltk
+>>> nltk.download('all')
