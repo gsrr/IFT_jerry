@@ -2,6 +2,7 @@ import nltk
 from collections import defaultdict
 from nltk.stem.snowball import EnglishStemmer  # Assuming we're working with English
 from nltk.stem.porter import *
+import os
 
 class Index:
     """ Inverted index datastructure """
@@ -47,17 +48,38 @@ class Index:
                 self.index[token].append(self.unique_id)
 
         self.documents[self.unique_id] = document
+        print self.unique_id
         self.unique_id += 1           
 
+def create_corpus():
+    index = Index(nltk.word_tokenize, EnglishStemmer(), nltk.corpus.stopwords.words('english'))
 
-index = Index(nltk.word_tokenize, EnglishStemmer(), nltk.corpus.stopwords.words('english'))
-fr = open("documents/224415.product")
-data = fr.read()
-index.add(data)
-fr = open("documents/128297.product")
-data = fr.read()
-index.add(data)
-print index.index
+    doc_path = "./documents"
+    for line in os.listdir(doc_path):
+        with open(doc_path + "/" + line, "r") as fr: 
+            print "documents/%s"%line,
+            data = fr.read()
+            index.add(data)
 
+    with open("./inverted_index_file", "w") as fw:
+        for key in index.index:
+            fw.write(key + "::" + " ".join([ str(x) for x in index.index[key]]) + "\n")
 
+def usage():
+    print "1 : tf with cosine"
+    print "2 : tf with Jaccard"
+    print "3 : tf-idf with cosine"
+    print "4 : tf-idf with Jaccard"
 
+def main():
+    while True:
+        usage()
+        opt = raw_input("Enter your option:")
+        query = raw_input("Enter your query:")
+        print "opt=%s"%opt, "query=%s"%query
+        index_query = Index(nltk.word_tokenize, EnglishStemmer(), nltk.corpus.stopwords.words('english'))
+        index_query.add(query)
+        print index_query.index
+
+if __name__ == "__main__":
+    main()
