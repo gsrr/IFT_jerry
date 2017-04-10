@@ -2,7 +2,9 @@ import nltk
 from collections import defaultdict
 from nltk.stem.snowball import EnglishStemmer  # Assuming we're working with English
 from nltk.stem.porter import *
+import pickle
 import os
+from numpy.linalg import norm
 
 class Index:
     """ Inverted index datastructure """
@@ -15,7 +17,7 @@ class Index:
         """
         self.tokenizer = tokenizer
         self.stemmer = stemmer
-        self.index = defaultdict(list)
+        self.index = defaultdict(dict)
         self.documents = {}
         self.unique_id = 0
         if not stopwords:
@@ -44,8 +46,9 @@ class Index:
             if self.stemmer:
                 token = self.stemmer.stem(token)
 
-            if self.unique_id not in self.index[token]:
-                self.index[token].append(self.unique_id)
+            if self.unique_id not in self.index[token].keys():
+                self.index[token][self.unique_id] = 0
+            self.index[token][self.unique_id] += 1
 
         self.documents[self.unique_id] = document
         print self.unique_id
@@ -61,9 +64,7 @@ def create_corpus():
             data = fr.read()
             index.add(data)
 
-    with open("./inverted_index_file", "w") as fw:
-        for key in index.index:
-            fw.write(key + "::" + " ".join([ str(x) for x in index.index[key]]) + "\n")
+    pickle.dump( index.index, open( "./inverted_index_file", "wb" ) )
 
 def usage():
     print "1 : tf with cosine"
@@ -71,7 +72,20 @@ def usage():
     print "3 : tf-idf with cosine"
     print "4 : tf-idf with Jaccard"
 
+def cosine(q, c):
+    q_vec = [q[word][0] for word in q.keys()]
+    print q_vec
+    ret = {}
+    s = 0
+    for word in q.keys():
+        for d in c[word]:
+            if ret.has_key(d) == False:
+                ret[d] = 0
+            ret[d] += (q[word][0] * c[word][d])
+        
+
 def main():
+    inverted_index = pickle.load(open( "inverted_index_file", "rb" ))
     while True:
         usage()
         opt = raw_input("Enter your option:")
@@ -79,7 +93,10 @@ def main():
         print "opt=%s"%opt, "query=%s"%query
         index_query = Index(nltk.word_tokenize, EnglishStemmer(), nltk.corpus.stopwords.words('english'))
         index_query.add(query)
-        print index_query.index
+        cosine(index_query.index, inverted_index)
+
+
 
 if __name__ == "__main__":
+    #create_corpus()
     main()
