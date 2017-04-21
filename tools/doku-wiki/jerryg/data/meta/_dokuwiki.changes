@@ -1,21 +1,36 @@
-1488862251	172.27.12.71	C	nas:log		created		83
-1488866056	172.27.12.71	E	nas:log				793
-1488867478	172.27.12.71	E	nas:log				577
-1488871071	172.27.12.71	E	nas:log				290
-1488884026	172.27.12.71	E	nas:log				0
-1489132096	172.27.12.71	E	nas:log				524
-1489139314	172.27.12.71	C	tool:rpm		created		141
-1489387298	172.27.12.71	E	tool:network				0
-1489387443	172.27.12.71	C	nas:app_install		created		2015
-1489387647	172.27.12.71	E	nas:app_install				-1443
-1489387657	172.27.12.71	E	nas:app_install				-9
-1489387698	172.27.12.71	E	nas:app_install				148
-1489390516	172.27.12.71	E	nas:app_install				252
-1489390593	172.27.12.71	E	nas:app_install				289
-1489390717	172.27.12.71	E	nas:app_install				405
-1489395392	172.27.12.71	E	nas:app_install				830
-1489395406	172.27.12.71	E	nas:app_install				1
-1489395422	172.27.12.71	E	nas:app_install				-827
-1489395433	172.27.12.71	E	tool:rpm				829
-1489395543	172.27.12.71	E	tool:rpm				1070
-1489542189	172.27.12.71	C	english:20170315		created		316
+1492499349	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		352
+1492509286	172.27.12.71	E	nas:app_install				125
+1492509306	172.27.12.71	E	nas:app_install				15
+1492509356	172.27.12.71	E	nas:app_install				64
+1492566666	172.27.12.71	E	nas:app_install				585
+1492567481	172.27.12.71	E	nas:app_install		[Related commands] 		278
+1492585685	172.27.12.71	E	nas:app_install		[waiting to do] 		37
+1492585726	172.27.12.71	E	nas:app_install		[waiting to do] 		-129
+1492588558	172.27.12.71	E	nas:app_install		[nascmd - app] 		25
+1492588849	172.27.12.71	E	nas:app_install		[nascmd - app] 		7
+1492653571	172.27.12.71	E	tool:openssl				1565
+1492655783	172.27.12.71	E	tool:openssl				164
+1492660400	172.27.12.71	E	tool:openssl				146
+1492660571	172.27.12.71	E	tool:openssl				158
+1492662162	172.27.12.71	E	tool:openssl				1105
+1492672487	172.27.12.71	E	nas:app_install		[nascmd - app] 		-45
+1492673953	172.27.12.71	E	nas:app_install				88
+1492676545	172.27.12.71	E	nas:app_install		[nascmd - app] 		9
+1492676671	172.27.12.71	E	nas:app_install		[nascmd - app] 		69
+1492676705	172.27.12.71	E	nas:app_install		[nascmd - app] 		6
+1492677755	172.27.12.71	E	nas:app_install		[nascmd - app] 		1118
+1492755106	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		110
+1492755421	172.27.12.71	E	tool:gdb				66
+1492755595	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		80
+1492770821	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		183
+1492773081	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		59
+1492785789	10.141.141.104	E	nas:rsync		[Sync Acl with EonNAS] 		76
+1492787890	10.141.141.104	E	nas:rsync				300
+1492788020	10.141.141.104	E	nas:rsync		[Sync Acl with EonNAS] 		174
+1492788224	10.141.141.104	E	nas:rsync		[Sync Acl with EonNAS] 		196
+1492789851	10.141.141.104	E	nas:rsync		[Sync Acl with EonNAS] 		232
+1492793537	10.141.141.116	E	nas:rsync		[Sync Acl with EonNAS] 		198
+1492797277	10.141.141.101	E	nas:rsync		[Sync Acl with EonNAS] 		753
+1492800194	10.141.141.101	E	nas:rsync		[Sync Acl with EonNAS] 		1279
+1492800521	10.141.141.101	E	nas:rsync		[FAQ] 		146
+1492800792	10.141.141.101	E	nas:rsync		[FAQ] 		82

@@ -11,3 +11,6 @@ sambalmpassword
 sambantpassword
 sambalogonhours
 permitrootlogin
+folderoperation
+fileinputstream
+getoutputstream

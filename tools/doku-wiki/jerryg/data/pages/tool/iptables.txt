@@ -1,3 +1,12 @@
+====== Reference ======
+<file>
+# packet flow diagram
+http://xkr47.outerspace.dyndns.org/netfilter/packet_flow/
+
+# iptables log
+https://websistent.com/linux-iptables-log-everything/
+</file>
+
 ====== Commands ======
 <file>
 # Add NASROUTING into PREROUTING
@@ -6,6 +15,12 @@ iptables -t nat -A PREROUTING -j NASROUTING -p all
 # Show all information
 iptables -t nat -L -vn # show all information
 
+# edit rules of iptables
+iptables-save > iptables.dump 
+...
+start to edit 
+...
+iptables-restore < iptables.dump 
 </file>
 <file>
 # Example:

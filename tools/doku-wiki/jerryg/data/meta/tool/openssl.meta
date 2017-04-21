@@ -1,17 +1,19 @@
-a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1487905179;s:8:"modified";i:1487908457;}s:11:"last_change";a:8:{s:4:"date";i:1487908457;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:12:"tool:openssl";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:61;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"relation";a:2:{s:5:"media";a:1:{s:35:"tool:np110614000811061414250101.png";b:1;}s:10:"firstimage";s:35:"tool:np110614000811061414250101.png";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:417:"Q2 : The days of self-certificate is limited?
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1487905179;s:8:"modified";i:1492662162;}s:11:"last_change";a:8:{s:4:"date";i:1492662162;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:12:"tool:openssl";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:1105;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"relation";a:2:{s:5:"media";a:1:{s:35:"tool:np110614000811061414250101.png";b:1;}s:10:"firstimage";s:35:"tool:np110614000811061414250101.png";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:527:"Q4: openssl command
 
 
+# create certificate
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
 
+# display the contents of a PEM formatted certificate under Linux
+openssl x509 -in acs.qacafe.com.pem -text
 
-Q1 : what is ssl?
+# remove key phrase
+openssl rsa -in key.pem -out newkey.pem
+------------------------
+Validity (365 days)
+            Not Before: Dec 19 03:06:25 2016 GMT
+            Not After : Dec 19 03:06:25 2017 GMT
+------------------------
 
-<http://www.ntu.edu.sg/home/ehchua/programming/webprogramming/http_ssl.html>
-
-
-ssl is stands for secure socket layer, it provides secure communication between client and server.
-The protocol stack is as below.
-
-
-
-
-由stack看起來, application layer的訊息會先被ssl加密, 變成ssl的header, 這個header再放在tcp stack上面進行傳輸.";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1487905179;s:8:"modified";i:1487908457;}s:11:"last_change";a:8:{s:4:"date";i:1487908457;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:12:"tool:openssl";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:61;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}
+#超過valid的時間時, client若使用過期的cert:
+[root@nas_8…";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1487905179;s:8:"modified";i:1492662162;}s:11:"last_change";a:8:{s:4:"date";i:1492662162;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:12:"tool:openssl";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:1105;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

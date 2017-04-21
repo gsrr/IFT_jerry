@@ -37,7 +37,7 @@ def cronlog(msg):
 
 ";i:1;N;i:2;N;}i:2;i:906;}i:6;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:906;}i:7;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:16:"iftcron.py - new";}i:2;i:1298;}i:8;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:1320;}i:9;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:126:"            
 import iftsyslog
-def cronlog(level = iftsyslog.LOG_INFO, msg = ""):
+def cronlog(msg = "", level = iftsyslog.LOG_INFO):
         iftsyslog.log("iftcron", level, msg)
 ";i:1;N;i:2;N;}i:2;i:1320;}i:10;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:799:"
 >>> import iftsyslog

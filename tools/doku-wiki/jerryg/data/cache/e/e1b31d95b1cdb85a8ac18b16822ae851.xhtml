@@ -1,0 +1,156 @@
+
+<h1 class="sectionedit1" id="reference">Reference</h1>
+<div class="level1">
+<pre class="file"># Setting up Samba as a Domain Member
+https://wiki.samba.org/index.php/Setting_up_Samba_as_a_Domain_Member#Testing_the_Winbindd_Connectivity</pre>
+
+</div>
+<!-- EDIT1 SECTION "Reference" [1-181] -->
+<h1 class="sectionedit2" id="acl">acl</h1>
+<div class="level1">
+<pre class="file"># user join group after login
+## gs-join group-ad
+1. user1 login samba
+2. join group (ad)
+3. without update user list
+ret --&gt; can not access share folder (without relogin)
+relogin --&gt; can access share folder
+
+[root@nas_8446485_a ~]# id WINADNTP\\test001
+uid=11001369(WINADNTP\test001) gid=11000513(WINADNTP\domain users) groups=11001369(WINADNTP\test001),11000513(WINADNTP\domain users),11001372(WINADNTP\group002)
+
+## gs-join group-ad
+1. user1 login samba
+2. join group (ad)
+3. without update user list
+ret --&gt; can not access share folder (without relogin)
+relogin --&gt; can access share folder
+
+[root@nas_8446485_a ~]# id WINADNTP\\test001
+uid=11001369(WINADNTP\test001) gid=11000513(WINADNTP\domain users) groups=11001369(WINADNTP\test001),11000513(WINADNTP\domain users),11001372(WINADNTP\group002)
+
+## gs-join group-ad
+1. user1 login samba
+2. user1 join group
+3. update user list 
+ret --&gt; can not access share folder 
+relogin --&gt; can access share folder
+
+## gs without re-login
+1. user1 login samba
+2. user1 join group (ad)
+3. update user list
+ret --&gt;
+
+## gs without re-login
+1. user1 login samba
+2. user1 join group (ad)
+3. without update user list
+ret --&gt; 
+relogin --&gt; 
+
+## gs-join group-ldap
+1. user1 login samba
+2. user1 join group
+3. without update user list 
+ret --&gt; can not access share folder (without relogin)
+relogin --&gt; can not access share folder
+
+## gs-join group-ldap
+1. user1 login samba
+2. user1 join group
+3. update user list 
+ret --&gt; can not access share folder (without relogin)
+relogin --&gt; can access share folder
+
+## gs-leave group-ldap
+1. user1 login samba
+2. user1 leave group
+3. without update user list 
+ret --&gt; can access share folder (without relogin)
+relogin --&gt; can access share folder
+
+## gs-leave group-ldap
+1. user1 login samba
+2. user1 leave group
+3. update user list 
+ret --&gt; can access share folder (without relogin)
+relogin --&gt; can not can access share folder
+
+## synology without re-login
+1. user1 login samba
+2. join group
+3. waiting time (check user list)
+ret --&gt; 
+
+
+Summary:
+1. 一定要重新login才會生效, 不論有update user or not. (nscd -i group)
+2. ad跟ldap的行為不太一樣, ad的id command似乎沒有辦法再nscd -i group就更新, 必須要重新login
+3. ad只要重新login, 其acl就可以生效, 即便id user沒有更新也沒關係.
+3. synology 在add group時, 似乎可以不用重新login, 但leave group時等了15分鐘還是可以操作.
+</pre>
+
+</div>
+<!-- EDIT2 SECTION "acl" [182-2630] -->
+<h1 class="sectionedit3" id="ad_take_over">AD take over</h1>
+<div class="level1">
+<pre class="file">172.27.120.180 WIN-2012R2ADC.winadntp.evt
+172.27.120.179 WIN-2012R2ADNTP.winadntp.evt
+# join AD message
+Using short domain name -- WINADNTP
+5433 Joined &#039;NAS_824366_A&#039; to dns domain &#039;winadntp.evt&#039;
+5434 No DNS domain configured for nas_824366_a. Unable to perform DNS Update.)
+--&gt; normal message
+
+# failed to join AD
+Mar 27 02:42:12 nas_824366_a ldapOperation[2449]: (cmd, out) = ([&#039;/usr/bin/net&#039;, &#039;ads&#039;, &#039;join&#039;, &#039;-S&#039;, &#039;WIN-2012R2ADC.winadntp.evt&#039;, &#039;-U&#039;, &#039;administrator%ABcd_1234&#039;, &#039;-s&#039;, &#039;/etc/samba/net_smb.conf&#039;], Failed to join domain: Failed to set
+machine spn: Constraint violation Do you have sufficient permissions to create machine accounts?)
+Mar 27 02:42:12 nas_824366_a diagnosticOperation[2449]: {&#039;status&#039;: 71, &#039;err&#039;: &#039;&#039;, &#039;out&#039;: &#039;Failed to join domain: Failed to set machine spn: Constraint violation\nDo you have sufficient permissions to create machine accounts?&#039;}
+--&gt; Delete the computer account of AD
+
+Root Cause:
+若A, B兩台機器, A join完斷線, 這時候會換join B來進行接手,此時新增加的computer object id與join A時並不一樣,
+所以當A起來後, 會多出一個computerCNF的object, 導致若要換成joinA接手時會失敗.
+
+# 另外一個問題是沒辦法透過DNS找不到ip
+--&gt; 看起來是因為找到192.168.99.14去了, 導致DNS會一直回覆unknown host.
+anyway , 目前測試起來, 應該不需要進行重新join的動作.
+只要透過wbinfo -P來讓winbind ping AD, 就可以讓winbind建立正確連線.
+
+test scope:
+1. DNS應該只保留查詢得到的nameserver. (192.168.99.14, 192.168.99.16都應該去除)
+2. 將AD斷線, 等待約5~10分鐘, 再重新使用AD user來登入samba, 確認該user可以正常登入.
+</pre>
+
+</div>
+<!-- EDIT3 SECTION "AD take over" [2631-4348] -->
+<h1 class="sectionedit4" id="join_ad">join AD</h1>
+<div class="level1">
+<pre class="file"># join AD
+net ads join -U administrator%ABcd1234
+
+# leave AD
+net ads leave -U administrator%ABcd1234
+
+# join specific AD
+net ads join -S WIN-2012R2ADC.winadntp.evt -U administrator%ABcd_1234
+
+# leave specific AD
+net ads leave -S WIN-2012R2ADC.winadntp.evt -U administrator%ABcd_1234</pre>
+
+</div>
+<!-- EDIT4 SECTION "join AD" [4349-4669] -->
+<h1 class="sectionedit5" id="error_message">Error Message</h1>
+<div class="level1">
+<pre class="file"># failed to join AD
+Failed to join domain: failed to join domain &#039;WINADNTP.EVT&#039; over rpc: None of the information to be translated has been translated.
+--&gt; Delete the computer account of AD
+
+
+
+
+</pre>
+
+</div>
+<!-- EDIT5 SECTION "Error Message" [4670-] -->

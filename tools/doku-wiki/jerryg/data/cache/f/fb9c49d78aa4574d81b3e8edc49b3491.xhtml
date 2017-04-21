@@ -1,4 +1,177 @@
 
+<h1 class="sectionedit1" id="flow">flow</h1>
+<div class="level1">
+<pre class="file"></pre>
+
+</div>
+<!-- EDIT1 SECTION "flow" [1-35] -->
+<h1 class="sectionedit2" id="related_commands">Related commands</h1>
+<div class="level1">
+<pre class="file"># disk
+python testHA.py 0 --&gt; show disk information
+
+# create docker volume
+def create_docker(HA):
+        paras = {}
+        paras[&#039;operation&#039;] = &#039;createDocker&#039;
+        paras[&#039;vgName&#039;] = &#039;0FD492E13BBD3FBE&#039;
+        paras[&#039;lunId&#039;] = &#039;7&#039;
+        paras[&#039;lvName&#039;] = &#039;upload_packs&#039;
+        paras[&#039;size&#039;] = 26843545600
+        paras[&#039;controller&#039;] = &#039;A&#039;
+        paras[&#039;serviceId&#039;] = &#039;0&#039;
+        ret = HA.callGetLocalFunc(&#039;folderOperation&#039;, paras)
+        print ret
+        
+# destroy docker volume
+nascli --&gt; pool destroy 0FD492E13BBD3FBE -z a@0
+
+def destroy_docker(HA):
+        paras = {}
+        paras[&#039;operation&#039;] = &#039;deletePool&#039;
+        paras[&#039;poolname&#039;] = &#039;0FD492E13BBD3FBE&#039;
+        paras[&#039;controller&#039;] = &#039;A&#039;
+        paras[&#039;serviceId&#039;] = &#039;0&#039;
+        ret = HA.callGetLocalFunc(&#039;folderOperation&#039;, paras)
+        print ret
+</pre>
+
+</div>
+<!-- EDIT2 SECTION "Related commands" [36-899] -->
+<h1 class="sectionedit3" id="waiting_to_do">waiting to do</h1>
+<div class="level1">
+<pre class="file">App docker volume init  ---&gt; Michael , 4/14
+--&gt; done in 2017/04/18 
+--&gt; Integrate with app cli --&gt; JerryCheng, 4/19
+
+container status , need to monitor and issue event. --&gt;Jerry.Cheng
+write config for app when enabling app function --&gt; Jerry.Cheng
+
+container API --&gt; Yuan , 4/19
+
+NVR and App GUI --&gt; Hugh , 4/26
+
+container-nvr (docker):
+1. timezone問題 : map /etc/localtime 給 container使用.
+2. container-net mode : host mode , nat mode.
+3. </pre>
+
+<p>
+<strong><abbr title="specification">spec</abbr> issue</strong>
+</p>
+<pre class="file">#config_nvr
+mount_point = /mp/E/config_nvr
+
+[global]
+serial_number=8576145 (4 bytes unsigned integer)
+---------------------------------------
+
+
+Q : share folder給app使用之後, 是否可以再給其他app使用?
+Ans:
+預設上先不用
+
+Q : docker是跑在單片controller嗎?
+Ans:
+目前會跑在雙片的controller上, 所以會在兩邊的controller各建一個docker volume.
+目前預設會以一個LV的方式, 由其中切出一塊來作為upload package的地方, 另外一塊作為docker使用.
+(預設50G --&gt; 20G / 30G)
+
+Q : 那這個docker volume要給使用者看到嗎? (會由NASCLI這邊進行註記或是直接過濾)
+1. 是給使用者看到, 但不給操作.
+2. 或是不給使用者看到.
+3. 過濾要給NASCLI做, 或是給UI做.
+
+1 &amp; 2
+Ans:
+這個”docker-volume”我認為它應該要讓使用者可以看得到, 但是不讓使用者可以透過file explorer進行操作. -- from Richard
+
+3
+Ans:
+在Volume list上對這個volume進行標註, 讓UI進行防堵.
+
+
+Q : 因為docker volume是建在pool上, 那如果pool re-assign的話, 這個volume可能就會沒辦法使用.
+Ans:
+pool不能夠被re-assign.
+
+Q : 上傳的package已經安裝在NAS裡面的話, 應該要怎麼處理?
+Ans:
+不管新舊版本的問題, 對docker就是一整個覆蓋過去, 接下來的問題是原來的configuration能不能被新蓋上去的app所接受.
+所以,
+“2.2 上傳新版 --&gt; NAS 裡面是舊版”, 這個比較沒有問題, 就是更新版本.
+“2.1 上傳舊版 --&gt; NAS 裡面是新版”, 這種降版的狀況就需要GUI幫忙做一些處理, 諸如發警告來確認是不是要降版.
+
+Q : 若container fail的話, 要怎麼處理?
+1. container fail --&gt; Restart container.
+Ans:
+Event是一定要發的, 只是要不要自動restart container這件事要考慮一下,
+因為如果故障原因不是可以透過restart來解決的話, 例如working folder不見了,
+這樣幫使用者自動重開似乎沒有什麼意義.
+
+2. docker volume fail --&gt; Reinstall package and Restart container
+Ans:
+這個和前一個問題很類似, 我想還是先發event, 另外再考慮在GUI加recover的機制.</pre>
+
+</div>
+<!-- EDIT3 SECTION "waiting to do" [900-3549] -->
+<h1 class="sectionedit4" id="nascmd_-_app">nascmd - app</h1>
+<div class="level1">
+<pre class="file"># upload package --&gt; follow existed method
+
+
+=&gt;&gt; app init -v vvid -l lunid -z a@0
+{&quot;cliCode&quot;: [{&quot;Return&quot;: &quot;0x0000&quot;, &quot;CLI&quot;: &quot;Successful&quot;}], &quot;returnCode&quot;: [], &quot;data&quot;: []}
+1. create a volume for file system (50G)
+=&gt;&gt; pool status -z a@0
+{&quot;cliCode&quot;: [{&quot;Return&quot;: &quot;0x0000&quot;, &quot;CLI&quot;: &quot;Successful&quot;}], &quot;returnCode&quot;: [], &quot;data&quot;: [{&quot;used&quot;: &quot;33742848&quot;, &quot;name&quot;: &quot;447720D30A9CFC9D&quot;, &quot;uuid&quot;: &quot;fd4aa8f5-6b5a-4f78-8238-e68e4383183b&quot;, &quot;free&quot;: &quot;53627133952&quot;, &quot;fstype&quot;: &quot;xfs&quot;, &quot;member&quot;: [{&quot;driveName&quot;: &quot;sdf&quot;, &quot;used&quot;: &quot;53660876800&quot;, &quot;name&quot;: &quot;d7&quot;, &quot;free&quot;: &quot;0&quot;, &quot;state&quot;: &quot;active&quot;, &quot;useless&quot;: &quot;26214400&quot;, &quot;serial&quot;: &quot;447720D30A9CFC9D&quot;}], &quot;cluster&quot;: false, &quot;state&quot;: &quot;active&quot;, &quot;peSize&quot;: &quot;4096&quot;, &quot;folderNum&quot;: &quot;1&quot;, &quot;owner&quot;: &quot;A&quot;, &quot;type&quot;: &quot;user&quot;, &quot;utility&quot;: &quot;1.00&quot;}]}
+
+2. pool destroy volume (clear volume)
+=&gt;&gt; pool destroy &quot;447720D30A9CFC9D&quot; -z a@0
+{&quot;cliCode&quot;: [{&quot;Return&quot;: &quot;0x0000&quot;, &quot;CLI&quot;: &quot;Successful&quot;}], &quot;returnCode&quot;: [{&quot;code&quot;: &quot;0x051200A9&quot;, &quot;Params&quot;: []}], &quot;data&quot;: []}
+
+3. create docker volume
+=&gt;&gt; app init -v 447720D30A9CFC9D -l 7 -z a@0
+{&quot;cliCode&quot;: [{&quot;Return&quot;: &quot;0x0001&quot;, &quot;CLI&quot;: &quot;Failed (general)&quot;}], &quot;returnCode&quot;: [], &quot;data&quot;: []}
+
+4. lsblk
+sdf                                                                                            8:80   0   50G  0 disk
+└─79AB37B35236D591-upload_packs                                                              253:7    0   25G  0 lvm   /79AB37B35236D591/upload_packs
+
+
+=&gt;&gt; app preinstall -z a@0 -n test-1.0-1.x86_64.rpm
+=&gt;&gt; {&quot;cliCode&quot;: [{&quot;Return&quot;: &quot;0x0000&quot;, &quot;CLI&quot;: &quot;Successful&quot;}], &quot;returnCode&quot;: [], &quot;data&quot;: [{&quot;Group&quot;: &quot;develope&quot;, &quot;Name&quot;: &quot;nvr&quot;, &quot;License&quot;: &quot;GPL&quot;, &quot;Relocations&quot;: &quot;/tmp&quot;, &quot;Install Date&quot;: &quot;(not installed)&quot;, &quot;Build Host&quot;: &quot;CentOS7-Build&quot;, &quot;Description&quot;: &quot;&quot;, &quot;Summary&quot;: &quot;NVR App&quot;, &quot;Source RPM&quot;: &quot;nvr-1.0-1.src.rpm&quot;, &quot;Version&quot;: &quot;1.0&quot;, &quot;Architecture&quot;: &quot;x86_64&quot;, &quot;Signature&quot;: &quot;(none)&quot;, &quot;Release&quot;: &quot;1&quot;, &quot;Vendor&quot;: &quot;Infortrend&quot;, &quot;Packager&quot;: &quot;jerry.cheng &lt;jerry.cheng@infortrend.com&gt;&quot;, &quot;Size&quot;: &quot;840663552&quot;, &quot;Build Date&quot;: &quot;Fri 31 Mar 2017 06:06:58 AM GMT&quot;}]}
+
+=&gt;&gt; app install -n nvr-1.0-1.x86_64.rpm -z a@0
+{&quot;cliCode&quot;: [{&quot;Return&quot;: &quot;0x0000&quot;, &quot;CLI&quot;: &quot;Successful&quot;}], &quot;returnCode&quot;: [], &quot;data&quot;: []}
+ # rpm install # deploy file
+ # call docker to import dockfile
+ # remove installed file (nvr)
+
+=&gt;&gt; app uninstall -n nvr -z a@0
+{&quot;cliCode&quot;: [{&quot;Return&quot;: &quot;0x0000&quot;, &quot;CLI&quot;: &quot;Successful&quot;}], &quot;returnCode&quot;: [], &quot;data&quot;: []}
+ # call docker to export docker file
+ # rpm uninstall
+ # no need to clean files in share folder
+
+=&gt;&gt; app config -n nvr -p eyJmb2xkZXIiOiAiL1Bvb2wtMS9mMSJ9 -z a@0
+{&quot;cliCode&quot;: [{&quot;Return&quot;: &quot;0x0000&quot;, &quot;CLI&quot;: &quot;Successful&quot;}], &quot;returnCode&quot;: [], &quot;data&quot;: []}
+# set config for app
+
+=&gt;&gt; app enable -n nvr -z a@0
+{&quot;cliCode&quot;: [{&quot;Return&quot;: &quot;0x0000&quot;, &quot;CLI&quot;: &quot;Successful&quot;}], &quot;returnCode&quot;: [], &quot;data&quot;: []}
+# call docker to run docker file
+
+=&gt;&gt; app disable -n nvr -z a@0
+{&quot;cliCode&quot;: [{&quot;Return&quot;: &quot;0x0000&quot;, &quot;CLI&quot;: &quot;Successful&quot;}], &quot;returnCode&quot;: [], &quot;data&quot;: []}
+# call docker to kill docker process
+
+=&gt;&gt; app list -z a@0
+{&quot;cliCode&quot;: [{&quot;Return&quot;: &quot;0x0000&quot;, &quot;CLI&quot;: &quot;Successful&quot;}], &quot;returnCode&quot;: [], &quot;data&quot;: [{&quot;installed&quot;: true, &quot;version&quot;: &quot;1.0&quot;, &quot;config&quot;: {&quot;enable&quot;: &quot;True&quot;, &quot;name&quot;: &quot;nvr&quot;, &quot;ctrl&quot;: &quot;A&quot;, &quot;package&quot;: &quot;nvr-1.0-1.x86_64.rpm&quot;, &quot;version&quot;: &quot;1.0&quot;, &quot;docker_vol&quot;: &quot;/Pool-1/f1/rpms&quot;, &quot;folder&quot;: &quot;/Pool-1/f1&quot;}, &quot;name&quot;: &quot;nvr&quot;, &quot;package&quot;: &quot;nvr-1.0-1.x86_64.rpm&quot;}]}</pre>
+
 <p>
 <img src="/jerryg/lib/plugins/graphviz/img.php?width=800&amp;height=400&amp;layout=dot&amp;align=right&amp;version=2016-02-03&amp;md5=7f68a5aa1a195c0c481f90b3dcb42ff4" class="mediaright" alt="" width="800" height="400" align="right"/>
 </p>
+
+</div>
+<!-- EDIT4 SECTION "nascmd - app" [3550-] -->

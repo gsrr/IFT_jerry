@@ -1,12 +1,28 @@
 
-<h1 class="sectionedit1" id="commands">Commands</h1>
+<h1 class="sectionedit1" id="reference">Reference</h1>
+<div class="level1">
+<pre class="file"># packet flow diagram
+http://xkr47.outerspace.dyndns.org/netfilter/packet_flow/
+
+# iptables log
+https://websistent.com/linux-iptables-log-everything/</pre>
+
+</div>
+<!-- EDIT1 SECTION "Reference" [1-190] -->
+<h1 class="sectionedit2" id="commands">Commands</h1>
 <div class="level1">
 <pre class="file"># Add NASROUTING into PREROUTING
 iptables -t nat -A PREROUTING -j NASROUTING -p all
 
 # Show all information
 iptables -t nat -L -vn # show all information
-</pre>
+
+# edit rules of iptables
+iptables-save &gt; iptables.dump 
+...
+start to edit 
+...
+iptables-restore &lt; iptables.dump </pre>
 <pre class="file"># Example:
 Chain PREROUTING (policy ACCEPT 65670 packets, 9723K bytes)
  pkts bytes target     prot opt in     out     source               destination
@@ -42,3 +58,4 @@ iptables -t nat -A POSTROUTING -o iftnic3 -j MASQUERADE
 </pre>
 
 </div>
+<!-- EDIT2 SECTION "Commands" [191-] -->

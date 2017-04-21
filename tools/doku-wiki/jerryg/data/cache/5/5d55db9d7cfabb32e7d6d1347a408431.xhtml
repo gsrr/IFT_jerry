@@ -43,7 +43,7 @@ iftcron.py - new
 </p>
 <pre class="file">            
 import iftsyslog
-def cronlog(level = iftsyslog.LOG_INFO, msg = &quot;&quot;):
+def cronlog(msg = &quot;&quot;, level = iftsyslog.LOG_INFO):
         iftsyslog.log(&quot;iftcron&quot;, level, msg)</pre>
 <pre class="file">&gt;&gt;&gt; import iftsyslog
 &gt;&gt;&gt; iftsyslog.enable_msg(&quot;info&quot;)
