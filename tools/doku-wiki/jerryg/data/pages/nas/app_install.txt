@@ -2,6 +2,84 @@
 <file>
 
 </file>
+
+====== container api ======
+<file>
+[Problems]
+1. remove docker meta 沒有return value
+2. impact if docker load twice, 不行, failover的時候只能做一次.
+2.1 那假設原本是在ctrl b跑起來, failover時, 就要換在a的volume跑起來(因為a,b的docker volume是分開的)
+2.2 docker delete image , and query image repo name from image file
+
+
+1. __init__.py
+
+2. init_dckr_service # init docker vg 
+  --> appoperator.init_dckr_service("2BF3E9D70CC1D424")
+  2.1 需先remove docker meta data --> remove_dckr_meta
+  --> appoperator.remove_dckr_meta()
+  2.2 systemctl start docker
+-->
+sdg                                     8:96   0   50G  0 disk
+├─2BF3E9D70CC1D424-docker--pool_tmeta 253:6    0   52M  0 lvm
+│ └─2BF3E9D70CC1D424-docker--pool     253:9    0   10G  0 lvm
+├─2BF3E9D70CC1D424-upload_packs       253:7    0   25G  0 lvm   /2BF3E9D70CC1D424/upload_packs
+└─2BF3E9D70CC1D424-docker--pool_tdata 253:8    0   10G  0 lvm
+  └─2BF3E9D70CC1D424-docker--pool     253:9    0   10G  0 lvm
+  
+3. img_load --> 可以先使用EonOne進行測試.
+  3.1 EonOne path : /usr/local/EonOne/EonOne_2.4.c.02_20170420_1500.dckr.tar
+  --> appoperator.img_load("/usr/local/EonOne/EonOne_2.4.c.02_20170420_1500.dckr.tar")
+  
+4. get loaded images 
+--> appmonitor.get_images()
+{'data': [{u'Created': 1492672951,
+   u'Id': u'sha256:47b288ee5e366a38b43598a92c9c0b26c2dc4a3cfd274e18b5a1b2d1f1d0a733',
+   u'Labels': {u'license': u'GPLv2',
+    u'name': u'CentOS Base Image',
+    u'vendor': u'CentOS'},
+   u'ParentId': u'',
+   u'RepoDigests': None,
+   u'RepoTags': [u'eonone/base:2.4.c.02_20170420_1500'],
+   u'Size': 849681765,
+   u'VirtualSize': 849681765}],
+ 'status': 0}
+
+5. launch container
+--> appoperator.cntnr_launch("eonone/base:2.4.c.02_20170420_1500")
+{'err': [],
+ 'out': ['36fc5d2ac798d45a3f27ab9067c21d25b27b6cf52add4b6f89e0e78676571518'],
+ 'status': 0}
+
+6. get launched container
+--> appmonitor.get_containers()
+{'data': [{u'Command': u"/bin/sh -c 'nice -n 19 sh ./initSetting.sh && nice -n 19 /bin/bash'",
+   u'Created': 1493027281,
+   u'HostConfig': {u'NetworkMode': u'host'},
+   u'Id': u'36fc5d2ac798d45a3f27ab9067c21d25b27b6cf52add4b6f89e0e78676571518',
+   u'Image': u'eonone/base:2.4.c.02_20170420_1500',
+   u'ImageID': u'sha256:47b288ee5e366a38b43598a92c9c0b26c2dc4a3cfd274e18b5a1b2d1f1d0a733',
+   u'Labels': {u'license': u'GPLv2',
+    u'name': u'CentOS Base Image',
+    u'vendor': u'CentOS'},
+   u'Names': [u'/naughty_joliot'],
+   u'NetworkSettings': {u'Networks': {u'host': {u'Aliases': None,
+      u'EndpointID': u'f410076bff5c707c3325a526e893f220497f484e32bc016bc17ea99133165bc9',
+      u'Gateway': u'',
+      u'GlobalIPv6Address': u'',
+      u'GlobalIPv6PrefixLen': 0,
+      u'IPAMConfig': None,
+      u'IPAddress': u'',
+      u'IPPrefixLen': 0,
+      u'IPv6Gateway': u'',
+      u'Links': None,
+      u'MacAddress': u'',
+      u'NetworkID': u''}}},
+   u'Ports': [],
+   u'Status': u'Up About a minute'}],
+ 'status': 0}
+</file>
+
 ====== Related commands ======
 <file>
 # disk

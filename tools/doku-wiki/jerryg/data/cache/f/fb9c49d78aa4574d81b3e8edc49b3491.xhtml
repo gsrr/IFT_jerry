@@ -4,8 +4,86 @@
 <pre class="file"></pre>
 
 </div>
-<!-- EDIT1 SECTION "flow" [1-35] -->
-<h1 class="sectionedit2" id="related_commands">Related commands</h1>
+<!-- EDIT1 SECTION "flow" [1-36] -->
+<h1 class="sectionedit2" id="container_api">container api</h1>
+<div class="level1">
+<pre class="file">[Problems]
+1. remove docker meta 沒有return value
+2. impact if docker load twice, 不行, failover的時候只能做一次.
+2.1 那假設原本是在ctrl b跑起來, failover時, 就要換在a的volume跑起來(因為a,b的docker volume是分開的)
+2.2 docker delete image , and query image repo name from image file
+
+
+1. __init__.py
+
+2. init_dckr_service # init docker vg 
+  --&gt; appoperator.init_dckr_service(&quot;2BF3E9D70CC1D424&quot;)
+  2.1 需先remove docker meta data --&gt; remove_dckr_meta
+  --&gt; appoperator.remove_dckr_meta()
+  2.2 systemctl start docker
+--&gt;
+sdg                                     8:96   0   50G  0 disk
+├─2BF3E9D70CC1D424-docker--pool_tmeta 253:6    0   52M  0 lvm
+│ └─2BF3E9D70CC1D424-docker--pool     253:9    0   10G  0 lvm
+├─2BF3E9D70CC1D424-upload_packs       253:7    0   25G  0 lvm   /2BF3E9D70CC1D424/upload_packs
+└─2BF3E9D70CC1D424-docker--pool_tdata 253:8    0   10G  0 lvm
+  └─2BF3E9D70CC1D424-docker--pool     253:9    0   10G  0 lvm
+  
+3. img_load --&gt; 可以先使用EonOne進行測試.
+  3.1 EonOne path : /usr/local/EonOne/EonOne_2.4.c.02_20170420_1500.dckr.tar
+  --&gt; appoperator.img_load(&quot;/usr/local/EonOne/EonOne_2.4.c.02_20170420_1500.dckr.tar&quot;)
+  
+4. get loaded images 
+--&gt; appmonitor.get_images()
+{&#039;data&#039;: [{u&#039;Created&#039;: 1492672951,
+   u&#039;Id&#039;: u&#039;sha256:47b288ee5e366a38b43598a92c9c0b26c2dc4a3cfd274e18b5a1b2d1f1d0a733&#039;,
+   u&#039;Labels&#039;: {u&#039;license&#039;: u&#039;GPLv2&#039;,
+    u&#039;name&#039;: u&#039;CentOS Base Image&#039;,
+    u&#039;vendor&#039;: u&#039;CentOS&#039;},
+   u&#039;ParentId&#039;: u&#039;&#039;,
+   u&#039;RepoDigests&#039;: None,
+   u&#039;RepoTags&#039;: [u&#039;eonone/base:2.4.c.02_20170420_1500&#039;],
+   u&#039;Size&#039;: 849681765,
+   u&#039;VirtualSize&#039;: 849681765}],
+ &#039;status&#039;: 0}
+
+5. launch container
+--&gt; appoperator.cntnr_launch(&quot;eonone/base:2.4.c.02_20170420_1500&quot;)
+{&#039;err&#039;: [],
+ &#039;out&#039;: [&#039;36fc5d2ac798d45a3f27ab9067c21d25b27b6cf52add4b6f89e0e78676571518&#039;],
+ &#039;status&#039;: 0}
+
+6. get launched container
+--&gt; appmonitor.get_containers()
+{&#039;data&#039;: [{u&#039;Command&#039;: u&quot;/bin/sh -c &#039;nice -n 19 sh ./initSetting.sh &amp;&amp; nice -n 19 /bin/bash&#039;&quot;,
+   u&#039;Created&#039;: 1493027281,
+   u&#039;HostConfig&#039;: {u&#039;NetworkMode&#039;: u&#039;host&#039;},
+   u&#039;Id&#039;: u&#039;36fc5d2ac798d45a3f27ab9067c21d25b27b6cf52add4b6f89e0e78676571518&#039;,
+   u&#039;Image&#039;: u&#039;eonone/base:2.4.c.02_20170420_1500&#039;,
+   u&#039;ImageID&#039;: u&#039;sha256:47b288ee5e366a38b43598a92c9c0b26c2dc4a3cfd274e18b5a1b2d1f1d0a733&#039;,
+   u&#039;Labels&#039;: {u&#039;license&#039;: u&#039;GPLv2&#039;,
+    u&#039;name&#039;: u&#039;CentOS Base Image&#039;,
+    u&#039;vendor&#039;: u&#039;CentOS&#039;},
+   u&#039;Names&#039;: [u&#039;/naughty_joliot&#039;],
+   u&#039;NetworkSettings&#039;: {u&#039;Networks&#039;: {u&#039;host&#039;: {u&#039;Aliases&#039;: None,
+      u&#039;EndpointID&#039;: u&#039;f410076bff5c707c3325a526e893f220497f484e32bc016bc17ea99133165bc9&#039;,
+      u&#039;Gateway&#039;: u&#039;&#039;,
+      u&#039;GlobalIPv6Address&#039;: u&#039;&#039;,
+      u&#039;GlobalIPv6PrefixLen&#039;: 0,
+      u&#039;IPAMConfig&#039;: None,
+      u&#039;IPAddress&#039;: u&#039;&#039;,
+      u&#039;IPPrefixLen&#039;: 0,
+      u&#039;IPv6Gateway&#039;: u&#039;&#039;,
+      u&#039;Links&#039;: None,
+      u&#039;MacAddress&#039;: u&#039;&#039;,
+      u&#039;NetworkID&#039;: u&#039;&#039;}}},
+   u&#039;Ports&#039;: [],
+   u&#039;Status&#039;: u&#039;Up About a minute&#039;}],
+ &#039;status&#039;: 0}</pre>
+
+</div>
+<!-- EDIT2 SECTION "container api" [37-2999] -->
+<h1 class="sectionedit3" id="related_commands">Related commands</h1>
 <div class="level1">
 <pre class="file"># disk
 python testHA.py 0 --&gt; show disk information
@@ -37,8 +115,8 @@ def destroy_docker(HA):
 </pre>
 
 </div>
-<!-- EDIT2 SECTION "Related commands" [36-899] -->
-<h1 class="sectionedit3" id="waiting_to_do">waiting to do</h1>
+<!-- EDIT3 SECTION "Related commands" [3000-3863] -->
+<h1 class="sectionedit4" id="waiting_to_do">waiting to do</h1>
 <div class="level1">
 <pre class="file">App docker volume init  ---&gt; Michael , 4/14
 --&gt; done in 2017/04/18 
@@ -114,8 +192,8 @@ Ans:
 這個和前一個問題很類似, 我想還是先發event, 另外再考慮在GUI加recover的機制.</pre>
 
 </div>
-<!-- EDIT3 SECTION "waiting to do" [900-3549] -->
-<h1 class="sectionedit4" id="nascmd_-_app">nascmd - app</h1>
+<!-- EDIT4 SECTION "waiting to do" [3864-6513] -->
+<h1 class="sectionedit5" id="nascmd_-_app">nascmd - app</h1>
 <div class="level1">
 <pre class="file"># upload package --&gt; follow existed method
 
@@ -174,4 +252,4 @@ sdf                                                                             
 </p>
 
 </div>
-<!-- EDIT4 SECTION "nascmd - app" [3550-] -->
+<!-- EDIT5 SECTION "nascmd - app" [6514-] -->

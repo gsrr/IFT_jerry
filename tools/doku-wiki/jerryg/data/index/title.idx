@@ -20,7 +20,7 @@ config related
 
 Core dump file analysis
 
-Vim 的纵向编辑模式
+command line window
 
 
 
@@ -29,7 +29,7 @@ struct.pack
 Remote ssh with tmux
 
 
-mount lvm volume
+FAQ
 
 
 
@@ -71,4 +71,10 @@ FAQ
 
 Reference
 Usage
+
+
+
+Algorithms
+
+
 

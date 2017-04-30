@@ -147,7 +147,10 @@ net ads leave -S WIN-2012R2ADC.winadntp.evt -U administrator%ABcd_1234</pre>
 Failed to join domain: failed to join domain &#039;WINADNTP.EVT&#039; over rpc: None of the information to be translated has been translated.
 --&gt; Delete the computer account of AD
 
-
+# failed to join AD
+[root@nas_8686288_a ~]# net ads join -U administrator%ABcd_1234 -s /etc/samba/net_smb.conf
+Failed to join domain: Invalid configuration (&quot;workgroup&quot; set to &#039;&#039;, should be &#039;WINADNTP&#039;) and configuration modification was not requested
+--&gt; nmblookup -A ip , 沒辦法得到group information?
 
 
 </pre>

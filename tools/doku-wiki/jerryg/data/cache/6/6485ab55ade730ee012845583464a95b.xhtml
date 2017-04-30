@@ -1,15 +1,39 @@
 
 <p>
+[Reference]
+<a href="http://avp.toko.edu.tw/docs/class/3/%E5%AF%86%E7%A2%BC%E5%AD%B8%E5%8E%9F%E7%90%86%E8%88%87%E6%8A%80%E8%A1%93.pdf" class="urlextern" title="http://avp.toko.edu.tw/docs/class/3/%E5%AF%86%E7%A2%BC%E5%AD%B8%E5%8E%9F%E7%90%86%E8%88%87%E6%8A%80%E8%A1%93.pdf" rel="nofollow">http://avp.toko.edu.tw/docs/class/3/%E5%AF%86%E7%A2%BC%E5%AD%B8%E5%8E%9F%E7%90%86%E8%88%87%E6%8A%80%E8%A1%93.pdf</a>
+</p>
+
+<p>
 Q4: openssl command
 </p>
-<pre class="file"># create certificate
+<pre class="file">[Create]
+# create certificate and private key
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
-
-# display the contents of a PEM formatted certificate under Linux
-openssl x509 -in acs.qacafe.com.pem -text
+1. key.pem is private key
+2. 通常是透過private key再生成certificate
+3. 在主機上要先生成private key與public key, private key留著自己使用, public key則是丟出去給client使用.
+(經過憑證中心簽署完後的public key就叫做cerificate)
+所以溝通時應該是Client收到簽章--&gt; 拿到server的public key --&gt; 使用public key將自己的public key丟過去(或者不需要加密) 
+--&gt; server使用自己的private key解密 --&gt; server使用client的public key進行加密 --&gt; 將訊息傳回給Client, Client使用自己的private key解密.
 
 # remove key phrase
 openssl rsa -in key.pem -out newkey.pem
+
+# MD5 digest
+openssl dgst -md5 filename
+
+# SHA1 digest
+openssl dgst -sha1 filename
+
+[display]
+# display the contents of a PEM formatted certificate under Linux
+openssl x509 -in acs.qacafe.com.pem -text
+
+# display the information of key
+openssl rsa -noout -text -in myserver.key
+
+
 ------------------------
 Validity (365 days)
             Not Before: Dec 19 03:06:25 2016 GMT

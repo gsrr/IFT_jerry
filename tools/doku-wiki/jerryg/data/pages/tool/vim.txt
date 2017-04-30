@@ -1,3 +1,21 @@
+====== command line window ======
+
+<file>
+# help menu for command line window
+help c_ctrl-f
+
+# error indent while pasting code fragment from website
+--> cause by auto-indent
+set paste
+set nopaste
+
+</file>
+====== Show all character ======
+<file>
+set list
+set nolist
+</file>
+
 ====== Vim 的纵向编辑模式 ======
 第一步：修改
 <file>

@@ -1,6 +1,80 @@
-a:29:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:4:"flow";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2:"
+a:33:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:4:"flow";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2:"
 
-";i:1;N;i:2;N;}i:2;i:25;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:36;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:16:"Related commands";i:1;i:1;i:2;i:36;}i:2;i:36;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:36;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:819:"
+";i:1;N;i:2;N;}i:2;i:25;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:37;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:13:"container api";i:1;i:1;i:2;i:37;}i:2;i:37;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:37;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2920:"
+[Problems]
+1. remove docker meta 沒有return value
+2. impact if docker load twice, 不行, failover的時候只能做一次.
+2.1 那假設原本是在ctrl b跑起來, failover時, 就要換在a的volume跑起來(因為a,b的docker volume是分開的)
+2.2 docker delete image , and query image repo name from image file
+
+
+1. __init__.py
+
+2. init_dckr_service # init docker vg 
+  --> appoperator.init_dckr_service("2BF3E9D70CC1D424")
+  2.1 需先remove docker meta data --> remove_dckr_meta
+  --> appoperator.remove_dckr_meta()
+  2.2 systemctl start docker
+-->
+sdg                                     8:96   0   50G  0 disk
+├─2BF3E9D70CC1D424-docker--pool_tmeta 253:6    0   52M  0 lvm
+│ └─2BF3E9D70CC1D424-docker--pool     253:9    0   10G  0 lvm
+├─2BF3E9D70CC1D424-upload_packs       253:7    0   25G  0 lvm   /2BF3E9D70CC1D424/upload_packs
+└─2BF3E9D70CC1D424-docker--pool_tdata 253:8    0   10G  0 lvm
+  └─2BF3E9D70CC1D424-docker--pool     253:9    0   10G  0 lvm
+  
+3. img_load --> 可以先使用EonOne進行測試.
+  3.1 EonOne path : /usr/local/EonOne/EonOne_2.4.c.02_20170420_1500.dckr.tar
+  --> appoperator.img_load("/usr/local/EonOne/EonOne_2.4.c.02_20170420_1500.dckr.tar")
+  
+4. get loaded images 
+--> appmonitor.get_images()
+{'data': [{u'Created': 1492672951,
+   u'Id': u'sha256:47b288ee5e366a38b43598a92c9c0b26c2dc4a3cfd274e18b5a1b2d1f1d0a733',
+   u'Labels': {u'license': u'GPLv2',
+    u'name': u'CentOS Base Image',
+    u'vendor': u'CentOS'},
+   u'ParentId': u'',
+   u'RepoDigests': None,
+   u'RepoTags': [u'eonone/base:2.4.c.02_20170420_1500'],
+   u'Size': 849681765,
+   u'VirtualSize': 849681765}],
+ 'status': 0}
+
+5. launch container
+--> appoperator.cntnr_launch("eonone/base:2.4.c.02_20170420_1500")
+{'err': [],
+ 'out': ['36fc5d2ac798d45a3f27ab9067c21d25b27b6cf52add4b6f89e0e78676571518'],
+ 'status': 0}
+
+6. get launched container
+--> appmonitor.get_containers()
+{'data': [{u'Command': u"/bin/sh -c 'nice -n 19 sh ./initSetting.sh && nice -n 19 /bin/bash'",
+   u'Created': 1493027281,
+   u'HostConfig': {u'NetworkMode': u'host'},
+   u'Id': u'36fc5d2ac798d45a3f27ab9067c21d25b27b6cf52add4b6f89e0e78676571518',
+   u'Image': u'eonone/base:2.4.c.02_20170420_1500',
+   u'ImageID': u'sha256:47b288ee5e366a38b43598a92c9c0b26c2dc4a3cfd274e18b5a1b2d1f1d0a733',
+   u'Labels': {u'license': u'GPLv2',
+    u'name': u'CentOS Base Image',
+    u'vendor': u'CentOS'},
+   u'Names': [u'/naughty_joliot'],
+   u'NetworkSettings': {u'Networks': {u'host': {u'Aliases': None,
+      u'EndpointID': u'f410076bff5c707c3325a526e893f220497f484e32bc016bc17ea99133165bc9',
+      u'Gateway': u'',
+      u'GlobalIPv6Address': u'',
+      u'GlobalIPv6PrefixLen': 0,
+      u'IPAMConfig': None,
+      u'IPAddress': u'',
+      u'IPPrefixLen': 0,
+      u'IPv6Gateway': u'',
+      u'Links': None,
+      u'MacAddress': u'',
+      u'NetworkID': u''}}},
+   u'Ports': [],
+   u'Status': u'Up About a minute'}],
+ 'status': 0}
+";i:1;N;i:2;N;}i:2;i:70;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3000;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:16:"Related commands";i:1;i:1;i:2;i:3000;}i:2;i:3000;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3000;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:819:"
 # disk
 python testHA.py 0 --> show disk information
 
@@ -29,7 +103,7 @@ def destroy_docker(HA):
         ret = HA.callGetLocalFunc('folderOperation', paras)
         print ret
 
-";i:1;N;i:2;N;}i:2;i:72;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:900;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:13:"waiting to do";i:1;i:1;i:2;i:900;}i:2;i:900;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:900;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:448:"
+";i:1;N;i:2;N;}i:2;i:3036;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3864;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:13:"waiting to do";i:1;i:1;i:2;i:3864;}i:2;i:3864;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3864;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:448:"
 App docker volume init  ---> Michael , 4/14
 --> done in 2017/04/18 
 --> Integrate with app cli --> JerryCheng, 4/19
@@ -45,7 +119,7 @@ container-nvr (docker):
 1. timezone問題 : map /etc/localtime 給 container使用.
 2. container-net mode : host mode , nat mode.
 3. 
-";i:1;N;i:2;N;}i:2;i:933;}i:12;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:933;}i:13;a:3:{i:0;s:11:"strong_open";i:1;a:0:{}i:2;i:1392;}i:14;a:3:{i:0;s:7:"acronym";i:1;a:1:{i:0;s:4:"spec";}i:2;i:1394;}i:15;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:6:" issue";}i:2;i:1398;}i:16;a:3:{i:0;s:12:"strong_close";i:1;a:0:{}i:2;i:1404;}i:17;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:0:"";}i:2;i:1406;}i:18;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:1412;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2128:"
+";i:1;N;i:2;N;}i:2;i:3897;}i:16;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:3897;}i:17;a:3:{i:0;s:11:"strong_open";i:1;a:0:{}i:2;i:4356;}i:18;a:3:{i:0;s:7:"acronym";i:1;a:1:{i:0;s:4:"spec";}i:2;i:4358;}i:19;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:6:" issue";}i:2;i:4362;}i:20;a:3:{i:0;s:12:"strong_close";i:1;a:0:{}i:2;i:4368;}i:21;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:0:"";}i:2;i:4370;}i:22;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:4376;}i:23;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2128:"
 #config_nvr
 mount_point = /mp/E/config_nvr
 
@@ -99,7 +173,7 @@ Event是一定要發的, 只是要不要自動restart container這件事要考�
 2. docker volume fail --> Reinstall package and Restart container
 Ans:
 這個和前一個問題很類似, 我想還是先發event, 另外再考慮在GUI加recover的機制.
-";i:1;N;i:2;N;}i:2;i:1412;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3550;}i:21;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"nascmd - app";i:1;i:1;i:2;i:3550;}i:2;i:3550;}i:22;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3550;}i:23;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:3268:"
+";i:1;N;i:2;N;}i:2;i:4376;}i:24;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:6514;}i:25;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"nascmd - app";i:1;i:1;i:2;i:6514;}i:2;i:6514;}i:26;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:6514;}i:27;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:3268:"
 # upload package --> follow existed method
 
 
@@ -151,7 +225,7 @@ sdf                                                                             
 
 =>> app list -z a@0
 {"cliCode": [{"Return": "0x0000", "CLI": "Successful"}], "returnCode": [], "data": [{"installed": true, "version": "1.0", "config": {"enable": "True", "name": "nvr", "ctrl": "A", "package": "nvr-1.0-1.x86_64.rpm", "version": "1.0", "docker_vol": "/Pool-1/f1/rpms", "folder": "/Pool-1/f1"}, "name": "nvr", "package": "nvr-1.0-1.x86_64.rpm"}]}
-";i:1;N;i:2;N;}i:2;i:3582;}i:24;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:3582;}i:25;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:8:"graphviz";i:1;a:6:{s:5:"width";s:3:"800";s:6:"height";s:3:"400";s:6:"layout";s:3:"dot";s:5:"align";s:5:"right";s:7:"version";s:10:"2016-02-03";s:3:"md5";s:32:"7f68a5aa1a195c0c481f90b3dcb42ff4";}i:2;i:5;i:3;s:1657:"<graphviz dot right 800x400>
+";i:1;N;i:2;N;}i:2;i:6546;}i:28;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:6546;}i:29;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:8:"graphviz";i:1;a:6:{s:5:"width";s:3:"800";s:6:"height";s:3:"400";s:6:"layout";s:3:"dot";s:5:"align";s:5:"right";s:7:"version";s:10:"2016-02-03";s:3:"md5";s:32:"7f68a5aa1a195c0c481f90b3dcb42ff4";}i:2;i:5;i:3;s:1657:"<graphviz dot right 800x400>
 digraph ATN {
 rankdir=LR;
 user[fontsize=11, label="user", shape=rectangle, fixedsize=false];
@@ -179,4 +253,4 @@ uninstall-> remove_package[fontname="Times-Italic", label=""];
 remove_package-> remove_docker_process[fontname="Times-Italic", label=""];
 
 }
-</graphviz>";}i:2;i:6860;}i:26;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:8517;}i:27;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:8521;}i:28;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:8521;}}
+</graphviz>";}i:2;i:9824;}i:30;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:11481;}i:31;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:11485;}i:32;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:11485;}}
