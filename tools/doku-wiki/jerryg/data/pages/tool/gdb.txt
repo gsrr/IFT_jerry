@@ -1,6 +1,13 @@
 ====== Core dump file analysis ======
   * example : gdb /usr/bin/smbd path/to/the/core
 <file>
+# gdb print hex value
+p/x var
+
+# jump to another frame
+frame #n
+
+
 Some generic help:
 
 gdb start GDB, with no debugging les

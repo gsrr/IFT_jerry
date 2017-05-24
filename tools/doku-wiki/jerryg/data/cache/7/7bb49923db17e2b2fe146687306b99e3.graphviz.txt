@@ -1,0 +1,11 @@
+digraph ATN {
+rankdir=LR;
+download[fontsize=11, label="DOWNLOAD::filepath::offset::size", shape=rectangle, fixedsize=false];
+crc[fontsize=11, label="userhome", shape=rectangle, fixedsize=false];
+data[fontsize=11, label="importedUserHome", shape=rectangle, fixedsize=false];
+
+download-> crc[fontname="Times-Italic", label="recv 0"];
+crc-> data[fontname="Times-Italic", label="recv 0"];
+data-> download[fontname="Times-Italic", label="recv 0"];
+
+}

@@ -1,5 +1,36 @@
 
-<h1 class="sectionedit1" id="mount_lvm_volume">mount lvm volume</h1>
+<h1 class="sectionedit1" id="faq">FAQ</h1>
+<div class="level1">
+<pre class="file">Q: How to save virtual machine in vmware station?
+Ans:
+1. add new disk in another virtual machine
+2. mount this disk
+-2.1
+[root@nas_824366_a /]# lsblk
+NAME                             MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
+fd0                                2:0    1    4K  0 disk
+sda                                8:0    0   40G  0 disk
+├─sda1                             8:1    0  500M  0 part  /boot
+└─sda2                             8:2    0  3.5G  0 part
+  ├─centos_centos7--minimal-root 253:0    0  3.1G  0 lvm   /
+  └─centos_centos7--minimal-swap 253:1    0  412M  0 lvm   [SWAP]
+sdb                                8:16   0    3G  0 disk
+└─md127                            9:127  0    3G  0 raid1 /cfpool
+sdc                                8:32   0    3G  0 disk
+sdd                                8:48   0   16G  0 disk  /Pool-1/f1
+sde                                8:64   0   30G  0 disk
+├─sde1                             8:65   0    1G  0 part
+└─sde2                             8:66   0   29G  0 part
+sr0                               11:0    1 1024M  0 rom
+
+-2.2
+[root@nas_824366_a /]# blkid /dev/sdf1
+/dev/sdf1: UUID=&quot;f11f5b97-886f-4d06-94b5-ad48b78d2119&quot; TYPE=&quot;xfs&quot;
+</pre>
+
+</div>
+<!-- EDIT1 SECTION "FAQ" [1-1245] -->
+<h1 class="sectionedit2" id="mount_lvm_volume">mount lvm volume</h1>
 <div class="level1">
 
 <p>
@@ -94,3 +125,4 @@ mount /dev/centos_centos7-minimal/root /mnt/data
 </p>
 
 </div>
+<!-- EDIT2 SECTION "mount lvm volume" [1246-] -->

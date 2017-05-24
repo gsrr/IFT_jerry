@@ -7,9 +7,88 @@
 <a href="https://www.puritys.me/docs-blog/article-71-%E4%BD%BF%E7%94%A8-RPM-Build-%EF%BC%8C%E5%9C%A8Linux-%E6%89%93%E5%8C%85-Package.html" class="urlextern" title="https://www.puritys.me/docs-blog/article-71-%E4%BD%BF%E7%94%A8-RPM-Build-%EF%BC%8C%E5%9C%A8Linux-%E6%89%93%E5%8C%85-Package.html" rel="nofollow">https://www.puritys.me/docs-blog/article-71-%E4%BD%BF%E7%94%A8-RPM-Build-%EF%BC%8C%E5%9C%A8Linux-%E6%89%93%E5%8C%85-Package.html</a>
 </p>
 
-<h1 class="sectionedit1" id="rpm_usage">rpm usage</h1>
+<h1 class="sectionedit1" id="ift_rpm_package_flow">ift rpm package flow</h1>
 <div class="level1">
-<pre class="file"># list files in rpm package
+<pre class="file">#1 create rpmbuild environment
+mkdir -p /root/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+
+#2 deploy the file to package
+2.1 cd /root/rpmbuild/SOURCES
+2.2 mkdir nvr-1.0
+2.3 cp /root/vms-20170322.tar.gz ./nvr-1.0/
+2.4 tar -zcvf nvr.tar.gz nvr-1.0
+2.5 cp nvr.spec /root/rpmbuild/SPECS/
+2.6 cp /root/rpmbuild/SPECS/ 
+2.7 rpmbuild -bb nvr.spec
+2.8
+[root@CentOS7-Build SPECS]# ls -l /root/rpmbuild/RPMS/x86_64/
+total 199284
+-rw-r--r-- 1 root root 204062240 Mar 31 14:46 nvr-1.0-1.x86_64.rpm
+-rw-r--r-- 1 root root      1684 Mar 31 14:46 nvr-debuginfo-1.0-1.x86_64.rpm
+
+[installation]
+rpm -ivh --prefix=/Pool-1/f1/rpms/ nvr-1.0-1.x86_64.rpm</pre>
+<pre class="file">#將設定的RPM名稱、版號、路徑，以變數的方式指定
+%define _topdir /root/rpmbuild/
+%define Version 1.0
+%define RPM_BUILD_ROOT _topdir
+%define Name nvr
+#RPM相關資料
+Summary:        NVR App
+Name:           %{Name}
+Version:        %{Version}
+Release:        1
+Vendor:         Infortrend
+Packager:       jerry.cheng &lt;jerry.cheng@infortrend.com&gt;
+License:        GPL
+Source :        nvr.tar.gz
+Group:          develope
+Prefix:         /tmp
+
+%description
+nvr package
+
+%prep
+%setup -q
+
+%build
+
+%install
+#設定安裝的實際路徑與檔案
+install -d %{buildroot}/tmp/
+cp vms-20170322.tar.gz %{buildroot}/tmp/
+#cp vms-20170322.tar.gz %{buildroot}/tmp/vms-20170322.tar.gz
+
+%files
+#安裝時:設定預設的檔案權限
+%defattr(755,root,root)
+%attr(755,root,root) /tmp/vms-20170322.tar.gz
+#安裝時:設定檔案的屬性 chmod,chown,chgrp
+#%attr(755,root,root) /tmp/vms-20170322.tar.gz
+
+%clean
+rm -rf %{buildroot}
+
+%postun</pre>
+
+</div>
+<!-- EDIT1 SECTION "ift rpm package flow" [144-1781] -->
+<h1 class="sectionedit2" id="example">example</h1>
+<div class="level1">
+<pre class="file">/root/myrpm/SOURCES
+tar -zcvf vms-1.0.tar.gz vms-20170322.tar.gz
+</pre>
+
+</div>
+<!-- EDIT2 SECTION "example" [1782-1885] -->
+<h1 class="sectionedit3" id="rpm_usage">rpm usage</h1>
+<div class="level1">
+<pre class="file">[pre-install]
+# list information
+rpm -qip mypackage-2.0-1.x86_64.rpm
+
+[installed]
+# list files in rpm package
 [root@CentOS7-Build SPECS]# rpm -ql mypackage
 /mnt/test/mytest
 /mnt/test/test/mytest
@@ -37,8 +116,8 @@ mypackage-3.0::Infortrend
 </pre>
 
 </div>
-<!-- EDIT1 SECTION "rpm usage" [145-972] -->
-<h1 class="sectionedit2" id="content_of_examplespec">content of example.spec</h1>
+<!-- EDIT3 SECTION "rpm usage" [1886-2795] -->
+<h1 class="sectionedit4" id="content_of_examplespec">content of example.spec</h1>
 <div class="level1">
 <pre class="file">[root@CentOS7-Build SPECS]# cat example.spec
 #將設定的RPM名稱、版號、路徑，以變數的方式指定
@@ -87,4 +166,4 @@ rm -rf %{buildroot}
 rm -rf /tmp/test</pre>
 
 </div>
-<!-- EDIT2 SECTION "content of example.spec" [973-] -->
+<!-- EDIT4 SECTION "content of example.spec" [2796-] -->

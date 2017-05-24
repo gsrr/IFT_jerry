@@ -1,0 +1,28 @@
+====== docker ======
+<file>
+# Docker installation (Centos)
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-centos-7
+https://www.phpini.com/linux/rhel-centos-7-install-docker
+
+# basic (Docker —— 從入門到實踐)
+https://www.gitbook.com/book/philipzheng/docker_practice/details
+
+</file>
+
+====== rpm ======
+<file>
+# create an RPM package
+https://www.puritys.me/docs-blog/article-71-%E4%BD%BF%E7%94%A8-RPM-Build-%EF%BC%8C%E5%9C%A8Linux-%E6%89%93%E5%8C%85-Package.html
+https://fedoraproject.org/wiki/How_to_create_an_RPM_package/zh-tw
+
+</file>
+====== smbpasswd ======
+<file>
+# PAM-Based Distributed Authentication
+https://www.samba.org/samba/docs/man/Samba-HOWTO-Collection/pam.html#id2667199
+</file>
+====== dns ======
+<file>
+# man page (resolv.conf)
+https://linux.die.net/man/5/resolv.conf
+</file>

@@ -43,7 +43,7 @@ def cronlog(msg):
 iftcron.py - new
 <file>            
 import iftsyslog
-def cronlog(level = iftsyslog.LOG_INFO, msg = ""):
+def cronlog(msg = "", level = iftsyslog.LOG_INFO):
         iftsyslog.log("iftcron", level, msg)
 </file>
 

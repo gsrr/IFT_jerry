@@ -65,3 +65,16 @@ nas:log
 tool:rpm
 nas:app_install
 english:20170315
+resource:samba
+nas:uniserver
+nas:rsync
+linux:fork
+samba:ad
+tool:pytest
+tool:regex
+vpn
+playground:playground
+algorithm:algorithm
+algorithm:algorithms:subarray_sum_equals_k
+algorithm:algorithms:findanagrams
+algorithm:algorithms:reshape_the_matrix

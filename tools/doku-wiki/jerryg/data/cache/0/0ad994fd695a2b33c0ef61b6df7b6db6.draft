@@ -1,0 +1,286 @@
+a:6:{s:2:"id";s:9:"nas:rsync";s:6:"prefix";s:107:"====== FAQ ======
+<file>
+Q : security issue:
+Ans :
+remove root password --> passed -d root
+</file>
+
+";s:4:"text";s:4410:"====== Sync Acl with EonNAS ======
+<file>
+# first target
+可以看得出來各個acl的資訊嗎? uid and acl permission
+
+#define XMIT_USER_OBJ (1<<0)
+#define XMIT_GROUP_OBJ (1<<1)
+#define XMIT_MASK_OBJ (1<<2)
+#define XMIT_OTHER_OBJ (1<<3)
+#define XMIT_NAME_LIST (1<<4)
+--> /* Flags used to indicate what items are being transmitted for an entry. */
+ACL_USER_OBJ --> The ACL_USER_OBJ entry denotes accessrights for the file owner.
+ACL_GROUP_OBJ --> The ACL_GROUP_OBJ entry denotes access rights for the file group.
+
+
+
+# sync acl from EonNAS to GS
+[EonNAS]
+-->send_rsync_acl
+
+--> recv_rsync_acl , 每個file 呼叫一次, get file acl
+1. 在裡面會讀到 acl entry :
+gdb) print *duo_item
+$41 = {racl = {names = {idas = 0x5555557d36c0, count = 1}, user_obj = 128 '\200', group_obj = 4 '\004',
+    mask_obj = 128 '\200', other_obj = 128 '\200'}, sacl = 0x0}
+(gdb) print *duo_item.racl.names.idas
+$42 = {id = 1001, access = 2147483655}
+
+#empty rsync acl
+$44 = {racl = {names = {idas = 0x0, count = 0}, user_obj = 128 '\200', group_obj = 128 '\200', mask_obj = 0 '\000',
+    other_obj = 0 '\000'}, sacl = 0x0}
+
+--> recv_ida_entries
+1. 從這裡似乎會讀到各個entry的資訊.
+(gdb) print *(duo_item.racl.names.idas)
+$55 = {id = 1001, access = 2147483654}
+2147483655 --> 0x80000007 --> rwx
+2147483654 --> 0x80000006 --> rw
+
+# 2個user
+(gdb) print $72.racl.names
+$77 = {idas = 0x5555557d36c0, count = 2}
+(gdb) print *($72.racl.names.idas)
+$81 = {id = 1000, access = 2147483654}
+(gdb) print *($72.racl.names.idas + 1)
+$82 = {id = 1001, access = 2147483654}
+
+--> function: recv_acl_access , error message: recv_acl_access: value out of range: 1e
+
+
+[root@nas_8661593_a test123]# rsync -aA admin@172.27.121.54::test /root/test123/
+
+Password:
+recv_acl_access: value out of range: 1e01bf
+rsync error: error in rsync protocol data stream (code 12) at acls.c(958) [Receiver=3.0.9]
+----------------------------------------------------------------------------------------------
+
+
+Source Side:
+[root@nas_8744965_a test]# getfacl 01.gif
+# file: 01.gif
+# owner: 500
+# group: users
+user::rwx
+user:root:rwx
+user:500:rwx
+user:1004:r-x
+user:nfsnobody:---
+group::rwx
+mask::rwx
+other::rwx
+
+
+Command : rsync -aA /Pool-1/Volume_1/share1/test/ admin@172.27.121.54:/Pool-1/test/
+root@EonNAS_1510:/Pool-1/test# ls -lV 01.gif
+-rw-------  1 500      100         5344 Dec 29  2008 01.gif
+              user:root:rw-p----------:-------:allow
+               user:500:rw-p----------:-------:allow
+              user:1004:r--p----------:-------:allow
+             user:65534:--------------:-------:allow
+            user:100001:rw-p----------:-------:allow
+
+Command : rsync -aA /Pool-1/Volume_1/share1/test/ admin@172.27.121.54::test
+root@EonNAS_1510:/Pool-1/test# ls -lv 01.gif
+-rw-------  1 500      100         5344 Dec 29  2008 01.gif
+     0:user:root:read_data/write_data/append_data:allow
+     1:user:500:read_data/write_data/append_data:allow
+     2:user:1004:read_data/append_data:allow
+     3:user:65534::allow
+     4:user:100001:read_data/write_data/append_data:allow
+     
+# 使用一般user
+Command : rsync -aA /Pool-1/Volume_1/share1/test/ aa@172.27.121.54:/Pool-1/test123/
+rsync: recv_generator: mkdir "/Pool-1/test123/.syncing_db" failed: Permission denied (13)
+*** Skipping any contents from this failed directory ***
+rsync: recv_generator: mkdir "/Pool-1/test123/@Recycle" failed: Permission denied (13)
+*** Skipping any contents from this failed directory ***
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1052) [sender=3.0.9]
+第一層的ACL會被改掉, 導致一般user沒有權限進行修改
+Source Side:
+[root@gsnas_a share1]# getfacl test
+# file: test
+# owner: root
+# group: root
+user::rwx
+user:root:rwx
+user:500:rwx
+user:1004:r-x
+user:nfsnobody:---
+group::rwx
+mask::rwx
+other::rwx
+default:user::rwx
+default:user:root:rwx
+default:user:500:rwx
+default:user:1004:r-x
+default:user:nfsnobody:---
+default:group::rwx
+default:mask::rwx
+default:other::rwx
+
+Target side:
+drw-------  2 root     root           2 Apr  5 14:30 test123
+              user:root:rw-p----------:-------:allow
+               user:500:rw-p----------:-------:allow
+              user:1004:r--p----------:-------:allow
+             user:65534:--------------:-------:allow
+</file>";s:6:"suffix";s:4191:"
+====== Sync Acl with Syno ======
+<file>
+[rsync server]
+[root@nas_8744965_a test]# rsync -aAX /Pool-1/Volume_1/share1/test/ admin@172.27.112.150::Test
+Password:
+rsync: ACLs are not supported on this server
+rsync error: requested action not supported (code 4) at clientserver.c(1548) [Receiver=3.0.9]
+rsync: read error: Connection reset by peer (104)
+rsync error: error in rsync protocol data stream (code 12) at io.c(764) [sender=3.0.9]
+
+[ssh protocol]
+[root@nas_8744965_a test]# rsync -aAX /Pool-1/Volume_1/share1/test/ admin@172.27.112.150:/volume1/Test/
+admin@172.27.112.150's password:
+Could not chdir to home directory /var/services/homes/admin: No such file or directory
+rsync: ACLs are not supported on this server
+rsync error: syntax or usage error (code 1) at main.c(1786) [server=3.0.9]
+rsync: connection unexpectedly closed (0 bytes received so far) [sender]
+rsync error: error in rsync protocol data stream (code 12) at io.c(605) [sender=3.0.9]
+</file>
+
+
+
+Q : Sync Acl with QNAP (Source : GS, Target : QNAP)
+<file>
+Command:
+(ssh protocol) 
+rsync -aAX /Pool-1/Volume_1/share1/test/ admin@172.27.112.154:/share/test002
+
+(rsync server) 
+rsync -aAX /Pool-1/Volume_1/share1/test/ admin@172.27.112.154::test002
+
+A : sync acl permission
+X : sync extended attribute
+
+[ Without syncing acl ]
+Source Side:
+[root@nas_8744965_a test]# getfacl 01.gif
+# file: 01.gif
+# owner: 500
+# group: users
+user::rwx
+user:root:rwx
+user:500:rwx
+user:1004:r-x
+user:nfsnobody:---
+group::rwx
+mask::rwx
+other::rwx
+
+Target Side :
+[/share] # getfacl test002/01.gif
+# file: test002/01.gif
+# owner: aaaaaaaa
+# group: everyone
+user::rwx
+user:admin:rwx
+user:guest:---
+group::rwx
+mask::rwx
+other::rwx
+
+[ Replicating with acl ]
+Source Side:
+[root@nas_8744965_a test]# getfacl 01.gif
+# file: 01.gif
+# owner: 500
+# group: users
+user::rwx
+user:root:rwx
+user:500:rwx
+user:1004:r-x
+user:nfsnobody:---
+group::rwx
+mask::rwx
+other::rwx
+
+Target Side :
+[/share] # getfacl test002/01.gif
+# file: test002/01.gif
+# owner: aaaaaaaa
+# group: everyone
+user::rwx
+user:admin:rwx
+user:aaaaaaaa:rwx
+user:member1:r-x
+user:guest:---
+group::rwx
+mask::rwx
+other::rwx
+</file>
+
+
+<file>
+Q : Why not define the role of EonNAS is third party?
+Ans:
+設計上會比較複雜, 因為舊的EonNAS:
+1. 必須使用admin的帳密才可以備份ACL.
+2. 因為如果選NAS的話, 在我們底下實際是用root在進行備份(透過ssh and login by it's key).
+說穿了只是偷懶, 因為要做的話也可以做到.
+首先選NAS的時候要判斷對方是不是GS/EonNAS,
+如果是EonNAS的話就走user = admin, ssh protocol的路.
+如果是GS的話就走user = root, ssh protocol的路.
+(但是一個是solaris, 一個是linux, 兩邊的ACL真的可以完全sync到一致嗎?)
+</file>
+
+<file>
+Q : 現在GS -> Third Party, 備份過去後的ACL會長什麼樣子?
+Ans : 
+1. target folder的owner跟group會被source的owner跟group蓋掉. (但其餘entry還在)
+* target folder的原有acl entry不會被改變.
+
+source :
+drwxr-xr-x 2 aa1  users 45 Mar 21 11:16 source
+
+target : 
+drwxr-xr-x  2 1000     100            5 Mar 21 11:16 target
+2. source folder裡面的file , owner跟group會過來, 但是acl entry不會過來.
+source : 
+-rw-rwxr--+ 1 aa1  aa1  4 Mar 21 11:16 file1
+-rw-r--r--  1 aa2  root 4 Mar 21 11:16 file2
+-rw-r--r--  1 root root 4 Mar 21 11:16 file3
+
+target :
+-rw-rwxr--  1 1000     1000           4 Mar 21 11:16 file1
+-rw-r--r--  1 1001     root           4 Mar 21 11:16 file2
+-rw-r--r--  1 root     root           4 Mar 21 11:16 file3
+
+* solaris還有一些extended acl不會出來.
+* file會繼承target folder的原有acl entry.
+
+</file>
+
+<file>
+Q : GS -> EonNAS , 可以做到ACL備份嗎?
+Ans:
+沒有辦法, 因為EonNAS的source code有被更改過, 只適用於EonNAS -> EonNAS (--zfs-acl), 若只加上-A參數的話, 會變成:
+source :
+# file: source/file1
+# owner: aa1
+# group: aa1
+user::rw-
+user:aa2:rwx
+group::r--
+mask::rwx
+other::r--
+
+target : 
+----------  1 1000     1000           4 Mar 21 11:16 file1
+              user:1001:rw-p----------:-------:allow
+
+</file>";s:4:"date";i:1492789851;s:6:"client";s:14:"10.141.141.104";}

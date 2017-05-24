@@ -19,12 +19,31 @@
 (The packet should be padded if the char array is not divided by 2)
 </file>
 ====== debug with gdb ======
-py-fields[[https://gist.github.com/kouk/5c2e725bef8b54aae6e0]]
-
-Extended gdb using python [[https://sourceware.org/gdb/onlinedocs/gdb/Python.html]]
-
 [[https://docs.python.org/devguide/gdb.html]]
 <file>
+# Reference
+[DebuggingWithGdb]
+https://wiki.python.org/moin/DebuggingWithGdb
+
+[Extended gdb using python]
+https://sourceware.org/gdb/onlinedocs/gdb/Python.html
+
+# install package
+yum install gdb
+yum install yum-utils
+debuginfo-install glibc
+debuginfo-install python
+
+# gdb
+source python-gdb.py
+(https://raw.githubusercontent.com/WiserTogether/python27/master/python-gdb.py)
+
+source py-fields.py
+(https://gist.github.com/kouk/5c2e725bef8b54aae6e0)
+
+[MAX_OUTPUT_LEN]
+1. in python-pdb.py
+2. 增加output 的長度
 </file>
 ====== trace module ======
 [[https://pymotw.com/2/trace/]]

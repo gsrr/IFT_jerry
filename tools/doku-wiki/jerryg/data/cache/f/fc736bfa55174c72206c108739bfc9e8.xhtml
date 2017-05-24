@@ -1,5 +1,5 @@
 <ul>
-<li class="level1"><div class="li"> <a href="/jerryg/doku.php?id=tool:python:time_module" class="wikilink2" title="tool:python:time_module" rel="nofollow">Usage of time module</a></div>
+<li class="level1"><div class="li"> <a href="/jerryg/doku.php?id=tool:python:time_module" class="wikilink1" title="tool:python:time_module">Usage of time module</a></div>
 </li>
 </ul>
 
@@ -27,20 +27,34 @@
 <div class="level1">
 
 <p>
-py-fields<a href="https://gist.github.com/kouk/5c2e725bef8b54aae6e0" class="urlextern" title="https://gist.github.com/kouk/5c2e725bef8b54aae6e0" rel="nofollow">https://gist.github.com/kouk/5c2e725bef8b54aae6e0</a>
-</p>
-
-<p>
-Extended gdb using python <a href="https://sourceware.org/gdb/onlinedocs/gdb/Python.html" class="urlextern" title="https://sourceware.org/gdb/onlinedocs/gdb/Python.html" rel="nofollow">https://sourceware.org/gdb/onlinedocs/gdb/Python.html</a>
-</p>
-
-<p>
 <a href="https://docs.python.org/devguide/gdb.html" class="urlextern" title="https://docs.python.org/devguide/gdb.html" rel="nofollow">https://docs.python.org/devguide/gdb.html</a>
 </p>
-<pre class="file"></pre>
+<pre class="file"># Reference
+[DebuggingWithGdb]
+https://wiki.python.org/moin/DebuggingWithGdb
+
+[Extended gdb using python]
+https://sourceware.org/gdb/onlinedocs/gdb/Python.html
+
+# install package
+yum install gdb
+yum install yum-utils
+debuginfo-install glibc
+debuginfo-install python
+
+# gdb
+source python-gdb.py
+(https://raw.githubusercontent.com/WiserTogether/python27/master/python-gdb.py)
+
+source py-fields.py
+(https://gist.github.com/kouk/5c2e725bef8b54aae6e0)
+
+[MAX_OUTPUT_LEN]
+1. in python-pdb.py
+2. 增加output 的長度</pre>
 
 </div>
-<!-- EDIT2 SECTION "debug with gdb" [573-811] -->
+<!-- EDIT2 SECTION "debug with gdb" [573-1173] -->
 <h1 class="sectionedit3" id="trace_module">trace module</h1>
 <div class="level1">
 
@@ -51,7 +65,7 @@ Extended gdb using python <a href="https://sourceware.org/gdb/onlinedocs/gdb/Pyt
 python -m trace --listfuncs trace_example/main.py</pre>
 
 </div>
-<!-- EDIT3 SECTION "trace module" [812-979] -->
+<!-- EDIT3 SECTION "trace module" [1174-1341] -->
 <h1 class="sectionedit4" id="object_analysis">object analysis</h1>
 <div class="level1">
 <ul>
@@ -71,4 +85,4 @@ python -m trace --listfuncs trace_example/main.py</pre>
     print &quot;obj.%s = %s&quot; % (attr, getattr(obj, attr))</pre>
 
 </div>
-<!-- EDIT4 SECTION "object analysis" [980-] -->
+<!-- EDIT4 SECTION "object analysis" [1342-] -->

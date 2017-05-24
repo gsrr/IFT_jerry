@@ -1,11 +1,23 @@
-a:7:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:8:"Commands";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:156:"
+a:11:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:9:"Reference";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:151:"
+# packet flow diagram
+http://xkr47.outerspace.dyndns.org/netfilter/packet_flow/
+
+# iptables log
+https://websistent.com/linux-iptables-log-everything/
+";i:1;N;i:2;N;}i:2;i:30;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:191;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:8:"Commands";i:1;i:1;i:2;i:191;}i:2;i:191;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:191;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:269:"
 # Add NASROUTING into PREROUTING
 iptables -t nat -A PREROUTING -j NASROUTING -p all
 
 # Show all information
 iptables -t nat -L -vn # show all information
 
-";i:1;N;i:2;N;}i:2;i:29;}i:4;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1736:"
+# edit rules of iptables
+iptables-save > iptables.dump 
+...
+start to edit 
+...
+iptables-restore < iptables.dump 
+";i:1;N;i:2;N;}i:2;i:219;}i:8;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1736:"
 # Example:
 Chain PREROUTING (policy ACCEPT 65670 packets, 9723K bytes)
  pkts bytes target     prot opt in     out     source               destination
@@ -39,4 +51,4 @@ iptables -t nat -A POSTROUTING -o iftnic3 -j MASQUERADE
 跟SNAT類似, 也是將出去的封包轉換其source address, 差別是在SNAT需要指定to-source, 而MASQUERADE不需要.
 
 
-";i:1;N;i:2;N;}i:2;i:199;}i:5;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:1943;}i:6;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:1943;}}
+";i:1;N;i:2;N;}i:2;i:502;}i:9;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:2246;}i:10;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:2246;}}
