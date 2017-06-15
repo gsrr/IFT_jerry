@@ -12,6 +12,10 @@ set-option -g status-interval 1
 tmux_ssh.py, ssh connection by python
 
 [/root/.tmux/commands]
-C-b, :so $filename
+# reload the tmux script (instead of executing)
+# split-vssh (split windown in remote)
+# split-hssh
+C-b, :so $filename 
+
 
 
