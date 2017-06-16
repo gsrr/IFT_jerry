@@ -1,0 +1,5 @@
+#!/bin/bash
+tar -zxvf smb.tar.gz
+systemctl stop winbind
+cp -R install/* /
+echo > /var/log/samba/log.winbindd
