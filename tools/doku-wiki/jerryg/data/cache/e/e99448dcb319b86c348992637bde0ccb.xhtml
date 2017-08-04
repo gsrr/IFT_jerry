@@ -1,0 +1,46 @@
+<pre class="file">import sys
+
+# pattern : 10+1
+
+def start_state(c, pre):
+    if c == &quot;1&quot;:
+        pre.append(c)
+        return (0, &quot;one&quot;)
+    else:
+        del pre[:]
+        return (1, &quot;start&quot;)
+
+def one_state(c, pre):
+    if c == &quot;1&quot;:
+        return (1, &quot;one&quot;)
+    elif c == &quot;0&quot;:
+        pre.append(c)
+        return (0, &quot;zero&quot;)
+    else:
+        return (0, &quot;start&quot;)
+
+def zero_state(c, pre):
+    if c == &quot;0&quot;:
+        pre.append(c)
+        return (1, &quot;zero&quot;)
+    elif c == &quot;1&quot;:
+        return (0, &quot;end&quot;)
+    else:
+        return (0, &quot;start&quot;)
+
+def end_state(c, pre):
+    pre.append(c)
+    print &quot;&quot;.join(pre)
+    return (1, &quot;start&quot;)
+
+def main(s):
+    state = &quot;start&quot;
+    cnt = 0
+    pre = []
+    while cnt &lt; len(s):
+        func = getattr(sys.modules[__name__], &quot;%s_state&quot;%state)
+        step, state = func(s[cnt], pre)
+        cnt += step
+
+if __name__ == &quot;__main__&quot;:
+    main(&quot;100001abc101&quot;)</pre>

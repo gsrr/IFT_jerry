@@ -1,0 +1,19 @@
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1501645670;s:8:"modified";i:1501837304;}s:11:"last_change";a:8:{s:4:"date";i:1501837304;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:12:"rsync:server";s:4:"user";s:0:"";s:3:"sum";s:22:"[flow of source code] ";s:5:"extra";s:0:"";s:10:"sizechange";i:121;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:3:"FAQ";s:11:"description";a:2:{s:15:"tableofcontents";a:2:{i:0;a:4:{s:3:"hid";s:3:"faq";s:5:"title";s:3:"FAQ";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:19:"flow_of_source_code";s:5:"title";s:19:"flow of source code";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:819:"FAQ
+
+
+Q1 : file path在一般的mount point 下與在fuse的mount point下有什麼不一樣?
+Ans:
+路徑會不一樣, 我們可以分成
+xfs_path : /Pool-1/Volume1/.share/files/file1
+fuse_path : /Pool-1/Volume1/share/file1
+
+Q2 : rsync在備份檔案前會先比對兩邊的hash content , 若不一樣的話, 在備份檔案時會有什麼不一樣?
+Ans:
+1. 若比對檔案的結果為相同時, rsync就不會將source的檔案備份過去.
+2. 若比較檔案的結果為不同時, rsync會將source的檔案整個在備份過去一次.
+
+Q3 : 現在整個流程大概如何? (read / write)
+Ans:
+流程上應該是: (因為在cache mode時, file有可能存在, 有可能不存在.)
+read : 詢問fuse上的file是否存在 --> (Download file (不存在)) --> read file
+write : 詢問fuse上的file是否存在 --> (D…";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1501645670;s:8:"modified";i:1501837304;}s:11:"last_change";a:8:{s:4:"date";i:1501837304;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:12:"rsync:server";s:4:"user";s:0:"";s:3:"sum";s:22:"[flow of source code] ";s:5:"extra";s:0:"";s:10:"sizechange";i:121;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

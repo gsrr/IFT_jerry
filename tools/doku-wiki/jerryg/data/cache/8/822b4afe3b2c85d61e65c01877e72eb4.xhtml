@@ -1,0 +1,49 @@
+
+<h1 class="sectionedit1" id="basic">Basic</h1>
+<div class="level1">
+<pre class="file"># source code and help
+1. https://www.gnu.org/software/global/
+2. http://tieba.baidu.com/p/3543479318
+
+
+# create tag files
+gtags  
+1. in source code working space
+2. it will create three files:
+  2.1 GTAGS：所有变量，函数定义的相关信息
+  2.2 GRTAGS：所有变量，函数被引用的相关信息
+  2.3 GPATH：源代码中每个文件的信息。
+</pre>
+
+</div>
+<!-- EDIT1 SECTION "Basic" [1-401] -->
+<h1 class="sectionedit2" id="work_with_cscope">work with cscope</h1>
+<div class="level1">
+<pre class="file"># help
+1. http://cscope.sourceforge.net/cscope_vim_tutorial.html
+2. http://forum.ubuntu.org.cn/viewtopic.php?t=343460
+
+# setting in vim
+set csprg=gtags-cscope
+cs add GTAGS
+
+#cscope.vim
+http://cscope.sourceforge.net/cscope_maps.vim
+
+# command of cscope 
+## find symbol
+:cscope find symbol getent(== cs f s getent)
+
+## Find functions calling this function
+:cs find call getent(== cs f c getent) 
+
+## Find file by name
+:cs find file getent(== cs f f getent) 
+
+# example 1 --&gt; getent group
+cs f s winbind_getgrent --&gt; cs f g winbindd_request_response 
+--&gt; cs f g winbindd_send_request --&gt; cs f g winbindd_get_response --&gt; cs f g winbind_read_sock
+</pre>
+
+</div>
+<!-- EDIT2 SECTION "work with cscope" [402-] -->

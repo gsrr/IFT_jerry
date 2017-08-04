@@ -22,7 +22,10 @@ iptables-save &gt; iptables.dump
 ...
 start to edit 
 ...
-iptables-restore &lt; iptables.dump </pre>
+iptables-restore &lt; iptables.dump 
+
+# stop service
+systemctl stop firewalld</pre>
 <pre class="file"># Example:
 Chain PREROUTING (policy ACCEPT 65670 packets, 9723K bytes)
  pkts bytes target     prot opt in     out     source               destination

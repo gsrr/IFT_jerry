@@ -1,0 +1,19 @@
+<pre class="file">def _ans(n, ret):
+    if n == 0:
+        print ret
+
+    for i in xrange(n, 0, -1):
+        if i &gt; ret[-1]:
+            continue
+        ret.append(i)
+        _ans(n - i, ret)
+        ret.pop()
+
+def ans(n, ret):
+    for i in xrange(n - 1, 0 , -1):
+        ret.append(i)
+        _ans(n - i, ret)
+        ret.pop()
+
+ret = []
+ans(8, ret)</pre>

@@ -1,0 +1,28 @@
+<pre class="file">[Reference]
+1. https://gitpython.readthedocs.io/en/stable/
+
+[Installation]
+pip install gitpython
+
+
+[usage]
+# show remote branches
+&gt;&gt;&gt; import git
+&gt;&gt;&gt; repo = git.Repo(&quot;/root/github/HA.workspace/&quot;)
+&gt;&gt;&gt; repo.remotes.origin.refs
+
+# show log of current branch
+&gt;&gt;&gt; import git
+&gt;&gt;&gt; repo = git.Repo(&quot;/root/github/HA.workspace/&quot;)
+&gt;&gt;&gt; repo.git.log(-10) # -10 means last ten log messages
+
+
+# last diff of commit
+&gt;&gt;&gt; import git
+&gt;&gt;&gt; repo = git.Repo(&quot;/root/github/HA.workspace/&quot;)
+&gt;&gt;&gt; repo.git.diff(&#039;HEAD~1&#039;)
+
+# diff of from commit hashcode
+&gt;&gt;&gt; import git
+&gt;&gt;&gt; repo = git.Repo(&quot;/root/github/HA.workspace/&quot;)
+&gt;&gt;&gt; repo.git.diff(&#039;f5d2a069a25a6d01432689cb973cf2358d1dccb5~&#039;)</pre>

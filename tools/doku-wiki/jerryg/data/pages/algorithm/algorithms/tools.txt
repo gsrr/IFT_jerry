@@ -1,0 +1,23 @@
+<file>
+# itertools
+def permutations(arr):
+    # disadvantage : 暴力法, 速度慢, 需等到全部東西都回傳才可以進行處理
+    import itertools
+    return itertools.permutations(arr)
+
+# euclidean distance
+def euclidean(v1, v2):
+    from scipy.spatial import distance
+    return distance.euclidean(v1, v2)
+
+def euclidean(v1, v2):
+    return sqrt(sum( (x - y)**2 for x, y in zip(v1, v2)))
+   
+# basic algorithm
+1. stack & queue
+2. binary search tree
+3. bfs & dfs
+4. permutations
+5. subset
+6. binary combinations
+</file>

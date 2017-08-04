@@ -1,0 +1,26 @@
+<pre class="file"># Reference
+1. http://tw.gitbook.net/sqlite/sqlite_python.html
+
+
+# ex1 , create db and insert data
+&gt;&gt;&gt; import sqlite3
+&gt;&gt;&gt; conn = sqlite3.connect(&#039;/root/test.db&#039;)
+&gt;&gt;&gt; conn.execute(&#039;&#039;&#039;CREATE TABLE COMPANY
+       (ID INT PRIMARY KEY     NOT NULL,
+       NAME           TEXT    NOT NULL,
+       AGE            INT     NOT NULL,
+       ADDRESS        CHAR(50),
+       SALARY         REAL);&#039;&#039;&#039;)
+&gt;&gt;&gt; conn.execute(&quot;INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) VALUES (1, &#039;Paul&#039;, 32, &#039;California&#039;, 20000.00 )&quot;);
+&gt;&gt;&gt; conn.commit()
+&gt;&gt;&gt; conn.close()
+
+# ex2, show data in db
+&gt;&gt;&gt; conn = sqlite3.connect(&#039;/root/test.db&#039;)
+&gt;&gt;&gt; conn.execute(&quot;select * from company&quot;)
+&gt;&gt;&gt; a = conn.execute(&quot;select * from company&quot;)
+&gt;&gt;&gt; for r in a:
+...     print r
+...
+(1, u&#039;Paul&#039;, 32, u&#039;California&#039;, 20000.0)
+&gt;&gt;&gt;</pre>

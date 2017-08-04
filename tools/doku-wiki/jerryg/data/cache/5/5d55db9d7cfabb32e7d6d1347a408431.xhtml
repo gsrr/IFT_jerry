@@ -45,7 +45,20 @@ iftcron.py - new
 import iftsyslog
 def cronlog(msg = &quot;&quot;, level = iftsyslog.LOG_INFO):
         iftsyslog.log(&quot;iftcron&quot;, level, msg)</pre>
-<pre class="file">&gt;&gt;&gt; import iftsyslog
+<pre class="file">NAS的 log主要分為三個檔案:
+1. CLI --&gt; /var/log/NASCmd_debugLog
+2. HA --&gt; /var/log/HAServer_debugLog
+3. Modules --&gt; /var/log/NAS_messages
+
+Log level分為三種 : info , warning, err  (預設為err)
+
+如果要印出全部的log, 需要將level設為info.
+方式如下:
+1. 在shell 上輸入python
+2. 輸入以下command,   分別打開各個log level.
+
+
+&gt;&gt;&gt; import iftsyslog
 &gt;&gt;&gt; iftsyslog.enable_msg(&quot;info&quot;)
 local5.*  to local5.info
 0

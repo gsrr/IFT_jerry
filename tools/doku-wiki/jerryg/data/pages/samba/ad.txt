@@ -4,6 +4,21 @@
 https://wiki.samba.org/index.php/Setting_up_Samba_as_a_Domain_Member#Testing_the_Winbindd_Connectivity
 </file>
 
+====== Event and Error message ======
+| | |message|event| |
+|AD|Password / Accout Error (Preauthentication failed)| 使用者名稱或密碼不正確。| X | |
+|AD| Dns Entry error (Can not find KDC Server) |  X | X | |
+|AD| ip error (Can't contact LDAP server)| 無法連到網域伺務器。  | X | |
+|AD| account 沒有admin 權限 ( Failed to join domain: Failed to set account flags for machine account (NT_STATUS_ACCESS_DENIED))| X  | X | |
+|LDAP| Password (ldap_bind: Invalid credentials) | 使用者名稱或密碼不正確。  | X | |
+|LDAP| User Dn error (ldap_bind: Invalid credentials) | 使用者名稱或密碼不正確。 | X | |
+|LDAP| ip error (can not contact ldap server)| 無法連接到LDAP伺服器 | X | |
+|LDAP| Base Dn error (No such object)| X | X | |
+
+
+
+
+
 ====== acl ======
 <file>
 # user join group after login
@@ -121,8 +136,21 @@ test scope:
 2. 將AD斷線, 等待約5~10分鐘, 再重新使用AD user來登入samba, 確認該user可以正常登入.
 
 </file>
-====== join AD ======
+====== AD related commands ======
 <file>
+# smbd
+1. port 139, port 445
+
+# nmbd
+1. port 137, port 138
+UDP    172.27.12.71:137       *:*                                    4
+UDP    172.27.12.71:138       *:*                                    4
+
+# search workgroup
+1. net ads workgroup -S 172.27.120.130
+2. nmblookup -A 172.27.l20.130
+3. 
+
 # join AD
 net ads join -U administrator%ABcd1234
 
@@ -138,6 +166,9 @@ net ads leave -S WIN-2012R2ADC.winadntp.evt -U administrator%ABcd_1234
 
 ====== Error Message ======
 <file>
+# can not get user information (MIS , England)
+getent group : 3m40 + 3m37
+
 # failed to join AD
 Failed to join domain: failed to join domain 'WINADNTP.EVT' over rpc: None of the information to be translated has been translated.
 --> Delete the computer account of AD
@@ -146,7 +177,16 @@ Failed to join domain: failed to join domain 'WINADNTP.EVT' over rpc: None of th
 [root@nas_8686288_a ~]# net ads join -U administrator%ABcd_1234 -s /etc/samba/net_smb.conf
 Failed to join domain: Invalid configuration ("workgroup" set to '', should be 'WINADNTP') and configuration modification was not requested
 --> nmblookup -A ip , 沒辦法得到group information?
+Ans : 
+看起來是客戶將netbios over tcp/ip這個service關掉了, 導致nmblookup -A ip 沒有辦法得到資訊.
+打開的方式如下: 
+http://172.27.12.189/jerryg/lib/exe/fetch.php?media=netbios_over_tcpip.png
 
+# failed to join AD (not have admin privilege)
+n  1 15:47:21 mlmlpppnt03_a ldapOperation[1318]: joinAD result: {'status': 71, 'err': '', 'out': 'Failed to join domain: User specified does not have administrator privileges'}
 
+# account error
+joinAD result: {'status': 71, 'err': '', 'out': "Failed to join domain: failed to lookup DC info for domain 'VCPILTPAC.COM' over rpc: Account locked out"}
+--> 看起來是帳號沒有辦法使用.?
 
 </file>

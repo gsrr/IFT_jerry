@@ -3,7 +3,130 @@
 </li>
 </ul>
 
-<h1 class="sectionedit1" id="structpack">struct.pack</h1>
+<h1 class="sectionedit1" id="unix_domain_socket">unix domain socket</h1>
+<div class="level1">
+<pre class="file"># server.py
+import socket
+import sys
+import os
+
+server_address = &#039;./uds_socket&#039;
+
+try:
+    os.unlink(server_address)
+except OSError:
+    if os.path.exists(server_address):
+        raise
+
+# Create a UDS socket
+sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+print &gt;&gt;sys.stderr, &#039;starting up on %s&#039; % server_address
+sock.bind(server_address)
+sock.listen(1)
+
+while True:
+    print &gt;&gt;sys.stderr, &#039;waiting for a connection&#039;
+    connection, client_address = sock.accept()
+    try:
+        print &gt;&gt;sys.stderr, &#039;connection from&#039;, client_address
+
+        while True:
+            data = connection.recv(16)
+            print &gt;&gt;sys.stderr, &#039;received &quot;%s&quot;&#039; % data
+            if data:
+                print &gt;&gt;sys.stderr, &#039;sending data back to the client&#039;
+                connection.sendall(data)
+            else:
+                print &gt;&gt;sys.stderr, &#039;no more data from&#039;, client_address
+                break
+    finally:
+        connection.close()
+        
+# client.py
+import socket
+import sys
+
+# Create a UDS socket
+sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+
+# Connect the socket to the port where the server is listening
+server_address = &#039;./uds_socket&#039;
+print &gt;&gt;sys.stderr, &#039;connecting to %s&#039; % server_address
+try:
+    sock.connect(server_address)
+except socket.error, msg:
+    print &gt;&gt;sys.stderr, msg
+    sys.exit(1)
+try:
+
+    # Send data
+    message = &#039;This is the message.  It will be repeated.&#039;
+    print &gt;&gt;sys.stderr, &#039;sending &quot;%s&quot;&#039; % message
+    sock.sendall(message)
+
+    amount_received = 0
+    amount_expected = len(message)
+
+    while amount_received &lt; amount_expected:
+        data = sock.recv(16)
+        amount_received += len(data)
+        print &gt;&gt;sys.stderr, &#039;received &quot;%s&quot;&#039; % data
+except Exception as ex:
+        print type(ex), ex.args
+
+finally:
+    print &gt;&gt;sys.stderr, &#039;closing socket&#039;
+    sock.close()
+    
+# socket file is not exist
+[root@gsnas_a unix]# python client.py
+connecting to ./uds_socket
+[Errno 2] No such file or directory</pre>
+
+</div>
+<!-- EDIT1 SECTION "unix domain socket" [54-2068] -->
+<h1 class="sectionedit2" id="socket_exception">socket exception</h1>
+<div class="level1">
+<pre class="file">#client code
+import socket
+import traceback
+import sys
+
+try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server_address = (&#039;localhost&#039;, 10000)
+        sock.connect(server_address)
+except Exception as ex:
+        print type(ex), ex.args
+
+# Server is not open
+[root@gsnas_a ~]# python client.py
+&lt;class &#039;socket.error&#039;&gt; (111, &#039;Connection refused&#039;) 
+
+# Server close socket
+[root@gsnas_a ~]# python client.py
+&lt;class &#039;socket.error&#039;&gt; (104, &#039;Connection reset by peer&#039;)
+
+
+# raise exception
+import socket
+import traceback
+import sys
+import time
+
+try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server_address = (&#039;localhost&#039;, 10000)
+        raise Exception,(1,&quot;error&quot;), sys.exc_info()[2]
+        sock.connect(server_address)
+        sock.close()
+except Exception as ex:
+        print type(ex), ex.args, ex.errno
+        print traceback.format_tb(sys.exc_info()[2])</pre>
+
+</div>
+<!-- EDIT2 SECTION "socket exception" [2069-3027] -->
+<h1 class="sectionedit3" id="structpack">struct.pack</h1>
 <div class="level1">
 <pre class="file"># pack string (char array)
 &gt;&gt;&gt; s1 = struct.pack(&quot;I9sI&quot;, 12, &quot;Eononestr&quot;, 11)
@@ -22,8 +145,8 @@
 (The packet should be padded if the char array is not divided by 2)</pre>
 
 </div>
-<!-- EDIT1 SECTION "struct.pack" [55-572] -->
-<h1 class="sectionedit2" id="debug_with_gdb">debug with gdb</h1>
+<!-- EDIT3 SECTION "struct.pack" [3028-3545] -->
+<h1 class="sectionedit4" id="debug_with_gdb">debug with gdb</h1>
 <div class="level1">
 
 <p>
@@ -54,8 +177,8 @@ source py-fields.py
 2. 增加output 的長度</pre>
 
 </div>
-<!-- EDIT2 SECTION "debug with gdb" [573-1173] -->
-<h1 class="sectionedit3" id="trace_module">trace module</h1>
+<!-- EDIT4 SECTION "debug with gdb" [3546-4146] -->
+<h1 class="sectionedit5" id="trace_module">trace module</h1>
 <div class="level1">
 
 <p>
@@ -65,8 +188,8 @@ source py-fields.py
 python -m trace --listfuncs trace_example/main.py</pre>
 
 </div>
-<!-- EDIT3 SECTION "trace module" [1174-1341] -->
-<h1 class="sectionedit4" id="object_analysis">object analysis</h1>
+<!-- EDIT5 SECTION "trace module" [4147-4314] -->
+<h1 class="sectionedit6" id="object_analysis">object analysis</h1>
 <div class="level1">
 <ul>
 <li class="level1"><div class="li"> vars(object) , but not all objects have a <em class="u">dict</em> member</div>
@@ -85,4 +208,4 @@ python -m trace --listfuncs trace_example/main.py</pre>
     print &quot;obj.%s = %s&quot; % (attr, getattr(obj, attr))</pre>
 
 </div>
-<!-- EDIT4 SECTION "object analysis" [1342-] -->
+<!-- EDIT6 SECTION "object analysis" [4315-] -->

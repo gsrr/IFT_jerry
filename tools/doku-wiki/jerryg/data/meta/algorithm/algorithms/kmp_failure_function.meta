@@ -1,0 +1,21 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1494731440;s:8:"modified";i:1494904717;}s:11:"last_change";a:8:{s:4:"date";i:1494904717;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:41:"algorithm:algorithms:kmp_failure_function";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:246;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:503:"'''
+f - failure function (by definition, this is the length of the longest prefix of the string which is a suffix also)
+'''
+[code #1]
+def prefix_function(s):
+    f = [0] * len(s)
+    c = 0
+    for i in xrange(1, len(f)):
+        if s[i] == s[c]:
+            c += 1
+        else:
+            if c > 0:
+                c = f[c - 1] 
+        f[i] = c
+    return f
+
+[code #2]
+ def ComputePrefixFunction(self, needle):
+        Pi = [0 for i in range(len(needle))]
+        m = len(needle)
+        Pi[0] = 0…";}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1494731440;s:8:"modified";i:1494904717;}s:11:"last_change";a:8:{s:4:"date";i:1494904717;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:41:"algorithm:algorithms:kmp_failure_function";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:246;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

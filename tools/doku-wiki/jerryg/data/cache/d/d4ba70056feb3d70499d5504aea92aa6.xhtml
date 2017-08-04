@@ -1,0 +1,90 @@
+
+<h1 class="sectionedit1" id="convert_fd_to_real_path">convert fd to real path</h1>
+<div class="level1">
+<pre class="file">#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;fcntl.h&gt;
+
+
+char* fd2fpath(int fd)
+{
+        struct stat sb;
+        char *linkname;
+        ssize_t r;
+        char fdpath[256] = {0};
+
+        sprintf(fdpath, &quot;/proc/%d/fd/%d&quot;,getpid(), fd);
+        printf(&quot;fdpath:%s\n&quot;, fdpath);
+        if (lstat(fdpath, &amp;sb) == -1) {
+        }
+
+        linkname = malloc(sb.st_size + 1);
+        r = readlink(fdpath, linkname, sb.st_size + 1);
+        if (r == -1) {
+                /* path convert fail*/
+        }
+        linkname[r] = &#039;\0&#039;;
+        return linkname;
+}
+
+void test_fd2fpath()
+{
+        int fd = open(&quot;/tmp/2.txt&quot;, O_RDONLY);
+        char *fpath = fd2fpath(fd);
+        printf(&quot;fpath:%s\n&quot;, fpath);
+        free(fpath);
+}
+</pre>
+<pre class="file">#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+
+int
+main(int argc, char *argv[])
+{
+    struct stat sb;
+    char *linkname;
+    ssize_t r;
+
+    if (argc != 2) {
+        fprintf(stderr, &quot;Usage: %s &lt;pathname&gt;\n&quot;, argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    if (lstat(argv[1], &amp;sb) == -1) {
+        perror(&quot;lstat&quot;);
+        exit(EXIT_FAILURE);
+    }
+
+    linkname = malloc(sb.st_size + 1);
+    if (linkname == NULL) {
+        fprintf(stderr, &quot;insufficient memory\n&quot;);
+        exit(EXIT_FAILURE);
+    }
+
+    r = readlink(argv[1], linkname, sb.st_size + 1);
+
+    if (r == -1) {
+        perror(&quot;lstat&quot;);
+        exit(EXIT_FAILURE);
+    }
+
+    if (r &gt; sb.st_size) {
+        fprintf(stderr, &quot;symlink increased in size &quot;
+                        &quot;between lstat() and readlink()\n&quot;);
+        exit(EXIT_FAILURE);
+    }
+
+    linkname[r] = &#039;\0&#039;;
+
+    printf(&quot;&#039;%s&#039; points to &#039;%s&#039;\n&quot;, argv[1], linkname);
+
+    exit(EXIT_SUCCESS);
+}</pre>
+
+</div>

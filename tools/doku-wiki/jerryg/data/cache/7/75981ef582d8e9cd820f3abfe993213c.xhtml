@@ -1,0 +1,58 @@
+
+<h1 class="sectionedit1" id="reference">Reference</h1>
+<div class="level1">
+<pre class="file">1. TCP : window size value
+https://my.oschina.net/mawx/blog/297925</pre>
+<pre class="file">Q: Can be speedup by increasing buffer size?
+Ans:
+
+Q: where is io of rsync?
+Ans:
+</pre>
+
+</div>
+<!-- EDIT1 SECTION "Reference" [1-205] -->
+<h1 class="sectionedit2" id="flow">Flow</h1>
+<div class="level1">
+<pre class="file">match_sums --&gt; matched --&gt; send_token --&gt; simple_send_token --&gt; write_buf --&gt; writefd
+
+for (j = last_match + CHUNK_SIZE; j &lt; len; j += CHUNK_SIZE)
+{
+    matched(f, s, buf, j, -2);
+    
+    // -2 token means to send data only and no token
+}
+
+
+static void writefd(int fd, const char *buf, size_t len)
+{
+	if (fd == sock_f_out)
+		stats.total_written += len;
+
+	if (fd == write_batch_monitor_out)
+		writefd_unbuffered(batch_fd, buf, len);
+
+	if (!iobuf_out || fd != iobuf_f_out) {
+		writefd_unbuffered(fd, buf, len);
+		return;
+	}
+
+	while (len) {
+		int n = MIN((int)len, IO_BUFFER_SIZE - iobuf_out_cnt);
+		if (n &gt; 0) {
+			memcpy(iobuf_out+iobuf_out_cnt, buf, n);
+			buf += n;
+			len -= n;
+			iobuf_out_cnt += n;
+		}
+
+		if (iobuf_out_cnt == IO_BUFFER_SIZE)
+			io_flush(NORMAL_FLUSH);
+	}
+}
+
+// iobuf_out_cnt 是在儲存data , 當buffer size等於 IO_BUFFER_SIZE時, 就會進行一次flush的動作.
+</pre>
+
+</div>
+<!-- EDIT2 SECTION "Flow" [206-] -->

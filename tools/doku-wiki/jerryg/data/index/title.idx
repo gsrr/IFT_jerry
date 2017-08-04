@@ -25,7 +25,7 @@ command line window
 
 
 
-struct.pack
+unix domain socket
 Remote ssh with tmux
 
 
@@ -63,7 +63,7 @@ Create file
 du
 
 ift rpm package flow
-flow
+nvr command
 
 docker
 
@@ -78,3 +78,29 @@ Algorithms
 
 
 
+
+
+Reference
+Usage
+
+
+
+
+
+
+
+Basic
+
+Basic
+
+
+
+Reference
+
+
+post
+Reference
+FAQ
+
+
+convert fd to real path

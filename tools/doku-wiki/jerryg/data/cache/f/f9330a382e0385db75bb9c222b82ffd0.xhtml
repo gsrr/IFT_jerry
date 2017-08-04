@@ -1,0 +1,122 @@
+
+<h1 class="sectionedit1" id="basic">Basic</h1>
+<div class="level1">
+<pre class="file"># related files (samba)
+1. libnss_winbind.so
+
+# version
+ldd --version
+
+# website
+https://www.gnu.org/software/libc/sources.html
+
+# source rpm
+yumdownloader --source glibc
+</pre>
+
+</div>
+<!-- EDIT1 SECTION "Basic" [1-209] -->
+<h1 class="sectionedit2" id="getent_group">getent group</h1>
+<div class="level1">
+<pre class="file">Q10 : winbind在呼叫rpc要資料時, 是透過tevent傳給child去做事, 這時會需要先拿到一個child handle, 但若是child都在busy時, 會回傳一個NULL(find_idle_child)給 choose_domain_child, choose_domain_child會隨機選擇一個child來做事.
+Ans:
+ok.
+
+Q9 : winbind 跟 AD要資料時, 是一次要到完, 還是一個一個接收?
+Ans:
+是一次要到完的.
+
+
+Q8 : flow of winbindd?
+(getent passwd)
+winbindd_getpwent_send(from cmd, WINBINDD_GETPWENT) -&gt; [wb_next_pwent_send --&gt; winbindd_getpwent_done](loop, 一個user一次) --&gt; wb_fill_pwent_send --&gt; wb_sids2xids_send --&gt; wb_fill_pwent_sid2uid_done
+
+(getent group)
+winbindd_getgrent_send(from cmd, WINBINDD_GETGRENT) -&gt; wb_next_grent_send -&gt; dcerpc_wbint_QueryGroupList_send 
+--&gt; wb_getgrsid_send --&gt; choose_domain_child --&gt; wb_next_grent_getgrsid_done
+
+first time:
+wb_next_pwent_send --&gt; wb_query_user_list_send --&gt; dcerpc_wbint_QueryUserList_send --&gt; dom_child_handle (交給child來處理)
+--&gt; wb_next_pwent_send_do 
+ 
+
+Q7 : 為什麼把getent的timeout調長(30 --&gt; 300)就可以得到資料? 那就算是30秒, 只要retry次數多一點的話, 應該也是可以得到資料的吧?
+1. 每一次重來的時候, next_user 與num_users都會是0, 所以這時候會執行 wb_query_user_list_send 這個function.
+2. 但是雖然重來, winbind還是會在背景做, 只要有人得到資料回來, getent passwd就可以拿得到user.
+Q7.3. 不過winbind也有300s的cache time, 所以有可能會等到300s到還要不到, 這時候會怎麼樣?
+Ans:
+3.1 整個流常大概是 : request user list from ad server --&gt; get user information for individual user (250個一循環)
+3.2 若winbind cache time還沒超過時, 不會重新要user list, 但會重新要user information
+3.3 而若winbind cache time超過時, 會再重新要一次 user list
+3.4 若要到user infor後, 後面就是看nscd 的設定, 看cache time多久再重新要資訊.
+ 
+
+Q6: 為什麼getent group retry可以要得到資料, 照理說重新下一次的話, 整個都要重來不是嗎?
+1. 不過其實每250筆後, 後面也是重新下一次再抓250筆. (但應該有類似一個page index的東西吧?)
+2. 在 cli-&gt;pwent_state 裡面會存著next_user 與 num_users, next_user是指下一個要抓的user number, num_users則是全部的user數量.
+
+
+Q5: getent每次會讀250筆, 印出來後再讀250筆, 那他如何知道有沒有讀完?
+Ans:
+他就是一直讀, 直到對方回傳null, 所以每次都是一回合30秒, 直到對方回傳null(包含對方close socket)才結束.
+
+Q4 : 整個架構圖是?
+Ans:
+看起來是getent ----&gt; wbclient, wbclient再透過pipe 傳command給winbindd, 由winbindd去跟AD要資料.
+而此時wbclient會等待一段timeout時間, 若timeout時間沒有拿到資料的話就會fail.
+
+
+Q3 : flow of winbind (nss function).
+Ans:
+1. getent group --&gt; _nss_winbind_getgrent_r --&gt; winbind_getgrent --&gt; 
+winbindd_request_response --&gt; winbindd_send_request --&gt; winbindd_get_response --&gt; winbind_read_sock
+
+==&gt; _nss_winbind_getgrent_r 會送command給wbclient(command為WINBINDD_GETGRENT)
+==&gt; wbclient會包裝成winbind_request後再送給winbindd,
+==&gt; winbind_read_sock每次最多會讀250 entries, 送給getent後再繼續讀250筆
+
+
+Q2 : flow of getent?
+Ans:
+1. read so file according to nsswitch.conf
+2. call nss function from so file (libnss_winbind.so)
+
+Q1 : How to set the timeout value?
+Ans:
+1. time out value 寫死在code裡面
+
+----- source code -----
+
+ret = poll(&amp;pfd, 1, 5000);
+if (ret == -1) {
+        winbind_close_sock(ctx);
+        return -1;                   /* poll error */
+}
+
+if (ret == 0) {
+        /* Not ready for read yet... */
+        if (total_time &gt;= 30) {
+                /* Timeout */
+                winbind_close_sock(ctx);
+                return -1;
+        }
+        total_time += 5;
+        continue;
+}
+
+----- source code -----
+
+----- strace -----
+
+poll([{fd=5, events=POLLIN|POLLHUP}], 1, 5000) = 0 (Timeout)
+poll([{fd=5, events=POLLIN|POLLHUP}], 1, 5000) = 0 (Timeout)
+poll([{fd=5, events=POLLIN|POLLHUP}], 1, 5000) = 0 (Timeout)
+poll([{fd=5, events=POLLIN|POLLHUP}], 1, 5000) = 0 (Timeout)
+poll([{fd=5, events=POLLIN|POLLHUP}], 1, 5000) = 0 (Timeout)
+poll([{fd=5, events=POLLIN|POLLHUP}], 1, 5000) = 0 (Timeout)
+poll([{fd=5, events=POLLIN|POLLHUP}], 1, 5000) = 0 (Timeout)
+
+----- strace -----</pre>
+
+</div>
+<!-- EDIT2 SECTION "getent group" [210-] -->
