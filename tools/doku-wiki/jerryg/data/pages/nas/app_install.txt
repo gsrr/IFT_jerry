@@ -1,6 +1,32 @@
-====== flow ======
+====== nvr command ======
 <file>
+=>> nvr config -f /tmp -z a@0
+{"cliCode": [{"Return": "0x0000", "CLI": "Successful"}], "returnCode": [], "data": []}
 
+=>> nvr config -z a@0
+{"cliCode": [{"Return": "0x0000", "CLI": "Successful"}], "returnCode": [], "data": [{"nvr_version": "nvr:vms-20170322", "status": {"nvr_status": true, "docker_status": true}, "container_id": "5828122a924d0d51a0bf6ef82b5f6970a139ecc9ab55fc5bbb6f9f4529332163", "enabled": "True", "wkfolder": "/tmp"}]}
+
+=>> nvr disable -z a@0
+{"cliCode": [{"Return": "0x0000", "CLI": "Successful"}], "returnCode": [], "data": []}
+
+=>> nvr enable -z a@0
+{"cliCode": [{"Return": "0x0000", "CLI": "Successful"}], "returnCode": [], "data": []}
+</file>
+
+====== docker command ======
+<file>
+# Docker installation (Centos)
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-centos-7
+https://www.phpini.com/linux/rhel-centos-7-install-docker
+
+# basic (Docker —— 從入門到實踐)
+https://www.gitbook.com/book/philipzheng/docker_practice/details
+
+# docker process
+docker ps
+
+# attach container
+docker attach 20622f7359cf
 </file>
 
 ====== container api ======
@@ -78,6 +104,17 @@ sdg                                     8:96   0   50G  0 disk
    u'Ports': [],
    u'Status': u'Up About a minute'}],
  'status': 0}
+
+# loop device
+loop0                                                                                       7:0    0  100G  0 loop
+└─docker-253:1-1112773-pool                                                               253:3    0  100G  0 dm
+  └─docker-253:1-1112773-511a29fa52fbc633f66a920ae1189a1a71e460366b94fb90e6a8545dfa6095bd 253:4    0   10G  0 dm
+loop1                                                                                       7:1    0    2G  0 loop
+└─docker-253:1-1112773-pool                                                               253:3    0  100G  0 dm
+  └─docker-253:1-1112773-511a29fa52fbc633f66a920ae1189a1a71e460366b94fb90e6a8545dfa6095bd 253:4    0   10G  0 dm
+
+In [6]: appoperator.docker_using_loopdev()
+Out[6]: True
 </file>
 
 ====== Related commands ======

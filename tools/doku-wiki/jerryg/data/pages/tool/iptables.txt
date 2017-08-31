@@ -21,6 +21,9 @@ iptables-save > iptables.dump
 start to edit 
 ...
 iptables-restore < iptables.dump 
+
+# stop service
+systemctl stop firewalld
 </file>
 <file>
 # Example:

@@ -1,4 +1,124 @@
   * [[tool:python:time_module|Usage of time module]]
+====== unix domain socket ======
+<file>
+# server.py
+import socket
+import sys
+import os
+
+server_address = './uds_socket'
+
+try:
+    os.unlink(server_address)
+except OSError:
+    if os.path.exists(server_address):
+        raise
+
+# Create a UDS socket
+sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+print >>sys.stderr, 'starting up on %s' % server_address
+sock.bind(server_address)
+sock.listen(1)
+
+while True:
+    print >>sys.stderr, 'waiting for a connection'
+    connection, client_address = sock.accept()
+    try:
+        print >>sys.stderr, 'connection from', client_address
+
+        while True:
+            data = connection.recv(16)
+            print >>sys.stderr, 'received "%s"' % data
+            if data:
+                print >>sys.stderr, 'sending data back to the client'
+                connection.sendall(data)
+            else:
+                print >>sys.stderr, 'no more data from', client_address
+                break
+    finally:
+        connection.close()
+        
+# client.py
+import socket
+import sys
+
+# Create a UDS socket
+sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+
+# Connect the socket to the port where the server is listening
+server_address = './uds_socket'
+print >>sys.stderr, 'connecting to %s' % server_address
+try:
+    sock.connect(server_address)
+except socket.error, msg:
+    print >>sys.stderr, msg
+    sys.exit(1)
+try:
+
+    # Send data
+    message = 'This is the message.  It will be repeated.'
+    print >>sys.stderr, 'sending "%s"' % message
+    sock.sendall(message)
+
+    amount_received = 0
+    amount_expected = len(message)
+
+    while amount_received < amount_expected:
+        data = sock.recv(16)
+        amount_received += len(data)
+        print >>sys.stderr, 'received "%s"' % data
+except Exception as ex:
+        print type(ex), ex.args
+
+finally:
+    print >>sys.stderr, 'closing socket'
+    sock.close()
+    
+# socket file is not exist
+[root@gsnas_a unix]# python client.py
+connecting to ./uds_socket
+[Errno 2] No such file or directory
+</file>
+
+====== socket exception ======
+<file>
+#client code
+import socket
+import traceback
+import sys
+
+try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server_address = ('localhost', 10000)
+        sock.connect(server_address)
+except Exception as ex:
+        print type(ex), ex.args
+
+# Server is not open
+[root@gsnas_a ~]# python client.py
+<class 'socket.error'> (111, 'Connection refused') 
+
+# Server close socket
+[root@gsnas_a ~]# python client.py
+<class 'socket.error'> (104, 'Connection reset by peer')
+
+
+# raise exception
+import socket
+import traceback
+import sys
+import time
+
+try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server_address = ('localhost', 10000)
+        raise Exception,(1,"error"), sys.exc_info()[2]
+        sock.connect(server_address)
+        sock.close()
+except Exception as ex:
+        print type(ex), ex.args, ex.errno
+        print traceback.format_tb(sys.exc_info()[2])
+</file>
 
 ====== struct.pack ======
 <file>

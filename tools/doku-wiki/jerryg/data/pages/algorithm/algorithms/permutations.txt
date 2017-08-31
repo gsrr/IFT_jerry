@@ -1,0 +1,18 @@
+<file>
+def perms(arr, idx):
+    if idx == len(arr):
+        print arr
+    for i in xrange(idx, len(arr)):
+        arr[idx], arr[i] = arr[i], arr[idx]
+        perms(arr, idx + 1)
+        arr[idx], arr[i] = arr[i], arr[idx]
+
+
+def main():
+    arr = range(1, 4)
+    perms(arr,0)
+
+if __name__ == "__main__":
+    main()
+
+</file>

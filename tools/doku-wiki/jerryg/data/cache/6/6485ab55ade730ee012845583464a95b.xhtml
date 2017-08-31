@@ -3,6 +3,9 @@
 [Reference]
 <a href="http://avp.toko.edu.tw/docs/class/3/%E5%AF%86%E7%A2%BC%E5%AD%B8%E5%8E%9F%E7%90%86%E8%88%87%E6%8A%80%E8%A1%93.pdf" class="urlextern" title="http://avp.toko.edu.tw/docs/class/3/%E5%AF%86%E7%A2%BC%E5%AD%B8%E5%8E%9F%E7%90%86%E8%88%87%E6%8A%80%E8%A1%93.pdf" rel="nofollow">http://avp.toko.edu.tw/docs/class/3/%E5%AF%86%E7%A2%BC%E5%AD%B8%E5%8E%9F%E7%90%86%E8%88%87%E6%8A%80%E8%A1%93.pdf</a>
 </p>
+<pre class="file"># ssl version
+https://zh.wikipedia.org/wiki/OpenSSL
+</pre>
 
 <p>
 Q4: openssl command
@@ -33,6 +36,8 @@ openssl x509 -in acs.qacafe.com.pem -text
 # display the information of key
 openssl rsa -noout -text -in myserver.key
 
+# check cipher support
+openssl ciphers -v | awk &#039;{print $2}&#039; | sort | uniq
 
 ------------------------
 Validity (365 days)

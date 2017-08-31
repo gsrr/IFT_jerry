@@ -1,0 +1,29 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1493839138;s:8:"modified";i:1493839138;}s:11:"last_change";a:8:{s:4:"date";i:1493839138;s:2:"ip";s:14:"10.141.141.116";s:4:"type";s:1:"C";s:2:"id";s:50:"algorithm:algorithms:counting_perfect_subsequences";s:4:"user";s:0:"";s:3:"sum";s:7:"created";s:5:"extra";s:0:"";s:10:"sizechange";i:1047;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:503:"#!/bin/python
+
+import sys
+
+M = 10**9+7
+
+def egcd(a, b):
+    if a == 0:
+        return (b, 0, 1)
+    else:
+        g, y, x = egcd(b % a, a)
+        return (g, x - (b // a) * y, y)
+
+def inverse(x, p):
+    g, x, y = egcd(x, p)
+    if g != 1:
+        raise Exception('modular inverse does not exist')
+    else:
+        return x % p
+
+
+def f(n1, n2):
+    k = min(n1, n2)
+    c1 = 1
+    c2 = 1
+    res = 1
+    for kk in xrange(1, k+1):
+        c1 = (c1 * (n1 - kk + 1) * inverse(kk, M)) % M
+        c2 = (c2…";}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:1:{s:7:"created";i:1493839138;}s:11:"last_change";a:8:{s:4:"date";i:1493839138;s:2:"ip";s:14:"10.141.141.116";s:4:"type";s:1:"C";s:2:"id";s:50:"algorithm:algorithms:counting_perfect_subsequences";s:4:"user";s:0:"";s:3:"sum";s:7:"created";s:5:"extra";s:0:"";s:10:"sizechange";i:1047;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

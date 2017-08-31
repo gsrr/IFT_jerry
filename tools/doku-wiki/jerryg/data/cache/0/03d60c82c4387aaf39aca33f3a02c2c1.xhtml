@@ -1,0 +1,69 @@
+
+<h1 class="sectionedit1" id="remote_ssh_with_tmux">Remote ssh with tmux</h1>
+<div class="level1">
+<pre class="file">## execute shell command in tmux.conf
+#(shell-command)
+## set status bar
+set -g window-status-format &#039;#I:#(pwd=&quot;#{pane_current_path}&quot;; echo ${pwd####*/})#F&#039;
+set -g window-status-current-format &#039;#I:#(pwd=&quot;#{pane_current_path}&quot;; echo ${pwd####*/})#F&#039;
+set-option -g status-interval 1
+
+## set session name and execute ssh command
+function tmux-ssh() { tmux new -s $1 &quot;ssh root@$1&quot;; }</pre>
+<div class="table sectionedit2"><table class="inline">
+	<tr class="row0">
+		<td class="col0">shell command in tmux.conf</td><td class="col1 leftalign">  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0">取出tmux的variable</td><td class="col1 rightalign">  #{pane_current_path}</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">set length of session name</td><td class="col1 rightalign">  set -g status-left-length 20 <a href="http://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/" class="urlextern" title="http://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/" rel="nofollow">http://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/</a></td>
+	</tr>
+</table></div>
+<!-- EDIT2 TABLE [431-641] -->
+</div>
+<!-- EDIT1 SECTION "Remote ssh with tmux" [1-642] -->
+<h1 class="sectionedit3" id="cmd_list">cmd list</h1>
+<div class="level1">
+<div class="table sectionedit4"><table class="inline">
+	<tr class="row0">
+		<td class="col0" colspan="3">session operation</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0">put the session to background</td><td class="col1">tmux detach</td><td class="col2">C-b, d</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">put the session to foreground</td><td class="col1">tmux attach</td><td class="col2"> </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">list all session</td><td class="col1">tmux ls</td><td class="col2"> </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">rename session</td><td class="col1"> </td><td class="col2">C-b, $ </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0" colspan="3">pane operation</td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">split pane vertically</td><td class="col1">rename-session </td><td class="col2"> Ctrl+b, %</td>
+	</tr>
+	<tr class="row7">
+		<td class="col0">split pane horizontally</td><td class="col1"> </td><td class="col2"> Ctrl+b, “</td>
+	</tr>
+	<tr class="row8">
+		<td class="col0">switch pane</td><td class="col1"> </td><td class="col2">Ctrl+b, arrow key</td>
+	</tr>
+	<tr class="row9">
+		<td class="col0">list windows</td><td class="col1"> </td><td class="col2">Ctrl+b, w</td>
+	</tr>
+	<tr class="row10">
+		<td class="col0">hide pane</td><td class="col1"> </td><td class="col2">Ctrl+b, break-pane -dP</td>
+	</tr>
+	<tr class="row11">
+		<td class="col0">get pane</td><td class="col1"> </td><td class="col2">Ctrl+b, join-pane -vs 1 (1 is panel index)</td>
+	</tr>
+</table></div>
+<!-- EDIT4 TABLE [666-1103] -->
+</div>
+<!-- EDIT3 SECTION "cmd list" [643-] -->

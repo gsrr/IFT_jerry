@@ -1,0 +1,46 @@
+====== Basic ======
+<file>
+# source code and help
+1. https://www.gnu.org/software/global/
+2. http://tieba.baidu.com/p/3543479318
+
+
+# create tag files
+gtags  
+1. in source code working space
+2. it will create three files:
+  2.1 GTAGS：所有变量，函数定义的相关信息
+  2.2 GRTAGS：所有变量，函数被引用的相关信息
+  2.3 GPATH：源代码中每个文件的信息。
+
+</file>
+
+
+====== work with cscope ======
+<file>
+# help
+1. http://cscope.sourceforge.net/cscope_vim_tutorial.html
+2. http://forum.ubuntu.org.cn/viewtopic.php?t=343460
+
+# setting in vim
+set csprg=gtags-cscope
+cs add GTAGS
+
+#cscope.vim
+http://cscope.sourceforge.net/cscope_maps.vim
+
+# command of cscope 
+## find symbol
+:cscope find symbol getent(== cs f s getent)
+
+## Find functions calling this function
+:cs find call getent(== cs f c getent) 
+
+## Find file by name
+:cs find file getent(== cs f f getent) 
+
+# example 1 --> getent group
+cs f s winbind_getgrent --> cs f g winbindd_request_response 
+--> cs f g winbindd_send_request --> cs f g winbindd_get_response --> cs f g winbind_read_sock
+
+</file>

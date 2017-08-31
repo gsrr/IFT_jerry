@@ -1,0 +1,5 @@
+<file>
+# scan the machine who open port 5566
+nmap -vv -p 5566 172.27.112.0/24
+
+</file>

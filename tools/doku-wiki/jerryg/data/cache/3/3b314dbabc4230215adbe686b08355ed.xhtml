@@ -10,15 +10,135 @@ Ans:
 3. ls -v file
 ref : https://docs.oracle.com/cd/E18752_01/html/819-5461/gbchf.html
 
+# add a acl entry for specific user
+chmod A+user:aa:read_data/write_data:allow test
+
 Q : security issue:
 Ans :
 remove root password --&gt; passed -d root</pre>
 
 </div>
-<!-- EDIT1 SECTION "FAQ" [1-328] -->
+<!-- EDIT1 SECTION "FAQ" [1-413] -->
 <h1 class="sectionedit2" id="sync_acl_with_eonnas">Sync Acl with EonNAS</h1>
 <div class="level1">
-<pre class="file"># first target
+<pre class="file"># modified files:
+1. acl.c
+2. options.c
+
+-------------------------------------
+Q10:
+test case #1:
+1. backup file時, file與folder的acl都要可以過去.
+2. backup file時, 最上層folder的acl不可以被更改.
+
+Ans:
+
+-------------------------------------
+
+Q09:
+inherit acl也要跟著過去. (fd --&gt; f: file inherit, d: directory inherit)
+
+Ans:
+1. fd = 3, f=1, d=2
+2. default acl how to set?
+--&gt; mode == 0 , flag=0x1f, 且user_obj, group_obj, mask_obj, other_obj都要設定.
+3. owner, group and everyone
+3.1 owner@ : flags:1000
+3.2 group@ : flags:2000
+3.3 everyone@ : flags:4000
+-------------------------------------
+Q8:
+sync過來的acl entry, 會多一個mask entry, 且mask entry會與group同步, 導致其他user/group的acl會被受限.
+
+Ans:
+1. The default behavior of linux system:
+If an ACL contains named user or named group entries, and no mask entry exists, a mask entry containing the same permissions as the group entry is created.
+2. solution
+2.1 在最後執行一次setfacl --recursive -m m:rwx /Pool-1/rsync_test
+2.2 
+終於找到了, 不是在mask_obj控制的, 而是由file-&gt;mode來控制mask的權限.
+但group與mask還是會同步, 所以需要在group_obj 與mask_obj再進行設定.
+
+
+-------------------------------------
+Q7:
+設定domain user的acl entry時, user的entry會變成group entry
+
+Ans:
+看來是因為跟順序性有關, 若前面已經有group的entry, 那後面都會變成group entry.
+
+-------------------------------------
+
+Q6:
+rsync 最後面都會有error message:
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1518) [generator=3.0.9]
+
+Ans:
+這是因為我用以下function來印訊息的關係.
+rprintf(FERROR_XFER, &quot;type=%d, flags=%d, has_name: %d, %d, is user=%d, count=%d\n&quot;,type, flags,has_name, id, access, i);
+
+
+-------------------------------------
+
+Q5:
+我發現會區分不出user 還是group, 對我來說只有讀到id
+
+Ans:
+1. 可以透過zfs-acls的結構來判別, 但source code需要加入zfs-acls的參數.
+2. 在flag的變數中, 可以判斷出是user還是group
+3. https://blogs.oracle.com/lisaweek/entry/nfsv4_and_zfs_acls
+
+-------------------------------------
+Q4:
+acl entry裡面若有group id的話?
+
+Ans:
+1. 讀取來跟user一樣, 都可以讀到id與access.
+
+-------------------------------------
+Q3:
+deny的acl entry要如何忽略掉?
+
+Ans:
+
+-------------------------------------
+Q1: 
+owner@ , group@, everyone@ 的uid讀取到是-1, 會造成set acl fail:
+rsync: set_acl: sys_acl_set_file(test, ACL_TYPE_ACCESS): Invalid argument (22)
+
+Ans:
+一開始會讀進所有的acl entry,  若entry的id為-1時, 就不存起來.
+
+
+Q2:
+不複製最上面一層folder的acl.
+
+Ans:
+rsync -aA admin@172.27.121.54::test/* ./*
+
+
+
+acl mapping (hex format)
+r --&gt; 4 --&gt; r (80000004), rx(80000005)
+w --&gt; 8 
+rw --&gt; c --&gt; rwx (80000007)
+p --&gt; 10
+x --&gt; 80 
+d --&gt; 40000
+rd --&gt; 40004
+rwp --&gt; 1c
+
+
+[error message]
+[root@nas_8686288_b ~]# rsync -aA admin@172.27.121.54::test/ /root/test123/
+Password:
+recv_acl_access: value out of range: 100116
+rsync error: error in rsync protocol data stream (code 12) at acls.c(958) [Receiver=3.0.9]
+
+1. user@, group@, everyone@ 可以忽略掉, 因為會靠-o進行設定.
+2. 
+
+# first target
 可以看得出來各個acl的資訊嗎? uid and acl permission
 
 #define XMIT_USER_OBJ (1&lt;&lt;0)
@@ -201,7 +321,7 @@ drw-------  2 root     root           2 Apr  5 14:30 test123
              user:65534:--------------:-------:allow</pre>
 
 </div>
-<!-- EDIT2 SECTION "Sync Acl with EonNAS" [329-6677] -->
+<!-- EDIT2 SECTION "Sync Acl with EonNAS" [414-9982] -->
 <h1 class="sectionedit3" id="sync_acl_with_syno">Sync Acl with Syno</h1>
 <div class="level1">
 <pre class="file">[rsync server]
@@ -342,4 +462,4 @@ target :
 </pre>
 
 </div>
-<!-- EDIT3 SECTION "Sync Acl with Syno" [6678-] -->
+<!-- EDIT3 SECTION "Sync Acl with Syno" [9983-] -->

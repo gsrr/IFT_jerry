@@ -1,0 +1,10 @@
+<file>
+def bin_combination(n):
+    for i in xrange(pow(2,n)):
+        cb = ""
+        for j in xrange(n):
+            cb += "%u"%(i / pow(2,j) % 2)
+        print cb
+
+bin_combination(3)
+</file>

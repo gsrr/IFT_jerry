@@ -1,57 +1,93 @@
 
 <h1 class="sectionedit1" id="config_related">config related</h1>
 <div class="level1">
-<pre class="file"># login with escape password
+<pre class="file"># Reference
+1. https://ihower.tw/git/basic.html#sec1
+
+# Basic knowledge
+Q1: git working tree裡面分為三個區域, working directory, staging area and repository.
+Ans:
+也就是說, 一開始修改檔案的地方, 叫做working directory.
+當執行git add後, 修改後的檔案紀錄就會放到staging area.
+當執行git commit後, 檔案紀錄就會被加進repository
+(git push就是上傳到remote repository)
+
+# login with escape password
 http.proxy=http://userId:pwd%40123@ipaddress:port
 </pre>
 
 </div>
-<!-- EDIT1 SECTION "config related" [1-124] -->
-<h1 class="sectionedit2" id="see_the_change">see the change</h1>
+<!-- EDIT1 SECTION "config related" [1-543] -->
+<h1 class="sectionedit2" id="merge">Merge</h1>
 <div class="level1">
-<pre class="file"># see the change in a commit
-git diff COMMIT^ COMMIT</pre>
+<pre class="file"># merge with commits
+git checkout master
+git merge hotfix # it will merge hotfix branch into master branch with commits.
+
+# merge and write a new commit (discard commits in hotfix branch)
+git checkout master
+git merge hotfix --squash
+</pre>
 
 </div>
-<!-- EDIT2 SECTION "see the change" [125-221] -->
-<h1 class="sectionedit3" id="list_remote_branch">list remote branch</h1>
+<!-- EDIT2 SECTION "Merge" [544-813] -->
+<h1 class="sectionedit3" id="difference">Difference</h1>
 <div class="level1">
-<pre class="file">git branch -a</pre>
+<pre class="file"># Difference in commit 
+git diff $commit $commit^
+
+# Difference between two branches
+        X
+        |
+        | T
+        | |
+        | |
+        | |
+        |/
+        B
+        |
+        |
+        S
+        
+git diff master..topic will show us the difference between X and T
+git diff master...topic will show us the difference between B and T</pre>
 
 </div>
-<!-- EDIT3 SECTION "list remote branch" [222-283] -->
-<h1 class="sectionedit4" id="overwrite_local_files">overwrite local files</h1>
+<!-- EDIT3 SECTION "Difference" [814-1201] -->
+<h1 class="sectionedit4" id="branch">Branch</h1>
 <div class="level1">
-<pre class="file">git fetch --all
+<pre class="file"># checkout a remote branch
+git pull
+git checkout -b test origin/test
+
+# create a remote branch
+git checkout -b &lt;branch-name&gt;
+git push &lt;remote-name&gt; &lt;branch-name&gt; or git push &lt;remote-name&gt; &lt;local-branch-name&gt;:&lt;remote-branch-name&gt;
+
+# remove local branch
+git branch -d &lt;branch&gt;
+
+# list all branches (include remote branches)
+git branch -a
+
+</pre>
+
+</div>
+<!-- EDIT4 SECTION "Branch" [1202-1575] -->
+<h1 class="sectionedit5" id="recover">Recover</h1>
+<div class="level1">
+<pre class="file"># Reset all files in current branch
+git fetch --all  # git-fetch - Download objects and refs from another repository
 git reset --hard origin/master
 
-# git-fetch - Download objects and refs from another repository</pre>
+# Remove file in staging area
+git reset &lt;file&gt;
 
-</div>
-<!-- EDIT4 SECTION "overwrite local files" [284-446] -->
-<h1 class="sectionedit5" id="create_a_remote_git_branch">create a remote Git branch</h1>
-<div class="level1">
-<pre class="file">git checkout -b &lt;branch-name&gt;
-git push &lt;remote-name&gt; &lt;branch-name&gt; or git push &lt;remote-name&gt; &lt;local-branch-name&gt;:&lt;remote-branch-name&gt;</pre>
+# Modify the last commit message
+git commit --amend
 
-</div>
-<!-- EDIT5 SECTION "create a remote Git branch" [447-636] -->
-<h1 class="sectionedit6" id="compare_two_branches">compare two branches</h1>
-<div class="level1">
-<ul>
-<li class="level1"><div class="li"> git diff branch_1..branch_2</div>
-</li>
-</ul>
-
-</div>
-<!-- EDIT6 SECTION "compare two branches" [637-703] -->
-<h1 class="sectionedit7" id="rollback">rollback</h1>
-<div class="level1">
-<ul>
-<li class="level1"><div class="li"> rollback push</div>
-</li>
-</ul>
-<pre class="file">git revert $hash  # It will create a new commit automatically.
+# rollback
+git revert $hash  # It will create a new commit automatically.
 git push</pre>
 <ul>
 <li class="level1"><div class="li"> Revert to a specific commit id</div>
@@ -60,4 +96,4 @@ git push</pre>
 <pre class="file">git reset --hard 9bc9775a51432ae4a0ecc57423dd9791a22ea9c0</pre>
 
 </div>
-<!-- EDIT7 SECTION "rollback" [704-] -->
+<!-- EDIT5 SECTION "Recover" [1576-] -->

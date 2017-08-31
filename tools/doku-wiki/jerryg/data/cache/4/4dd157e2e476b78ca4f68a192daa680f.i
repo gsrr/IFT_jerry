@@ -1,0 +1,61 @@
+a:3:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2700:"
+App framework (python) – 2017/03 ~ 2017/06
+Architecture design by myself (project leader for developing)  
+Integrate with GUI and Docker module
+Dynamic installation / un-installation
+
+ACL transformation from nt-acl(solaris) to acl in linux (c & python) – 2017/05 ~ 2017/06 
+Deep understanding bwteeent nt-acl and acl in linux
+Modify the source code of rsync
+
+Automation & debug tools
+nas_helper (python) – 2016/10 ~ 2016/12
+A tool to help teammate develop new module.(Create template files automatically)
+Use python distutils tool to auto deploy
+https://github.com/gsrr/nas_helper
+
+auto_update_server (python) – 2016/10 ~ 2016/12
+Auto deploy the remote machine (ctrl-a and ctrl-b)
+Use ssh-tunnel to deploy ctrl-b while ctrl-b can not be reached.
+https://github.com/gsrr/Auto_Update_Server
+
+jtrace (python) – 2017/01 ~ 2017/02
+Can trace functions in a process
+https://github.com/gsrr/jtrace
+
+NAS Architecture (Improvement, python)
+NASCLI (python) – 2016/12 ~ 2017/02
+Improve the log function by syslog service
+Support socket communication and ssl encryption.
+
+Samba(cifs) – 2015/08 ~ present
+Support login by ldap user (python & c)
+Support both local user and ldap user (Modify samba source code)
+Support login by domain format for user@domain.com (Modify samba source code)
+Avoid to create ldap user account by create local user account.
+Support modify samba-ntacl by samba python api (python)
+
+AD (Active Ddirectory) – 2015/08 ~ present
+In this project, I improve it from original.
+Improve the functionality for importing user from AD Server to NAS. (2017/05 ~ 2017/06)
+Auto take over if primary AD controller is crashed. (improve by dns rotate and dns query, 2017/03 ~ 2017/04) 
+From simple authentication to ntlm authentication. (ldapsearch to net ads search)
+Improve the method for getting trust domain controller.
+
+LDAP (Server side) – 2015/08 ~ present
+In this project, I mainly implement the User and Group parts in LDAP Server.
+Support features including "user must change password", "user can not change password"
+Support mschap authentication. (for VPN by freeradius)
+
+LDAP (Client side)
+In this project, I improve the ldap service from original:
+Support login with domain name (ex: user@domain.com)
+Deal with group problem for user@domain.com
+
+VPN Server  (xl2tpd + pppd + freeradius, python & c)
+In this project, I modify the source code to support domain user login by mschap:
+Display proper information - Client session and login information
+Support login by mschap protocol (Generate ntpassword for local user)
+Support login by AD user by ntlm_auth(mschap) or pam(pap)
+Support login by LDAP user (by freeradius, and ldap user should have ntpassword for mschap auth)
+";i:1;N;i:2;N;}i:2;i:6;}i:2;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:6;}}

@@ -1,4 +1,4 @@
-a:21:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:3:"FAQ";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:295:"
+a:21:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:3:"FAQ";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:380:"
 Q : commands of solaris
 Ans:
 # change acl of index 4
@@ -8,10 +8,130 @@ Ans:
 3. ls -v file
 ref : https://docs.oracle.com/cd/E18752_01/html/819-5461/gbchf.html
 
+# add a acl entry for specific user
+chmod A+user:aa:read_data/write_data:allow test
+
 Q : security issue:
 Ans :
 remove root password --> passed -d root
-";i:1;N;i:2;N;}i:2;i:24;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:329;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:20:"Sync Acl with EonNAS";i:1;i:1;i:2;i:329;}i:2;i:329;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:329;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:6300:"
+";i:1;N;i:2;N;}i:2;i:24;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:414;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:20:"Sync Acl with EonNAS";i:1;i:1;i:2;i:414;}i:2;i:414;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:414;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:9520:"
+# modified files:
+1. acl.c
+2. options.c
+
+-------------------------------------
+Q10:
+test case #1:
+1. backup file時, file與folder的acl都要可以過去.
+2. backup file時, 最上層folder的acl不可以被更改.
+
+Ans:
+
+-------------------------------------
+
+Q09:
+inherit acl也要跟著過去. (fd --> f: file inherit, d: directory inherit)
+
+Ans:
+1. fd = 3, f=1, d=2
+2. default acl how to set?
+--> mode == 0 , flag=0x1f, 且user_obj, group_obj, mask_obj, other_obj都要設定.
+3. owner, group and everyone
+3.1 owner@ : flags:1000
+3.2 group@ : flags:2000
+3.3 everyone@ : flags:4000
+-------------------------------------
+Q8:
+sync過來的acl entry, 會多一個mask entry, 且mask entry會與group同步, 導致其他user/group的acl會被受限.
+
+Ans:
+1. The default behavior of linux system:
+If an ACL contains named user or named group entries, and no mask entry exists, a mask entry containing the same permissions as the group entry is created.
+2. solution
+2.1 在最後執行一次setfacl --recursive -m m:rwx /Pool-1/rsync_test
+2.2 
+終於找到了, 不是在mask_obj控制的, 而是由file->mode來控制mask的權限.
+但group與mask還是會同步, 所以需要在group_obj 與mask_obj再進行設定.
+
+
+-------------------------------------
+Q7:
+設定domain user的acl entry時, user的entry會變成group entry
+
+Ans:
+看來是因為跟順序性有關, 若前面已經有group的entry, 那後面都會變成group entry.
+
+-------------------------------------
+
+Q6:
+rsync 最後面都會有error message:
+rsync error: some files/attrs were not transferred (see previous errors) (code 23) at main.c(1518) [generator=3.0.9]
+
+Ans:
+這是因為我用以下function來印訊息的關係.
+rprintf(FERROR_XFER, "type=%d, flags=%d, has_name: %d, %d, is user=%d, count=%d\n",type, flags,has_name, id, access, i);
+
+
+-------------------------------------
+
+Q5:
+我發現會區分不出user 還是group, 對我來說只有讀到id
+
+Ans:
+1. 可以透過zfs-acls的結構來判別, 但source code需要加入zfs-acls的參數.
+2. 在flag的變數中, 可以判斷出是user還是group
+3. https://blogs.oracle.com/lisaweek/entry/nfsv4_and_zfs_acls
+
+-------------------------------------
+Q4:
+acl entry裡面若有group id的話?
+
+Ans:
+1. 讀取來跟user一樣, 都可以讀到id與access.
+
+-------------------------------------
+Q3:
+deny的acl entry要如何忽略掉?
+
+Ans:
+
+-------------------------------------
+Q1: 
+owner@ , group@, everyone@ 的uid讀取到是-1, 會造成set acl fail:
+rsync: set_acl: sys_acl_set_file(test, ACL_TYPE_ACCESS): Invalid argument (22)
+
+Ans:
+一開始會讀進所有的acl entry,  若entry的id為-1時, 就不存起來.
+
+
+Q2:
+不複製最上面一層folder的acl.
+
+Ans:
+rsync -aA admin@172.27.121.54::test/* ./*
+
+
+
+acl mapping (hex format)
+r --> 4 --> r (80000004), rx(80000005)
+w --> 8 
+rw --> c --> rwx (80000007)
+p --> 10
+x --> 80 
+d --> 40000
+rd --> 40004
+rwp --> 1c
+
+
+[error message]
+[root@nas_8686288_b ~]# rsync -aA admin@172.27.121.54::test/ /root/test123/
+Password:
+recv_acl_access: value out of range: 100116
+rsync error: error in rsync protocol data stream (code 12) at acls.c(958) [Receiver=3.0.9]
+
+1. user@, group@, everyone@ 可以忽略掉, 因為會靠-o進行設定.
+2. 
+
 # first target
 可以看得出來各個acl的資訊嗎? uid and acl permission
 
@@ -193,7 +313,7 @@ drw-------  2 root     root           2 Apr  5 14:30 test123
                user:500:rw-p----------:-------:allow
               user:1004:r--p----------:-------:allow
              user:65534:--------------:-------:allow
-";i:1;N;i:2;N;}i:2;i:369;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:6678;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:18:"Sync Acl with Syno";i:1;i:1;i:2;i:6678;}i:2;i:6678;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:6678;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:917:"
+";i:1;N;i:2;N;}i:2;i:454;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:9983;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:18:"Sync Acl with Syno";i:1;i:1;i:2;i:9983;}i:2;i:9983;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:9983;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:917:"
 [rsync server]
 [root@nas_8744965_a test]# rsync -aAX /Pool-1/Volume_1/share1/test/ admin@172.27.112.150::Test
 Password:
@@ -210,7 +330,7 @@ rsync: ACLs are not supported on this server
 rsync error: syntax or usage error (code 1) at main.c(1786) [server=3.0.9]
 rsync: connection unexpectedly closed (0 bytes received so far) [sender]
 rsync error: error in rsync protocol data stream (code 12) at io.c(605) [sender=3.0.9]
-";i:1;N;i:2;N;}i:2;i:6716;}i:12;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:6716;}i:13;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:51:"Q : Sync Acl with QNAP (Source : GS, Target : QNAP)";}i:2;i:7645;}i:14;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:7702;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1090:"
+";i:1;N;i:2;N;}i:2;i:10021;}i:12;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:10021;}i:13;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:51:"Q : Sync Acl with QNAP (Source : GS, Target : QNAP)";}i:2;i:10950;}i:14;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:11007;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1090:"
 Command:
 (ssh protocol) 
 rsync -aAX /Pool-1/Volume_1/share1/test/ admin@172.27.112.154:/share/test002
@@ -276,7 +396,7 @@ user:guest:---
 group::rwx
 mask::rwx
 other::rwx
-";i:1;N;i:2;N;}i:2;i:7702;}i:16;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:586:"
+";i:1;N;i:2;N;}i:2;i:11007;}i:16;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:586:"
 Q : Why not define the role of EonNAS is third party?
 Ans:
 設計上會比較複雜, 因為舊的EonNAS:
@@ -287,7 +407,7 @@ Ans:
 如果是EonNAS的話就走user = admin, ssh protocol的路.
 如果是GS的話就走user = root, ssh protocol的路.
 (但是一個是solaris, 一個是linux, 兩邊的ACL真的可以完全sync到一致嗎?)
-";i:1;N;i:2;N;}i:2;i:8808;}i:17;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:861:"
+";i:1;N;i:2;N;}i:2;i:12113;}i:17;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:861:"
 Q : 現在GS -> Third Party, 備份過去後的ACL會長什麼樣子?
 Ans : 
 1. target folder的owner跟group會被source的owner跟group蓋掉. (但其餘entry還在)
@@ -312,7 +432,7 @@ target :
 * solaris還有一些extended acl不會出來.
 * file會繼承target folder的原有acl entry.
 
-";i:1;N;i:2;N;}i:2;i:9409;}i:18;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:424:"
+";i:1;N;i:2;N;}i:2;i:12714;}i:18;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:424:"
 Q : GS -> EonNAS , 可以做到ACL備份嗎?
 Ans:
 沒有辦法, 因為EonNAS的source code有被更改過, 只適用於EonNAS -> EonNAS (--zfs-acl), 若只加上-A參數的話, 會變成:
@@ -330,4 +450,4 @@ target :
 ----------  1 1000     1000           4 Mar 21 11:16 file1
               user:1001:rw-p----------:-------:allow
 
-";i:1;N;i:2;N;}i:2;i:10285;}i:19;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:10717;}i:20;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:10717;}}
+";i:1;N;i:2;N;}i:2;i:13590;}i:19;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:14022;}i:20;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:14022;}}
