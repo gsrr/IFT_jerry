@@ -1,5 +1,10 @@
 ====== FAQ ======
 <file>
+Q1 : commands of rsync
+Ans:
+# from windows
+rsync -a --progress /cygdrive/D/temp/ admin@10.10.10.1::nocache
+
 Q : commands of solaris
 Ans:
 # change acl of index 4

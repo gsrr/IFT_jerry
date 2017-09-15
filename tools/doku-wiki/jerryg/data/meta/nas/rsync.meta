@@ -1,5 +1,10 @@
-a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1490064934;s:8:"modified";i:1495617931;}s:11:"last_change";a:8:{s:4:"date";i:1495617931;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:9:"nas:rsync";s:4:"user";s:0:"";s:3:"sum";s:23:"[Sync Acl with EonNAS] ";s:5:"extra";s:0:"";s:10:"sizechange";i:188;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:3:"FAQ";s:11:"description";a:2:{s:15:"tableofcontents";a:3:{i:0;a:4:{s:3:"hid";s:3:"faq";s:5:"title";s:3:"FAQ";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:20:"sync_acl_with_eonnas";s:5:"title";s:20:"Sync Acl with EonNAS";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:2;a:4:{s:3:"hid";s:18:"sync_acl_with_syno";s:5:"title";s:18:"Sync Acl with Syno";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:384:"FAQ
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1490064934;s:8:"modified";i:1502875316;}s:11:"last_change";a:8:{s:4:"date";i:1502875316;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:9:"nas:rsync";s:4:"user";s:0:"";s:3:"sum";s:6:"[FAQ] ";s:5:"extra";s:0:"";s:10:"sizechange";i:108;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:3:"FAQ";s:11:"description";a:2:{s:15:"tableofcontents";a:3:{i:0;a:4:{s:3:"hid";s:3:"faq";s:5:"title";s:3:"FAQ";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:20:"sync_acl_with_eonnas";s:5:"title";s:20:"Sync Acl with EonNAS";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:2;a:4:{s:3:"hid";s:18:"sync_acl_with_syno";s:5:"title";s:18:"Sync Acl with Syno";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:492:"FAQ
 
+
+Q1 : commands of rsync
+Ans:
+# from windows
+rsync -a --progress /cygdrive/D/temp/ admin@10.10.10.1::nocache
 
 Q : commands of solaris
 Ans:
@@ -15,4 +20,4 @@ chmod A+user:aa:read_data/write_data:allow test
 
 Q : security issue:
 Ans :
-remove root password --> passed -d root";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1490064934;s:8:"modified";i:1495617931;}s:11:"last_change";a:8:{s:4:"date";i:1495617931;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:9:"nas:rsync";s:4:"user";s:0:"";s:3:"sum";s:23:"[Sync Acl with EonNAS] ";s:5:"extra";s:0:"";s:10:"sizechange";i:188;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}
+remove root password --> passed -d root";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1490064934;s:8:"modified";i:1502875316;}s:11:"last_change";a:8:{s:4:"date";i:1502875316;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:9:"nas:rsync";s:4:"user";s:0:"";s:3:"sum";s:6:"[FAQ] ";s:5:"extra";s:0:"";s:10:"sizechange";i:108;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

@@ -142,6 +142,9 @@ except Exception as ex:
 [[https://docs.python.org/devguide/gdb.html]]
 <file>
 # Reference
+[gdb python online document]
+https://sourceware.org/gdb/onlinedocs/gdb/Breakpoints-In-Python.html#Breakpoints-In-Python
+
 [DebuggingWithGdb]
 https://wiki.python.org/moin/DebuggingWithGdb
 
@@ -149,6 +152,8 @@ https://wiki.python.org/moin/DebuggingWithGdb
 https://sourceware.org/gdb/onlinedocs/gdb/Python.html
 
 # install package
+yum install gdb python-debuginfo
+or
 yum install gdb
 yum install yum-utils
 debuginfo-install glibc
@@ -164,6 +169,37 @@ source py-fields.py
 [MAX_OUTPUT_LEN]
 1. in python-pdb.py
 2. 增加output 的長度
+
+Q4 : 可以用gdb改變程式的fd路徑嗎?
+Ans :
+
+Q3 : 如何設定break point?
+Ans : 
+1. break PyEval_EvalFrameEx if (strcmp((((PyStringObject *)(f->f_code->co_name))->ob_sval), "foo") == 0)
+2. (參考 my-gdb.py)
+(gdb) py-bk Hello
+Breakpoint 1 at 0x7fd390fefb00: file Python/ceval.c, line 759.
+(gdb) c
+Continuing.
+stop
+
+Breakpoint 1, PyEval_EvalFrameEx (
+    f=f@entry=Frame 0x7fd3913c33e0, for file test.py, line 3, in Hello (name='Jerry', dic={'test': 2, 'key': 1}),
+    throwflag=throwflag@entry=0) at Python/ceval.c:759
+759     Python/ceval.c: No such file or directory.
+(gdb)
+
+Q2 : 如何印出python的變數內容?
+Ans :
+
+Q1 : py-bt print出來的訊息會被truncated, 要如何印出完整的訊息?
+for example:
+#9 Frame 0x7f759788e578, for file /usr/local/NAS/misc/HAAgent/HAServer.py, line 2913, in main (sys=<module at remote 0x7f75ab374bb0>, server=<HAServer(setInfoLock={'NFSInfo': <thread.lock at remote 0x7f75970f5710>, 'WEBDAVInfo': <thread.lock at remote 0x7f75970f57d0>, 'FTPInfo': <thread.lock at remote 0x7f75970f5750>, 'ServiceInfo': <thread.lock at remote 0x7f75970f5870>, 'MonitorInfo': <thread.lock at remote 0x7f75970f58d0>, 'DiskInfo': <thread.lock at remote 0x7f75970f5bf0>, 'ShareInfo': <thread.lock at remote 0x7f75970f5e70>, 'MDInfo': <thread.lock at remote 0x7f7594064270>, 'AvInfo': <thread.lock at remote 0x7f75940640d0>, 'SystemInfo': <thread.lock at remote 0x7f75970f5cf0>, 'LVMInfo': <thread.lock at remote 0x7f7594064430>, 'UserInfo': <thread.lock at remote 0x7f7594064390>, 'RSYNCDInfo': <thread.lock at remote 0x7f75970f5810>, 'AFPInfo': <thread.lock at remote 0x7f75970f5d50>, 'PasswdManageInfo': <thread.lock at remote 0x7f75970f5a50>, 'NetworkInfo': <thread.lock at remote 0x7f75940642d0>, 'CIFSInfo': <th...(truncated)
+
+Ans:
+需修改python-gdb裡面的參數:
+MAX_OUTPUT_LEN=1024
+
 </file>
 ====== trace module ======
 [[https://pymotw.com/2/trace/]]

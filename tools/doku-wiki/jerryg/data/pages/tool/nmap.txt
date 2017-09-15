@@ -2,4 +2,6 @@
 # scan the machine who open port 5566
 nmap -vv -p 5566 172.27.112.0/24
 
+# scan tcp port
+nmap -sT 172.27.120.131
 </file>

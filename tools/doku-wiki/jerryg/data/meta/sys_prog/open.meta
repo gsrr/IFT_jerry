@@ -1,0 +1,19 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1502246155;s:8:"modified";i:1502246849;}s:11:"last_change";a:8:{s:4:"date";i:1502246849;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:13:"sys_prog:open";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:335;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:503:"-- open and possibly create a file
+
+
+int open(const char *pathname, int flags, mode_t mode);
+-- flags : access mode for that file.
+-- mode : The mode argument specifies the file mode bits be applied when a new file is created.
+1. mode will be ignored if the file is not created.
+
+
+The open file description records the file offset and the file status flags
+-- Q1 : how to get offset from fd?
+-- Q2 : how to get flags from fd?
+
+1. O_CREAT
+
+if file is not exist:
+    create the file.
+else:
+    if O_EXC…";}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1502246155;s:8:"modified";i:1502246849;}s:11:"last_change";a:8:{s:4:"date";i:1502246849;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:13:"sys_prog:open";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:335;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

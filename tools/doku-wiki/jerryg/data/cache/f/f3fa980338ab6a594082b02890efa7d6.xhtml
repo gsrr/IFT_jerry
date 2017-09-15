@@ -20,7 +20,10 @@ http.proxy=http://userId:pwd%40123@ipaddress:port
 <!-- EDIT1 SECTION "config related" [1-543] -->
 <h1 class="sectionedit2" id="merge">Merge</h1>
 <div class="level1">
-<pre class="file"># merge with commits
+<pre class="file"># cherry-pick with new commit
+git cherry-pick -n XXXX
+
+# merge with commits
 git checkout master
 git merge hotfix # it will merge hotfix branch into master branch with commits.
 
@@ -30,7 +33,7 @@ git merge hotfix --squash
 </pre>
 
 </div>
-<!-- EDIT2 SECTION "Merge" [544-813] -->
+<!-- EDIT2 SECTION "Merge" [544-868] -->
 <h1 class="sectionedit3" id="difference">Difference</h1>
 <div class="level1">
 <pre class="file"># Difference in commit 
@@ -53,7 +56,7 @@ git diff master..topic will show us the difference between X and T
 git diff master...topic will show us the difference between B and T</pre>
 
 </div>
-<!-- EDIT3 SECTION "Difference" [814-1201] -->
+<!-- EDIT3 SECTION "Difference" [869-1256] -->
 <h1 class="sectionedit4" id="branch">Branch</h1>
 <div class="level1">
 <pre class="file"># checkout a remote branch
@@ -73,7 +76,7 @@ git branch -a
 </pre>
 
 </div>
-<!-- EDIT4 SECTION "Branch" [1202-1575] -->
+<!-- EDIT4 SECTION "Branch" [1257-1630] -->
 <h1 class="sectionedit5" id="recover">Recover</h1>
 <div class="level1">
 <pre class="file"># Reset all files in current branch
@@ -96,4 +99,4 @@ git push</pre>
 <pre class="file">git reset --hard 9bc9775a51432ae4a0ecc57423dd9791a22ea9c0</pre>
 
 </div>
-<!-- EDIT5 SECTION "Recover" [1576-] -->
+<!-- EDIT5 SECTION "Recover" [1631-] -->

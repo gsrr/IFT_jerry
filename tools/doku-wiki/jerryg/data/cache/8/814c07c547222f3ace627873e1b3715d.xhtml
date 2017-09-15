@@ -1,0 +1,28 @@
+
+<h1 class="sectionedit1" id="fork_and_zombie">fork and zombie</h1>
+<div class="level1">
+<pre class="file">Q4 : Difference between System() and fork()?
+Ans : 
+1. System等同於fork + exec + waitpid
+2. 執行System時, SIGCHILD會被阻擋, 但SIGINT(Ctrl-C) and SIGQUIT會被忽略.
+
+Q3 : How to avoid zombie?
+Ans :
+1. Add waitpid() somewhere in the parent process
+2. Perform double fork()
+3. Explicitly ignore SIGCHLD signal in parent.
+(http://low-understated.blogspot.tw/2009/08/program-ex1-kill-prog1prog1-ps-ef-prog1.html)
+
+Q2 : process table?
+Ans :
+ps command
+
+Q1 : What is zombie process?
+Ans1 :
+1. A zombie process or defunct process is a process that has completed execution (via the exit system call) but still has an entry in the process table.
+
+2. It is a process in the &quot;Terminated state&quot;. This occurs for child processes, where the entry is still needed to allow the parent process to read its child&#039;s exit status.
+
+3. Once the exit status is read via the wait system call, the zombie&#039;s entry is removed from the process table and it is said to be &quot;reaped&quot;.</pre>
+
+</div>

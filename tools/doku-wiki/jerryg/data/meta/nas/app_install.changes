@@ -60,3 +60,7 @@
 1500960457	172.27.12.71	E	nas:app_install		[nvr command] 		116
 1500960502	172.27.12.71	E	nas:app_install		[nvr command] 		219
 1500965161	172.27.12.71	E	nas:app_install		[nvr command] 		55
+1503886891	172.27.12.71	E	nas:app_install		[docker command] 		65
+1503887179	172.27.12.71	E	nas:app_install		[docker command] 		33
+1503887615	172.27.12.71	E	nas:app_install		[docker command] 		89
+1503899951	172.27.12.71	E	nas:app_install		[docker command] 		149
