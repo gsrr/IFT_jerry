@@ -1,50 +1,26 @@
-1501224225	172.27.12.71	E	python:memory				84
-1501234045	172.27.12.71	E	python:memory				89
-1501234232	172.27.12.71	E	python:memory				115
-1501481177	172.27.12.71	E	tool:git				-4
-1501481275	172.27.12.71	E	tool:git		[Difference] 		-3
-1501482495	172.27.12.71	E	tool:git		[Difference] 		298
-1501552768	172.27.12.71	E	tool:git				270
-1501552875	172.27.12.71	E	tool:git		[list remote branch] 		106
-1501552906	172.27.12.71	E	tool:git				-66
-1501552961	172.27.12.71	E	tool:git				-30
-1501554359	172.27.12.71	E	tool:git		[overwrite local files] 		41
-1501554388	172.27.12.71	E	tool:git		[Recover] 		30
-1501554508	172.27.12.71	E	tool:git		[Recover] 		52
-1501554765	172.27.12.71	E	tool:git		[Branch] 		46
-1501566748	172.27.12.71	E	tool:git		[Recover] 		84
-1501566766	172.27.12.71	E	tool:git				-129
-1501645670	172.27.12.71	C	rsync:server		created		139
-1501645754	172.27.12.71	E	rsync:server				86
-1501645841	172.27.12.71	E	rsync:server				66
-1501646226	172.27.12.71	E	rsync:server				47
-1501646335	172.27.12.71	E	rsync:server				22
-1501654682	172.27.12.71	E	rsync:server				101
-1501655332	172.27.12.71	E	rsync:server				24
-1501658773	172.27.12.71	E	rsync:server				28
-1501660649	172.27.12.71	E	rsync:server				14
-1501660697	172.27.12.71	E	rsync:server				45
-1501661460	172.27.12.71	E	rsync:server				93
-1501663045	172.27.12.71	E	rsync:server				132
-1501663397	172.27.12.71	E	rsync:server				-1
-1501668751	172.27.12.71	E	rsync:server				15
-1501668790	172.27.12.71	E	rsync:server				12
-1501671077	172.27.12.71	E	rsync:server				49
-1501672055	172.27.12.71	E	rsync:server				13
-1501672259	172.27.12.71	E	rsync:server				66
-1501672500	172.27.12.71	E	rsync:server				32
-1501672610	172.27.12.71	E	rsync:server				65
-1501672674	172.27.12.71	E	rsync:server				27
-1501738842	172.27.12.71	E	rsync:server				134
-1501740538	172.27.12.71	E	rsync:server				649
-1501747909	172.27.12.71	E	rsync:server				639
-1501756221	172.27.12.71	E	rsync:server				49
-1501827363	172.27.12.71	E	rsync:server				38
-1501828549	172.27.12.71	C	linux:uid_and_euid		created		1524
-1501829799	172.27.12.71	E	rsync:server		[flow of source code] 		85
-1501829816	172.27.12.71	E	rsync:server		[flow of source code] 		1
-1501830366	172.27.12.71	E	rsync:server		[flow of source code] 		541
-1501835481	172.27.12.71	C	ldap:kerberos		created		234
-1501837304	172.27.12.71	E	rsync:server		[flow of source code] 		121
-1501838782	172.27.12.71	C	linux:sys_prog:readlink		created		991
-1501840605	172.27.12.71	E	linux:sys_prog:readlink				844
+1504306918	10.141.141.101	E	linux:process				78
+1504522916	172.27.12.71	E	rsync:server				232
+1504590402	172.27.12.71	E	rsync:server				150
+1504601405	172.27.12.71	E	rsync:server		[Rsync mechanism] 		889
+1504604719	172.27.12.71	E	rsync:server		[Rsync mechanism] 		36
+1504604976	172.27.12.71	E	rsync:server		[Rsync mechanism] 		353
+1504609545	172.27.12.71	E	rsync:server		[Rsync mechanism] 		342
+1504780844	172.27.12.71	E	samba:ad				942
+1505195674	172.27.12.71	C	english:words		created		379
+1505204553	172.27.12.71	E	rsync:server		[Rsync mechanism] 		384
+1505204618	172.27.12.71	E	rsync:server		[Rsync mechanism] 		136
+1505205011	172.27.12.71	E	rsync:server		[Rsync mechanism] 		153
+1505208704	172.27.12.71	E	rsync:server				574
+1505208944	172.27.12.71	E	rsync:server		[Rsync mechanism] 		59
+1505209877	172.27.12.71	E	rsync:server		[Rsync mechanism] 		311
+1505211592	172.27.12.71	E	rsync:server				673
+1505211627	172.27.12.71	E	rsync:server		[Rsync mechanism] 		1
+1505368040	172.27.12.71	C	linux:ascii_art		created		218
+1505370254	172.27.12.71	E	linux:ascii_art				18
+1505382140	172.27.12.71	E	linux:ascii_art				58
+1505461490	172.27.12.71	E	rsync:server				164
+1505463063	172.27.12.71	E	rsync:server				776
+1505463123	172.27.12.71	E	rsync:server				14
+1505463402	172.27.12.71	E	rsync:server				782
+1505463593	172.27.12.71	E	rsync:server				785
+1505463943	172.27.12.71	E	rsync:server				772

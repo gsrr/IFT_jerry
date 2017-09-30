@@ -104,3 +104,14 @@ rsync:server
 linux:uid_and_euid
 ldap:kerberos
 linux:sys_prog:readlink
+sys_prog:yas3fs
+sys_prog:open
+sys_prog:fork
+linux:monitor
+windows:backup_tool
+linux:setfacl
+linux:time
+linux:bash
+linux:process
+english:words
+linux:ascii_art

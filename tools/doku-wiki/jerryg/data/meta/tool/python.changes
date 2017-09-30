@@ -19,3 +19,11 @@
 1494320233	172.27.12.71	E	tool:python				536
 1494320865	172.27.12.71	E	tool:python				2014
 1494322807	172.27.12.71	E	tool:python		[socket exception] 		423
+1504167137	172.27.12.71	E	tool:python		[debug with gdb] 		36
+1504169198	172.27.12.71	E	tool:python		[debug with gdb] 		1145
+1504169693	172.27.12.71	E	tool:python		[debug with gdb] 		55
+1504169727	172.27.12.71	E	tool:python		[debug with gdb] 		46
+1504197986	10.141.141.101	E	tool:python		[debug with gdb] 		141
+1504201749	10.141.141.101	E	tool:python		[debug with gdb] 		392
+1504202025	10.141.141.101	E	tool:python		[debug with gdb] 		121
+1504306717	10.141.141.101	E	tool:python		[debug with gdb] 		52

@@ -1,0 +1,7 @@
+====== Basic of Process ======
+
+<file>
+Q1 : process 包含了哪些資訊?
+Ans : 
+1. open fd of a process : ls -l /proc/<pid>/fd
+</file>

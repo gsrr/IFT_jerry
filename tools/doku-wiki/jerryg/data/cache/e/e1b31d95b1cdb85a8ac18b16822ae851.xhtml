@@ -6,9 +6,38 @@ https://wiki.samba.org/index.php/Setting_up_Samba_as_a_Domain_Member#Testing_the
 
 </div>
 <!-- EDIT1 SECTION "Reference" [1-181] -->
-<h1 class="sectionedit2" id="event_and_error_message">Event and Error message</h1>
+<h1 class="sectionedit2" id="login_samba_server_by_kerberos_auth">login samba server by kerberos auth</h1>
 <div class="level1">
-<div class="table sectionedit3"><table class="inline">
+<pre class="file">這個問題大概有兩個面向:
+1. samba service
+1.1 需使用netbios進行login(ip 與netbios的行為不一樣)
+ip 會預設走ntlm的方式, netbios則是走kerberos的方式.
+
+1.2 可以使用smbclient進行測試:
+(https://cwiki.apache.org/confluence/display/DIRxINTEROP/Using+Kerberos+Credentials+with+smbclient)
+
+a. 先join AD
+b. 使用kinit跟AD要一個key : kinit administrator@WINADNTP.EVT
+(或使用wbinfo -K administrator%ABcd_1234)
+c. smbclient -k //nas_8632830_a/AA -R host -U administrator -d 4
+
+
+2. other service (透過pam認證, 像sftp, ftp...etc)
+2.1 需要先將/etc/security/pam_winbind.conf裡面的kerberos設定enable
+(https://wiki.samba.org/index.php/PAM_Kerberos_Authentication)
+主要有兩個東西:
+krb5_auth = yes
+krb5_ccache_type = FILE
+
+2.2 當user登入時,  就會在tmp底下產生一個該user的key file, 像是/tmp/krb5cc_11001703
+
+</pre>
+
+</div>
+<!-- EDIT2 SECTION "login samba server by kerberos auth" [182-1123] -->
+<h1 class="sectionedit3" id="event_and_error_message">Event and Error message</h1>
+<div class="level1">
+<div class="table sectionedit4"><table class="inline">
 	<tr class="row0">
 		<td class="col0"> </td><td class="col1"> </td><td class="col2">message</td><td class="col3">event</td><td class="col4"> </td>
 	</tr>
@@ -37,10 +66,10 @@ https://wiki.samba.org/index.php/Setting_up_Samba_as_a_Domain_Member#Testing_the
 		<td class="col0">LDAP</td><td class="col1"> Base Dn error (No such object)</td><td class="col2"> X </td><td class="col3"> X </td><td class="col4"> </td>
 	</tr>
 </table></div>
-<!-- EDIT3 TABLE [220-959] -->
+<!-- EDIT4 TABLE [1162-1901] -->
 </div>
-<!-- EDIT2 SECTION "Event and Error message" [182-964] -->
-<h1 class="sectionedit4" id="acl">acl</h1>
+<!-- EDIT3 SECTION "Event and Error message" [1124-1906] -->
+<h1 class="sectionedit5" id="acl">acl</h1>
 <div class="level1">
 <pre class="file"># user join group after login
 ## gs-join group-ad
@@ -126,8 +155,8 @@ Summary:
 </pre>
 
 </div>
-<!-- EDIT4 SECTION "acl" [965-3413] -->
-<h1 class="sectionedit5" id="ad_take_over">AD take over</h1>
+<!-- EDIT5 SECTION "acl" [1907-4355] -->
+<h1 class="sectionedit6" id="ad_take_over">AD take over</h1>
 <div class="level1">
 <pre class="file">172.27.120.180 WIN-2012R2ADC.winadntp.evt
 172.27.120.179 WIN-2012R2ADNTP.winadntp.evt
@@ -158,8 +187,8 @@ test scope:
 </pre>
 
 </div>
-<!-- EDIT5 SECTION "AD take over" [3414-5131] -->
-<h1 class="sectionedit6" id="ad_related_commands">AD related commands</h1>
+<!-- EDIT6 SECTION "AD take over" [4356-6073] -->
+<h1 class="sectionedit7" id="ad_related_commands">AD related commands</h1>
 <div class="level1">
 <pre class="file"># smbd
 1. port 139, port 445
@@ -187,8 +216,8 @@ net ads join -S WIN-2012R2ADC.winadntp.evt -U administrator%ABcd_1234
 net ads leave -S WIN-2012R2ADC.winadntp.evt -U administrator%ABcd_1234</pre>
 
 </div>
-<!-- EDIT6 SECTION "AD related commands" [5132-5760] -->
-<h1 class="sectionedit7" id="error_message">Error Message</h1>
+<!-- EDIT7 SECTION "AD related commands" [6074-6702] -->
+<h1 class="sectionedit8" id="error_message">Error Message</h1>
 <div class="level1">
 <pre class="file"># can not get user information (MIS , England)
 getent group : 3m40 + 3m37
@@ -215,4 +244,4 @@ joinAD result: {&#039;status&#039;: 71, &#039;err&#039;: &#039;&#039;, &#039;out
 </pre>
 
 </div>
-<!-- EDIT7 SECTION "Error Message" [5761-] -->
+<!-- EDIT8 SECTION "Error Message" [6703-] -->

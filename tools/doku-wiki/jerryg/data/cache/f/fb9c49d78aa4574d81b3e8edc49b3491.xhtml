@@ -24,6 +24,23 @@ https://www.phpini.com/linux/rhel-centos-7-install-docker
 # basic (Docker —— 從入門到實踐)
 https://www.gitbook.com/book/philipzheng/docker_practice/details
 
+# start a docker container
+1. docker start [container-id]
+or
+
+# running command in docker
+docker exec -it [container-id] bash -c &quot;bash /root/nwdt.sh&quot;
+
+# remove a docker container
+1. docker stop [container-id]
+2. docker rm [container-id]
+
+# Enter a running docker
+docker exec -it [container-id] bash
+
+# docker show images
+docker images
+
 # docker process
 docker ps
 
@@ -31,7 +48,7 @@ docker ps
 docker attach 20622f7359cf</pre>
 
 </div>
-<!-- EDIT2 SECTION "docker command" [704-1112] -->
+<!-- EDIT2 SECTION "docker command" [704-1448] -->
 <h1 class="sectionedit3" id="container_api">container api</h1>
 <div class="level1">
 <pre class="file">[Problems]
@@ -120,7 +137,7 @@ In [6]: appoperator.docker_using_loopdev()
 Out[6]: True</pre>
 
 </div>
-<!-- EDIT3 SECTION "container api" [1113-4845] -->
+<!-- EDIT3 SECTION "container api" [1449-5181] -->
 <h1 class="sectionedit4" id="related_commands">Related commands</h1>
 <div class="level1">
 <pre class="file"># disk
@@ -153,7 +170,7 @@ def destroy_docker(HA):
 </pre>
 
 </div>
-<!-- EDIT4 SECTION "Related commands" [4846-5709] -->
+<!-- EDIT4 SECTION "Related commands" [5182-6045] -->
 <h1 class="sectionedit5" id="waiting_to_do">waiting to do</h1>
 <div class="level1">
 <pre class="file">App docker volume init  ---&gt; Michael , 4/14
@@ -230,7 +247,7 @@ Ans:
 這個和前一個問題很類似, 我想還是先發event, 另外再考慮在GUI加recover的機制.</pre>
 
 </div>
-<!-- EDIT5 SECTION "waiting to do" [5710-8359] -->
+<!-- EDIT5 SECTION "waiting to do" [6046-8695] -->
 <h1 class="sectionedit6" id="nascmd_-_app">nascmd - app</h1>
 <div class="level1">
 <pre class="file"># upload package --&gt; follow existed method
@@ -290,4 +307,4 @@ sdf                                                                             
 </p>
 
 </div>
-<!-- EDIT6 SECTION "nascmd - app" [8360-] -->
+<!-- EDIT6 SECTION "nascmd - app" [8696-] -->

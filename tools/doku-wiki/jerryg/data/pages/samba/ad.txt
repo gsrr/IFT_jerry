@@ -4,6 +4,34 @@
 https://wiki.samba.org/index.php/Setting_up_Samba_as_a_Domain_Member#Testing_the_Winbindd_Connectivity
 </file>
 
+====== login samba server by kerberos auth ======
+<file>
+這個問題大概有兩個面向:
+1. samba service
+1.1 需使用netbios進行login(ip 與netbios的行為不一樣)
+ip 會預設走ntlm的方式, netbios則是走kerberos的方式.
+
+1.2 可以使用smbclient進行測試:
+(https://cwiki.apache.org/confluence/display/DIRxINTEROP/Using+Kerberos+Credentials+with+smbclient)
+
+a. 先join AD
+b. 使用kinit跟AD要一個key : kinit administrator@WINADNTP.EVT
+(或使用wbinfo -K administrator%ABcd_1234)
+c. smbclient -k //nas_8632830_a/AA -R host -U administrator -d 4
+
+
+2. other service (透過pam認證, 像sftp, ftp...etc)
+2.1 需要先將/etc/security/pam_winbind.conf裡面的kerberos設定enable
+(https://wiki.samba.org/index.php/PAM_Kerberos_Authentication)
+主要有兩個東西:
+krb5_auth = yes
+krb5_ccache_type = FILE
+
+2.2 當user登入時,  就會在tmp底下產生一個該user的key file, 像是/tmp/krb5cc_11001703
+
+
+</file>
+
 ====== Event and Error message ======
 | | |message|event| |
 |AD|Password / Accout Error (Preauthentication failed)| 使用者名稱或密碼不正確。| X | |

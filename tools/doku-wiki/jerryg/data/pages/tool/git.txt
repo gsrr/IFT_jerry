@@ -17,6 +17,9 @@ http.proxy=http://userId:pwd%40123@ipaddress:port
 </file>
 ====== Merge ======
 <file>
+# cherry-pick with new commit
+git cherry-pick -n XXXX
+
 # merge with commits
 git checkout master
 git merge hotfix # it will merge hotfix branch into master branch with commits.

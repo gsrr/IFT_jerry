@@ -10,7 +10,7 @@ a:37:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"he
 
 =>> nvr enable -z a@0
 {"cliCode": [{"Return": "0x0000", "CLI": "Successful"}], "returnCode": [], "data": []}
-";i:1;N;i:2;N;}i:2;i:32;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:704;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"docker command";i:1;i:1;i:2;i:704;}i:2;i:704;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:704;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:365:"
+";i:1;N;i:2;N;}i:2;i:32;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:704;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"docker command";i:1;i:1;i:2;i:704;}i:2;i:704;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:704;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:701:"
 # Docker installation (Centos)
 https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-centos-7
 https://www.phpini.com/linux/rhel-centos-7-install-docker
@@ -18,12 +18,29 @@ https://www.phpini.com/linux/rhel-centos-7-install-docker
 # basic (Docker —— 從入門到實踐)
 https://www.gitbook.com/book/philipzheng/docker_practice/details
 
+# start a docker container
+1. docker start [container-id]
+or
+
+# running command in docker
+docker exec -it [container-id] bash -c "bash /root/nwdt.sh"
+
+# remove a docker container
+1. docker stop [container-id]
+2. docker rm [container-id]
+
+# Enter a running docker
+docker exec -it [container-id] bash
+
+# docker show images
+docker images
+
 # docker process
 docker ps
 
 # attach container
 docker attach 20622f7359cf
-";i:1;N;i:2;N;}i:2;i:738;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:1113;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:13:"container api";i:1;i:1;i:2;i:1113;}i:2;i:1113;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1113;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:3690:"
+";i:1;N;i:2;N;}i:2;i:738;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:1449;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:13:"container api";i:1;i:1;i:2;i:1449;}i:2;i:1449;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1449;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:3690:"
 [Problems]
 1. remove docker meta 沒有return value
 2. impact if docker load twice, 不行, failover的時候只能做一次.
@@ -108,7 +125,7 @@ loop1                                                                           
 
 In [6]: appoperator.docker_using_loopdev()
 Out[6]: True
-";i:1;N;i:2;N;}i:2;i:1146;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:4846;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:16:"Related commands";i:1;i:1;i:2;i:4846;}i:2;i:4846;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:4846;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:819:"
+";i:1;N;i:2;N;}i:2;i:1482;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:5182;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:16:"Related commands";i:1;i:1;i:2;i:5182;}i:2;i:5182;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:5182;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:819:"
 # disk
 python testHA.py 0 --> show disk information
 
@@ -137,7 +154,7 @@ def destroy_docker(HA):
         ret = HA.callGetLocalFunc('folderOperation', paras)
         print ret
 
-";i:1;N;i:2;N;}i:2;i:4882;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:5710;}i:17;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:13:"waiting to do";i:1;i:1;i:2;i:5710;}i:2;i:5710;}i:18;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:5710;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:448:"
+";i:1;N;i:2;N;}i:2;i:5218;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:6046;}i:17;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:13:"waiting to do";i:1;i:1;i:2;i:6046;}i:2;i:6046;}i:18;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:6046;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:448:"
 App docker volume init  ---> Michael , 4/14
 --> done in 2017/04/18 
 --> Integrate with app cli --> JerryCheng, 4/19
@@ -153,7 +170,7 @@ container-nvr (docker):
 1. timezone問題 : map /etc/localtime 給 container使用.
 2. container-net mode : host mode , nat mode.
 3. 
-";i:1;N;i:2;N;}i:2;i:5743;}i:20;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:5743;}i:21;a:3:{i:0;s:11:"strong_open";i:1;a:0:{}i:2;i:6202;}i:22;a:3:{i:0;s:7:"acronym";i:1;a:1:{i:0;s:4:"spec";}i:2;i:6204;}i:23;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:6:" issue";}i:2;i:6208;}i:24;a:3:{i:0;s:12:"strong_close";i:1;a:0:{}i:2;i:6214;}i:25;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:0:"";}i:2;i:6216;}i:26;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:6222;}i:27;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2128:"
+";i:1;N;i:2;N;}i:2;i:6079;}i:20;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:6079;}i:21;a:3:{i:0;s:11:"strong_open";i:1;a:0:{}i:2;i:6538;}i:22;a:3:{i:0;s:7:"acronym";i:1;a:1:{i:0;s:4:"spec";}i:2;i:6540;}i:23;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:6:" issue";}i:2;i:6544;}i:24;a:3:{i:0;s:12:"strong_close";i:1;a:0:{}i:2;i:6550;}i:25;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:0:"";}i:2;i:6552;}i:26;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:6558;}i:27;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2128:"
 #config_nvr
 mount_point = /mp/E/config_nvr
 
@@ -207,7 +224,7 @@ Event是一定要發的, 只是要不要自動restart container這件事要考�
 2. docker volume fail --> Reinstall package and Restart container
 Ans:
 這個和前一個問題很類似, 我想還是先發event, 另外再考慮在GUI加recover的機制.
-";i:1;N;i:2;N;}i:2;i:6222;}i:28;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:8360;}i:29;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"nascmd - app";i:1;i:1;i:2;i:8360;}i:2;i:8360;}i:30;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:8360;}i:31;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:3268:"
+";i:1;N;i:2;N;}i:2;i:6558;}i:28;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:8696;}i:29;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"nascmd - app";i:1;i:1;i:2;i:8696;}i:2;i:8696;}i:30;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:8696;}i:31;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:3268:"
 # upload package --> follow existed method
 
 
@@ -259,7 +276,7 @@ sdf                                                                             
 
 =>> app list -z a@0
 {"cliCode": [{"Return": "0x0000", "CLI": "Successful"}], "returnCode": [], "data": [{"installed": true, "version": "1.0", "config": {"enable": "True", "name": "nvr", "ctrl": "A", "package": "nvr-1.0-1.x86_64.rpm", "version": "1.0", "docker_vol": "/Pool-1/f1/rpms", "folder": "/Pool-1/f1"}, "name": "nvr", "package": "nvr-1.0-1.x86_64.rpm"}]}
-";i:1;N;i:2;N;}i:2;i:8392;}i:32;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:8392;}i:33;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:8:"graphviz";i:1;a:6:{s:5:"width";s:3:"800";s:6:"height";s:3:"400";s:6:"layout";s:3:"dot";s:5:"align";s:5:"right";s:7:"version";s:10:"2016-02-03";s:3:"md5";s:32:"7f68a5aa1a195c0c481f90b3dcb42ff4";}i:2;i:5;i:3;s:1657:"<graphviz dot right 800x400>
+";i:1;N;i:2;N;}i:2;i:8728;}i:32;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:8728;}i:33;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:8:"graphviz";i:1;a:6:{s:5:"width";s:3:"800";s:6:"height";s:3:"400";s:6:"layout";s:3:"dot";s:5:"align";s:5:"right";s:7:"version";s:10:"2016-02-03";s:3:"md5";s:32:"7f68a5aa1a195c0c481f90b3dcb42ff4";}i:2;i:5;i:3;s:1657:"<graphviz dot right 800x400>
 digraph ATN {
 rankdir=LR;
 user[fontsize=11, label="user", shape=rectangle, fixedsize=false];
@@ -287,4 +304,4 @@ uninstall-> remove_package[fontname="Times-Italic", label=""];
 remove_package-> remove_docker_process[fontname="Times-Italic", label=""];
 
 }
-</graphviz>";}i:2;i:11670;}i:34;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:13327;}i:35;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:13331;}i:36;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:13331;}}
+</graphviz>";}i:2;i:12006;}i:34;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:13663;}i:35;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:13667;}i:36;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:13667;}}

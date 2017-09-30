@@ -129,8 +129,11 @@ except Exception as ex:
 >>> struct.unpack("I8sI",s2)
 (12, 'Eononest', 11)
 (The packet should be padded if the char array is not divided by 2)
-";i:1;N;i:2;N;}i:2;i:3059;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3546;}i:21;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"debug with gdb";i:1;i:1;i:2;i:3546;}i:2;i:3546;}i:22;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3546;}i:23;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:3546;}i:24;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:41:"https://docs.python.org/devguide/gdb.html";i:1;N;}i:2;i:3575;}i:25;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:0:"";}i:2;i:3620;}i:26;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:3626;}i:27;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:512:"
+";i:1;N;i:2;N;}i:2;i:3059;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3546;}i:21;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"debug with gdb";i:1;i:1;i:2;i:3546;}i:2;i:3546;}i:22;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3546;}i:23;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:3546;}i:24;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:41:"https://docs.python.org/devguide/gdb.html";i:1;N;}i:2;i:3575;}i:25;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:0:"";}i:2;i:3620;}i:26;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:3626;}i:27;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2500:"
 # Reference
+[gdb python online document]
+https://sourceware.org/gdb/onlinedocs/gdb/Breakpoints-In-Python.html#Breakpoints-In-Python
+
 [DebuggingWithGdb]
 https://wiki.python.org/moin/DebuggingWithGdb
 
@@ -138,6 +141,8 @@ https://wiki.python.org/moin/DebuggingWithGdb
 https://sourceware.org/gdb/onlinedocs/gdb/Python.html
 
 # install package
+yum install gdb python-debuginfo
+or
 yum install gdb
 yum install yum-utils
 debuginfo-install glibc
@@ -153,11 +158,42 @@ source py-fields.py
 [MAX_OUTPUT_LEN]
 1. in python-pdb.py
 2. 增加output 的長度
-";i:1;N;i:2;N;}i:2;i:3626;}i:28;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:4147;}i:29;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"trace module";i:1;i:1;i:2;i:4147;}i:2;i:4147;}i:30;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:4147;}i:31;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:4147;}i:32;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:27:"https://pymotw.com/2/trace/";i:1;N;}i:2;i:4174;}i:33;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:0:"";}i:2;i:4205;}i:34;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:4211;}i:35;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:95:"
+
+Q4 : 可以用gdb改變程式的fd路徑嗎?
+Ans :
+
+Q3 : 如何設定break point?
+Ans : 
+1. break PyEval_EvalFrameEx if (strcmp((((PyStringObject *)(f->f_code->co_name))->ob_sval), "foo") == 0)
+2. (參考 my-gdb.py)
+(gdb) py-bk Hello
+Breakpoint 1 at 0x7fd390fefb00: file Python/ceval.c, line 759.
+(gdb) c
+Continuing.
+stop
+
+Breakpoint 1, PyEval_EvalFrameEx (
+    f=f@entry=Frame 0x7fd3913c33e0, for file test.py, line 3, in Hello (name='Jerry', dic={'test': 2, 'key': 1}),
+    throwflag=throwflag@entry=0) at Python/ceval.c:759
+759     Python/ceval.c: No such file or directory.
+(gdb)
+
+Q2 : 如何印出python的變數內容?
+Ans :
+
+Q1 : py-bt print出來的訊息會被truncated, 要如何印出完整的訊息?
+for example:
+#9 Frame 0x7f759788e578, for file /usr/local/NAS/misc/HAAgent/HAServer.py, line 2913, in main (sys=<module at remote 0x7f75ab374bb0>, server=<HAServer(setInfoLock={'NFSInfo': <thread.lock at remote 0x7f75970f5710>, 'WEBDAVInfo': <thread.lock at remote 0x7f75970f57d0>, 'FTPInfo': <thread.lock at remote 0x7f75970f5750>, 'ServiceInfo': <thread.lock at remote 0x7f75970f5870>, 'MonitorInfo': <thread.lock at remote 0x7f75970f58d0>, 'DiskInfo': <thread.lock at remote 0x7f75970f5bf0>, 'ShareInfo': <thread.lock at remote 0x7f75970f5e70>, 'MDInfo': <thread.lock at remote 0x7f7594064270>, 'AvInfo': <thread.lock at remote 0x7f75940640d0>, 'SystemInfo': <thread.lock at remote 0x7f75970f5cf0>, 'LVMInfo': <thread.lock at remote 0x7f7594064430>, 'UserInfo': <thread.lock at remote 0x7f7594064390>, 'RSYNCDInfo': <thread.lock at remote 0x7f75970f5810>, 'AFPInfo': <thread.lock at remote 0x7f75970f5d50>, 'PasswdManageInfo': <thread.lock at remote 0x7f75970f5a50>, 'NetworkInfo': <thread.lock at remote 0x7f75940642d0>, 'CIFSInfo': <th...(truncated)
+
+Ans:
+需修改python-gdb裡面的參數:
+MAX_OUTPUT_LEN=1024
+
+";i:1;N;i:2;N;}i:2;i:3626;}i:28;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:6135;}i:29;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"trace module";i:1;i:1;i:2;i:6135;}i:2;i:6135;}i:30;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:6135;}i:31;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:6135;}i:32;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:27:"https://pymotw.com/2/trace/";i:1;N;}i:2;i:6162;}i:33;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:0:"";}i:2;i:6193;}i:34;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:6199;}i:35;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:95:"
 # For a simple list of the functions called
 python -m trace --listfuncs trace_example/main.py
-";i:1;N;i:2;N;}i:2;i:4211;}i:36;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:4315;}i:37;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:15:"object analysis";i:1;i:1;i:2;i:4315;}i:2;i:4315;}i:38;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:4315;}i:39;a:3:{i:0;s:10:"listu_open";i:1;a:0:{}i:2;i:4343;}i:40;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:4343;}i:41;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:4343;}i:42;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:43:" vars(object) , but not all objects have a ";}i:2;i:4347;}i:43;a:3:{i:0;s:14:"underline_open";i:1;a:0:{}i:2;i:4390;}i:44;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:4:"dict";}i:2;i:4392;}i:45;a:3:{i:0;s:15:"underline_close";i:1;a:0:{}i:2;i:4396;}i:46;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:7:" member";}i:2;i:4398;}i:47;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:4405;}i:48;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:4405;}i:49;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:4405;}i:50;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:4405;}i:51;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:12:" dir(object)";}i:2;i:4409;}i:52;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:4421;}i:53;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:4421;}i:54;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:4421;}i:55;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:4421;}i:56;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:10:" getattr()";}i:2;i:4425;}i:57;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:4435;}i:58;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:4435;}i:59;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:4435;}i:60;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:4435;}i:61;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:7:" type()";}i:2;i:4439;}i:62;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:4446;}i:63;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:4446;}i:64;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:4446;}i:65;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:4446;}i:66;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:" ";}i:2;i:4450;}i:67;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:4451;}i:68;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:4451;}i:69;a:3:{i:0;s:11:"listu_close";i:1;a:0:{}i:2;i:4451;}i:70;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:93:"
+";i:1;N;i:2;N;}i:2;i:6199;}i:36;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:6303;}i:37;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:15:"object analysis";i:1;i:1;i:2;i:6303;}i:2;i:6303;}i:38;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:6303;}i:39;a:3:{i:0;s:10:"listu_open";i:1;a:0:{}i:2;i:6331;}i:40;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6331;}i:41;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6331;}i:42;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:43:" vars(object) , but not all objects have a ";}i:2;i:6335;}i:43;a:3:{i:0;s:14:"underline_open";i:1;a:0:{}i:2;i:6378;}i:44;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:4:"dict";}i:2;i:6380;}i:45;a:3:{i:0;s:15:"underline_close";i:1;a:0:{}i:2;i:6384;}i:46;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:7:" member";}i:2;i:6386;}i:47;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6393;}i:48;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6393;}i:49;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6393;}i:50;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6393;}i:51;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:12:" dir(object)";}i:2;i:6397;}i:52;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6409;}i:53;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6409;}i:54;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6409;}i:55;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6409;}i:56;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:10:" getattr()";}i:2;i:6413;}i:57;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6423;}i:58;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6423;}i:59;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6423;}i:60;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6423;}i:61;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:7:" type()";}i:2;i:6427;}i:62;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6434;}i:63;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6434;}i:64;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6434;}i:65;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6434;}i:66;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:" ";}i:2;i:6438;}i:67;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6439;}i:68;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6439;}i:69;a:3:{i:0;s:11:"listu_close";i:1;a:0:{}i:2;i:6439;}i:70;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:93:"
 def dump(obj):
   for attr in dir(obj):
     print "obj.%s = %s" % (attr, getattr(obj, attr))
-";i:1;N;i:2;N;}i:2;i:4457;}i:71;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:4558;}i:72;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:4558;}}
+";i:1;N;i:2;N;}i:2;i:6445;}i:71;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:6546;}i:72;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:6546;}}

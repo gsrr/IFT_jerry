@@ -22,6 +22,23 @@ https://www.phpini.com/linux/rhel-centos-7-install-docker
 # basic (Docker —— 從入門到實踐)
 https://www.gitbook.com/book/philipzheng/docker_practice/details
 
+# start a docker container
+1. docker start [container-id]
+or
+
+# running command in docker
+docker exec -it [container-id] bash -c "bash /root/nwdt.sh"
+
+# remove a docker container
+1. docker stop [container-id]
+2. docker rm [container-id]
+
+# Enter a running docker
+docker exec -it [container-id] bash
+
+# docker show images
+docker images
+
 # docker process
 docker ps
 
