@@ -1,0 +1,5 @@
+<file>
+Q1 : pthread 排班機制?
+Ans :
+
+</file>

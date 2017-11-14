@@ -1,4 +1,61 @@
-a:21:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:3:"FAQ";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:488:"
+a:21:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:3:"FAQ";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2047:"
+Q3 : rsync備份過去, 為什麼mask都變成空的?
+Ans :
+因為rsync 會一邊建空資料夾, 一邊進行備份, 而新建的空資料夾其mask會是空的.
+
+
+[root@nas_524297_a 1000w-5k]# getfacl 10
+# file: 10
+# owner: root
+# group: root
+user::rwx
+user:peter:rwx                  #effective:---
+group::r-x                      #effective:---
+group:users:r-x                 #effective:---
+mask::---
+other::---
+default:user::rwx
+default:user:peter:rwx
+default:group::r-x
+default:group:users:r-x
+default:mask::rwx
+default:other::rwx
+
+Q2 : rsync commands for testing
+Ans :
+1. rsync -a --progress /root/src admin@10.10.10.1::rsync
+-- copy softlink
+-- preserve permissions
+-- preserve group
+-- preserve mtime
+-- preserve owner
+-- preserve device files
+
+2. rsync -aAX --progress /root/src admin@10.10.10.1::rsync
+-- A: preserve ACL
+-- X: preserve extended attributes
+
+3. rsync -au --progress /root/src admin@10.10.10.1::rsync
+-- u: skip files that are newer on the receiver
+
+4. rsync -rp --chmod=ugo=rwx /root/src admin@10.10.10.1::rsync
+-- p: change permission to rwx in target file
+
+5. rsync -an --progress /root/src admin@10.10.10.1::rsync
+-- n: dry-run
+
+6. rsync -a --delete --progress /root/src admin@10.10.10.1::rsync
+-- --delete: delete extraneous files from dest dirs
+
+7. rsync -aAX --progress --numeric-ids /root/src admin@10.10.10.1::rsync
+-- --numeric-ids: don't map uid/gid values by user/group name
+
+8. rsync -azS --progress /root/src admin@10.10.10.1::rsync
+-- z: compress file data during the transfer
+-- S: handle sparse files efficiently
+
+
+
 Q1 : commands of rsync
 Ans:
 # from windows
@@ -19,7 +76,7 @@ chmod A+user:aa:read_data/write_data:allow test
 Q : security issue:
 Ans :
 remove root password --> passed -d root
-";i:1;N;i:2;N;}i:2;i:24;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:522;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:20:"Sync Acl with EonNAS";i:1;i:1;i:2;i:522;}i:2;i:522;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:522;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:9520:"
+";i:1;N;i:2;N;}i:2;i:24;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:2081;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:20:"Sync Acl with EonNAS";i:1;i:1;i:2;i:2081;}i:2;i:2081;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:2081;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:9520:"
 # modified files:
 1. acl.c
 2. options.c
@@ -318,7 +375,7 @@ drw-------  2 root     root           2 Apr  5 14:30 test123
                user:500:rw-p----------:-------:allow
               user:1004:r--p----------:-------:allow
              user:65534:--------------:-------:allow
-";i:1;N;i:2;N;}i:2;i:562;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:10091;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:18:"Sync Acl with Syno";i:1;i:1;i:2;i:10091;}i:2;i:10091;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:10091;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:917:"
+";i:1;N;i:2;N;}i:2;i:2121;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:11650;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:18:"Sync Acl with Syno";i:1;i:1;i:2;i:11650;}i:2;i:11650;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:11650;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:917:"
 [rsync server]
 [root@nas_8744965_a test]# rsync -aAX /Pool-1/Volume_1/share1/test/ admin@172.27.112.150::Test
 Password:
@@ -335,7 +392,7 @@ rsync: ACLs are not supported on this server
 rsync error: syntax or usage error (code 1) at main.c(1786) [server=3.0.9]
 rsync: connection unexpectedly closed (0 bytes received so far) [sender]
 rsync error: error in rsync protocol data stream (code 12) at io.c(605) [sender=3.0.9]
-";i:1;N;i:2;N;}i:2;i:10129;}i:12;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:10129;}i:13;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:51:"Q : Sync Acl with QNAP (Source : GS, Target : QNAP)";}i:2;i:11058;}i:14;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:11115;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1090:"
+";i:1;N;i:2;N;}i:2;i:11688;}i:12;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:11688;}i:13;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:51:"Q : Sync Acl with QNAP (Source : GS, Target : QNAP)";}i:2;i:12617;}i:14;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:12674;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1090:"
 Command:
 (ssh protocol) 
 rsync -aAX /Pool-1/Volume_1/share1/test/ admin@172.27.112.154:/share/test002
@@ -401,7 +458,7 @@ user:guest:---
 group::rwx
 mask::rwx
 other::rwx
-";i:1;N;i:2;N;}i:2;i:11115;}i:16;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:586:"
+";i:1;N;i:2;N;}i:2;i:12674;}i:16;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:586:"
 Q : Why not define the role of EonNAS is third party?
 Ans:
 設計上會比較複雜, 因為舊的EonNAS:
@@ -412,7 +469,7 @@ Ans:
 如果是EonNAS的話就走user = admin, ssh protocol的路.
 如果是GS的話就走user = root, ssh protocol的路.
 (但是一個是solaris, 一個是linux, 兩邊的ACL真的可以完全sync到一致嗎?)
-";i:1;N;i:2;N;}i:2;i:12221;}i:17;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:861:"
+";i:1;N;i:2;N;}i:2;i:13780;}i:17;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:861:"
 Q : 現在GS -> Third Party, 備份過去後的ACL會長什麼樣子?
 Ans : 
 1. target folder的owner跟group會被source的owner跟group蓋掉. (但其餘entry還在)
@@ -437,7 +494,7 @@ target :
 * solaris還有一些extended acl不會出來.
 * file會繼承target folder的原有acl entry.
 
-";i:1;N;i:2;N;}i:2;i:12822;}i:18;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:424:"
+";i:1;N;i:2;N;}i:2;i:14381;}i:18;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:424:"
 Q : GS -> EonNAS , 可以做到ACL備份嗎?
 Ans:
 沒有辦法, 因為EonNAS的source code有被更改過, 只適用於EonNAS -> EonNAS (--zfs-acl), 若只加上-A參數的話, 會變成:
@@ -455,4 +512,4 @@ target :
 ----------  1 1000     1000           4 Mar 21 11:16 file1
               user:1001:rw-p----------:-------:allow
 
-";i:1;N;i:2;N;}i:2;i:13698;}i:19;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:14130;}i:20;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:14130;}}
+";i:1;N;i:2;N;}i:2;i:15257;}i:19;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:15689;}i:20;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:15689;}}

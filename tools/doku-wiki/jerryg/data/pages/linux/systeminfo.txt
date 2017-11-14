@@ -1,0 +1,6 @@
+====== cpu information ======
+<file>
+1. cat /proc/cpuinfo
+2. lscpu
+3. nproc
+</file>

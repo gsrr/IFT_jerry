@@ -1,4 +1,59 @@
-a:73:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:10:"listu_open";i:1;a:0:{}i:2;i:0;}i:2;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:0;}i:3;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:0;}i:4;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:" ";}i:2;i:4;}i:5;a:3:{i:0;s:12:"internallink";i:1;a:2:{i:0;s:23:"tool:python:time_module";i:1;s:20:"Usage of time module";}i:2;i:5;}i:6;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:53;}i:7;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:53;}i:8;a:3:{i:0;s:11:"listu_close";i:1;a:0:{}i:2;i:53;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:18:"unix domain socket";i:1;i:1;i:2;i:54;}i:2;i:54;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:54;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1967:"
+a:69:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:10:"listu_open";i:1;a:0:{}i:2;i:0;}i:2;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:0;}i:3;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:0;}i:4;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:" ";}i:2;i:4;}i:5;a:3:{i:0;s:12:"internallink";i:1;a:2:{i:0;s:23:"tool:python:time_module";i:1;s:20:"Usage of time module";}i:2;i:5;}i:6;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:53;}i:7;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:53;}i:8;a:3:{i:0;s:11:"listu_close";i:1;a:0:{}i:2;i:53;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:28:"get reference count from gdb";i:1;i:1;i:2;i:54;}i:2;i:54;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:54;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1988:"
+The reference count of each and every object is stored in the PyObject itself, in a variable called ob_refcnt.
+
+typedef struct _object {
+    _PyObject_HEAD_EXTRA
+    Py_ssize_t ob_refcnt;          # Reference count
+    struct _typeobject *ob_type;
+} PyObject;
+
+(gdb) info locals
+sp = 0x7fe6c054c1e8
+stack_pointer = <optimized out>
+next_instr = <optimized out>
+opcode = <optimized out>
+oparg = <optimized out>
+why = WHY_NOT
+err = 0
+x = <optimized out>
+v = <optimized out>
+w = <optimized out>
+u = <optimized out>
+t = <optimized out>
+stream = 0x0
+fastlocals = 0x7fe6c054c1c8
+freevars = <optimized out>
+retval = <optimized out>
+tstate = <optimized out>
+co = <optimized out>
+instr_ub = -1
+instr_lb = 0
+instr_prev = -1
+first_instr = <optimized out>
+names = <optimized out>
+consts = <optimized out>
+(gdb) print fastlocals
+$6 = (PyObject **) 0x7fe6c054c1c8
+(gdb) print *fastlocals
+$7 = <HAServer(setInfoLock={'NFSInfo': <thread.lock at remote 0x7fe6c0996730>, 'WEBDAVInfo': <thread.lock at remote 0x7fe6c09967f0>, 'FTPInfo': <thread.lock at remote 0x7fe6c09968f0>, 'ServiceInfo': <thread.lock at remote 0x7fe6c09968d0>, 'MonitorInfo': <thread.lock at remote 0x7fe6c0996970>, 'DiskInfo': <thread.lock at remote 0x7fe6c0996dd0>, 'ShareInfo': <thread.lock at remote 0x7fe6c06c1230>, 'MDInfo': <thread.lock at remote 0x7fe6c06c15b0>, 'AvInfo': <thread.lock at remote 0x7fe6c06c1410>, 'SystemInfo': <thread.lock at remote 0x7fe6c0996c30>, 'LVMInfo': <thread.lock at remote 0x7fe6c0996cf0>, 'UserInfo': <thread.lock at remote 0x7fe6c0996d30>, 'RSYNCDInfo': <thread.lock at remote 0x7fe6c0996870>, 'AFPInfo': <thread.lock at remote 0x7fe6c0996c50>, 'PasswdManageInfo': <thread.lock at remote 0x7fe6c0996d90>, 'NetworkInfo': <thread.lock at remote 0x7fe6c0996f10>, 'CIFSInfo': <thread.lock at remote 0x7fe6c06c1210>}, g_bgjobList=[], infoLocal={'NFSInfo': <NFSInfo(updateTime=<datetime.datetime at remote 0x7fe6c767c78...(truncated)
+(gdb) print *(*fastlocals)
+$8 = {ob_refcnt = 26, ob_type = 0x241feb0}
+";i:1;N;i:2;N;}i:2;i:102;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:2100;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:9:"id and di";i:1;i:1;i:2;i:2100;}i:2;i:2100;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:2100;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2250:"
+import _ctypes
+
+def di(obj_id):
+    """ Inverse of id() function. """
+    return _ctypes.PyObj_FromPtr(obj_id)
+
+if __name__ == '__main__':
+    a = 42
+    b = 'answer'
+    print(di(id(a)))  # -> 42
+    print(di(id(b)))  # -> answer
+    
+<file>
+====== unix domain socket ======
+<file>
 # server.py
 import socket
 import sys
@@ -76,7 +131,7 @@ finally:
 [root@gsnas_a unix]# python client.py
 connecting to ./uds_socket
 [Errno 2] No such file or directory
-";i:1;N;i:2;N;}i:2;i:92;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:2069;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:16:"socket exception";i:1;i:1;i:2;i:2069;}i:2;i:2069;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:2069;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:913:"
+";i:1;N;i:2;N;}i:2;i:2129;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:4389;}i:17;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:16:"socket exception";i:1;i:1;i:2;i:4389;}i:2;i:4389;}i:18;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:4389;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:913:"
 #client code
 import socket
 import traceback
@@ -113,7 +168,7 @@ try:
 except Exception as ex:
         print type(ex), ex.args, ex.errno
         print traceback.format_tb(sys.exc_info()[2])
-";i:1;N;i:2;N;}i:2;i:2105;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3028;}i:17;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:11:"struct.pack";i:1;i:1;i:2;i:3028;}i:2;i:3028;}i:18;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3028;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:478:"
+";i:1;N;i:2;N;}i:2;i:4425;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:5348;}i:21;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:11:"struct.pack";i:1;i:1;i:2;i:5348;}i:2;i:5348;}i:22;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:5348;}i:23;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:478:"
 # pack string (char array)
 >>> s1 = struct.pack("I9sI", 12, "Eononestr", 11)
 >>> s1
@@ -129,71 +184,11 @@ except Exception as ex:
 >>> struct.unpack("I8sI",s2)
 (12, 'Eononest', 11)
 (The packet should be padded if the char array is not divided by 2)
-";i:1;N;i:2;N;}i:2;i:3059;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3546;}i:21;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"debug with gdb";i:1;i:1;i:2;i:3546;}i:2;i:3546;}i:22;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3546;}i:23;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:3546;}i:24;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:41:"https://docs.python.org/devguide/gdb.html";i:1;N;}i:2;i:3575;}i:25;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:0:"";}i:2;i:3620;}i:26;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:3626;}i:27;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2500:"
-# Reference
-[gdb python online document]
-https://sourceware.org/gdb/onlinedocs/gdb/Breakpoints-In-Python.html#Breakpoints-In-Python
-
-[DebuggingWithGdb]
-https://wiki.python.org/moin/DebuggingWithGdb
-
-[Extended gdb using python]
-https://sourceware.org/gdb/onlinedocs/gdb/Python.html
-
-# install package
-yum install gdb python-debuginfo
-or
-yum install gdb
-yum install yum-utils
-debuginfo-install glibc
-debuginfo-install python
-
-# gdb
-source python-gdb.py
-(https://raw.githubusercontent.com/WiserTogether/python27/master/python-gdb.py)
-
-source py-fields.py
-(https://gist.github.com/kouk/5c2e725bef8b54aae6e0)
-
-[MAX_OUTPUT_LEN]
-1. in python-pdb.py
-2. 增加output 的長度
-
-Q4 : 可以用gdb改變程式的fd路徑嗎?
-Ans :
-
-Q3 : 如何設定break point?
-Ans : 
-1. break PyEval_EvalFrameEx if (strcmp((((PyStringObject *)(f->f_code->co_name))->ob_sval), "foo") == 0)
-2. (參考 my-gdb.py)
-(gdb) py-bk Hello
-Breakpoint 1 at 0x7fd390fefb00: file Python/ceval.c, line 759.
-(gdb) c
-Continuing.
-stop
-
-Breakpoint 1, PyEval_EvalFrameEx (
-    f=f@entry=Frame 0x7fd3913c33e0, for file test.py, line 3, in Hello (name='Jerry', dic={'test': 2, 'key': 1}),
-    throwflag=throwflag@entry=0) at Python/ceval.c:759
-759     Python/ceval.c: No such file or directory.
-(gdb)
-
-Q2 : 如何印出python的變數內容?
-Ans :
-
-Q1 : py-bt print出來的訊息會被truncated, 要如何印出完整的訊息?
-for example:
-#9 Frame 0x7f759788e578, for file /usr/local/NAS/misc/HAAgent/HAServer.py, line 2913, in main (sys=<module at remote 0x7f75ab374bb0>, server=<HAServer(setInfoLock={'NFSInfo': <thread.lock at remote 0x7f75970f5710>, 'WEBDAVInfo': <thread.lock at remote 0x7f75970f57d0>, 'FTPInfo': <thread.lock at remote 0x7f75970f5750>, 'ServiceInfo': <thread.lock at remote 0x7f75970f5870>, 'MonitorInfo': <thread.lock at remote 0x7f75970f58d0>, 'DiskInfo': <thread.lock at remote 0x7f75970f5bf0>, 'ShareInfo': <thread.lock at remote 0x7f75970f5e70>, 'MDInfo': <thread.lock at remote 0x7f7594064270>, 'AvInfo': <thread.lock at remote 0x7f75940640d0>, 'SystemInfo': <thread.lock at remote 0x7f75970f5cf0>, 'LVMInfo': <thread.lock at remote 0x7f7594064430>, 'UserInfo': <thread.lock at remote 0x7f7594064390>, 'RSYNCDInfo': <thread.lock at remote 0x7f75970f5810>, 'AFPInfo': <thread.lock at remote 0x7f75970f5d50>, 'PasswdManageInfo': <thread.lock at remote 0x7f75970f5a50>, 'NetworkInfo': <thread.lock at remote 0x7f75940642d0>, 'CIFSInfo': <th...(truncated)
-
-Ans:
-需修改python-gdb裡面的參數:
-MAX_OUTPUT_LEN=1024
-
-";i:1;N;i:2;N;}i:2;i:3626;}i:28;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:6135;}i:29;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"trace module";i:1;i:1;i:2;i:6135;}i:2;i:6135;}i:30;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:6135;}i:31;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:6135;}i:32;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:27:"https://pymotw.com/2/trace/";i:1;N;}i:2;i:6162;}i:33;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:0:"";}i:2;i:6193;}i:34;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:6199;}i:35;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:95:"
+";i:1;N;i:2;N;}i:2;i:5379;}i:24;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:5867;}i:25;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"trace module";i:1;i:1;i:2;i:5867;}i:2;i:5867;}i:26;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:5867;}i:27;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:5867;}i:28;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:27:"https://pymotw.com/2/trace/";i:1;N;}i:2;i:5894;}i:29;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:0:"";}i:2;i:5925;}i:30;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:5931;}i:31;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:95:"
 # For a simple list of the functions called
 python -m trace --listfuncs trace_example/main.py
-";i:1;N;i:2;N;}i:2;i:6199;}i:36;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:6303;}i:37;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:15:"object analysis";i:1;i:1;i:2;i:6303;}i:2;i:6303;}i:38;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:6303;}i:39;a:3:{i:0;s:10:"listu_open";i:1;a:0:{}i:2;i:6331;}i:40;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6331;}i:41;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6331;}i:42;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:43:" vars(object) , but not all objects have a ";}i:2;i:6335;}i:43;a:3:{i:0;s:14:"underline_open";i:1;a:0:{}i:2;i:6378;}i:44;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:4:"dict";}i:2;i:6380;}i:45;a:3:{i:0;s:15:"underline_close";i:1;a:0:{}i:2;i:6384;}i:46;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:7:" member";}i:2;i:6386;}i:47;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6393;}i:48;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6393;}i:49;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6393;}i:50;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6393;}i:51;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:12:" dir(object)";}i:2;i:6397;}i:52;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6409;}i:53;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6409;}i:54;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6409;}i:55;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6409;}i:56;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:10:" getattr()";}i:2;i:6413;}i:57;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6423;}i:58;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6423;}i:59;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6423;}i:60;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6423;}i:61;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:7:" type()";}i:2;i:6427;}i:62;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6434;}i:63;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6434;}i:64;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6434;}i:65;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6434;}i:66;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:" ";}i:2;i:6438;}i:67;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6439;}i:68;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6439;}i:69;a:3:{i:0;s:11:"listu_close";i:1;a:0:{}i:2;i:6439;}i:70;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:93:"
+";i:1;N;i:2;N;}i:2;i:5931;}i:32;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:6035;}i:33;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:15:"object analysis";i:1;i:1;i:2;i:6035;}i:2;i:6035;}i:34;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:6035;}i:35;a:3:{i:0;s:10:"listu_open";i:1;a:0:{}i:2;i:6063;}i:36;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6063;}i:37;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6063;}i:38;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:43:" vars(object) , but not all objects have a ";}i:2;i:6067;}i:39;a:3:{i:0;s:14:"underline_open";i:1;a:0:{}i:2;i:6110;}i:40;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:4:"dict";}i:2;i:6112;}i:41;a:3:{i:0;s:15:"underline_close";i:1;a:0:{}i:2;i:6116;}i:42;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:7:" member";}i:2;i:6118;}i:43;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6125;}i:44;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6125;}i:45;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6125;}i:46;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6125;}i:47;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:12:" dir(object)";}i:2;i:6129;}i:48;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6141;}i:49;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6141;}i:50;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6141;}i:51;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6141;}i:52;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:10:" getattr()";}i:2;i:6145;}i:53;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6155;}i:54;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6155;}i:55;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6155;}i:56;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6155;}i:57;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:7:" type()";}i:2;i:6159;}i:58;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6166;}i:59;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6166;}i:60;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6166;}i:61;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6166;}i:62;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:" ";}i:2;i:6170;}i:63;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6171;}i:64;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6171;}i:65;a:3:{i:0;s:11:"listu_close";i:1;a:0:{}i:2;i:6171;}i:66;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:93:"
 def dump(obj):
   for attr in dir(obj):
     print "obj.%s = %s" % (attr, getattr(obj, attr))
-";i:1;N;i:2;N;}i:2;i:6445;}i:71;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:6546;}i:72;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:6546;}}
+";i:1;N;i:2;N;}i:2;i:6177;}i:67;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:6278;}i:68;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:6278;}}

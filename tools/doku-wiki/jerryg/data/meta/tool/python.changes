@@ -27,3 +27,6 @@
 1504201749	10.141.141.101	E	tool:python		[debug with gdb] 		392
 1504202025	10.141.141.101	E	tool:python		[debug with gdb] 		121
 1504306717	10.141.141.101	E	tool:python		[debug with gdb] 		52
+1507157973	10.141.141.105	E	tool:python				275
+1507158516	10.141.141.105	E	tool:python				2045
+1510551051	172.27.12.71	E	tool:python		[debug with gdb] 		-2588

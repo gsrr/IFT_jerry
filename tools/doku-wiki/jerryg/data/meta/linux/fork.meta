@@ -1,16 +1,12 @@
-a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1490169977;s:8:"modified";i:1490169977;}s:11:"last_change";a:8:{s:4:"date";i:1490169977;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"C";s:2:"id";s:10:"linux:fork";s:4:"user";s:0:"";s:3:"sum";s:7:"created";s:5:"extra";s:0:"";s:10:"sizechange";i:1149;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:627:"Q : 
-fork出來的child若結束後, 會產生zombie (defunc process)
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1490169977;s:8:"modified";i:1506064905;}s:11:"last_change";a:8:{s:4:"date";i:1506064905;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:10:"linux:fork";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:-242;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:503:"Q2 : compare with system() function
+Ans :
+System : 
+1. Calls out to sh to handle your command line.
+2. It waits for the child process to exit.
+3. It is a potential security hazard if you pass it a string from an untrusted source.
+4. It is slower than a direct fork/exec.
 
-Ans:
-因為fork 出來的child, 在結束後會發出SIGCHILD通知parent, 如果parent沒有接收或是忽略的話, child就會被迫等待.(無法結束而成為zombie)
-
-這部分在parent有幾種處理方法:
-1. 處理signal SIGCHILD:
-def handler(signum, frame):
-    print 'Signal handler called with signal', signum
-    os.waitpid(0, os.WNOHANG)
-    
-signal.signal(signal.SIGALRM, handler)
-'''
-0 :: the request is for the status of any child in the process group of the current process
--1 :: the request pertains to any child of the current proce…";}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:1:{s:7:"created";i:1490169977;}s:11:"last_change";a:8:{s:4:"date";i:1490169977;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"C";s:2:"id";s:10:"linux:fork";s:4:"user";s:0:"";s:3:"sum";s:7:"created";s:5:"extra";s:0:"";s:10:"sizechange";i:1149;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}
+Fork with Exec:
+1. The fork system call will duplicate a process with different pid.
+2. The exec system call will execute another process to replace the original process.(with the same pid)
+3. We could duplicate its functionalit…";}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1490169977;s:8:"modified";i:1506064905;}s:11:"last_change";a:8:{s:4:"date";i:1506064905;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:10:"linux:fork";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:-242;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

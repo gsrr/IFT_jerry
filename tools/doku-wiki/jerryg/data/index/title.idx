@@ -4,7 +4,7 @@
 Reference
 
 
-
+Installation
 
 
 
@@ -18,14 +18,14 @@ config related
 
 
 
-Core dump file analysis
+
 
 command line window
 
 
 
 
-unix domain socket
+get reference count from gdb
 Remote ssh with tmux
 
 
@@ -87,7 +87,7 @@ Usage
 
 
 
-
+linux tools
 
 Basic
 
@@ -100,7 +100,7 @@ Reference
 
 post
 Reference
-Rsync mechanism
+Rsyncd Performance
 
 
 convert fd to real path
@@ -115,3 +115,20 @@ FAQ
 Basic of Process
 
 
+vim
+io snoop
+
+
+
+
+
+
+
+cpu information
+yas3fs out of memory
+
+
+strace
+
+Questions
+Command

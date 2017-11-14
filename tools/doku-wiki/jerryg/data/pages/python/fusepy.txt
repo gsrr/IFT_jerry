@@ -1,0 +1,5 @@
+<file>
+[Installation]
+1. pip install fusepy
+
+</file>

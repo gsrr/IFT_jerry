@@ -3,9 +3,68 @@
 </li>
 </ul>
 
-<h1 class="sectionedit1" id="unix_domain_socket">unix domain socket</h1>
+<h1 class="sectionedit1" id="get_reference_count_from_gdb">get reference count from gdb</h1>
 <div class="level1">
-<pre class="file"># server.py
+<pre class="file">The reference count of each and every object is stored in the PyObject itself, in a variable called ob_refcnt.
+
+typedef struct _object {
+    _PyObject_HEAD_EXTRA
+    Py_ssize_t ob_refcnt;          # Reference count
+    struct _typeobject *ob_type;
+} PyObject;
+
+(gdb) info locals
+sp = 0x7fe6c054c1e8
+stack_pointer = &lt;optimized out&gt;
+next_instr = &lt;optimized out&gt;
+opcode = &lt;optimized out&gt;
+oparg = &lt;optimized out&gt;
+why = WHY_NOT
+err = 0
+x = &lt;optimized out&gt;
+v = &lt;optimized out&gt;
+w = &lt;optimized out&gt;
+u = &lt;optimized out&gt;
+t = &lt;optimized out&gt;
+stream = 0x0
+fastlocals = 0x7fe6c054c1c8
+freevars = &lt;optimized out&gt;
+retval = &lt;optimized out&gt;
+tstate = &lt;optimized out&gt;
+co = &lt;optimized out&gt;
+instr_ub = -1
+instr_lb = 0
+instr_prev = -1
+first_instr = &lt;optimized out&gt;
+names = &lt;optimized out&gt;
+consts = &lt;optimized out&gt;
+(gdb) print fastlocals
+$6 = (PyObject **) 0x7fe6c054c1c8
+(gdb) print *fastlocals
+$7 = &lt;HAServer(setInfoLock={&#039;NFSInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996730&gt;, &#039;WEBDAVInfo&#039;: &lt;thread.lock at remote 0x7fe6c09967f0&gt;, &#039;FTPInfo&#039;: &lt;thread.lock at remote 0x7fe6c09968f0&gt;, &#039;ServiceInfo&#039;: &lt;thread.lock at remote 0x7fe6c09968d0&gt;, &#039;MonitorInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996970&gt;, &#039;DiskInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996dd0&gt;, &#039;ShareInfo&#039;: &lt;thread.lock at remote 0x7fe6c06c1230&gt;, &#039;MDInfo&#039;: &lt;thread.lock at remote 0x7fe6c06c15b0&gt;, &#039;AvInfo&#039;: &lt;thread.lock at remote 0x7fe6c06c1410&gt;, &#039;SystemInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996c30&gt;, &#039;LVMInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996cf0&gt;, &#039;UserInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996d30&gt;, &#039;RSYNCDInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996870&gt;, &#039;AFPInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996c50&gt;, &#039;PasswdManageInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996d90&gt;, &#039;NetworkInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996f10&gt;, &#039;CIFSInfo&#039;: &lt;thread.lock at remote 0x7fe6c06c1210&gt;}, g_bgjobList=[], infoLocal={&#039;NFSInfo&#039;: &lt;NFSInfo(updateTime=&lt;datetime.datetime at remote 0x7fe6c767c78...(truncated)
+(gdb) print *(*fastlocals)
+$8 = {ob_refcnt = 26, ob_type = 0x241feb0}</pre>
+
+</div>
+<!-- EDIT1 SECTION "get reference count from gdb" [54-2099] -->
+<h1 class="sectionedit2" id="id_and_di">id and di</h1>
+<div class="level1">
+<pre class="file">import _ctypes
+
+def di(obj_id):
+    &quot;&quot;&quot; Inverse of id() function. &quot;&quot;&quot;
+    return _ctypes.PyObj_FromPtr(obj_id)
+
+if __name__ == &#039;__main__&#039;:
+    a = 42
+    b = &#039;answer&#039;
+    print(di(id(a)))  # -&gt; 42
+    print(di(id(b)))  # -&gt; answer
+    
+&lt;file&gt;
+====== unix domain socket ======
+&lt;file&gt;
+# server.py
 import socket
 import sys
 import os
@@ -84,8 +143,8 @@ connecting to ./uds_socket
 [Errno 2] No such file or directory</pre>
 
 </div>
-<!-- EDIT1 SECTION "unix domain socket" [54-2068] -->
-<h1 class="sectionedit2" id="socket_exception">socket exception</h1>
+<!-- EDIT2 SECTION "id and di" [2100-4388] -->
+<h1 class="sectionedit3" id="socket_exception">socket exception</h1>
 <div class="level1">
 <pre class="file">#client code
 import socket
@@ -125,8 +184,8 @@ except Exception as ex:
         print traceback.format_tb(sys.exc_info()[2])</pre>
 
 </div>
-<!-- EDIT2 SECTION "socket exception" [2069-3027] -->
-<h1 class="sectionedit3" id="structpack">struct.pack</h1>
+<!-- EDIT3 SECTION "socket exception" [4389-5347] -->
+<h1 class="sectionedit4" id="structpack">struct.pack</h1>
 <div class="level1">
 <pre class="file"># pack string (char array)
 &gt;&gt;&gt; s1 = struct.pack(&quot;I9sI&quot;, 12, &quot;Eononestr&quot;, 11)
@@ -145,75 +204,7 @@ except Exception as ex:
 (The packet should be padded if the char array is not divided by 2)</pre>
 
 </div>
-<!-- EDIT3 SECTION "struct.pack" [3028-3545] -->
-<h1 class="sectionedit4" id="debug_with_gdb">debug with gdb</h1>
-<div class="level1">
-
-<p>
-<a href="https://docs.python.org/devguide/gdb.html" class="urlextern" title="https://docs.python.org/devguide/gdb.html" rel="nofollow">https://docs.python.org/devguide/gdb.html</a>
-</p>
-<pre class="file"># Reference
-[gdb python online document]
-https://sourceware.org/gdb/onlinedocs/gdb/Breakpoints-In-Python.html#Breakpoints-In-Python
-
-[DebuggingWithGdb]
-https://wiki.python.org/moin/DebuggingWithGdb
-
-[Extended gdb using python]
-https://sourceware.org/gdb/onlinedocs/gdb/Python.html
-
-# install package
-yum install gdb python-debuginfo
-or
-yum install gdb
-yum install yum-utils
-debuginfo-install glibc
-debuginfo-install python
-
-# gdb
-source python-gdb.py
-(https://raw.githubusercontent.com/WiserTogether/python27/master/python-gdb.py)
-
-source py-fields.py
-(https://gist.github.com/kouk/5c2e725bef8b54aae6e0)
-
-[MAX_OUTPUT_LEN]
-1. in python-pdb.py
-2. 增加output 的長度
-
-Q4 : 可以用gdb改變程式的fd路徑嗎?
-Ans :
-
-Q3 : 如何設定break point?
-Ans : 
-1. break PyEval_EvalFrameEx if (strcmp((((PyStringObject *)(f-&gt;f_code-&gt;co_name))-&gt;ob_sval), &quot;foo&quot;) == 0)
-2. (參考 my-gdb.py)
-(gdb) py-bk Hello
-Breakpoint 1 at 0x7fd390fefb00: file Python/ceval.c, line 759.
-(gdb) c
-Continuing.
-stop
-
-Breakpoint 1, PyEval_EvalFrameEx (
-    f=f@entry=Frame 0x7fd3913c33e0, for file test.py, line 3, in Hello (name=&#039;Jerry&#039;, dic={&#039;test&#039;: 2, &#039;key&#039;: 1}),
-    throwflag=throwflag@entry=0) at Python/ceval.c:759
-759     Python/ceval.c: No such file or directory.
-(gdb)
-
-Q2 : 如何印出python的變數內容?
-Ans :
-
-Q1 : py-bt print出來的訊息會被truncated, 要如何印出完整的訊息?
-for example:
-#9 Frame 0x7f759788e578, for file /usr/local/NAS/misc/HAAgent/HAServer.py, line 2913, in main (sys=&lt;module at remote 0x7f75ab374bb0&gt;, server=&lt;HAServer(setInfoLock={&#039;NFSInfo&#039;: &lt;thread.lock at remote 0x7f75970f5710&gt;, &#039;WEBDAVInfo&#039;: &lt;thread.lock at remote 0x7f75970f57d0&gt;, &#039;FTPInfo&#039;: &lt;thread.lock at remote 0x7f75970f5750&gt;, &#039;ServiceInfo&#039;: &lt;thread.lock at remote 0x7f75970f5870&gt;, &#039;MonitorInfo&#039;: &lt;thread.lock at remote 0x7f75970f58d0&gt;, &#039;DiskInfo&#039;: &lt;thread.lock at remote 0x7f75970f5bf0&gt;, &#039;ShareInfo&#039;: &lt;thread.lock at remote 0x7f75970f5e70&gt;, &#039;MDInfo&#039;: &lt;thread.lock at remote 0x7f7594064270&gt;, &#039;AvInfo&#039;: &lt;thread.lock at remote 0x7f75940640d0&gt;, &#039;SystemInfo&#039;: &lt;thread.lock at remote 0x7f75970f5cf0&gt;, &#039;LVMInfo&#039;: &lt;thread.lock at remote 0x7f7594064430&gt;, &#039;UserInfo&#039;: &lt;thread.lock at remote 0x7f7594064390&gt;, &#039;RSYNCDInfo&#039;: &lt;thread.lock at remote 0x7f75970f5810&gt;, &#039;AFPInfo&#039;: &lt;thread.lock at remote 0x7f75970f5d50&gt;, &#039;PasswdManageInfo&#039;: &lt;thread.lock at remote 0x7f75970f5a50&gt;, &#039;NetworkInfo&#039;: &lt;thread.lock at remote 0x7f75940642d0&gt;, &#039;CIFSInfo&#039;: &lt;th...(truncated)
-
-Ans:
-需修改python-gdb裡面的參數:
-MAX_OUTPUT_LEN=1024
-</pre>
-
-</div>
-<!-- EDIT4 SECTION "debug with gdb" [3546-6134] -->
+<!-- EDIT4 SECTION "struct.pack" [5348-5866] -->
 <h1 class="sectionedit5" id="trace_module">trace module</h1>
 <div class="level1">
 
@@ -224,7 +215,7 @@ MAX_OUTPUT_LEN=1024
 python -m trace --listfuncs trace_example/main.py</pre>
 
 </div>
-<!-- EDIT5 SECTION "trace module" [6135-6302] -->
+<!-- EDIT5 SECTION "trace module" [5867-6034] -->
 <h1 class="sectionedit6" id="object_analysis">object analysis</h1>
 <div class="level1">
 <ul>
@@ -244,4 +235,4 @@ python -m trace --listfuncs trace_example/main.py</pre>
     print &quot;obj.%s = %s&quot; % (attr, getattr(obj, attr))</pre>
 
 </div>
-<!-- EDIT6 SECTION "object analysis" [6303-] -->
+<!-- EDIT6 SECTION "object analysis" [6035-] -->

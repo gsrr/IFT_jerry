@@ -1,0 +1,11 @@
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1509600962;s:8:"modified";i:1509602587;}s:11:"last_change";a:8:{s:4:"date";i:1509602587;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:17:"nas:bug:synccloud";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:120;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:20:"yas3fs out of memory";s:11:"description";a:2:{s:15:"tableofcontents";a:1:{i:0;a:4:{s:3:"hid";s:20:"yas3fs_out_of_memory";s:5:"title";s:20:"yas3fs out of memory";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:503:"yas3fs out of memory
+
+
+Q2 : strace information
+Ans :
+
+[pid 11526] sendto(54, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 8192, 0, NULL, 0) = 8192
+
+[pid   880] read(79, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 19992576) = 19992576
+[pid   880] read(79, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 4096) = 4096
+[pid   880] read(79, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 19996672) = 1999…";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1509600962;s:8:"modified";i:1509602587;}s:11:"last_change";a:8:{s:4:"date";i:1509602587;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:17:"nas:bug:synccloud";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:120;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

@@ -1,8 +1,99 @@
 ====== Reference ======
 <file>
 https://docs.python.org/2/c-api/index.html
+
+[Tools]
+1. memory_profile
+2. guppy
 </file>
 
+====== Analysis ======
+<file>
+import copy
+import time
+import os
+from guppy import hpy
+
+
+
+lens = 100000
+
+class Test:
+        def __init__(self):
+                self.a = range(lens)
+
+def method_2(cnt):
+        a1 = {}
+        a1['1'] = Test()
+        a1['2'] = Test()
+        a1['3'] = Test()
+        a = [a1] # 21.1m
+        data2 = copy.deepcopy(a1)
+        a.append(data2) # 57.7m
+        data3 = copy.deepcopy(a1)
+        a.append(data3) # 61.9m
+        data4 = copy.deepcopy(a1)
+        a.append(data4) # 69m
+        return a
+
+def method_1(cnt):
+        a1 = {}
+        a1['1'] = Test()
+        a1['2'] = Test()
+        a1['3'] = Test()
+        a = [a1] # 21.1m
+        for i in xrange(len(a)):
+                b = copy.deepcopy(a1)
+                a.append(b)
+        return a # 57.6m
+
+def method_0(cnt):
+        a = [range(lens), range(lens), range(lens)] #12.6m
+
+def main():
+        print "aaaaaaaaaaaa"
+        print os.getpid()
+        time.sleep(1)
+        cnt = 1
+        while cnt < 2:
+                b = method_1(cnt)
+                print "cnt:%d"%cnt
+                cnt += 1
+        h = hpy()
+        print h.heap()
+
+if __name__ == "__main__":
+        main()
+        
+        
+[Result]
+Partition of a set of 325581 objects. Total size = 20380176 bytes.
+ Index  Count   %     Size   % Cumulative  % Kind (class / dict of class)
+     0    194   0  9857168  48   9857168  48 list
+     1 299623  92  7190952  35  17048120  84 int
+     2  11858   4   943448   5  17991568  88 str
+     3   5930   2   478248   2  18469816  91 tuple
+     4    329   0   282968   1  18752784  92 dict (no owner)
+     5     72   0   217536   1  18970320  93 dict of module
+     6   1658   1   212224   1  19182544  94 types.CodeType
+     7    200   0   211136   1  19393680  95 dict of type
+     8   1614   0   193680   1  19587360  96 function
+     9    200   0   177912   1  19765272  97 type
+
+Partition of a set of 325561 objects. Total size = 15461872 bytes.
+ Index  Count   %     Size   % Cumulative  % Kind (class / dict of class)
+     0 299623  92  7190952  47   7190952  47 int
+     1    188   0  4941536  32  12132488  78 list
+     2  11858   4   943448   6  13075936  85 str
+     3   5930   2   478248   3  13554184  88 tuple
+     4    327   0   282408   2  13836592  89 dict (no owner)
+     5     72   0   217536   1  14054128  91 dict of module
+     6   1658   1   212224   1  14266352  92 types.CodeType
+     7    200   0   211136   1  14477488  94 dict of type
+     8   1614   0   193680   1  14671168  95 function
+     9    200   0   177912   1  14849080  96 type
+
+</file>
 
 <file>
 All Python objects (even Python integers) have a type and a reference count.
@@ -19,72 +110,4 @@ Q1 : 為什麼剛init一個object的reference count是2, 而不是1
 Ans:
 因為object在傳進getreference()時，reference count就會偷偷加1了。
 
-
-Q2 : anon是什麼東西? (Anonymous memory?)
-Ans:
-Anon blocks are "large" blocks allocated via malloc or mmap.
-'[ anon ]' for allocated memory
-'[ stack ]' for the program stack
-
-</file>
-<file>
-VZS:
-Virtual Memory Size, It includes all memory that the process can access, including memory that is swapped out and memory that is from shared libraries.
-
-RSS: 
-RSS is the Resident Set Size and is used to show how much memory is allocated to that process and is in RAM. It does not include memory that is swapped out. It does include memory from shared libraries as long as the pages from those libraries are actually in memory. It does include all stack and heap memory.
-
-pmap:
-1. report memory map of a process
-2. writeable/private : 指不含shared memory的部分.
-
------- pmap -d $pid
-21490:   python test_mem.py
-Address           Kbytes Mode  Offset           Device    Mapping
-0000000000400000       4 r-x-- 0000000000000000 0fd:00000 python2.7
-0000000000600000       4 r---- 0000000000000000 0fd:00000 python2.7
-0000000000601000       4 rw--- 0000000000001000 0fd:00000 python2.7
-00000000011d6000    1020 rw--- 0000000000000000 000:00000   [ anon ]
-00007fe141706000      16 r-x-- 0000000000000000 0fd:00000 timemodule.so
-00007fe14170a000    2044 ----- 0000000000004000 0fd:00000 timemodule.so
-00007fe141909000       4 r---- 0000000000003000 0fd:00000 timemodule.so
-00007fe14190a000       8 rw--- 0000000000004000 0fd:00000 timemodule.so
-00007fe14190c000  103588 r---- 0000000000000000 0fd:00000 locale-archive
-00007fe147e35000    1756 r-x-- 0000000000000000 0fd:00000 libc-2.17.so
-00007fe147fec000    2044 ----- 00000000001b7000 0fd:00000 libc-2.17.so
-00007fe1481eb000      16 r---- 00000000001b6000 0fd:00000 libc-2.17.so
-00007fe1481ef000       8 rw--- 00000000001ba000 0fd:00000 libc-2.17.so
-00007fe1481f1000      20 rw--- 0000000000000000 000:00000   [ anon ]
-00007fe1481f6000    1024 r-x-- 0000000000000000 0fd:00000 libm-2.17.so
-00007fe1482f6000    2048 ----- 0000000000100000 0fd:00000 libm-2.17.so
-00007fe1484f6000       4 r---- 0000000000100000 0fd:00000 libm-2.17.so
-00007fe1484f7000       4 rw--- 0000000000101000 0fd:00000 libm-2.17.so
-00007fe1484f8000       8 r-x-- 0000000000000000 0fd:00000 libutil-2.17.so
-00007fe1484fa000    2044 ----- 0000000000002000 0fd:00000 libutil-2.17.so
-00007fe1486f9000       4 r---- 0000000000001000 0fd:00000 libutil-2.17.so
-00007fe1486fa000       4 rw--- 0000000000002000 0fd:00000 libutil-2.17.so
-00007fe1486fb000       8 r-x-- 0000000000000000 0fd:00000 libdl-2.17.so
-00007fe1486fd000    2048 ----- 0000000000002000 0fd:00000 libdl-2.17.so
-00007fe1488fd000       4 r---- 0000000000002000 0fd:00000 libdl-2.17.so
-00007fe1488fe000       4 rw--- 0000000000003000 0fd:00000 libdl-2.17.so
-00007fe1488ff000      92 r-x-- 0000000000000000 0fd:00000 libpthread-2.17.so
-00007fe148916000    2044 ----- 0000000000017000 0fd:00000 libpthread-2.17.so
-00007fe148b15000       4 r---- 0000000000016000 0fd:00000 libpthread-2.17.so
-00007fe148b16000       4 rw--- 0000000000017000 0fd:00000 libpthread-2.17.so
-00007fe148b17000      16 rw--- 0000000000000000 000:00000   [ anon ]
-00007fe148b1b000    1524 r-x-- 0000000000000000 0fd:00000 libpython2.7.so.1.0
-00007fe148c98000    2044 ----- 000000000017d000 0fd:00000 libpython2.7.so.1.0
-00007fe148e97000       8 r---- 000000000017c000 0fd:00000 libpython2.7.so.1.0
-00007fe148e99000     248 rw--- 000000000017e000 0fd:00000 libpython2.7.so.1.0
-00007fe148ed7000      60 rw--- 0000000000000000 000:00000   [ anon ]
-00007fe148ee6000     128 r-x-- 0000000000000000 0fd:00000 ld-2.17.so
-00007fe148fba000    1256 rw--- 0000000000000000 000:00000   [ anon ]
-00007fe149104000       4 rw--- 0000000000000000 000:00000   [ anon ]
-00007fe149105000       4 r---- 000000000001f000 0fd:00000 ld-2.17.so
-00007fe149106000       4 rw--- 0000000000020000 0fd:00000 ld-2.17.so
-00007fe149107000       4 rw--- 0000000000000000 000:00000   [ anon ]
-00007ffde3a40000     132 rw--- 0000000000000000 000:00000   [ stack ]
-00007ffde3a76000       8 r-x-- 0000000000000000 000:00000   [ anon ]
-ffffffffff600000       4 r-x-- 0000000000000000 000:00000   [ anon ]
-mapped: 125328K    writeable/private: 2800K    shared: 0K
 </file>

@@ -1,5 +1,62 @@
 ====== FAQ ======
 <file>
+Q3 : rsync備份過去, 為什麼mask都變成空的?
+Ans :
+因為rsync 會一邊建空資料夾, 一邊進行備份, 而新建的空資料夾其mask會是空的.
+
+
+[root@nas_524297_a 1000w-5k]# getfacl 10
+# file: 10
+# owner: root
+# group: root
+user::rwx
+user:peter:rwx                  #effective:---
+group::r-x                      #effective:---
+group:users:r-x                 #effective:---
+mask::---
+other::---
+default:user::rwx
+default:user:peter:rwx
+default:group::r-x
+default:group:users:r-x
+default:mask::rwx
+default:other::rwx
+
+Q2 : rsync commands for testing
+Ans :
+1. rsync -a --progress /root/src admin@10.10.10.1::rsync
+-- copy softlink
+-- preserve permissions
+-- preserve group
+-- preserve mtime
+-- preserve owner
+-- preserve device files
+
+2. rsync -aAX --progress /root/src admin@10.10.10.1::rsync
+-- A: preserve ACL
+-- X: preserve extended attributes
+
+3. rsync -au --progress /root/src admin@10.10.10.1::rsync
+-- u: skip files that are newer on the receiver
+
+4. rsync -rp --chmod=ugo=rwx /root/src admin@10.10.10.1::rsync
+-- p: change permission to rwx in target file
+
+5. rsync -an --progress /root/src admin@10.10.10.1::rsync
+-- n: dry-run
+
+6. rsync -a --delete --progress /root/src admin@10.10.10.1::rsync
+-- --delete: delete extraneous files from dest dirs
+
+7. rsync -aAX --progress --numeric-ids /root/src admin@10.10.10.1::rsync
+-- --numeric-ids: don't map uid/gid values by user/group name
+
+8. rsync -azS --progress /root/src admin@10.10.10.1::rsync
+-- z: compress file data during the transfer
+-- S: handle sparse files efficiently
+
+
+
 Q1 : commands of rsync
 Ans:
 # from windows

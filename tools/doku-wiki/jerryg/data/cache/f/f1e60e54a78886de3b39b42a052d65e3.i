@@ -1,5 +1,18 @@
-a:3:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1135:"
-Q : 
+a:3:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1702:"
+Q2 : compare with system() function
+Ans :
+System : 
+1. Calls out to sh to handle your command line.
+2. It waits for the child process to exit.
+3. It is a potential security hazard if you pass it a string from an untrusted source.
+4. It is slower than a direct fork/exec.
+
+Fork with Exec:
+1. The fork system call will duplicate a process with different pid.
+2. The exec system call will execute another process to replace the original process.(with the same pid)
+3. We could duplicate its functionality as system() using some combination fork(), exec(), and wait().
+
+Q1 : 
 fork出來的child若結束後, 會產生zombie (defunc process)
 
 Ans:

@@ -1,13 +1,18 @@
 
-<p>
-<strong>packages</strong>
-</p>
-<ul>
-<li class="level1"><div class="li"> yum install -y samba4-python</div>
-</li>
-<li class="level1"><div class="li"> yum install -y samba*</div>
-</li>
-</ul>
+<h1 class="sectionedit1" id="installation">Installation</h1>
+<div class="level1">
+<pre class="file">[FAQ]
+Q1 : samba-tool 無法get domain sid, 該如何處理?
+Ans :
+目前是assign一個domain sid給他就可以進行處理, 但為什麼會這樣還是需要進行確認.
+domain_sid = security.dom_sid(&quot;S-1-5-21&quot;)
+
+[packages]
+  * yum install -y samba4-python
+  * yum install -y samba*
+  * yum install pytalloc
+
+</pre>
 
 <p>
 <strong>file location</strong>
@@ -32,7 +37,7 @@
 <p>
 <a href="/jerryg/lib/exe/detail.php?id=samba%3Aacl&amp;media=samba:ic493699.png" class="media" title="samba:ic493699.png"><img src="/jerryg/lib/exe/fetch.php?w=600&amp;tok=ad4f95&amp;media=samba:ic493699.png" class="media" alt="" width="600" /></a>
 </p>
-<div class="table sectionedit1"><table class="inline">
+<div class="table sectionedit2"><table class="inline">
 	<tr class="row0">
 		<td class="col0"> bit </td><td class="col1 leftalign"> Access Right String  </td><td class="col2"></td>
 	</tr>
@@ -73,16 +78,98 @@
 		<td class="col0"> 6 </td><td class="col1"> WP </td><td class="col2"> 0x00100020 </td>
 	</tr>
 </table></div>
-<!-- EDIT1 TABLE [295-514] -->
-<p>
-<strong>samba-tool</strong>
-</p>
-<pre class="file">[root@localhost bin]# ./samba-tool ntacl get /tmp/ccc.txt --as-sddl
-O:S-1-5-21-3863028735-649080503-733086412-1000G:DUD:AI(D;;0x001f01ff;;;S-1-5-21-3863028735-649080503-733086412-1000)(A;;0x001f01ff;;;DU)(A;ID;0x001f01ff;;;S-1-5-21-3863028735-649080503-733086412-1000)(A;ID;0x001200a9;;;DU)(A;ID;0x001200a9;;;WD)</pre>
+<!-- EDIT2 TABLE [579-798] -->
+</div>
+<!-- EDIT1 SECTION "Installation" [1-800] -->
+<h1 class="sectionedit3" id="faq">FAQ</h1>
+<div class="level1">
+<pre class="file">Q7 : 看起來 pytalloc_get_type就會得到security descriptor,  但是怎麼拿到的?
+Ans :
 
-<p>
-<strong>sddl format (Security Descriptor Definition Language)</strong>
-</p>
+Q6 : 從程式架夠看起來有一直遞迴在處理, 但到底在遞迴處理什麼? (是上層檔案 or 下層檔案)
+Ans :
+
+Q5 : vfs_handle_struct *handle是指什麼東西的handle?
+Ans :
+
+Q4 : 若使用samba-tool set ntacl的話, 也會同步更改到posix-acl嗎?
+Ans :
+是的, 若使用./samba-tool set ntacl進行設定的話, 也會同步更改到posix-acl
+
+Q3 : set_nt_acl與get_nt_acl的flow?
+Ans :
+parse_acl_blob(xacl.version = 4) --&gt; ndr_pull_struct_blob --&gt; ndr_pull_xattr_NTACL
+
+
+Q2 : NT-acl的結構如何解讀?
+Ans :
+1. getfattr的value開頭的0s代表使用base64進行encode.
+2. 若使用getfattr -n security.NTACL -e hex f4 , 就可以dump出跟strace裡面一樣的value.
+
+[root@nas_8801737_a f2]# getfattr -n security.NTACL -e hex f4
+# file: f4
+security.NTACL=0x0400040000000200040002000100da6a415c3d9c07c704ac3d17a62bb80ad4eace772fb8c449d4b3c109b645f35d0000000000000000000000000000000000000000000000000000000000000000706f7369785f61636c00f8dc3b7f6c4cd30133dc3e9e50718d63fad9ee3c7d5d4a79dbb745ad846dd547878608edb755117100000000000000000000000000000000000000000000000000000000000000000100049cb4000000d000000000000000e0000000010500000000000515000000acacacacacacacacacacacacae8601000102000000000005200000002002000002002c000100000000032400ff011f00010500000000000515000000acacacacacacacacacacacacae860100
+
+[root@nas_8801737_a f2]# cat test.py
+a = &quot;0x0400040000000200040002000100da6a415c3d9c07c704ac3d17a62bb80ad4eace772fb8c449d4b3c109b645f35d0000000000000000000000000000000000000000000000000000000000000000706f7369785f61636c00f8dc3b7f6c4cd30133dc3e9e50718d63fad9ee3c7d5d4a79dbb745ad846dd547878608edb755117100000000000000000000000000000000000000000000000000000000000000000100049cb4000000d000000000000000e0000000010500000000000515000000acacacacacacacacacacacacae8601000102000000000005200000002002000002002c000100000000032400ff011f00010500000000000515000000acacacacacacacacacacacacae860100&quot;
+
+ret = []
+for i in xrange(2, len(a[2:]) + 2, 2):
+        ret.append( chr(int(a[2:][i - 2:i], 16)))
+print ret
+
+
+Q1 : 若從putty建立一個folder, 並設好acl, 從Samba看會是如何?
+Ans :
+Create by putty:
+&gt;&gt;&gt; xattr(&quot;f2&quot;).list()
+[u&#039;trusted.SGI_ACL_FILE&#039;, u&#039;trusted.SGI_ACL_DEFAULT&#039;, u&#039;system.posix_acl_access&#039;, u&#039;system.posix_acl_default&#039;]
+
+posix acl of f2:
+[root@nas_8801737_a smb]# getfacl f2
+# file: f2
+# owner: root
+# group: root
+user::rwx
+user:aa:rwx
+group::r-x
+mask::rwx
+other::r-x
+default:user::rwx
+default:user:aa:rwx
+default:group::r-x
+default:mask::rwx
+default:other::r-x
+
+--&gt; 只要從Samba設過一次, 所有設定就會apply到security.NTACL
+--&gt; 更改Samba ntacl, 會同步更改到posix acl.
+--&gt; Samba裡面的ACL Entry是 or起來看的.
+
+
+Create by Samba service:
+&gt;&gt;&gt; xattr(&quot;f1&quot;).list()
+[u&#039;user.DOSATTRIB&#039;, u&#039;trusted.SGI_ACL_FILE&#039;, u&#039;trusted.SGI_ACL_DEFAULT&#039;, u&#039;security.NTACL&#039;, u&#039;system.posix_acl_access&#039;, u&#039;system.posix_acl_default&#039;]
+
+</pre>
+
+</div>
+<!-- EDIT3 SECTION "FAQ" [801-3797] -->
+<h1 class="sectionedit4" id="set_nt-acl">Set NT-acl</h1>
+<div class="level1">
+<pre class="file"># samba-tool
+[root@localhost bin]# ./samba-tool ntacl get /tmp/ccc.txt --as-sddl
+O:S-1-5-21-3863028735-649080503-733086412-1000G:DUD:AI(D;;0x001f01ff;;;S-1-5-21-3863028735-649080503-733086412-1000)(A;;0x001f01ff;;;DU)(A;ID;0x001f01ff;;;S-1-5-21-3863028735-649080503-733086412-1000)(A;ID;0x001200a9;;;DU)(A;ID;0x001200a9;;;WD)
+
+# set ntacl
+./samba-tool ntacl set &quot;O:S-1-5-21-2896997548-2896997548-2896997548-1003G:BAD:(A;;0x001f019f;;;S-1-5-21-2896997548-2896997548-2896997548-1003)(A;;0x00120089;;;BA)(A;;0x00120089;;;WD)&quot; /tmp/test.txt
+
+# smbcacls
+smbcacls //172.27.112.150/testext file1 -U aa --add ACL:aa:ALLOWED/3/FULL</pre>
+
+</div>
+<!-- EDIT4 SECTION "Set NT-acl" [3798-4462] -->
+<h1 class="sectionedit5" id="sddl_format_security_descriptor_definition_language">sddl format (Security Descriptor Definition Language)</h1>
+<div class="level1">
 <pre class="file">The following is an example SDDL string:
 O:S-1-5-21-3863028735-649080503-733086412-1000G:DUD:AI(D;;0x001f01ff;;;S-1-5-21-3863028735-649080503-733086412-1000)(A;;0x001f01ff;;;DU)(A;ID;0x001f01ff;;;S-1-5-21-3863028735-649080503-733086412-1000)(A;ID;0x001200a9;;;DU)(A;ID;0x001200a9;;;WD)
 
@@ -94,12 +181,22 @@ D:AI
   (A;;0x001f01ff;;;DU)
   (A;ID;0x001f01ff;;;S-1-5-21-3863028735-649080503-733086412-1000)
   (A;ID;0x001200a9;;;DU)
-  (A;ID;0x001200a9;;;WD)</pre>
+  (A;ID;0x001200a9;;;WD)
+  
+  (ACE TYPE:ACE_FLAGS:PERMISSION;;;USER)
+  --&gt; ACE_TYPE
+      --&gt; A (Allow)
+      --&gt; D (DENY)</pre>
 <pre class="file">Main Part Format:
   O: SID string := Owner
   G: SID string := Group
   D: ACE String := DACL (Discretionary Access Control List)
-  S: ACE String := SACL (Security Access Control List) (optional)(optional)</pre>
+  S: ACE String := SACL (Security Access Control List) (optional)(optional)
+  
+&quot;P&quot; --&gt; SDDL_PROTECTED(The SE_DACL_PROTECTED flag is set.)
+&quot;AR&quot; --&gt; SDDL_AUTO_INHERIT_REQ(The SE_DACL_AUTO_INHERIT_REQ flag is set.)
+&quot;AI&quot; --&gt; SDDL_AUTO_INHERITED(The SE_DACL_AUTO_INHERITED flag is set.)
+&quot;NO_ACCESS_CONTROL&quot;  --&gt; SSDL_NULL_ACL(The ACL is null.)</pre>
 <pre class="file">SID String Chart:
   SID                 String Account alias
   &quot;AN&quot;                Anonymous logon.
@@ -108,6 +205,7 @@ D:AI
   &quot;BG&quot;                Built-in guests.
   &quot;BU&quot;                Built-in users.
   “CO”                Creator Owner
+  &quot;CG&quot; --&gt; Creator group. The corresponding RID is SECURITY_CREATOR_GROUP_RID.
   &quot;DA&quot;                Domain administrators.
   &quot;DG&quot;                Domain guests.
   &quot;DU&quot;                Domain users
@@ -121,11 +219,17 @@ D:AI
   &quot;NU&quot;                Network logon user
   &quot;NS&quot;                Network service account
   &quot;PU&quot;                Power users
-  &quot;RD&quot;                Terminal server users (Remote Desktop)</pre>
+  &quot;RD&quot;                Terminal server users (Remote Desktop)
+
+Ref : https://msdn.microsoft.com/en-us/library/windows/desktop/aa379602(v=vs.85).aspx</pre>
 <pre class="file">ace_type;ace_flags;rights;object_guid;inherit_object_guid;account_sid;(resource_attribute)
 ace_flags:
+&quot;CI&quot;  --&gt; ContainerInherit --&gt; The access mask is propagated to child container objects.
 &quot;IO&quot;                 SDDL_INHERIT_ONLY
-&quot;ID&quot;                 SDDL_INHERITED</pre>
+&quot;ID&quot;                 SDDL_INHERITED
+&quot;OI&quot;  --&gt; ObjectInherit --&gt; The access mask is propagated onto child leaf objects.
+
+Ref : https://msdn.microsoft.com/en-us/library/system.security.accesscontrol.aceflags(v=vs.110).aspx</pre>
 
 <p>
 ACE String Format<a href="http://172.27.112.239/dokuwiki/lib/exe/fetch.php?media=samba:ace_strings_windows_.pdf" class="urlextern" title="http://172.27.112.239/dokuwiki/lib/exe/fetch.php?media=samba:ace_strings_windows_.pdf" rel="nofollow">http://172.27.112.239/dokuwiki/lib/exe/fetch.php?media=samba:ace_strings_windows_.pdf</a>
@@ -351,3 +455,6 @@ NTACL</pre>
 <p>
 <strong>ntacls.py</strong>
 </p>
+
+</div>
+<!-- EDIT5 SECTION "sddl format (Security Descriptor Definition Language)" [4463-] -->

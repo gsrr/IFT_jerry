@@ -1,4 +1,209 @@
-a:14:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:15:"Rsync mechanism";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:7309:"
+a:26:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:18:"Rsyncd Performance";i:1;i:1;i:2;i:3;}i:2;i:3;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3;}i:3;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:36;}i:4;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:16:"Compare with ftp";i:1;i:2;i:2;i:36;}i:2;i:36;}i:5;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:36;}i:6;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:5147:"
+ftp:
+[root@nas_852612_a src]# time python pftp.py
+
+real    1m3.404s
+user    0m3.298s
+sys     0m7.866s
+
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 54.76    4.537973          26    175004           sendto
+ 25.75    2.134117          13    165200           read
+  5.66    0.468815          23     20005           recvfrom
+  4.29    0.355493          71      5001           connect
+  4.18    0.346338          34     10140           close
+  1.32    0.109400          11     10192           fstat
+  1.28    0.106264          19      5610       474 open
+  1.08    0.089352          18      5058           munmap
+  0.77    0.063540          13      5001           socket
+  0.76    0.062755          12      5143           mmap
+  0.06    0.005372          27       200       162 stat
+  0.05    0.003783          56        68           rt_sigaction
+  0.02    0.001437          22        64           mprotect
+  0.01    0.001008          27        38           brk
+  0.01    0.000487          14        36           lseek
+  0.00    0.000361          36        10           getdents
+  0.00    0.000217          36         6         2 readlink
+  0.00    0.000209         105         2         2 access
+  0.00    0.000152          30         5         1 ioctl
+  0.00    0.000104         104         1           futex
+  0.00    0.000097          16         6           lstat
+  0.00    0.000075          75         1           geteuid
+  0.00    0.000061          61         1           rt_sigprocmask
+  0.00    0.000057          57         1           set_robust_list
+  0.00    0.000056          56         1           getrlimit
+  0.00    0.000042          42         1           set_tid_address
+  0.00    0.000031          31         1           arch_prctl
+  0.00    0.000011          11         1           execve
+  0.00    0.000000           0         3           write
+  0.00    0.000000           0         1           getcwd
+  0.00    0.000000           0         3           gettimeofday
+  0.00    0.000000           0         1           getuid
+  0.00    0.000000           0         1           getgid
+  0.00    0.000000           0         1           getegid
+  0.00    0.000000           0         2         2 statfs
+  0.00    0.000000           0         3           openat
+------ ----------- ----------- --------- --------- ----------------
+100.00    8.287607                406812       643 total
+
+
+rsync:
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 31.35    0.224479          34      6693         3 select
+ 30.05    0.215182          32      6692         4 read
+ 29.72    0.212819          21     10068      5003 lstat
+  3.90    0.027943         167       167           write
+  1.22    0.008764          67       130        52 open
+  0.67    0.004782          98        49           rename
+  0.58    0.004119          40       103           close
+  0.53    0.003798          78        49           chmod
+  0.45    0.003187          64        50           utimensat
+  0.38    0.002700          54        50           fchmod
+  0.19    0.001360          29        47           mmap
+  0.14    0.001024          39        26           munmap
+  0.11    0.000816          51        16           sendto
+  0.09    0.000636          24        26           fstat
+  0.08    0.000562          62         9         5 wait4
+  0.07    0.000511          43        12           mprotect
+  0.07    0.000477          34        14        10 connect
+  0.05    0.000371          21        18           fcntl
+  0.05    0.000343          25        14           socket
+  0.05    0.000324          41         8           poll
+  0.04    0.000260          22        12           gettimeofday
+  0.03    0.000193          24         8         2 stat
+  0.03    0.000186          93         2           accept
+  0.02    0.000177          44         4           getdents
+  0.02    0.000165          41         4         2 rt_sigreturn
+  0.02    0.000134          34         4           recvfrom
+  0.02    0.000118          30         4           getpeername
+  0.01    0.000102          26         4           ioctl
+  0.01    0.000097          97         1           unlink
+  0.01    0.000082          41         2           socketpair
+  0.01    0.000080          40         2           openat
+  0.01    0.000071           7        10           rt_sigaction
+  0.00    0.000028          14         2           chdir
+  0.00    0.000025          13         2         1 kill
+  0.00    0.000022          11         2           setsockopt
+  0.00    0.000019           5         4           geteuid
+  0.00    0.000017           9         2           setgroups
+  0.00    0.000013           7         2           setuid
+  0.00    0.000013           7         2           setgid
+  0.00    0.000011           6         2           setresuid
+  0.00    0.000010           3         4           clone
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.716020                 24320      5082 total
+";i:1;N;i:2;N;}i:2;i:71;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:3572:"
+Q1 : strace 的時間意思?
+Ans : 
+1. strace裡面所記錄的秒數是 : CPU time spent running in the kernel
+
+
+
+====================================================================
+
+方向大概有幾個, system call的部分:
+io read/write, rsyncd flow
+
+3000機器(CPU比較好):
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total
+ time   seconds   seconds    calls   s/call   s/call  name
+ 98.56      2.73     2.73    50024     0.00     0.00  md5_process
+  1.08      2.76     0.03   641060     0.00     0.00  writefd_unbuffered
+  0.36      2.77     0.01                             mdfour
+  0.00      2.77     0.00   641210     0.00     0.00  msg_flush
+  0.00      2.77     0.00   320535     0.00     0.00  mplex_write
+
+[root@nas_8716691_a Volume_1]# time rsync -a rsrc/ admin@172.27.114.98::dst  (with checksum)
+
+real    0m4.249s
+user    0m0.202s
+sys     0m1.340s
+
+
+[root@nas_8716691_a Volume_1]# time rsync -a rsrc/ admin@172.27.114.98::dst 
+
+real    0m6.822s
+user    0m3.560s
+sys     0m1.270s
+
+=======================================================================
+
+因為rsync每備份一段data, 都會更新該file的check_sum (md5).
+所以從gprof所得到的資料判斷, check sum佔了主要時間因素.
+time   seconds   seconds    calls   s/call   s/call  name
+ 97.38      3.71     3.71    50028     0.00     0.00  md5_process
+  0.79      3.74     0.03   641125     0.00     0.00  writefd_unbuffered
+  0.26      3.75     0.01   641274     0.00     0.00  msg_flush
+  0.26      3.76     0.01   320567     0.00     0.00  mplex_write
+  0.26      3.77     0.01   146267     0.00     0.00  writefd
+
+將server side與client side的checksum機制關掉:
+/*sum_update(data, i);*/
+
+重新測試的結果如下:
+(GS --> GS, client與server都關掉)
+[root@nas_852612_a Volume_2]# time rsync -a dst/ admin@87.87.87.10::dst
+
+real    0m10.163s
+user    0m0.595s
+sys     0m4.796s
+
+[root@nas_852612_a Volume_2]# time rsync -a dst/ admin@87.87.87.10::dst
+
+real    0m9.778s
+user    0m0.651s
+sys     0m4.564s
+
+(Windows --> GS, Server無checksum , client有)
+C:\cwRsync\bin>timer
+14:07:27.31 - 14:07:12.36 = 14.95
+
+C:\cwRsync\bin>timer
+14:07:49.53 - 14:07:34.84 = 14.69
+
+C:\cwRsync\bin>timer
+14:08:12.45 - 14:07:57.07 = 15.38
+
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 45.82    3.216396           5    651123         3 select
+ 44.15    3.098948           5    646114         1 read
+  5.48    0.384756          38     10065           write
+  1.25    0.087886           9     10018      5003 open
+  0.87    0.060944          12      5002           rename
+  0.80    0.056339           6     10007      5002 lstat
+  0.50    0.035446           7      5026           close
+
+
+================================================================
+Q11 : rsync效能 in 一般的share folder (not cache mode)
+Ans : 
+
+@echo off
+echo %time% < nul
+rsync -a /cygdrive/c/cwRsync/src/ admin@87.87.87.10::dst
+echo %time% < nul
+
+Windows to GS (10G to 10G)
+rsync -a /cygdrive/c/cwRsync/src/ admin@87.87.87.10::dst
+(with rename)
+16:03:25.17 to 16:03:42.91 --> 18.8s --> 265.95 files/s
+
+rsync -a --inplace /cygdrive/c/cwRsync/src/ admin@87.87.87.10::dst
+16:06:45.43 to 16:07:07.57 --> 22s --> 227 files/s
+
+GS to GS (local side, 10G)
+[root@nas_852612_a Volume_2]# time rsync -a src/ admin@87.87.87.10::dst
+(with rename)
+real    0m16.427s --> 304.37 files/s
+
+[root@nas_8822956_a Volume_1]# time rsync -a --inplace src/ admin@87.87.87.10::dst
+real   0m25.834s --> 193.57 files/s
+
+";i:1;N;i:2;N;}i:2;i:5233;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:8815;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:44:"perf - delta algorithm & w/o delta algorithm";i:1;i:1;i:2;i:8815;}i:2;i:8815;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:8815;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:3199:"
 Q10 : rsync delta algorithm 與沒有delta algorithm的比較?
 Ans :
 [root@nas_8739457_a Volume_2]# time rsync -aW --progress src/file50M admin@172.27.112.254::aaa
@@ -105,6 +310,130 @@ real    2m18.769s
 user    0m28.206s
 sys     0m7.860s
 
+";i:1;N;i:2;N;}i:2;i:8878;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:12088;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:15:"Rsync mechanism";i:1;i:1;i:2;i:12088;}i:2;i:12088;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:12088;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:8380:"
+Q15 : 從server端看起來, 每次讀data之前都會先讀一個size, 但client在送的時候, 也是這樣送的嗎?
+Ans : 
+是的, 會先傳一個size再傳後面的data
+248			write_int(f, n1);
+249			write_buf(f, map_ptr(buf, offset+len, n1), n1);
+
+Q14 : rsync 在client送資料時, 看起來是read 32k, 但每次送4k出去, 所以32k共送了8次, 但在Server端的行為是?
+Ans : 
+Server端看起來會先讀一個buffer size, 再讀後面的data.
+if (residue == 0) {
+	int32 i = read_int(f);
+	if (i <= 0)
+		return i;
+	residue = i;
+}
+
+*data = buf;
+n = MIN(CHUNK_SIZE,residue);
+residue -= n;
+read_buf(f,buf,n);
+
+
+Q13 : rsync pipeline explaination
+Ans : 
+The above sections describe the process for constructing a copy of one
+file on a remote system.  If we have a several files to copy, we can
+gain a considerable latency advantage by pipelining the process.
+
+This involves $\beta$ initiating two independent processes. One of the
+processes generates and sends the checksums to $\alpha$ while the
+other receives the difference information from $\alpha$ and
+reconstructs the files. 
+
+If the communications link is buffered then these two processes can
+proceed independently and the link should be kept fully utilised in
+both directions for most of the time.
+
+
+Q12 : rsync在送資料時, 看起來每次只會送4k, is that true?
+Ans :
+while (len) {
+		int n = MIN((int)len, IO_BUFFER_SIZE - iobuf_out_cnt);
+		if (n > 0) {
+			memcpy(iobuf_out+iobuf_out_cnt, buf, n);
+			buf += n;
+			len -= n;
+			iobuf_out_cnt += n;
+		}
+
+		if (iobuf_out_cnt == IO_BUFFER_SIZE)
+			io_flush(NORMAL_FLUSH);
+}
+這裡的IO_BUFFER_SIZE為:
+#define IO_BUFFER_SIZE (4092) --> 4k
+
+len為chunk_size:
+#define CHUNK_SIZE (32*1024)
+每次會從檔案讀取32k, 但write每次只有4k
+write(3, "\265PH0\301\233\344]\217~\0\253\357\3766N\352\340V[\rn\274{;\303_EI\267\0064"..., 4092) = 4092
+
+
+
+
+Q11 : 在write_unbuffered裡面會先進行select後, 再進行read, 這個select的目的是?
+Ans :
+從網路查到:
+
+使用select函數的過程一般是：
+先調用宏FD_ZERO將指定的fd_set清零，然後調用宏FD_SET將需要測試的fd加入fd_set，接著調用函數select測試fd_set中的所有fd，
+最後用宏FD_ISSET檢查某個fd在函數select調用後，相應位是否仍然爲1。
+
+也就是說, 這一段code的目的主要是在檢查該fd是否確認可寫.
+因為:
+因为select会修改其中间三个参数，即将没有准备好的socketfd剔除，FD_ISSET的作用就是判断该socketfd是否准备好了。
+当然如果你只有一个socket的话，不用也行了。
+
+
+
+Q10 : 為什麼rsync有兩支process在做事? 另外一支的作用是?
+Ans : 
+第一支是generator,  第二支是receiver, generator看起來是在進行flow 控制, receiver則是在進行檔案接收,
+receiver在接收成功後會傳送MSG_SUCCESS給generator:
+send_msg_int(MSG_SUCCESS, ndx);
+
+或進行REDO動作:
+send_msg_int(MSG_REDO, ndx);
+(receiver主要的動作都在receive_files()裡面)
+
+而generator主要是在read_msg_fd裡面等待receiver的訊息來決定後面的流程.
+
+
+
+First --> 
+#0  0x00007f7ef864b783 in __select_nocancel () from /lib64/libc.so.6
+#1  0x00007f7ef8f837fe in read_timeout ()
+#2  0x00007f7ef8f850f8 in readfd_unbuffered ()
+#3  0x00007f7ef8f85163 in readfd ()
+#4  0x00007f7ef8f82676 in read_msg_fd ()
+#5  0x00007f7ef8f6cdbd in generate_files ()
+#6  0x00007f7ef8f7806c in do_recv ()
+#7  0x00007f7ef8f7866f in start_server ()
+#8  0x00007f7ef8f95c82 in rsync_module ()
+#9  0x00007f7ef8f9685f in start_daemon ()
+#10 0x00007f7ef8f8b399 in start_accept_loop ()
+#11 0x00007f7ef8f970ff in daemon_main ()
+#12 0x00007f7ef8f5df3a in main ()
+
+
+Second --> 
+#0  0x00007f7ef864b783 in __select_nocancel () from /lib64/libc.so.6
+#1  0x00007f7ef8f837fe in read_timeout ()
+#2  0x00007f7ef8f84bfd in readfd_unbuffered.part.6 ()
+#3  0x00007f7ef8f85163 in readfd ()
+#4  0x00007f7ef8f88c01 in recv_token ()
+#5  0x00007f7ef8f6d6eb in receive_data ()
+#6  0x00007f7ef8f6ea95 in recv_files ()
+#7  0x00007f7ef8f77f69 in do_recv ()
+#8  0x00007f7ef8f7866f in start_server ()
+#9  0x00007f7ef8f95c82 in rsync_module ()
+#10 0x00007f7ef8f9685f in start_daemon ()
+#11 0x00007f7ef8f8b399 in start_accept_loop ()
+#12 0x00007f7ef8f970ff in daemon_main ()
+#13 0x00007f7ef8f5df3a in main ()
 
 Q9 : 為什麼rsync target相對於cp會比較慢?
 Ans : 
@@ -190,7 +519,7 @@ Ans :
 1. "quick  check" algorithm --> looks for files that have changed in size or  in  last-modified  time.
 2. delta-transfer algorithm
 
-";i:1;N;i:2;N;}i:2;i:36;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:7355;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:3:"FAQ";i:1;i:1;i:2;i:7355;}i:2;i:7355;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:7355;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:4242:"
+";i:1;N;i:2;N;}i:2;i:12124;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:20514;}i:17;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:3:"FAQ";i:1;i:1;i:2;i:20514;}i:2;i:20514;}i:18;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:20514;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:4242:"
 Q7 : rsync的hash與compare機制到底是?
 Ans : 
 1. wf_writeBufSize
@@ -295,7 +624,7 @@ total size is 10485760000  speedup is 1.00
 Q5 : what is sum_struct?
 Ans:
 
-";i:1;N;i:2;N;}i:2;i:7379;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:11631;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:19:"flow of source code";i:1;i:1;i:2;i:11631;}i:2;i:11631;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:11631;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1712:"
+";i:1;N;i:2;N;}i:2;i:20538;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:24790;}i:21;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:19:"flow of source code";i:1;i:1;i:2;i:24790;}i:2;i:24790;}i:22;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:24790;}i:23;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1712:"
 # rsync client (for read)
 # rsync server-ssh (for write)
 # rsync daemon (for writie)
@@ -343,4 +672,4 @@ struct map_struct {
 };
 -----------------------------------------------
 readfd_unbuffered --> read_timeout --> read
-";i:1;N;i:2;N;}i:2;i:11671;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:13391;}i:13;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:13391;}}
+";i:1;N;i:2;N;}i:2;i:24830;}i:24;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:26550;}i:25;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:26550;}}

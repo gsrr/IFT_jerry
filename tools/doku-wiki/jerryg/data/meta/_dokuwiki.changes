@@ -1,26 +1,35 @@
-1504306918	10.141.141.101	E	linux:process				78
-1504522916	172.27.12.71	E	rsync:server				232
-1504590402	172.27.12.71	E	rsync:server				150
-1504601405	172.27.12.71	E	rsync:server		[Rsync mechanism] 		889
-1504604719	172.27.12.71	E	rsync:server		[Rsync mechanism] 		36
-1504604976	172.27.12.71	E	rsync:server		[Rsync mechanism] 		353
-1504609545	172.27.12.71	E	rsync:server		[Rsync mechanism] 		342
-1504780844	172.27.12.71	E	samba:ad				942
-1505195674	172.27.12.71	C	english:words		created		379
-1505204553	172.27.12.71	E	rsync:server		[Rsync mechanism] 		384
-1505204618	172.27.12.71	E	rsync:server		[Rsync mechanism] 		136
-1505205011	172.27.12.71	E	rsync:server		[Rsync mechanism] 		153
-1505208704	172.27.12.71	E	rsync:server				574
-1505208944	172.27.12.71	E	rsync:server		[Rsync mechanism] 		59
-1505209877	172.27.12.71	E	rsync:server		[Rsync mechanism] 		311
-1505211592	172.27.12.71	E	rsync:server				673
-1505211627	172.27.12.71	E	rsync:server		[Rsync mechanism] 		1
-1505368040	172.27.12.71	C	linux:ascii_art		created		218
-1505370254	172.27.12.71	E	linux:ascii_art				18
-1505382140	172.27.12.71	E	linux:ascii_art				58
-1505461490	172.27.12.71	E	rsync:server				164
-1505463063	172.27.12.71	E	rsync:server				776
-1505463123	172.27.12.71	E	rsync:server				14
-1505463402	172.27.12.71	E	rsync:server				782
-1505463593	172.27.12.71	E	rsync:server				785
-1505463943	172.27.12.71	E	rsync:server				772
+1509602349	172.27.12.71	E	nas:bug:synccloud				1121
+1509602587	172.27.12.71	E	nas:bug:synccloud				120
+1509750516	10.141.141.104	C	python:fusepy		created		52
+1509949260	172.27.12.71	E	nas:rsync				40
+1509953030	172.27.12.71	E	nas:rsync				494
+1509953945	172.27.12.71	E	nas:rsync				106
+1509955601	172.27.12.71	E	nas:rsync				380
+1509961538	172.27.12.71	E	nas:rsync				539
+1509962532	172.27.12.71	C	faq:memory		created		466
+1510372057	10.141.141.102	E	todos				66
+1510514050	10.141.141.103	E	todos				108
+1510538889	172.27.12.71	C	linux:debugtool		created		211
+1510538974	172.27.12.71	E	linux:debugtool				78
+1510539937	172.27.12.71	E	linux:debugtool				1653
+1510539954	172.27.12.71	D	tool:gdb		removed		-2398
+1510540639	172.27.12.71	E	linux:debugtool				55
+1510540936	172.27.12.71	E	linux:debugtool				2563
+1510551000	172.27.12.71	E	linux:debugtool		[python - debug with gdb] 		12
+1510551051	172.27.12.71	E	tool:python		[debug with gdb] 		-2588
+1510551076	172.27.12.71	E	linux:debugtool				23
+1510642226	172.27.12.71	C	linux:awk		created		308
+1510655001	172.27.12.71	C	linux:memory		created		466
+1510655004	172.27.12.71	D	faq:memory		removed		-466
+1510655199	172.27.12.71	E	linux:memory				16141
+1510655282	172.27.12.71	E	linux:memory				25426
+1510655412	172.27.12.71	E	linux:memory				1278
+1510655548	172.27.12.71	E	linux:memory				513
+1510655577	172.27.12.71	E	linux:memory				90
+1510655611	172.27.12.71	E	python:memory		[Analysis] 		-3996
+1510655659	172.27.12.71	E	linux:memory		[Questions] 		180
+1510655669	172.27.12.71	E	python:memory		[Analysis] 		-180
+1510656135	172.27.12.71	C	linux:grep		created		124
+1510656271	172.27.12.71	E	todos				84
+1510656367	172.27.12.71	E	linux:grep				46
+1510656496	172.27.12.71	E	linux:debugtool		[gdb] 		100

@@ -1,0 +1,19 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1508383628;s:8:"modified";i:1508383946;}s:11:"last_change";a:8:{s:4:"date";i:1508383946;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:15:"nas:system_sync";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:1249;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:503:"# dirty page
+dirty pages = ( Dirty + NFS_Unstable + Writeback )
+----
+cat /proc/meminfo
+MemTotal:        3882232 kB
+MemFree:         2049896 kB
+MemAvailable:    2198416 kB
+Buffers:            1484 kB
+Cached:           365748 kB
+SwapCached:            0 kB
+Active:          1370916 kB
+Inactive:         225472 kB
+Active(anon):    1267732 kB
+Inactive(anon):    34256 kB
+Active(file):     103184 kB
+Inactive(file):   191216 kB
+Unevictable:       18936 kB
+Mlocked:           18936 kB
+SwapTotal:           …";}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1508383628;s:8:"modified";i:1508383946;}s:11:"last_change";a:8:{s:4:"date";i:1508383946;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:15:"nas:system_sync";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:1249;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}
