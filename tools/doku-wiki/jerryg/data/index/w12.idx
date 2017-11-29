@@ -335,3 +335,7 @@ socketmodule
 7fff3f7fb000
 7fff3f7fc000
 7fff3f7fe000
+anonymousgid
+anonymousuid
+clientfornfs
+segmentation

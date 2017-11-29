@@ -132,3 +132,13 @@ linux:debugtool
 linux:awk
 linux:memory
 linux:grep
+linux:iscsi
+nas:faq:mount_root_filesystem_byiscsi
+linux:umask
+python:subprocess
+sys_prog:get_program_name
+linux:nfs
+encryption:base64
+python:string
+python:module
+linux:xattr

@@ -1,5 +1,15 @@
 
-<h1 class="sectionedit1" id="config_related">config related</h1>
+<h1 class="sectionedit1" id="faq">FAQ</h1>
+<div class="level1">
+<pre class="file">Q1 : How to checkout remote git tag?
+Ans:
+1. list all tags --&gt; git tag
+2. checkout remote tag --&gt; git checkout &lt;tag_name&gt;
+</pre>
+
+</div>
+<!-- EDIT1 SECTION "FAQ" [1-157] -->
+<h1 class="sectionedit2" id="config_related">config related</h1>
 <div class="level1">
 <pre class="file"># Reference
 1. https://ihower.tw/git/basic.html#sec1
@@ -17,8 +27,8 @@ http.proxy=http://userId:pwd%40123@ipaddress:port
 </pre>
 
 </div>
-<!-- EDIT1 SECTION "config related" [1-543] -->
-<h1 class="sectionedit2" id="merge">Merge</h1>
+<!-- EDIT2 SECTION "config related" [158-700] -->
+<h1 class="sectionedit3" id="merge">Merge</h1>
 <div class="level1">
 <pre class="file"># cherry-pick with new commit
 git cherry-pick -n XXXX
@@ -33,8 +43,8 @@ git merge hotfix --squash
 </pre>
 
 </div>
-<!-- EDIT2 SECTION "Merge" [544-868] -->
-<h1 class="sectionedit3" id="difference">Difference</h1>
+<!-- EDIT3 SECTION "Merge" [701-1025] -->
+<h1 class="sectionedit4" id="difference">Difference</h1>
 <div class="level1">
 <pre class="file"># Difference in commit 
 git diff $commit $commit^
@@ -56,8 +66,8 @@ git diff master..topic will show us the difference between X and T
 git diff master...topic will show us the difference between B and T</pre>
 
 </div>
-<!-- EDIT3 SECTION "Difference" [869-1256] -->
-<h1 class="sectionedit4" id="branch">Branch</h1>
+<!-- EDIT4 SECTION "Difference" [1026-1413] -->
+<h1 class="sectionedit5" id="branch">Branch</h1>
 <div class="level1">
 <pre class="file"># checkout a remote branch
 git pull
@@ -76,8 +86,8 @@ git branch -a
 </pre>
 
 </div>
-<!-- EDIT4 SECTION "Branch" [1257-1630] -->
-<h1 class="sectionedit5" id="recover">Recover</h1>
+<!-- EDIT5 SECTION "Branch" [1414-1787] -->
+<h1 class="sectionedit6" id="recover">Recover</h1>
 <div class="level1">
 <pre class="file"># Reset all files in current branch
 git fetch --all  # git-fetch - Download objects and refs from another repository
@@ -99,4 +109,4 @@ git push</pre>
 <pre class="file">git reset --hard 9bc9775a51432ae4a0ecc57423dd9791a22ea9c0</pre>
 
 </div>
-<!-- EDIT5 SECTION "Recover" [1631-] -->
+<!-- EDIT6 SECTION "Recover" [1788-] -->

@@ -1,6 +1,20 @@
 ====== Basic of Process ======
 
 <file>
+Q7 : thread is running in the same cpu core?
+Ans :
+No, threads can run in different cpu cores. 
+
+Q6 : cpu core of process?
+Ans :
+1. taskset -c -p <pid>
+2. ps -o pid,psr,comm -p <pid>
+4. ps -aTF
+3. top
+The top command can also show the CPU assigned to a given process. First, launch top command with "p" option. 
+Then press 'f' key, and add "Last used CPU" column to the display. 
+The currently used CPU core will appear under "P" (or "PSR") column.
+
 Q5 : Format of "ps aux"?
 Ans : 
 

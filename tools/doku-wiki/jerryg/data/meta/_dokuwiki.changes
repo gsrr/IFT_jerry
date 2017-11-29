@@ -1,35 +1,38 @@
-1509602349	172.27.12.71	E	nas:bug:synccloud				1121
-1509602587	172.27.12.71	E	nas:bug:synccloud				120
-1509750516	10.141.141.104	C	python:fusepy		created		52
-1509949260	172.27.12.71	E	nas:rsync				40
-1509953030	172.27.12.71	E	nas:rsync				494
-1509953945	172.27.12.71	E	nas:rsync				106
-1509955601	172.27.12.71	E	nas:rsync				380
-1509961538	172.27.12.71	E	nas:rsync				539
-1509962532	172.27.12.71	C	faq:memory		created		466
-1510372057	10.141.141.102	E	todos				66
-1510514050	10.141.141.103	E	todos				108
-1510538889	172.27.12.71	C	linux:debugtool		created		211
-1510538974	172.27.12.71	E	linux:debugtool				78
-1510539937	172.27.12.71	E	linux:debugtool				1653
-1510539954	172.27.12.71	D	tool:gdb		removed		-2398
-1510540639	172.27.12.71	E	linux:debugtool				55
-1510540936	172.27.12.71	E	linux:debugtool				2563
-1510551000	172.27.12.71	E	linux:debugtool		[python - debug with gdb] 		12
-1510551051	172.27.12.71	E	tool:python		[debug with gdb] 		-2588
-1510551076	172.27.12.71	E	linux:debugtool				23
-1510642226	172.27.12.71	C	linux:awk		created		308
-1510655001	172.27.12.71	C	linux:memory		created		466
-1510655004	172.27.12.71	D	faq:memory		removed		-466
-1510655199	172.27.12.71	E	linux:memory				16141
-1510655282	172.27.12.71	E	linux:memory				25426
-1510655412	172.27.12.71	E	linux:memory				1278
-1510655548	172.27.12.71	E	linux:memory				513
-1510655577	172.27.12.71	E	linux:memory				90
-1510655611	172.27.12.71	E	python:memory		[Analysis] 		-3996
-1510655659	172.27.12.71	E	linux:memory		[Questions] 		180
-1510655669	172.27.12.71	E	python:memory		[Analysis] 		-180
-1510656135	172.27.12.71	C	linux:grep		created		124
-1510656271	172.27.12.71	E	todos				84
-1510656367	172.27.12.71	E	linux:grep				46
-1510656496	172.27.12.71	E	linux:debugtool		[gdb] 		100
+1511344664	172.27.12.71	E	linux:nfs		[Basic] 		315
+1511478989	10.141.141.104	E	linux:process				439
+1511479068	10.141.141.104	E	linux:process				11
+1511489075	172.27.12.71	C	linux:xattr		created		75
+1511718662	10.141.141.104	E	linux:nfs		[Basic] 		26
+1511719018	10.141.141.104	E	linux:nfs				226
+1511720170	10.141.141.104	E	linux:nfs				218
+1511720649	10.141.141.104	E	linux:nfs				37
+1511721234	10.141.141.104	E	linux:nfs				72
+1511763612	172.27.12.71	E	linux:nfs				80
+1511768727	172.27.12.71	E	linux:nfs				786
+1511776903	172.27.12.71	E	linux:nfs				184
+1511776946	172.27.12.71	E	linux:nfs				71
+1511778641	172.27.12.71	E	linux:nfs				323
+1511834473	172.27.12.71	E	samba:ntacl:samba-tool				86
+1511834543	172.27.12.71	E	samba:ntacl:samba-tool				77
+1511834781	172.27.12.71	E	samba:ntacl:samba-tool		[Basic commands] 		291
+1511834879	172.27.12.71	E	samba:ntacl:samba-tool				151
+1511835267	172.27.12.71	E	samba:ntacl:samba-tool				492
+1511837453	172.27.12.71	E	samba:ntacl:samba-tool				215
+1511838298	172.27.12.71	E	samba:ntacl:samba-tool				83
+1511838340	172.27.12.71	E	samba:ntacl:samba-tool				379
+1511839544	172.27.12.71	E	samba:ntacl:samba-tool				536
+1511840120	172.27.12.71	E	samba:ntacl:samba-tool				74
+1511840835	172.27.12.71	E	samba:ntacl:samba-tool				696
+1511848690	172.27.12.71	E	samba:ntacl:samba-tool				652
+1511848719	172.27.12.71	E	samba:ntacl:samba-tool				26
+1511858415	172.27.12.71	E	samba:ntacl:samba-tool				482
+1511864292	172.27.12.71	E	samba:ntacl:samba-tool				24
+1511981421	10.141.141.102	E	samba:ntacl:samba-tool				610
+1511981468	10.141.141.102	E	samba:ntacl:samba-tool				102
+1511981527	10.141.141.102	E	samba:ntacl:samba-tool				36
+1511981563	10.141.141.102	E	samba:ntacl:samba-tool				90
+1511981646	10.141.141.102	E	samba:ntacl:samba-tool				76
+1511982191	10.141.141.102	E	samba:ntacl:samba-tool				408
+1511982310	10.141.141.102	E	samba:ntacl:samba-tool				159
+1511983361	10.141.141.102	E	samba:ntacl:samba-tool				1008
+1511983500	10.141.141.102	E	samba:ntacl:samba-tool				-518

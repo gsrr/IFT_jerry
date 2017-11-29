@@ -1,0 +1,31 @@
+<file>
+# Reference:
+1. https://stackoverflow.com/questions/9097201/how-to-get-current-process-name-in-linux
+
+在Linux中, 若要從程式得到自己的program name, 有幾種方式:
+1. read data from /proc/self/cmdline
+
+2. read data from /proc/self/status
+
+3. from <errno.h>
+#define _GNU_SOURCE
+#include <errno.h>
+
+extern char *program_invocation_name;
+extern char *program_invocation_short_name;
+
+--> program_invocation_name contains the name that was used to invoke the calling program.
+(example : /usr/bin/nmbd)
+--> program_invocation_short_name contains the basename component of name that was used to invoke the calling program.
+(example : nmbd)
+
+4. __progname 
+extern char *__progname;
+printf("\n%s", __progname);
+
+5. argv[0] in main function.
+
+
+
+
+</file>

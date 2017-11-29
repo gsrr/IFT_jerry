@@ -1,4 +1,18 @@
-a:6:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:16:"Basic of Process";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1191:"
+a:6:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:16:"Basic of Process";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1641:"
+Q7 : thread is running in the same cpu core?
+Ans :
+No, threads can run in different cpu cores. 
+
+Q6 : cpu core of process?
+Ans :
+1. taskset -c -p <pid>
+2. ps -o pid,psr,comm -p <pid>
+4. ps -aTF
+3. top
+The top command can also show the CPU assigned to a given process. First, launch top command with "p" option. 
+Then press 'f' key, and add "Last used CPU" column to the display. 
+The currently used CPU core will appear under "P" (or "PSR") column.
+
 Q5 : Format of "ps aux"?
 Ans : 
 
@@ -43,4 +57,4 @@ Ans :
 Q1 : process 包含了哪些資訊?
 Ans : 
 1. open fd of a process : ls -l /proc/<pid>/fd
-";i:1;N;i:2;N;}i:2;i:38;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:1237;}i:5;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:1237;}}
+";i:1;N;i:2;N;}i:2;i:38;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:1687;}i:5;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:1687;}}

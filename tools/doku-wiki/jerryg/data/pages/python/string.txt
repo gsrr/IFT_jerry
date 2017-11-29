@@ -1,0 +1,8 @@
+====== FAQ ======
+<file>
+Q1 : convert ascii chars in a string to ascii hex.
+Ans:
+>>> mystring = "Hello World"
+>>> print ''.join(r'\x{0:x}'.format(ord(c)) for c in mystring)
+\x48\x65\x6c\x6c\x6f\x20\x57\x6f\x72\x6c\x64
+</file>

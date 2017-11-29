@@ -6,3 +6,4 @@
   * [[nas:faq:nas_nfs|How to set nfs service]]
   * [[nas:faq:create_file|Create file by specific size]]
   * [[nas:faq:export_import_ldap_server|ldap server export and import mechanism]]
+  * [[nas:faq:mount_root_filesystem_byiscsi|mount root filesystem by iscsi]]

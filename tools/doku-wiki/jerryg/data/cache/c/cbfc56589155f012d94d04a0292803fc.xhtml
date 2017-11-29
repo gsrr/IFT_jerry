@@ -1,0 +1,7 @@
+<pre class="file"># input data to stdin - os.system
+os.system(&#039;echo -e &quot;%s\n%s\n&quot; | smbpasswd -a %s&#039;%(password, password, username))
+
+
+# input data to stdin by subprocess
+p = Popen(&#039;/usr/bin/smbpasswd -c /etc/samba/smb.conf.default -a %s&#039;%username, shell = True, stdout=PIPE, stdin=PIPE, stder    r=PIPE)
+p.communicate(input=&#039;%s\n%s\n&#039;%(password, password))</pre>

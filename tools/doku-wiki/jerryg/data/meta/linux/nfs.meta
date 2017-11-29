@@ -1,0 +1,22 @@
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1511245590;s:8:"modified";i:1511778641;}s:11:"last_change";a:8:{s:4:"date";i:1511778641;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:9:"linux:nfs";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:323;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:3:"FAQ";s:11:"description";a:2:{s:15:"tableofcontents";a:2:{i:0;a:4:{s:3:"hid";s:3:"faq";s:5:"title";s:3:"FAQ";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:5:"basic";s:5:"title";s:5:"Basic";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:663:"FAQ
+
+
+Q2 : nfs4_acl, how to operate?
+Ans :
+1. mount nfs4 file system --> mount -t nfs4 127.0.0.1:/tmp /mnt
+2. get acl --> 
+root@CentOS7-Build /mnt $ nfs4_getfacl /mnt/1234
+A::OWNER@:rwatTcCy
+A::900:rtcy
+A::GROUP@:rtcy
+A::EVERYONE@:rtcy
+
+3. set acl:
+--> mount by no_root_squash
+--> nfs4_setfacl -a A::4106:r /mnt/123
+
+4. nfs4_acl 看起來跟samba的運作機制不一樣, samba是另外存一個security.NTACL來設定acl.
+而nfs4_acl則是存在原先的posix_acl裡面, 但是會透過各種轉換機制來設定posix_acl, 並達到NTACL所要的結果.
+4.1 那轉換的行為跟規則都可以跟samba一致嗎?
+Ans :
+看起來並不完全一樣, 以user而…";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1511245590;s:8:"modified";i:1511778641;}s:11:"last_change";a:8:{s:4:"date";i:1511778641;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:9:"linux:nfs";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:323;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}
