@@ -115,6 +115,7 @@ def ntacl_lib_set(HAServer, paraList):
 
 def ntacllib(HAServer, paraList):
         try:
+                reload(smb_ntacl)
                 op = paraList['op']
                 func = getattr(sys.modules[__name__], op)
                 return func(HAServer, paraList)
@@ -134,6 +135,15 @@ def test_ntacl_lib_set(HA):
     paras = {
         'path' : sys.argv[2],
         'acl' : "(0;0;2032031;100001):(0;0;1179785;WD)",
+        'controller' : 'A',
+        'serviceId' : '0',
+    }
+    print ntacl_lib_set(HA, paras)
+
+def test_ntacl_lib_set_prop1(HA):
+    paras = {
+        'path' : sys.argv[2],
+        'acl' : "(0;17;2032031;100001):(0;17;1179785;WD)",
         'controller' : 'A',
         'serviceId' : '0',
     }

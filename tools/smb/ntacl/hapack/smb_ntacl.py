@@ -54,10 +54,12 @@ SEC_DESC_DACL_AUTO_INHERITED = 0x0400
 SEC_DESC_SACL_AUTO_INHERITED = 0x0800
 SEC_DESC_DACL_PROTECTED = 0x1000
 
-SEC_ACE_FLAG_OBJECT_INHERIT = 0x0001       
-SEC_ACE_FLAG_CONTAINER_INHERIT = 0x0002
-SEC_ACE_FLAG_INHERIT_ONLY = 0x1000
-SEC_ACE_FLAG_INHERITED_ACE = 0x0010
+SEC_ACE_FLAG_OBJECT_INHERIT = 0x01       
+SEC_ACE_FLAG_CONTAINER_INHERIT = 0x02
+SEC_ACE_FLAG_NO_PROPAGATE_INHERIT = 0x04
+SEC_ACE_FLAG_INHERIT_ONLY = 0x08  #No set this folder
+SEC_ACE_FLAG_INHERITED_ACE = 0x10
+SEC_ACE_FLAG_CONTAINER_OBJECT_INHERIT = 0x0b
 
 def ntacl_parser_from_str(sddl):
     # owner, group, dflags, aces
@@ -111,6 +113,7 @@ def num2aceflag(flags):
         (SEC_ACE_FLAG_CONTAINER_INHERIT, 'CI'), 
         (SEC_ACE_FLAG_INHERIT_ONLY, 'IO'),
         (SEC_ACE_FLAG_INHERITED_ACE, 'ID'), 
+        (SEC_ACE_FLAG_NO_PROPAGATE_INHERIT, 'NP'), 
     ]
     for m in flag_map:
         if flags & m[0] != 0:
@@ -171,14 +174,28 @@ def get_sd_file(sd_dic):
 def get_sd_dir(sd_dic):
     tdic = copy.deepcopy(sd_dic)
     for i in xrange(len(tdic['aces']['self']) - 1, -1, -1):
-        if tdic['aces']['self'][i]['flags'] == 0:
+        if tdic['aces']['self'][i]['flags'] == 0: # acl entry is "this folder only"
             tdic['aces']['self'].pop(i)
             continue
+
+        if tdic['aces']['self'][i]['flags'] & SEC_ACE_FLAG_NO_PROPAGATE_INHERIT != 0:
+            if tdic['aces']['self'][i]['flags'] & SEC_ACE_FLAG_CONTAINER_INHERIT != 0:
+                tdic['aces']['self'][i]['flags'] = 0             
+            else:
+                tdic['aces']['self'].pop(i)
+                continue
+        else:
+            if tdic['aces']['self'][i]['flags'] & ~(SEC_ACE_FLAG_OBJECT_INHERIT) == 0: # this folder and files
+                tdic['aces']['self'][i]['flags'] |= SEC_ACE_FLAG_INHERIT_ONLY # cancel this folder
+            
+            if tdic['aces']['self'][i]['flags'] & SEC_ACE_FLAG_CONTAINER_INHERIT != 0: # inherit subfolder
+                tdic['aces']['self'][i]['flags'] &= ~(SEC_ACE_FLAG_INHERIT_ONLY) # add this folder
+            
         tdic['aces']['self'][i]['flags'] |= SEC_ACE_FLAG_INHERITED_ACE
 
     for i in xrange(len(tdic['aces']['inherit']) - 1, -1, -1):
-        if tdic['aces']['self'][i]['flags'] == 0:
-            tdic['aces']['self'].pop(i)
+        if tdic['aces']['inherit'][i]['flags'] == 0:
+            tdic['aces']['inherit'].pop(i)
             continue
         tdic['aces']['inherit'][i]['flags'] |= SEC_ACE_FLAG_INHERITED_ACE
     return tdic 
