@@ -1,0 +1,5 @@
+[installation]
+yum install lua
+yum install lua-devel
+pip install lupa
+

@@ -1,0 +1,18 @@
+<pre class="file">class Solution(object):
+    def subarraySum(self, nums, k):
+        &quot;&quot;&quot;
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        &quot;&quot;&quot;
+        dic = {0 : 1}
+        s = 0
+        ret = 0
+        for i in xrange(len(nums)):
+            s += nums[i]
+            d = s - k
+            ret += dic.get(d, 0)
+            dic[s] = dic.get(s,0) + 1
+        return ret    
+        
+                </pre>

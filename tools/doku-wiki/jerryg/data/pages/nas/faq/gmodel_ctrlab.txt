@@ -1,0 +1,16 @@
+====== Gui send A/B controller in G-Model, How to handle it? ======
+<file>
+# Description
+The NASCLI receive primary controller in Primary controller, 
+then send the command to HA Lib according to controller parameter of command.
+
+# Example
+def func(HAServer, paraList):
+    if paraList['controller'] != HA.currentController():
+        return {'status' : 0}
+
+# Attention
+A:Successful , B: Successful -> GUI Successful
+A:Successful , B: Fail -> GUI Fail
+A:Fail , B: Successful -> GUI Fail
+</file>

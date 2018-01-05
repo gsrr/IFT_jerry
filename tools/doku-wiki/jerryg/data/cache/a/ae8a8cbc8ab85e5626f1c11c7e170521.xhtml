@@ -1,0 +1,38 @@
+<pre class="file">class Solution(object):
+    def matrixReshape(self, nums, r, c):
+        &quot;&quot;&quot;
+        :type nums: List[List[int]]
+        :type r: int
+        :type c: int
+        :rtype: List[List[int]]
+        &quot;&quot;&quot;
+        if len(nums) == 0:
+            return nums
+        nr,nc = len(nums), len(nums[0])
+        if nr * nc != r * c:
+            return nums
+        new_nums = [[0] * c for i in xrange(r)]
+        for i in xrange(nr * nc):
+            new_nums[i / c][i % c] = nums[i / nc][i % nc]
+        return new_nums</pre>
+<pre class="file">class Solution(object):
+    def matrixReshape(self, nums, r, c):
+        &quot;&quot;&quot;
+        :type nums: List[List[int]]
+        :type r: int
+        :type c: int
+        :rtype: List[List[int]]
+        &quot;&quot;&quot;
+        if len(nums) == 0:
+            return nums
+        nr,nc = len(nums), len(nums[0])
+        if nr * nc != r * c:
+            return nums
+        nnums = [[0] * c for i in xrange(r)]
+        
+        cnt = 0
+        for i in xrange(nr):
+            for j in xrange(nc):
+                nnums[cnt / c][cnt % c] = nums[i][j]
+                cnt += 1
+        return nnums</pre>

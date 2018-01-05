@@ -1,0 +1,199 @@
+
+<p>
+<strong><abbr title="Frequently Asked Questions">FAQ</abbr></strong>
+</p>
+<pre class="file">Q7 : 在load parameter時,會發生segmentation fault?
+Ans :
+花了不少時間進行確認, 看了4.2.3與4.4在load parameter時的code都相同.
+--&gt; 最後看到是pytalloc中的pytalloc_steal code有所不一樣. (pytalloc 2.1.2 and pytalloc 2.1.9)
+--&gt; 兩邊python所得到的pyObject size也不相同. (.__sizeof__())
+
+試著裝了libtalloc 2.1.6 與pytalloc 2.1.6進行測試 --&gt; 結果ok.
+1. pytalloc 2.1.6
+--&gt; http://rpm.pbone.net/index.php3/stat/4/idpl/35491718/dir/centos_7/com/pytalloc-2.1.6-1.el7.x86_64.rpm.html
+
+2. libtalloc 2.1.6
+--&gt; http://rpm.pbone.net/index.php3/stat/4/idpl/35045440/dir/scientific_linux_7/com/libtalloc-2.1.6-1.el7.x86_64.rpm.html
+
+3. install from rpm
+rpm -ivh --force &lt;package name&gt;
+
+Reference:
+1. What is pyalloc?
+--&gt; https://download.samba.org/pub/unpacked/talloc/pytalloc_guide.txt
+
+2. Build Samba from source
+--&gt; https://wiki.samba.org/index.php/Build_Samba_from_Source
+
+
+Q6 : get_acl.py for samba ntacl
+Ans :
+The code segment below can work fine in my machine, but it will segmentation fault in GS.
+
+from samba.samba3 import param as s3param
+from samba.dcerpc import security
+from samba.samba3 import smbd
+
+s3conf = s3param.get_context()
+s3conf.load(&quot;/etc/samba/smb.conf&quot;)
+
+raw_input()
+print smbd.get_nt_acl(&quot;/tmp/abcd/f2&quot;, security.SECINFO_OWNER | security.SECINFO_GROUP | security.SECINFO_DACL | security.SECINFO_SACL, service=None)
+--- The code ---
+
+
+#flow
+lpcfg_load --&gt; 
+
+Q5 : flow of get_nt_acl?
+Ans :
+若使用以下的code進行測試, 會發生fail:
+mkdir failed on directory : No such file or directory
+No builtin nor plugin backend for  found
+PANIC: pdb_get_methods: failed to get pdb methods for backend
+
+--- code ---
+from samba.dcerpc import security
+from samba.samba3 import smbd
+raw_input()
+smbd.get_nt_acl(&quot;/tmp/abcd/f2&quot;, security.SECINFO_OWNER | security.SECINFO_GROUP | security.SECINFO_DACL | security.SECINFO_SACL, service=None)
+--- code ---
+
+這是因為沒有load parameter, 導致執行lp_profile_acls()時會fail.
+
+# flow
+get_nt_acl_conn --&gt; vfswrap_get_nt_acl --&gt; posix_get_nt_acl --&gt; posix_get_nt_acl_common --&gt; lp_profile_acls
+
+Q4 : import error for &quot;from samba.samba3 import smbd&quot;
+Traceback (most recent call last):
+  File &quot;smb-ntacl.py&quot;, line 2, in &lt;module&gt;
+    from samba.netcmd.ntacl import cmd_ntacl_get
+  File &quot;/usr/lib64/python2.7/site-packages/samba/netcmd/ntacl.py&quot;, line 22, in &lt;module&gt;
+    from samba.ntacls import setntacl, getntacl
+  File &quot;/usr/lib64/python2.7/site-packages/samba/ntacls.py&quot;, line 26, in &lt;module&gt;
+    from samba.samba3 import smbd
+ImportError: /usr/lib64/samba/libgse-samba4.so: symbol krb5_get_init_creds_opt_set_pac_request, version krb5_3_MIT not defined in file libkrb5.so.3 with link time reference
+
+Ans : 
+krb5-libs.x86_64的version為1.13, 最新為1.15
+--&gt; yum update krb5-libs.x86_64
+
+Q3 : import error for xattr_native
+Traceback (most recent call last):
+  File &quot;smb-ntacl.py&quot;, line 2, in &lt;module&gt;
+    from samba.netcmd.ntacl import cmd_ntacl_get
+  File &quot;/usr/lib64/python2.7/site-packages/samba/netcmd/ntacl.py&quot;, line 22, in &lt;module&gt;
+    from samba.ntacls import setntacl, getntacl
+  File &quot;/usr/lib64/python2.7/site-packages/samba/ntacls.py&quot;, line 23, in &lt;module&gt;
+    import samba.xattr_native, samba.xattr_tdb, samba.posix_eadb
+ImportError: No module named xattr_native
+
+Ans :
+--&gt; 註解掉 import samba.xattr_native, samba.xattr_tdb, samba.posix_eadb
+
+Q2 : import ldb error
+[root@nas_8716691_a samba-tool]# python smb-ntacl.py ntacl_get /Pool-1/Volume_1/d1/file1
+Traceback (most recent call last):
+  File &quot;smb-ntacl.py&quot;, line 2, in &lt;module&gt;
+    from samba.netcmd.ntacl import cmd_ntacl_get
+  File &quot;/usr/lib64/python2.7/site-packages/samba/__init__.py&quot;, line 49, in &lt;module&gt;
+    import ldb
+ImportError: No module named ldb
+
+Ans :
+缺少 ldb module.
+--&gt; yum install pyldb
+
+Q1 : import error in gs
+[root@nas_8716691_a samba-tool]# python smb-ntacl.py ntacl_get /Pool-1/Volume_1/d1/file1
+Traceback (most recent call last):
+  File &quot;smb-ntacl.py&quot;, line 2, in &lt;module&gt;
+    from samba.netcmd.ntacl import cmd_ntacl_get
+  File &quot;/usr/lib64/python2.7/site-packages/samba/__init__.py&quot;, line 27, in &lt;module&gt;
+    import samba.param
+ImportError: /lib64/libpytalloc-util.so.2: version `PYTALLOC_UTIL_2.1.6&#039; not found (required by /usr/lib64/python2.7/site-packages/samba/param.so)
+
+Ans : 
+[root@nas_8716691_a samba-tool]# strings /usr/lib64/python2.7/site-packages/samba/param.so | grep 2.1.6
+PYTALLOC_UTIL_2.1.6
+所以要支援param.so, 至少需要PYTALLOC_UTIL_2.1.6, 但目前GS的版本只在2.1.2
+目前的pytalloc為2.1.9, 所以直接進行update即可.
+--&gt; yum update pytalloc
+
+</pre>
+
+<p>
+<strong>Summary</strong>
+</p>
+<pre class="file"># getntacl and setntacl script
+from samba.samba3 import param as s3param
+from samba.dcerpc import security
+from samba.samba3 import smbd
+
+
+def getntacl():
+        s3conf = s3param.get_context()
+        s3conf.load(&quot;/etc/samba/smb.conf&quot;)
+
+        acl = smbd.get_nt_acl(&quot;/Pool-1/Volume_1/d12/file1.txt&quot;, security.SECINFO_OWNER | security.SECINFO_GROUP | security.SECINFO_DACL | security.SECINFO_SACL, service=None)
+        print acl.as_sddl()
+        return acl.as_sddl()
+
+def setntacl(sddl):
+        sd = security.descriptor.from_sddl(sddl, security.dom_sid())
+        print sd
+        s3conf = s3param.get_context()
+        s3conf.load(&quot;/etc/samba/smb.conf&quot;)
+
+        smbd.set_nt_acl(&quot;/Pool-1/Volume_1/d12/file2.txt&quot;, security.SECINFO_OWNER | security.SECINFO_GROUP | security.SECINFO_DACL | security.SECINFO_SACL, sd, service = None)
+
+sddl = getntacl()
+setntacl(sddl)
+
+# Requirement for porting to GS
+1. rpm -ivh --force libtalloc-2.1.6-1.el7.x86_64.rpm
+2. rpm -ivh --force pytalloc-2.1.6-1.el7.x86_64.rpm
+3. yum install pyldb</pre>
+
+<p>
+<strong> requirement </strong>
+</p>
+<ul>
+<li class="level1 node"><div class="li"> mark #import samba.xattr_native, samba.xattr_tdb, samba.posix_eadb</div>
+<ul>
+<li class="level2"><div class="li"> /usr/lib64/python2.7/site-packages/samba/ntacls.py</div>
+</li>
+</ul>
+</li>
+<li class="level1 node"><div class="li"> replace “tdbsam” with “samba_dsdb” when setting ntacl (optional?)</div>
+<ul>
+<li class="level2"><div class="li"> /usr/lib64/python2.7/site-packages/samba/netcmd/ntacl.py</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<h1 class="sectionedit1" id="basic_commands">Basic commands</h1>
+<div class="level1">
+<pre class="file"># dump all extended attribute
+1. getfattr --dump filename 
+--&gt; only to dumps the user.*
+
+2. getfattr -d -m &quot;&quot; /Pool-1/Volume_1/d1/file1
+
+3. xattr in python
+[root@nas_8716691_a ~]# function geteas() { echo -e &quot;import xattr\nes = xattr.xattr(&#039;$1&#039;).list()\nprint es\n&quot; | python; }
+[root@nas_8716691_a ~]# geteas /Pool-1/Volume_1/d1/file1
+[u&#039;user.DOSATTRIB&#039;, u&#039;trusted.SGI_ACL_FILE&#039;, u&#039;security.NTACL&#039;, u&#039;system.posix_acl_access&#039;]
+[root@nas_8716691_a ~]# geteas &quot;/Pool-1/Volume_1/d1/file 1&quot;
+[u&#039;user.DOSATTRIB&#039;, u&#039;trusted.SGI_ACL_FILE&#039;, u&#039;security.NTACL&#039;, u&#039;system.posix_acl_access&#039;]
+
+# get ntacl from file
+[root@nas_824366_a ~]# ./samba-tool ntacl get /tmp/user.ldif --as-sddl
+O:S-1-5-21-2896997548-2896997548-2896997548-1003G:BAD:(A;;0x001f019f;;;S-1-5-21-2896997548-2896997548-2896997548-1003)(A;;0x00120089;;;BA)(A;;0x00120089;;;WD)
+
+# set ntacl to file
+[root@nas_824366_a ~]# ./samba-tool ntacl set &quot;O:S-1-5-21-2896997548-2896997548-2896997548-1003G:BAD:(A;;0x001f019f;;;S-1-5-21-2896997548-2896997548-2896997548-1003)(A;;0x00120089;;;BA)(A;;0x00120089;;;WD)&quot; /tmp/test.txt</pre>
+
+</div>
+<!-- EDIT1 SECTION "Basic commands" [5945-] -->

@@ -1,0 +1,13 @@
+====== post ======
+
+<file>
+# 透過 post 將parameter 以 json object的方式傳送
+# 1. content-type : application/json 是跟server說 : 要以json object的方式進行parse.
+
+data={"user" : args['u'], "pwd" : args['p']}
+headers = {'content-type': 'application/json'}
+url = "http://127.0.0.1:8816/cmd/api/resetPass"
+r = requests.post(url, json = data, headers=headers)
+print r.status_code
+print r.json()
+</file>

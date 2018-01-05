@@ -1,0 +1,247 @@
+
+<h1 class="sectionedit1" id="reference">Reference</h1>
+<div class="level1">
+<pre class="file"># Setting up Samba as a Domain Member
+https://wiki.samba.org/index.php/Setting_up_Samba_as_a_Domain_Member#Testing_the_Winbindd_Connectivity</pre>
+
+</div>
+<!-- EDIT1 SECTION "Reference" [1-181] -->
+<h1 class="sectionedit2" id="login_samba_server_by_kerberos_auth">login samba server by kerberos auth</h1>
+<div class="level1">
+<pre class="file">這個問題大概有兩個面向:
+1. samba service
+1.1 需使用netbios進行login(ip 與netbios的行為不一樣)
+ip 會預設走ntlm的方式, netbios則是走kerberos的方式.
+
+1.2 可以使用smbclient進行測試:
+(https://cwiki.apache.org/confluence/display/DIRxINTEROP/Using+Kerberos+Credentials+with+smbclient)
+
+a. 先join AD
+b. 使用kinit跟AD要一個key : kinit administrator@WINADNTP.EVT
+(或使用wbinfo -K administrator%ABcd_1234)
+c. smbclient -k //nas_8632830_a/AA -R host -U administrator -d 4
+
+
+2. other service (透過pam認證, 像sftp, ftp...etc)
+2.1 需要先將/etc/security/pam_winbind.conf裡面的kerberos設定enable
+(https://wiki.samba.org/index.php/PAM_Kerberos_Authentication)
+主要有兩個東西:
+krb5_auth = yes
+krb5_ccache_type = FILE
+
+2.2 當user登入時,  就會在tmp底下產生一個該user的key file, 像是/tmp/krb5cc_11001703
+
+</pre>
+
+</div>
+<!-- EDIT2 SECTION "login samba server by kerberos auth" [182-1123] -->
+<h1 class="sectionedit3" id="event_and_error_message">Event and Error message</h1>
+<div class="level1">
+<div class="table sectionedit4"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><td class="col1"> </td><td class="col2">message</td><td class="col3">event</td><td class="col4"> </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0">AD</td><td class="col1">Password / Accout Error (Preauthentication failed)</td><td class="col2"> 使用者名稱或密碼不正確。</td><td class="col3"> X </td><td class="col4"> </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">AD</td><td class="col1"> Dns Entry error (Can not find KDC Server) </td><td class="col2 rightalign">  X </td><td class="col3"> X </td><td class="col4"> </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">AD</td><td class="col1"> ip error (Can&#039;t contact LDAP server)</td><td class="col2 leftalign"> 無法連到網域伺務器。  </td><td class="col3"> X </td><td class="col4"> </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">AD</td><td class="col1"> account 沒有admin 權限 ( Failed to join domain: Failed to set account flags for machine account (NT_STATUS_ACCESS_DENIED))</td><td class="col2 leftalign"> X  </td><td class="col3"> X </td><td class="col4"> </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">LDAP</td><td class="col1"> Password (ldap_bind: Invalid credentials) </td><td class="col2 leftalign"> 使用者名稱或密碼不正確。  </td><td class="col3"> X </td><td class="col4"> </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">LDAP</td><td class="col1"> User Dn error (ldap_bind: Invalid credentials) </td><td class="col2"> 使用者名稱或密碼不正確。 </td><td class="col3"> X </td><td class="col4"> </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0">LDAP</td><td class="col1"> ip error (can not contact ldap server)</td><td class="col2"> 無法連接到LDAP伺服器 </td><td class="col3"> X </td><td class="col4"> </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0">LDAP</td><td class="col1"> Base Dn error (No such object)</td><td class="col2"> X </td><td class="col3"> X </td><td class="col4"> </td>
+	</tr>
+</table></div>
+<!-- EDIT4 TABLE [1162-1901] -->
+</div>
+<!-- EDIT3 SECTION "Event and Error message" [1124-1906] -->
+<h1 class="sectionedit5" id="acl">acl</h1>
+<div class="level1">
+<pre class="file"># user join group after login
+## gs-join group-ad
+1. user1 login samba
+2. join group (ad)
+3. without update user list
+ret --&gt; can not access share folder (without relogin)
+relogin --&gt; can access share folder
+
+[root@nas_8446485_a ~]# id WINADNTP\\test001
+uid=11001369(WINADNTP\test001) gid=11000513(WINADNTP\domain users) groups=11001369(WINADNTP\test001),11000513(WINADNTP\domain users),11001372(WINADNTP\group002)
+
+## gs-join group-ad
+1. user1 login samba
+2. join group (ad)
+3. without update user list
+ret --&gt; can not access share folder (without relogin)
+relogin --&gt; can access share folder
+
+[root@nas_8446485_a ~]# id WINADNTP\\test001
+uid=11001369(WINADNTP\test001) gid=11000513(WINADNTP\domain users) groups=11001369(WINADNTP\test001),11000513(WINADNTP\domain users),11001372(WINADNTP\group002)
+
+## gs-join group-ad
+1. user1 login samba
+2. user1 join group
+3. update user list 
+ret --&gt; can not access share folder 
+relogin --&gt; can access share folder
+
+## gs without re-login
+1. user1 login samba
+2. user1 join group (ad)
+3. update user list
+ret --&gt;
+
+## gs without re-login
+1. user1 login samba
+2. user1 join group (ad)
+3. without update user list
+ret --&gt; 
+relogin --&gt; 
+
+## gs-join group-ldap
+1. user1 login samba
+2. user1 join group
+3. without update user list 
+ret --&gt; can not access share folder (without relogin)
+relogin --&gt; can not access share folder
+
+## gs-join group-ldap
+1. user1 login samba
+2. user1 join group
+3. update user list 
+ret --&gt; can not access share folder (without relogin)
+relogin --&gt; can access share folder
+
+## gs-leave group-ldap
+1. user1 login samba
+2. user1 leave group
+3. without update user list 
+ret --&gt; can access share folder (without relogin)
+relogin --&gt; can access share folder
+
+## gs-leave group-ldap
+1. user1 login samba
+2. user1 leave group
+3. update user list 
+ret --&gt; can access share folder (without relogin)
+relogin --&gt; can not can access share folder
+
+## synology without re-login
+1. user1 login samba
+2. join group
+3. waiting time (check user list)
+ret --&gt; 
+
+
+Summary:
+1. 一定要重新login才會生效, 不論有update user or not. (nscd -i group)
+2. ad跟ldap的行為不太一樣, ad的id command似乎沒有辦法再nscd -i group就更新, 必須要重新login
+3. ad只要重新login, 其acl就可以生效, 即便id user沒有更新也沒關係.
+3. synology 在add group時, 似乎可以不用重新login, 但leave group時等了15分鐘還是可以操作.
+</pre>
+
+</div>
+<!-- EDIT5 SECTION "acl" [1907-4355] -->
+<h1 class="sectionedit6" id="ad_take_over">AD take over</h1>
+<div class="level1">
+<pre class="file">172.27.120.180 WIN-2012R2ADC.winadntp.evt
+172.27.120.179 WIN-2012R2ADNTP.winadntp.evt
+# join AD message
+Using short domain name -- WINADNTP
+5433 Joined &#039;NAS_824366_A&#039; to dns domain &#039;winadntp.evt&#039;
+5434 No DNS domain configured for nas_824366_a. Unable to perform DNS Update.)
+--&gt; normal message
+
+# failed to join AD
+Mar 27 02:42:12 nas_824366_a ldapOperation[2449]: (cmd, out) = ([&#039;/usr/bin/net&#039;, &#039;ads&#039;, &#039;join&#039;, &#039;-S&#039;, &#039;WIN-2012R2ADC.winadntp.evt&#039;, &#039;-U&#039;, &#039;administrator%ABcd_1234&#039;, &#039;-s&#039;, &#039;/etc/samba/net_smb.conf&#039;], Failed to join domain: Failed to set
+machine spn: Constraint violation Do you have sufficient permissions to create machine accounts?)
+Mar 27 02:42:12 nas_824366_a diagnosticOperation[2449]: {&#039;status&#039;: 71, &#039;err&#039;: &#039;&#039;, &#039;out&#039;: &#039;Failed to join domain: Failed to set machine spn: Constraint violation\nDo you have sufficient permissions to create machine accounts?&#039;}
+--&gt; Delete the computer account of AD
+
+Root Cause:
+若A, B兩台機器, A join完斷線, 這時候會換join B來進行接手,此時新增加的computer object id與join A時並不一樣,
+所以當A起來後, 會多出一個computerCNF的object, 導致若要換成joinA接手時會失敗.
+
+# 另外一個問題是沒辦法透過DNS找不到ip
+--&gt; 看起來是因為找到192.168.99.14去了, 導致DNS會一直回覆unknown host.
+anyway , 目前測試起來, 應該不需要進行重新join的動作.
+只要透過wbinfo -P來讓winbind ping AD, 就可以讓winbind建立正確連線.
+
+test scope:
+1. DNS應該只保留查詢得到的nameserver. (192.168.99.14, 192.168.99.16都應該去除)
+2. 將AD斷線, 等待約5~10分鐘, 再重新使用AD user來登入samba, 確認該user可以正常登入.
+</pre>
+
+</div>
+<!-- EDIT6 SECTION "AD take over" [4356-6073] -->
+<h1 class="sectionedit7" id="ad_related_commands">AD related commands</h1>
+<div class="level1">
+<pre class="file"># smbd
+1. port 139, port 445
+
+# nmbd
+1. port 137, port 138
+UDP    172.27.12.71:137       *:*                                    4
+UDP    172.27.12.71:138       *:*                                    4
+
+# search workgroup
+1. net ads workgroup -S 172.27.120.130
+2. nmblookup -A 172.27.l20.130
+3. 
+
+# join AD
+net ads join -U administrator%ABcd1234
+
+# leave AD
+net ads leave -U administrator%ABcd1234
+
+# join specific AD
+net ads join -S WIN-2012R2ADC.winadntp.evt -U administrator%ABcd_1234
+
+# leave specific AD
+net ads leave -S WIN-2012R2ADC.winadntp.evt -U administrator%ABcd_1234</pre>
+
+</div>
+<!-- EDIT7 SECTION "AD related commands" [6074-6702] -->
+<h1 class="sectionedit8" id="error_message">Error Message</h1>
+<div class="level1">
+<pre class="file"># can not get user information (MIS , England)
+getent group : 3m40 + 3m37
+
+# failed to join AD
+Failed to join domain: failed to join domain &#039;WINADNTP.EVT&#039; over rpc: None of the information to be translated has been translated.
+--&gt; Delete the computer account of AD
+
+# failed to join AD
+[root@nas_8686288_a ~]# net ads join -U administrator%ABcd_1234 -s /etc/samba/net_smb.conf
+Failed to join domain: Invalid configuration (&quot;workgroup&quot; set to &#039;&#039;, should be &#039;WINADNTP&#039;) and configuration modification was not requested
+--&gt; nmblookup -A ip , 沒辦法得到group information?
+Ans : 
+看起來是客戶將netbios over tcp/ip這個service關掉了, 導致nmblookup -A ip 沒有辦法得到資訊.
+打開的方式如下: 
+http://172.27.12.189/jerryg/lib/exe/fetch.php?media=netbios_over_tcpip.png
+
+# failed to join AD (not have admin privilege)
+n  1 15:47:21 mlmlpppnt03_a ldapOperation[1318]: joinAD result: {&#039;status&#039;: 71, &#039;err&#039;: &#039;&#039;, &#039;out&#039;: &#039;Failed to join domain: User specified does not have administrator privileges&#039;}
+
+# account error
+joinAD result: {&#039;status&#039;: 71, &#039;err&#039;: &#039;&#039;, &#039;out&#039;: &quot;Failed to join domain: failed to lookup DC info for domain &#039;VCPILTPAC.COM&#039; over rpc: Account locked out&quot;}
+--&gt; 看起來是帳號沒有辦法使用.?
+</pre>
+
+</div>
+<!-- EDIT8 SECTION "Error Message" [6703-] -->

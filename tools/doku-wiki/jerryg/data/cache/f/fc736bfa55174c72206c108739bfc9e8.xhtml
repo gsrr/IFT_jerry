@@ -1,0 +1,238 @@
+<ul>
+<li class="level1"><div class="li"> <a href="/jerryg/doku.php?id=tool:python:time_module" class="wikilink1" title="tool:python:time_module">Usage of time module</a></div>
+</li>
+</ul>
+
+<h1 class="sectionedit1" id="get_reference_count_from_gdb">get reference count from gdb</h1>
+<div class="level1">
+<pre class="file">The reference count of each and every object is stored in the PyObject itself, in a variable called ob_refcnt.
+
+typedef struct _object {
+    _PyObject_HEAD_EXTRA
+    Py_ssize_t ob_refcnt;          # Reference count
+    struct _typeobject *ob_type;
+} PyObject;
+
+(gdb) info locals
+sp = 0x7fe6c054c1e8
+stack_pointer = &lt;optimized out&gt;
+next_instr = &lt;optimized out&gt;
+opcode = &lt;optimized out&gt;
+oparg = &lt;optimized out&gt;
+why = WHY_NOT
+err = 0
+x = &lt;optimized out&gt;
+v = &lt;optimized out&gt;
+w = &lt;optimized out&gt;
+u = &lt;optimized out&gt;
+t = &lt;optimized out&gt;
+stream = 0x0
+fastlocals = 0x7fe6c054c1c8
+freevars = &lt;optimized out&gt;
+retval = &lt;optimized out&gt;
+tstate = &lt;optimized out&gt;
+co = &lt;optimized out&gt;
+instr_ub = -1
+instr_lb = 0
+instr_prev = -1
+first_instr = &lt;optimized out&gt;
+names = &lt;optimized out&gt;
+consts = &lt;optimized out&gt;
+(gdb) print fastlocals
+$6 = (PyObject **) 0x7fe6c054c1c8
+(gdb) print *fastlocals
+$7 = &lt;HAServer(setInfoLock={&#039;NFSInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996730&gt;, &#039;WEBDAVInfo&#039;: &lt;thread.lock at remote 0x7fe6c09967f0&gt;, &#039;FTPInfo&#039;: &lt;thread.lock at remote 0x7fe6c09968f0&gt;, &#039;ServiceInfo&#039;: &lt;thread.lock at remote 0x7fe6c09968d0&gt;, &#039;MonitorInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996970&gt;, &#039;DiskInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996dd0&gt;, &#039;ShareInfo&#039;: &lt;thread.lock at remote 0x7fe6c06c1230&gt;, &#039;MDInfo&#039;: &lt;thread.lock at remote 0x7fe6c06c15b0&gt;, &#039;AvInfo&#039;: &lt;thread.lock at remote 0x7fe6c06c1410&gt;, &#039;SystemInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996c30&gt;, &#039;LVMInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996cf0&gt;, &#039;UserInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996d30&gt;, &#039;RSYNCDInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996870&gt;, &#039;AFPInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996c50&gt;, &#039;PasswdManageInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996d90&gt;, &#039;NetworkInfo&#039;: &lt;thread.lock at remote 0x7fe6c0996f10&gt;, &#039;CIFSInfo&#039;: &lt;thread.lock at remote 0x7fe6c06c1210&gt;}, g_bgjobList=[], infoLocal={&#039;NFSInfo&#039;: &lt;NFSInfo(updateTime=&lt;datetime.datetime at remote 0x7fe6c767c78...(truncated)
+(gdb) print *(*fastlocals)
+$8 = {ob_refcnt = 26, ob_type = 0x241feb0}</pre>
+
+</div>
+<!-- EDIT1 SECTION "get reference count from gdb" [54-2099] -->
+<h1 class="sectionedit2" id="id_and_di">id and di</h1>
+<div class="level1">
+<pre class="file">import _ctypes
+
+def di(obj_id):
+    &quot;&quot;&quot; Inverse of id() function. &quot;&quot;&quot;
+    return _ctypes.PyObj_FromPtr(obj_id)
+
+if __name__ == &#039;__main__&#039;:
+    a = 42
+    b = &#039;answer&#039;
+    print(di(id(a)))  # -&gt; 42
+    print(di(id(b)))  # -&gt; answer
+    
+&lt;file&gt;
+====== unix domain socket ======
+&lt;file&gt;
+# server.py
+import socket
+import sys
+import os
+
+server_address = &#039;./uds_socket&#039;
+
+try:
+    os.unlink(server_address)
+except OSError:
+    if os.path.exists(server_address):
+        raise
+
+# Create a UDS socket
+sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+print &gt;&gt;sys.stderr, &#039;starting up on %s&#039; % server_address
+sock.bind(server_address)
+sock.listen(1)
+
+while True:
+    print &gt;&gt;sys.stderr, &#039;waiting for a connection&#039;
+    connection, client_address = sock.accept()
+    try:
+        print &gt;&gt;sys.stderr, &#039;connection from&#039;, client_address
+
+        while True:
+            data = connection.recv(16)
+            print &gt;&gt;sys.stderr, &#039;received &quot;%s&quot;&#039; % data
+            if data:
+                print &gt;&gt;sys.stderr, &#039;sending data back to the client&#039;
+                connection.sendall(data)
+            else:
+                print &gt;&gt;sys.stderr, &#039;no more data from&#039;, client_address
+                break
+    finally:
+        connection.close()
+        
+# client.py
+import socket
+import sys
+
+# Create a UDS socket
+sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+
+# Connect the socket to the port where the server is listening
+server_address = &#039;./uds_socket&#039;
+print &gt;&gt;sys.stderr, &#039;connecting to %s&#039; % server_address
+try:
+    sock.connect(server_address)
+except socket.error, msg:
+    print &gt;&gt;sys.stderr, msg
+    sys.exit(1)
+try:
+
+    # Send data
+    message = &#039;This is the message.  It will be repeated.&#039;
+    print &gt;&gt;sys.stderr, &#039;sending &quot;%s&quot;&#039; % message
+    sock.sendall(message)
+
+    amount_received = 0
+    amount_expected = len(message)
+
+    while amount_received &lt; amount_expected:
+        data = sock.recv(16)
+        amount_received += len(data)
+        print &gt;&gt;sys.stderr, &#039;received &quot;%s&quot;&#039; % data
+except Exception as ex:
+        print type(ex), ex.args
+
+finally:
+    print &gt;&gt;sys.stderr, &#039;closing socket&#039;
+    sock.close()
+    
+# socket file is not exist
+[root@gsnas_a unix]# python client.py
+connecting to ./uds_socket
+[Errno 2] No such file or directory</pre>
+
+</div>
+<!-- EDIT2 SECTION "id and di" [2100-4388] -->
+<h1 class="sectionedit3" id="socket_exception">socket exception</h1>
+<div class="level1">
+<pre class="file">#client code
+import socket
+import traceback
+import sys
+
+try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server_address = (&#039;localhost&#039;, 10000)
+        sock.connect(server_address)
+except Exception as ex:
+        print type(ex), ex.args
+
+# Server is not open
+[root@gsnas_a ~]# python client.py
+&lt;class &#039;socket.error&#039;&gt; (111, &#039;Connection refused&#039;) 
+
+# Server close socket
+[root@gsnas_a ~]# python client.py
+&lt;class &#039;socket.error&#039;&gt; (104, &#039;Connection reset by peer&#039;)
+
+
+# raise exception
+import socket
+import traceback
+import sys
+import time
+
+try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server_address = (&#039;localhost&#039;, 10000)
+        raise Exception,(1,&quot;error&quot;), sys.exc_info()[2]
+        sock.connect(server_address)
+        sock.close()
+except Exception as ex:
+        print type(ex), ex.args, ex.errno
+        print traceback.format_tb(sys.exc_info()[2])</pre>
+
+</div>
+<!-- EDIT3 SECTION "socket exception" [4389-5347] -->
+<h1 class="sectionedit4" id="structpack">struct.pack</h1>
+<div class="level1">
+<pre class="file"># pack string (char array)
+&gt;&gt;&gt; s1 = struct.pack(&quot;I9sI&quot;, 12, &quot;Eononestr&quot;, 11)
+&gt;&gt;&gt; s1
+&#039;\x0c\x00\x00\x00Eononestr\x00\x00\x00\x0b\x00\x00\x00&#039;
+&gt;&gt;&gt; struct.unpack(&quot;I9sI&quot;, s1)
+(12, &#039;Eononestr&#039;, 11)
+
+&gt;&gt;&gt; struct.unpack(&quot;I8sI&quot;,s2)
+(12, &#039;Eononest&#039;, 11)
+&gt;&gt;&gt; s2 = struct.pack(&quot;I&quot;, 12) + &quot;Eononest&quot; + struct.pack(&quot;I&quot;, 11)
+&gt;&gt;&gt; s2
+&#039;\x0c\x00\x00\x00Eononest\x0b\x00\x00\x00&#039;
+&gt;&gt;&gt; struct.unpack(&quot;I8sI&quot;,s2)
+(12, &#039;Eononest&#039;, 11)
+(The packet should be padded if the char array is not divided by 2)</pre>
+
+</div>
+<!-- EDIT4 SECTION "struct.pack" [5348-5866] -->
+<h1 class="sectionedit5" id="trace_module">trace module</h1>
+<div class="level1">
+
+<p>
+<a href="https://pymotw.com/2/trace/" class="urlextern" title="https://pymotw.com/2/trace/" rel="nofollow">https://pymotw.com/2/trace/</a>
+</p>
+<pre class="file"># For a simple list of the functions called
+python -m trace --listfuncs trace_example/main.py</pre>
+
+</div>
+<!-- EDIT5 SECTION "trace module" [5867-6034] -->
+<h1 class="sectionedit6" id="object_analysis">object analysis</h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> vars(object) , but not all objects have a <em class="u">dict</em> member</div>
+</li>
+<li class="level1"><div class="li"> dir(object)</div>
+</li>
+<li class="level1"><div class="li"> getattr()</div>
+</li>
+<li class="level1"><div class="li"> type()</div>
+</li>
+<li class="level1"><div class="li"> </div>
+</li>
+</ul>
+<pre class="file">def dump(obj):
+  for attr in dir(obj):
+    print &quot;obj.%s = %s&quot; % (attr, getattr(obj, attr))</pre>
+
+</div>
+<!-- EDIT6 SECTION "object analysis" [6035-] -->

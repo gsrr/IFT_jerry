@@ -1,0 +1,7 @@
+digraph ATN {
+rankdir=LR;
+user[fontsize=11, label="user", shape=circle, fixedsize=true, width=.6];
+local_user[fontsize=11,label="local user", shape=circle, fixedsize=true, width=.6, peripheries=1];
+domain_user[fontsize=11,label="local user", shape=circle, fixedsize=true, width=.6, peripheries=1];
+local_user -> user[fontname="Times-Italic", label="&epsilon;"];
+}

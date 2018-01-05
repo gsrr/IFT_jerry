@@ -1,17 +1,99 @@
-====== create a remote Git branch ======
+====== FAQ ======
 <file>
+Q1 : How to checkout remote git tag?
+Ans:
+1. list all tags --> git tag
+2. checkout remote tag --> git checkout <tag_name>
+
+</file>
+
+====== config related ======
+<file>
+# Reference
+1. https://ihower.tw/git/basic.html#sec1
+
+# Basic knowledge
+Q1: git working tree裡面分為三個區域, working directory, staging area and repository.
+Ans:
+也就是說, 一開始修改檔案的地方, 叫做working directory.
+當執行git add後, 修改後的檔案紀錄就會放到staging area.
+當執行git commit後, 檔案紀錄就會被加進repository
+(git push就是上傳到remote repository)
+
+# login with escape password
+http.proxy=http://userId:pwd%40123@ipaddress:port
+
+</file>
+====== Merge ======
+<file>
+# cherry-pick with new commit
+git cherry-pick -n XXXX
+
+# merge with commits
+git checkout master
+git merge hotfix # it will merge hotfix branch into master branch with commits.
+
+# merge and write a new commit (discard commits in hotfix branch)
+git checkout master
+git merge hotfix --squash
+
+</file>
+====== Difference ======
+<file>
+# Difference in commit 
+git diff $commit $commit^
+
+# Difference between two branches
+        X
+        |
+        | T
+        | |
+        | |
+        | |
+        |/
+        B
+        |
+        |
+        S
+        
+git diff master..topic will show us the difference between X and T
+git diff master...topic will show us the difference between B and T
+</file>
+====== Branch ======
+<file>
+# checkout a remote branch
+git pull
+git checkout -b test origin/test
+
+# create a remote branch
 git checkout -b <branch-name>
 git push <remote-name> <branch-name> or git push <remote-name> <local-branch-name>:<remote-branch-name>
-</file>
-====== compare two branches ======
-  * git diff branch_1..branch_2
-====== rollback ======
 
-  * rollback push
+# remove local branch
+git branch -d <branch>
+
+# list all branches (include remote branches)
+git branch -a
+
+
+</file>
+====== Recover ======
 <file>
+# Reset all files in current branch
+git fetch --all  # git-fetch - Download objects and refs from another repository
+git reset --hard origin/master
+
+# Remove file in staging area
+git reset <file>
+
+# Modify the last commit message
+git commit --amend
+
+# rollback
 git revert $hash  # It will create a new commit automatically.
 git push
 </file>
+
   * Revert to a specific commit id
 <file>
 git reset --hard 9bc9775a51432ae4a0ecc57423dd9791a22ea9c0

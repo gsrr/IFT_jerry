@@ -1,0 +1,61 @@
+1490064934	172.27.12.71	C	nas:rsync		created		618
+1490068255	172.27.12.71	E	nas:rsync				876
+1490068711	172.27.12.71	E	nas:rsync				438
+1491373536	172.27.12.71	E	nas:rsync				470
+1491373575	172.27.12.71	E	nas:rsync				4
+1491373683	172.27.12.71	E	nas:rsync				440
+1491375990	172.27.12.71	E	nas:rsync				133
+1491376269	172.27.12.71	E	nas:rsync				107
+1491376281	172.27.12.71	E	nas:rsync				3
+1491376289	172.27.12.71	E	nas:rsync				1
+1491379938	172.27.12.71	E	nas:rsync				430
+1491380206	172.27.12.71	E	nas:rsync				507
+1491380227	172.27.12.71	E	nas:rsync				30
+1491381139	172.27.12.71	E	nas:rsync				396
+1491381458	172.27.12.71	E	nas:rsync				531
+1491463549	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		430
+1491463581	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		70
+1491463604	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		74
+1491463624	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		10
+1491463690	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		202
+1491463903	172.27.12.71	E	nas:rsync				645
+1491965579	172.27.12.71	E	nas:rsync				81
+1492499349	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		352
+1492755106	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		110
+1492755595	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		80
+1492770821	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		183
+1492773081	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		59
+1492785789	10.141.141.104	E	nas:rsync		[Sync Acl with EonNAS] 		76
+1492787890	10.141.141.104	E	nas:rsync				300
+1492788020	10.141.141.104	E	nas:rsync		[Sync Acl with EonNAS] 		174
+1492788224	10.141.141.104	E	nas:rsync		[Sync Acl with EonNAS] 		196
+1492789851	10.141.141.104	E	nas:rsync		[Sync Acl with EonNAS] 		232
+1492793537	10.141.141.116	E	nas:rsync		[Sync Acl with EonNAS] 		198
+1492797277	10.141.141.101	E	nas:rsync		[Sync Acl with EonNAS] 		753
+1492800194	10.141.141.101	E	nas:rsync		[Sync Acl with EonNAS] 		1279
+1492800521	10.141.141.101	E	nas:rsync		[FAQ] 		146
+1492800792	10.141.141.101	E	nas:rsync		[FAQ] 		82
+1494380319	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		250
+1494398651	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		77
+1494402112	172.27.12.71	E	nas:rsync		[FAQ] 		85
+1494406977	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		107
+1494407194	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		51
+1494409852	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		153
+1494411170	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		92
+1494473448	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		80
+1494476860	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		85
+1494476917	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		86
+1494535307	10.141.141.113	E	nas:rsync		[Sync Acl with EonNAS] 		381
+1494553656	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		383
+1494557103	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		219
+1494568083	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		458
+1494574616	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		89
+1494900623	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		346
+1494991761	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		175
+1495617931	172.27.12.71	E	nas:rsync		[Sync Acl with EonNAS] 		188
+1502875316	172.27.12.71	E	nas:rsync		[FAQ] 		108
+1509949260	172.27.12.71	E	nas:rsync				40
+1509953030	172.27.12.71	E	nas:rsync				494
+1509953945	172.27.12.71	E	nas:rsync				106
+1509955601	172.27.12.71	E	nas:rsync				380
+1509961538	172.27.12.71	E	nas:rsync				539

@@ -1,0 +1,4 @@
+<file>
+# list all extended attribute
+getfattr -d -m ".*" <filename>
+</file>

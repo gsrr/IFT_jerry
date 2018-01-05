@@ -1,0 +1,9 @@
+====== Command ======
+<file>
+# grep multiple pattan
+grep 'foo\|bar' *.txt
+
+# grep -F
+1. Equal to fgrep
+2. It will treat the special character as normal character.
+</file>

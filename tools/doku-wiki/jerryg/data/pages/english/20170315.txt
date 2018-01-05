@@ -1,0 +1,13 @@
+The newest status of issues is as follows:
+1. The power of schedule can not work.
+2. The led can not light while the NAS was booting.
+
+<file>
+說明兩個動作或兩種情況在同時發生, while, when, as.
+
+
+Their addresses are as follows.
+
+The following are their addresses.
+The following is his address.
+</file>

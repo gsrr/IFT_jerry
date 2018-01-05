@@ -1,3 +1,4 @@
+
   * python /usr/local/NAS/misc/HAAgent/MBCmd.py getPoolnameByVVID serial
   * disk list (python DiskInfo.py)
 <file>

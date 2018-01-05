@@ -1,0 +1,7 @@
+<pre class="file">Q1 : docker exec -it command returns following error &quot;cannot enable tty mode on non tty input&quot;
+Ans : 
+1. -i 是interactive mode --&gt; 會與container的程式連接stdin and stdout
+2. -t 是pseudo terminal --&gt; 會與container建立pesudo terminal (stdin and stdout), 但不會與裡面的程式建立stdin and stdout.
+
+
+</pre>

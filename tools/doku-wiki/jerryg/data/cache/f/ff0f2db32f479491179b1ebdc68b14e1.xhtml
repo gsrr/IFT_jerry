@@ -1,0 +1,52 @@
+<pre class="file"># dirty page
+dirty pages = ( Dirty + NFS_Unstable + Writeback )
+----
+cat /proc/meminfo
+MemTotal:        3882232 kB
+MemFree:         2049896 kB
+MemAvailable:    2198416 kB
+Buffers:            1484 kB
+Cached:           365748 kB
+SwapCached:            0 kB
+Active:          1370916 kB
+Inactive:         225472 kB
+Active(anon):    1267732 kB
+Inactive(anon):    34256 kB
+Active(file):     103184 kB
+Inactive(file):   191216 kB
+Unevictable:       18936 kB
+Mlocked:           18936 kB
+SwapTotal:             0 kB
+SwapFree:              0 kB
+Dirty:                24 kB
+Writeback:             0 kB
+AnonPages:       1246084 kB
+Mapped:            64780 kB
+Shmem:             66128 kB
+Slab:              81256 kB
+SReclaimable:      46128 kB
+SUnreclaim:        35128 kB
+KernelStack:        6832 kB
+PageTables:        11884 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     1941116 kB
+Committed_AS:    2153768 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:      285696 kB
+VmallocChunk:   34359432192 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:    960512 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:       79872 kB
+DirectMap2M:     3065856 kB
+DirectMap1G:     1048576 kB
+
+# /proc/sys/vm/dirty_ratio
+cat /proc/sys/vm/dirty_ratio
+</pre>

@@ -1,0 +1,17 @@
+<file>
+# return the upper index, for example : 
+if h == 2 , and heaters = [1,4]
+then it will return idx = 1
+
+def bin_search_house(h, heaters):
+    s = 0 
+    e = len(heaters) - 1
+    find = False
+    while s <= e:
+        m = (s + e) / 2
+        if h >= heaters[m]:
+            s = m + 1
+        elif h < heaters[m]:
+            e = m - 1
+    return s
+</file>

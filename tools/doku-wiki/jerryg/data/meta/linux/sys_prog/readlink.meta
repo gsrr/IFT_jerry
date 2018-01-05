@@ -1,0 +1,25 @@
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1501838782;s:8:"modified";i:1501840605;}s:11:"last_change";a:8:{s:4:"date";i:1501840605;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:23:"linux:sys_prog:readlink";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:844;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:23:"convert fd to real path";s:11:"description";a:2:{s:15:"tableofcontents";a:1:{i:0;a:4:{s:3:"hid";s:23:"convert_fd_to_real_path";s:5:"title";s:23:"convert fd to real path";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:503:"convert fd to real path
+
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+
+char* fd2fpath(int fd)
+{
+        struct stat sb;
+        char *linkname;
+        ssize_t r;
+        char fdpath[256] = {0};
+
+        sprintf(fdpath, "/proc/%d/fd/%d",getpid(), fd);
+        printf("fdpath:%s\n", fdpath);
+        if (lstat(fdpath, &sb) == -1) {
+        }
+
+        linkname = malloc(sb.st_size + 1);
+        r = readlink(fdpath, linkna…";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1501838782;s:8:"modified";i:1501840605;}s:11:"last_change";a:8:{s:4:"date";i:1501840605;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:23:"linux:sys_prog:readlink";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:844;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

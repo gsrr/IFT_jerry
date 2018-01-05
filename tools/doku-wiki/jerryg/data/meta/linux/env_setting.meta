@@ -1,0 +1,13 @@
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1505705584;s:8:"modified";i:1505713804;}s:11:"last_change";a:8:{s:4:"date";i:1505713804;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:17:"linux:env_setting";s:4:"user";s:0:"";s:3:"sum";s:6:"[vim] ";s:5:"extra";s:0:"";s:10:"sizechange";i:93;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:3:"vim";s:11:"description";a:2:{s:15:"tableofcontents";a:2:{i:0;a:4:{s:3:"hid";s:3:"vim";s:5:"title";s:3:"vim";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:4:"tmux";s:5:"title";s:4:"tmux";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:278:"vim
+
+
+[256 color test]
+1. cd ~/.vim/bundle/; git clone https://github.com/guns/xterm-color-table.vim
+2. vim
+3. :XtermColorTable
+
+[sshfs]
+1. yum install epel-release
+2. yum install sshfs
+3. mkdir ~/remoteserv
+4. sshfs -o idmap=user <username>@<ipaddress>:/remotepath ~/remoteserv";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1505705584;s:8:"modified";i:1505713804;}s:11:"last_change";a:8:{s:4:"date";i:1505713804;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:17:"linux:env_setting";s:4:"user";s:0:"";s:3:"sum";s:6:"[vim] ";s:5:"extra";s:0:"";s:10:"sizechange";i:93;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

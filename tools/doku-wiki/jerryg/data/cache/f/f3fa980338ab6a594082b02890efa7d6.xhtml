@@ -1,27 +1,106 @@
 
-<h1 class="sectionedit1" id="create_a_remote_git_branch">create a remote Git branch</h1>
+<h1 class="sectionedit1" id="faq">FAQ</h1>
 <div class="level1">
-<pre class="file">git checkout -b &lt;branch-name&gt;
-git push &lt;remote-name&gt; &lt;branch-name&gt; or git push &lt;remote-name&gt; &lt;local-branch-name&gt;:&lt;remote-branch-name&gt;</pre>
+<pre class="file">Q1 : How to checkout remote git tag?
+Ans:
+1. list all tags --&gt; git tag
+2. checkout remote tag --&gt; git checkout &lt;tag_name&gt;
+</pre>
 
 </div>
-<!-- EDIT1 SECTION "create a remote Git branch" [1-190] -->
-<h1 class="sectionedit2" id="compare_two_branches">compare two branches</h1>
+<!-- EDIT1 SECTION "FAQ" [1-157] -->
+<h1 class="sectionedit2" id="config_related">config related</h1>
 <div class="level1">
-<ul>
-<li class="level1"><div class="li"> git diff branch_1..branch_2</div>
-</li>
-</ul>
+<pre class="file"># Reference
+1. https://ihower.tw/git/basic.html#sec1
+
+# Basic knowledge
+Q1: git working tree裡面分為三個區域, working directory, staging area and repository.
+Ans:
+也就是說, 一開始修改檔案的地方, 叫做working directory.
+當執行git add後, 修改後的檔案紀錄就會放到staging area.
+當執行git commit後, 檔案紀錄就會被加進repository
+(git push就是上傳到remote repository)
+
+# login with escape password
+http.proxy=http://userId:pwd%40123@ipaddress:port
+</pre>
 
 </div>
-<!-- EDIT2 SECTION "compare two branches" [191-257] -->
-<h1 class="sectionedit3" id="rollback">rollback</h1>
+<!-- EDIT2 SECTION "config related" [158-700] -->
+<h1 class="sectionedit3" id="merge">Merge</h1>
 <div class="level1">
-<ul>
-<li class="level1"><div class="li"> rollback push</div>
-</li>
-</ul>
-<pre class="file">git revert $hash  # It will create a new commit automatically.
+<pre class="file"># cherry-pick with new commit
+git cherry-pick -n XXXX
+
+# merge with commits
+git checkout master
+git merge hotfix # it will merge hotfix branch into master branch with commits.
+
+# merge and write a new commit (discard commits in hotfix branch)
+git checkout master
+git merge hotfix --squash
+</pre>
+
+</div>
+<!-- EDIT3 SECTION "Merge" [701-1025] -->
+<h1 class="sectionedit4" id="difference">Difference</h1>
+<div class="level1">
+<pre class="file"># Difference in commit 
+git diff $commit $commit^
+
+# Difference between two branches
+        X
+        |
+        | T
+        | |
+        | |
+        | |
+        |/
+        B
+        |
+        |
+        S
+        
+git diff master..topic will show us the difference between X and T
+git diff master...topic will show us the difference between B and T</pre>
+
+</div>
+<!-- EDIT4 SECTION "Difference" [1026-1413] -->
+<h1 class="sectionedit5" id="branch">Branch</h1>
+<div class="level1">
+<pre class="file"># checkout a remote branch
+git pull
+git checkout -b test origin/test
+
+# create a remote branch
+git checkout -b &lt;branch-name&gt;
+git push &lt;remote-name&gt; &lt;branch-name&gt; or git push &lt;remote-name&gt; &lt;local-branch-name&gt;:&lt;remote-branch-name&gt;
+
+# remove local branch
+git branch -d &lt;branch&gt;
+
+# list all branches (include remote branches)
+git branch -a
+
+</pre>
+
+</div>
+<!-- EDIT5 SECTION "Branch" [1414-1787] -->
+<h1 class="sectionedit6" id="recover">Recover</h1>
+<div class="level1">
+<pre class="file"># Reset all files in current branch
+git fetch --all  # git-fetch - Download objects and refs from another repository
+git reset --hard origin/master
+
+# Remove file in staging area
+git reset &lt;file&gt;
+
+# Modify the last commit message
+git commit --amend
+
+# rollback
+git revert $hash  # It will create a new commit automatically.
 git push</pre>
 <ul>
 <li class="level1"><div class="li"> Revert to a specific commit id</div>
@@ -30,4 +109,4 @@ git push</pre>
 <pre class="file">git reset --hard 9bc9775a51432ae4a0ecc57423dd9791a22ea9c0</pre>
 
 </div>
-<!-- EDIT3 SECTION "rollback" [258-] -->
+<!-- EDIT6 SECTION "Recover" [1788-] -->

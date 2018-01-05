@@ -1,12 +1,22 @@
-a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1484794266;s:8:"modified";i:1484794346;}s:11:"last_change";a:8:{s:4:"date";i:1484794346;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:11:"tool:python";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:25;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:15:"object analysis";s:11:"description";a:2:{s:15:"tableofcontents";a:1:{i:0;a:4:{s:3:"hid";s:15:"object_analysis";s:5:"title";s:15:"object analysis";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:214:"object analysis
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1484794266;s:8:"modified";i:1510551051;}s:11:"last_change";a:8:{s:4:"date";i:1510551051;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:11:"tool:python";s:4:"user";s:0:"";s:3:"sum";s:17:"[debug with gdb] ";s:5:"extra";s:0:"";s:10:"sizechange";i:-2588;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"relation";a:2:{s:10:"references";a:1:{s:23:"tool:python:time_module";b:1;}s:10:"firstimage";s:0:"";}s:5:"title";s:28:"get reference count from gdb";s:11:"description";a:2:{s:15:"tableofcontents";a:6:{i:0;a:4:{s:3:"hid";s:28:"get_reference_count_from_gdb";s:5:"title";s:28:"get reference count from gdb";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:9:"id_and_di";s:5:"title";s:9:"id and di";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:2;a:4:{s:3:"hid";s:16:"socket_exception";s:5:"title";s:16:"socket exception";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:3;a:4:{s:3:"hid";s:10:"structpack";s:5:"title";s:11:"struct.pack";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:4;a:4:{s:3:"hid";s:12:"trace_module";s:5:"title";s:12:"trace module";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:5;a:4:{s:3:"hid";s:15:"object_analysis";s:5:"title";s:15:"object analysis";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:503:"*  Usage of time module
 
-	*  vars(object) , but not all objects have a dict member
-	*  dir(object)
-	*  getattr()
-	*  type()
-	*  
+get reference count from gdb
 
 
-def dump(obj):
-  for attr in dir(obj):
-    print "obj.%s = %s" % (attr, getattr(obj, attr))";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1484794266;s:8:"modified";i:1484794346;}s:11:"last_change";a:8:{s:4:"date";i:1484794346;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:11:"tool:python";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:25;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}
+The reference count of each and every object is stored in the PyObject itself, in a variable called ob_refcnt.
+
+typedef struct _object {
+    _PyObject_HEAD_EXTRA
+    Py_ssize_t ob_refcnt;          # Reference count
+    struct _typeobject *ob_type;
+} PyObject;
+
+(gdb) info locals
+sp = 0x7fe6c054c1e8
+stack_pointer = <optimized out>
+next_instr = <optimized out>
+opcode = <optimized out>
+oparg = <optimized out>
+why = WHY_NOT
+err = 0
+x = <optimize…";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1484794266;s:8:"modified";i:1510551051;}s:11:"last_change";a:8:{s:4:"date";i:1510551051;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:11:"tool:python";s:4:"user";s:0:"";s:3:"sum";s:17:"[debug with gdb] ";s:5:"extra";s:0:"";s:10:"sizechange";i:-2588;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

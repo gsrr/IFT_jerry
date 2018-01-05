@@ -1,0 +1,18 @@
+====== Debug tools ======
+<file>
+
+</file>
+====== Automation tools ======
+<file>
+* nas_helper (python)
+  - https://github.com/gsrr/nas_helper
+  - A tool to help teammate develop new module.(Create template files automatically)
+  - Use distutils to auto deploy
+
+* auto_update_server
+  - https://github.com/gsrr/Auto_Update_Server
+  - Auto deploy the remote machine (ctrl-a and ctrl-b)
+  - use ssh-tunnel to deploy ctrl-b while ctrl-b can not be reached.
+
+* 
+</file>

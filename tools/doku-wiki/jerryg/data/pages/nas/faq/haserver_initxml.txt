@@ -1,0 +1,6 @@
+====== How to init xml config file in HAServer ======
+<file>
+1. Remove xml file in /cfpool
+2. Remove lastGood in /cfpool
+3. Restart HAServer (HAServer will copy the xml file from $HAAgent/Config/ to /cfpool)
+</file>

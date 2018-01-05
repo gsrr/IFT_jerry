@@ -1,12 +1,15 @@
-a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1484127287;s:8:"modified";i:1484634824;}s:11:"last_change";a:8:{s:4:"date";i:1484634824;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:22:"samba:ntacl:samba-tool";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:34;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:301:"system_session
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1484127287;s:8:"modified";i:1511983500;}s:11:"last_change";a:8:{s:4:"date";i:1511983500;s:2:"ip";s:14:"10.141.141.102";s:4:"type";s:1:"E";s:2:"id";s:22:"samba:ntacl:samba-tool";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:-518;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:14:"Basic commands";s:11:"description";a:2:{s:15:"tableofcontents";a:1:{i:0;a:4:{s:3:"hid";s:14:"basic_commands";s:5:"title";s:14:"Basic commands";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:617:"FAQ
 
 
+Q7 : 在load parameter時,會發生segmentation fault?
+Ans :
+花了不少時間進行確認, 看了4.2.3與4.4在load parameter時的code都相同.
+--> 最後看到是pytalloc中的pytalloc_steal code有所不一樣. (pytalloc 2.1.2 and pytalloc 2.1.9)
+--> 兩邊python所得到的pyObject size也不相同. (.__sizeof__())
 
+試著裝了libtalloc 2.1.6 與pytalloc 2.1.6進行測試 --> 結果ok.
+1. pytalloc 2.1.6
+--> http://rpm.pbone.net/index.php3/stat/4/idpl/35491718/dir/centos_7/com/pytalloc-2.1.6-1.el7.x86_64.rpm.html
 
- requirement 
-
-	*  mark #import samba.xattr_native, samba.xattr_tdb, samba.posix_eadb
-		*  /usr/lib64/python2.7/site-packages/samba/ntacls.py
-
-	*  replace “tdbsam” with “samba_dsdb” when setting ntacl (optional?)
-		*  /usr/lib64/python2.7/site-packages/samba/netcmd/ntacl.py";}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1484127287;s:8:"modified";i:1484634824;}s:11:"last_change";a:8:{s:4:"date";i:1484634824;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:22:"samba:ntacl:samba-tool";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:34;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}
+2. libtalloc 2.1.6
+--> http://rpm.pbone.net/index.php3/stat/4/idpl/35045440/dir/s…";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1484127287;s:8:"modified";i:1511983500;}s:11:"last_change";a:8:{s:4:"date";i:1511983500;s:2:"ip";s:14:"10.141.141.102";s:4:"type";s:1:"E";s:2:"id";s:22:"samba:ntacl:samba-tool";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:-518;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

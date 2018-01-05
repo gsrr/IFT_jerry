@@ -1,0 +1,14 @@
+
+<h1 class="sectionedit1" id="post">post</h1>
+<div class="level1">
+<pre class="file"># 透過 post 將parameter 以 json object的方式傳送
+# 1. content-type : application/json 是跟server說 : 要以json object的方式進行parse.
+
+data={&quot;user&quot; : args[&#039;u&#039;], &quot;pwd&quot; : args[&#039;p&#039;]}
+headers = {&#039;content-type&#039;: &#039;application/json&#039;}
+url = &quot;http://127.0.0.1:8816/cmd/api/resetPass&quot;
+r = requests.post(url, json = data, headers=headers)
+print r.status_code
+print r.json()</pre>
+
+</div>

@@ -1,0 +1,14 @@
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1494395766;s:8:"modified";i:1496989684;}s:11:"last_change";a:8:{s:4:"date";i:1496989684;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:8:"tool:tig";s:4:"user";s:0:"";s:3:"sum";s:8:"[Usage] ";s:5:"extra";s:0:"";s:10:"sizechange";i:1;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:5:"Usage";s:11:"description";a:2:{s:15:"tableofcontents";a:2:{i:0;a:4:{s:3:"hid";s:5:"usage";s:5:"title";s:5:"Usage";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:8:"dot_file";s:5:"title";s:8:"dot file";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:378:"Usage
+
+
+# checkout branch
+1. r --> show all branch information
+2. C --> checkout branch
+
+# commit diff
+1. d --> show commit diff of file
+
+
+# cherry-pick
+還有 tig 指令後面接 branch 名稱可以直接查看分支，接著在分支 commit 上按大寫 C 可以 cherry-pick 回目前的 branch，
+而 tig 後面接檔名的話可以直接查看跟這個檔案有關的 commit";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1494395766;s:8:"modified";i:1496989684;}s:11:"last_change";a:8:{s:4:"date";i:1496989684;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:8:"tool:tig";s:4:"user";s:0:"";s:3:"sum";s:8:"[Usage] ";s:5:"extra";s:0:"";s:10:"sizechange";i:1;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

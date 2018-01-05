@@ -1,0 +1,14 @@
+
+<p>
+Restrict root login
+</p>
+<pre class="file"># do not allow user login by root in sshd_config
+PermitRootLogin no
+
+# do not allow user login by password in sshd_config
+PasswordAuthentication yes  
+
+# remove password of root
+1. passwd -d root
+2. debug : login by iftsup and su root
+</pre>

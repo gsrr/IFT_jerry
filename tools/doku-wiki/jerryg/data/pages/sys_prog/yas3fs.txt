@@ -1,0 +1,133 @@
+====== FAQ ======
+<file>
+Q1 : 如何驗證ioctl download?
+Ans:
+比對xfs的隱藏資料夾與fuse的資料夾, 就可以判斷出來, 執行download後, 隱藏資料夾照理會多出檔案.
+
+Q2 : 如何驗證ioctl state?
+Ans:
+比對xfs的隱藏資料夾與fuse的資料夾, 就可以判斷出來, 若xfs裡面不存在, 則應該回覆0, 若xfs裡面存在, 則會回覆1.
+
+</file>
+
+====== ioctl example ======
+<file>
+#include <linux/ioctl.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define YAS3FS_IOC_CACHE_STATE      _IOR('F', 1, unsigned int)
+#define YAS3FS_IOC_DOWNLOAD         _IOWR('F', 2, yas3fs_download_t)
+#define YAS3FS_IOC_ADJUST_SIZE      _IOW('F', 3, size_t)
+
+
+#define YAS3FS_CACHE_SYNC           (1 << 0)
+
+
+#define BUF_SIZE 8192
+
+typedef struct yas3fs_io_range {
+                off_t offset;
+                size_t count;
+} yas3fs_io_range_t;
+
+typedef struct yas3fs_download {
+                yas3fs_io_range_t io_range;
+                unsigned int state;
+                char resv[4];
+} yas3fs_download_t;
+
+
+int test_ioctl_download(char* fp)
+{
+                int fd = open(fp, O_RDONLY);
+                void *buf = NULL;
+                int ret;
+
+                yas3fs_download_t *download = malloc(sizeof(yas3fs_download_t));
+                if (download == NULL)
+                                return -1;
+
+                download->state = 0;
+                download->io_range.offset = 0;
+                download->io_range.count = 0;
+                buf = (void *)download;
+                ret = ioctl(fd, YAS3FS_IOC_DOWNLOAD, buf);
+                if(ret < 0)
+                {
+                                printf("ret < 0\n");
+                }
+                else
+                {
+                                printf("ret > 0\n");
+                                unsigned int *statep = &(((yas3fs_download_t *)buf)->state);
+                                printf("download state:%x\n", *statep & YAS3FS_CACHE_SYNC);
+                }
+                free(buf);
+}
+
+void test_ioctl_state(char* fp)
+{
+                unsigned int cstate = 0;
+                int fd = open(fp, O_RDONLY);
+                int ret = ioctl(fd, YAS3FS_IOC_CACHE_STATE, &cstate);
+                printf("state ret:%d\n", cstate);
+}
+
+int test_ioctl_adjust(char* fp)
+{
+        ssize_t ret_in, ret_out;
+        int fr = open("./iofile", O_RDONLY);
+        int fw = open(fp, O_WRONLY | O_CREAT);
+        char buffer[BUF_SIZE];
+        ssize_t offset = 0;
+        while((ret_in = read (fr, &buffer, BUF_SIZE)) > 0)
+        {
+                        //ret_out = write (fw, &buffer, (ssize_t) ret_in);
+                        offset += ret_in;
+                        printf("offset:%d, ret_out:%d\n", offset, ret_in);
+                        int ret = ioctl(fw, YAS3FS_IOC_ADJUST_SIZE, &offset);
+        }
+}
+
+
+int test_ioctl_xfswrite(char* fp)
+{
+        ssize_t ret_in, ret_out;
+        int fr = open("./iofile", O_RDONLY);
+        int fw = open(fp, O_WRONLY | O_CREAT);
+        char buffer[BUF_SIZE];
+        while((ret_in = read (fr, &buffer, BUF_SIZE)) > 0)
+        {
+                        ret_out = write (fw, &buffer, (ssize_t) ret_in);
+                        if(ret_out != ret_in){
+                                        /* Write error */
+                                        perror("write");
+                                        return 4;
+                        }
+        }
+}
+
+int main(int argc, char* argv[])
+{
+                if (strcmp("state", argv[1]) == 0)
+                {
+                        test_ioctl_state(argv[2]);
+                }
+                else if (strcmp("download", argv[1]) == 0)
+                {
+                                test_ioctl_download(argv[2]);
+                }
+                else if (strcmp("adjust", argv[1]) == 0)
+                {
+                                test_ioctl_adjust(argv[2]);
+                }
+                else if (strcmp("xfswrite", argv[1]) == 0)
+                {
+                                test_ioctl_xfswrite(argv[2]);
+                }
+                return 0;
+}
+</file>

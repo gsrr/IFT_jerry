@@ -1,0 +1,26 @@
+<file>
+def issub(haystack, needle, i):
+    for j in xrange(len(needle)):
+        if haystack[i + j] != needle[j]:
+            return False
+    return True
+    
+class Solution(object):
+    def strStr(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        if needle == "":
+            return 0
+        
+        s = 0
+        e = len(haystack) - len(needle) + 1
+        while s < e:
+            if haystack[s] == needle[0]:
+                if issub(haystack, needle, s):
+                    return s
+            s += 1
+        return -1
+</file>

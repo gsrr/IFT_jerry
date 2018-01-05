@@ -1,0 +1,10 @@
+digraph ATN {
+download[fontsize=11, label="DOWNLOAD::filepath::offset::size::", shape=rectangle, fixedsize=false];
+crc[fontsize=11, label="crc32::length::", shape=rectangle, fixedsize=false];
+data[fontsize=11, label="data", shape=rectangle, fixedsize=false];
+next[fontsize=11, label="data", shape=rectangle, fixedsize=false];
+
+download-> crc-> data-> next[label="recv 0"];
+crc-> download[fontname="Times-Italic", label="recv 1 (repeat)"];
+data-> download[fontname="Times-Italic", label="recv 1 (repeat)"];
+}

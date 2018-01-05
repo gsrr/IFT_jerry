@@ -1,0 +1,8 @@
+digraph ATN {
+rankdir=LR;
+binary_search_tree[fontsize=11, label="bst", shape=circle, fixedsize=false];
+ldr[fontsize=11, label="LDR", shape=circle, fixedsize=false];
+ldr -> binary_search_tree[fontname="Times-Italic", label="&epsilon;"];
+
+
+}

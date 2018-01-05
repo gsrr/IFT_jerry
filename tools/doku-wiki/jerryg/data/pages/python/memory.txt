@@ -1,0 +1,113 @@
+====== Reference ======
+<file>
+https://docs.python.org/2/c-api/index.html
+
+[Tools]
+1. memory_profile
+2. guppy
+</file>
+
+====== Analysis ======
+<file>
+import copy
+import time
+import os
+from guppy import hpy
+
+
+
+lens = 100000
+
+class Test:
+        def __init__(self):
+                self.a = range(lens)
+
+def method_2(cnt):
+        a1 = {}
+        a1['1'] = Test()
+        a1['2'] = Test()
+        a1['3'] = Test()
+        a = [a1] # 21.1m
+        data2 = copy.deepcopy(a1)
+        a.append(data2) # 57.7m
+        data3 = copy.deepcopy(a1)
+        a.append(data3) # 61.9m
+        data4 = copy.deepcopy(a1)
+        a.append(data4) # 69m
+        return a
+
+def method_1(cnt):
+        a1 = {}
+        a1['1'] = Test()
+        a1['2'] = Test()
+        a1['3'] = Test()
+        a = [a1] # 21.1m
+        for i in xrange(len(a)):
+                b = copy.deepcopy(a1)
+                a.append(b)
+        return a # 57.6m
+
+def method_0(cnt):
+        a = [range(lens), range(lens), range(lens)] #12.6m
+
+def main():
+        print "aaaaaaaaaaaa"
+        print os.getpid()
+        time.sleep(1)
+        cnt = 1
+        while cnt < 2:
+                b = method_1(cnt)
+                print "cnt:%d"%cnt
+                cnt += 1
+        h = hpy()
+        print h.heap()
+
+if __name__ == "__main__":
+        main()
+        
+        
+[Result]
+Partition of a set of 325581 objects. Total size = 20380176 bytes.
+ Index  Count   %     Size   % Cumulative  % Kind (class / dict of class)
+     0    194   0  9857168  48   9857168  48 list
+     1 299623  92  7190952  35  17048120  84 int
+     2  11858   4   943448   5  17991568  88 str
+     3   5930   2   478248   2  18469816  91 tuple
+     4    329   0   282968   1  18752784  92 dict (no owner)
+     5     72   0   217536   1  18970320  93 dict of module
+     6   1658   1   212224   1  19182544  94 types.CodeType
+     7    200   0   211136   1  19393680  95 dict of type
+     8   1614   0   193680   1  19587360  96 function
+     9    200   0   177912   1  19765272  97 type
+
+Partition of a set of 325561 objects. Total size = 15461872 bytes.
+ Index  Count   %     Size   % Cumulative  % Kind (class / dict of class)
+     0 299623  92  7190952  47   7190952  47 int
+     1    188   0  4941536  32  12132488  78 list
+     2  11858   4   943448   6  13075936  85 str
+     3   5930   2   478248   3  13554184  88 tuple
+     4    327   0   282408   2  13836592  89 dict (no owner)
+     5     72   0   217536   1  14054128  91 dict of module
+     6   1658   1   212224   1  14266352  92 types.CodeType
+     7    200   0   211136   1  14477488  94 dict of type
+     8   1614   0   193680   1  14671168  95 function
+     9    200   0   177912   1  14849080  96 type
+
+</file>
+
+<file>
+All Python objects (even Python integers) have a type and a reference count.
+An object’s type determines what kind of object it is
+"reference count" counts how many different places there are that have a reference to an object.
+
+It’s that you’ve created 5 million integers simultaneously alive, and each int object consumes 12 bytes. “For speed”, Python maintains an internal free list for integer objects. Unfortunately, that free list is both immortal and unbounded in size.
+
+'del someObject'. This only removes the binding between that identifier and the object. 
+'del' doesn't actually result in the object being deleted from memory. 
+It merely dereferences that local binding.
+
+Q1 : 為什麼剛init一個object的reference count是2, 而不是1
+Ans:
+因為object在傳進getreference()時，reference count就會偷偷加1了。
+
+</file>

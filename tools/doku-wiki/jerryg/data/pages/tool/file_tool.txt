@@ -1,0 +1,5 @@
+====== du ======
+<file>
+# list directories and their total sizes
+du -ah . | grep -v "/$" | sort -rh
+</file>

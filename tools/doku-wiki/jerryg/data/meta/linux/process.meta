@@ -1,0 +1,19 @@
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1504306756;s:8:"modified";i:1511479068;}s:11:"last_change";a:8:{s:4:"date";i:1511479068;s:2:"ip";s:14:"10.141.141.104";s:4:"type";s:1:"E";s:2:"id";s:13:"linux:process";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:11;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:16:"Basic of Process";s:11:"description";a:2:{s:15:"tableofcontents";a:1:{i:0;a:4:{s:3:"hid";s:16:"basic_of_process";s:5:"title";s:16:"Basic of Process";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:503:"Basic of Process
+
+
+Q7 : thread is running in the same cpu core?
+Ans :
+No, threads can run in different cpu cores. 
+
+Q6 : cpu core of process?
+Ans :
+1. taskset -c -p <pid>
+2. ps -o pid,psr,comm -p <pid>
+4. ps -aTF
+3. top
+The top command can also show the CPU assigned to a given process. First, launch top command with "p" option. 
+Then press 'f' key, and add "Last used CPU" column to the display. 
+The currently used CPU core will appear under "P" (or "PSR") column.
+
+Q5 : Format of "ps aux"?
+Ans : …";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1504306756;s:8:"modified";i:1511479068;}s:11:"last_change";a:8:{s:4:"date";i:1511479068;s:2:"ip";s:14:"10.141.141.104";s:4:"type";s:1:"E";s:2:"id";s:13:"linux:process";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:11;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

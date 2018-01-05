@@ -1,0 +1,18 @@
+====== FAQ ======
+<file>
+Q1 : Two modules have the same name in different package?
+Ans :
+
+ShutterDeck
+├── Controller
+│   ├── __init__.py
+│   └── User.py
+├── Helper
+│   ├── __init__.py
+│   └── User.py
+└── __init__.py
+
+--> import ShutterDeck.Controller.User
+--> import ShutterDeck.Helper.User
+
+</file>

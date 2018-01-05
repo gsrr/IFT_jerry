@@ -1,0 +1,17 @@
+<pre class="file">1. set a channel to block level.
+2. Raid command:
+  2.1 Debug0&gt; f &amp;show_lun  --&gt;  get LunMapIdx
+
+Debug0&gt; f &amp;show_lun
+LunMapIdx:40 chl:2 id:0 lun:0 ss_drv-&gt;drvlun:7C0 --&gt;
+  Simple Map: LDPartIdx:7C0
+  
+  2.2 Debug0&gt; f &amp;_map 2 0 0 7c0 0  --&gt; use _map([PhyChl], [Id], [Lun], [DriveUnit], 0) to map
+
+Debug0&gt; f &amp;_map 2 0 0 7c0 0
+000000001(rax) 0D801B270(rdx)
+(將root所在的disk partition map 到channel 2)
+
+3. discover and login by iscsi command.
+
+4. mount vg_eonfs-root</pre>

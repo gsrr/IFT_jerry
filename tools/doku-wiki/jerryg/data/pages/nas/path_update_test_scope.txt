@@ -1,0 +1,33 @@
+====== test scope for upgrade ======
+^Test version|^Test Result|
+|old|new|--|
+|1.3|2.3|
+|2.2|2.3|
+
+^Test model^Test Result|
+|G-Mmodel|
+|R-Model|
+
+^Item|^Test scope|^Test Result (OK/NG)|
+|Network||mgmt, data , trunk port||
+|AD/LDAP||1.確認Service運作正常||
+|:::||2.確認Imported UserHome路徑有正常轉換||
+|Share Folder||1. 確認路徑正常轉換||
+|:::||2. 確認設定存在(Network service , acl)||
+|User/UserHome||1. 確認User/Group資訊正常(包含Domain User/Group)||
+|:::||2. 確認UserHome有正常轉換||
+|Folder Rsync|Rsync Target|1.確認share路徑有正常轉換||
+|:::|Folder Rsync|1.確認schedule source路徑正常轉換||
+|:::|:::|2.確認schedule 可以正常備份資料||
+|Application||1. 確認LDAPServer路徑正常轉換且可以正常備份出資料庫||
+|:::||2. 確認Proxy可以正常運作||
+|:::||3. 確認syslog路徑正常轉換且可以正常運作||
+|:::||4. 確認syncCloud路徑正常轉換且可以正常運作||
+|Network Service||確認Service狀態正常且可以正常進行IO|CIFS/SMB|
+|:::||:::|FTP/SFTP|
+|:::||:::|NFS|
+|:::||:::|AFP|
+|:::||:::|Webdav|
+|建立兩個同樣名稱的volume||確認會有一個被mount起來,且可以正常進行IO||
+
+

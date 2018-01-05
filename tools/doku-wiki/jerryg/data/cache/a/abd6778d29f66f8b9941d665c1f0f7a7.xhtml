@@ -1,0 +1,20 @@
+
+<h1 class="sectionedit1" id="faq">FAQ</h1>
+<div class="level1">
+<pre class="file">Q1 : Two modules have the same name in different package?
+Ans :
+
+ShutterDeck
+├── Controller
+│   ├── __init__.py
+│   └── User.py
+├── Helper
+│   ├── __init__.py
+│   └── User.py
+└── __init__.py
+
+--&gt; import ShutterDeck.Controller.User
+--&gt; import ShutterDeck.Helper.User
+</pre>
+
+</div>

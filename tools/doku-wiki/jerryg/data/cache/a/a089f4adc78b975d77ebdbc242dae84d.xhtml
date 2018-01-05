@@ -1,0 +1,17 @@
+<pre class="file"># add entry offline
+slapadd -v -l /tmp/root.ldif
+
+[root.ldif]
+dn: sambaDomainName=aaa,dc=aaa,dc=com
+sambaSID: S-1-5-21-444432415-1257635583-3944642206
+sambaNextUserRid: 1000
+objectClass: sambaDomain
+
+# export 
+slapcat -n 2 &gt; ldap.ldif
+
+# import
+rm -rf  /cfpool/ldapserver/*
+cp /etc/openldap/DB_CONFIG.example /cfpool/ldapserver/DB_CONFIG
+slapadd -v -l ldap.ldif
+chown -R ldap:ldap /cfpool/ldapserver/</pre>

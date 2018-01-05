@@ -1,16 +1,23 @@
-a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1484288262;s:8:"modified";i:1484795930;}s:11:"last_change";a:8:{s:4:"date";i:1484795930;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:8:"tool:vim";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:28;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:25:"Vim 的纵向编辑模式";s:11:"description";a:2:{s:15:"tableofcontents";a:3:{i:0;a:4:{s:3:"hid";s:25:"vim_的纵向编辑模式";s:5:"title";s:25:"Vim 的纵向编辑模式";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:1:"m";s:5:"title";s:2:"^M";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:2;a:4:{s:3:"hid";s:26:"replace_string1_to_string2";s:5:"title";s:26:"Replace string1 to string2";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:472:"Vim 的纵向编辑模式
-
-第一步：修改
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1484288262;s:8:"modified";i:1493592899;}s:11:"last_change";a:8:{s:4:"date";i:1493592899;s:2:"ip";s:14:"10.141.141.113";s:4:"type";s:1:"E";s:2:"id";s:8:"tool:vim";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:105;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:19:"command line window";s:11:"description";a:2:{s:15:"tableofcontents";a:5:{i:0;a:4:{s:3:"hid";s:19:"command_line_window";s:5:"title";s:19:"command line window";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:18:"show_all_character";s:5:"title";s:18:"Show all character";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:2;a:4:{s:3:"hid";s:25:"vim_的纵向编辑模式";s:5:"title";s:25:"Vim 的纵向编辑模式";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:3;a:4:{s:3:"hid";s:1:"m";s:5:"title";s:2:"^M";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:4;a:4:{s:3:"hid";s:26:"replace_string1_to_string2";s:5:"title";s:26:"Replace string1 to string2";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:267:"command line window
 
 
-将 IP 数列中第二段所有数字“1” 修改为“5”：
-将游标定位第一个行 IP 地址第二段的“1”
-ctrl-v 进入纵向编辑模式
-G 移动游标到最后一行，可视块覆盖所要修改的列
-r 进入修改模式
-5 输入数字“5”
-ESC 退出纵向编辑模式，同时所有被选中的数字都被改成了“5”，并回到命令模式
-结果如下：
- 10.5.5.214 
- 10.5.5.212 
- 10.5.5.210";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1484288262;s:8:"modified";i:1484795930;}s:11:"last_change";a:8:{s:4:"date";i:1484795930;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:8:"tool:vim";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:28;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}
+# help menu for command line window
+help c_ctrl-f
+
+# error indent while pasting code fragment from website
+--> cause by auto-indent
+set paste
+set nopaste
+
+
+
+Show all character
+
+
+set list
+set nolist
+
+
+Vim 的纵向编辑模式
+
+第一步：修改";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1484288262;s:8:"modified";i:1493592899;}s:11:"last_change";a:8:{s:4:"date";i:1493592899;s:2:"ip";s:14:"10.141.141.113";s:4:"type";s:1:"E";s:2:"id";s:8:"tool:vim";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:105;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

@@ -1,0 +1,86 @@
+1501645670	172.27.12.71	C	rsync:server		created		139
+1501645754	172.27.12.71	E	rsync:server				86
+1501645841	172.27.12.71	E	rsync:server				66
+1501646226	172.27.12.71	E	rsync:server				47
+1501646335	172.27.12.71	E	rsync:server				22
+1501654682	172.27.12.71	E	rsync:server				101
+1501655332	172.27.12.71	E	rsync:server				24
+1501658773	172.27.12.71	E	rsync:server				28
+1501660649	172.27.12.71	E	rsync:server				14
+1501660697	172.27.12.71	E	rsync:server				45
+1501661460	172.27.12.71	E	rsync:server				93
+1501663045	172.27.12.71	E	rsync:server				132
+1501663397	172.27.12.71	E	rsync:server				-1
+1501668751	172.27.12.71	E	rsync:server				15
+1501668790	172.27.12.71	E	rsync:server				12
+1501671077	172.27.12.71	E	rsync:server				49
+1501672055	172.27.12.71	E	rsync:server				13
+1501672259	172.27.12.71	E	rsync:server				66
+1501672500	172.27.12.71	E	rsync:server				32
+1501672610	172.27.12.71	E	rsync:server				65
+1501672674	172.27.12.71	E	rsync:server				27
+1501738842	172.27.12.71	E	rsync:server				134
+1501740538	172.27.12.71	E	rsync:server				649
+1501747909	172.27.12.71	E	rsync:server				639
+1501756221	172.27.12.71	E	rsync:server				49
+1501827363	172.27.12.71	E	rsync:server				38
+1501829799	172.27.12.71	E	rsync:server		[flow of source code] 		85
+1501829816	172.27.12.71	E	rsync:server		[flow of source code] 		1
+1501830366	172.27.12.71	E	rsync:server		[flow of source code] 		541
+1501837304	172.27.12.71	E	rsync:server		[flow of source code] 		121
+1502331983	172.27.12.71	E	rsync:server		[FAQ] 		165
+1503459417	172.27.12.71	E	rsync:server				575
+1503459640	172.27.12.71	E	rsync:server				508
+1503459654	172.27.12.71	E	rsync:server				-1
+1503460564	172.27.12.71	E	rsync:server				717
+1503566336	172.27.12.71	E	rsync:server				508
+1504522916	172.27.12.71	E	rsync:server				232
+1504590402	172.27.12.71	E	rsync:server				150
+1504601405	172.27.12.71	E	rsync:server		[Rsync mechanism] 		889
+1504604719	172.27.12.71	E	rsync:server		[Rsync mechanism] 		36
+1504604976	172.27.12.71	E	rsync:server		[Rsync mechanism] 		353
+1504609545	172.27.12.71	E	rsync:server		[Rsync mechanism] 		342
+1505204553	172.27.12.71	E	rsync:server		[Rsync mechanism] 		384
+1505204618	172.27.12.71	E	rsync:server		[Rsync mechanism] 		136
+1505205011	172.27.12.71	E	rsync:server		[Rsync mechanism] 		153
+1505208704	172.27.12.71	E	rsync:server				574
+1505208944	172.27.12.71	E	rsync:server		[Rsync mechanism] 		59
+1505209877	172.27.12.71	E	rsync:server		[Rsync mechanism] 		311
+1505211592	172.27.12.71	E	rsync:server				673
+1505211627	172.27.12.71	E	rsync:server		[Rsync mechanism] 		1
+1505461490	172.27.12.71	E	rsync:server				164
+1505463063	172.27.12.71	E	rsync:server				776
+1505463123	172.27.12.71	E	rsync:server				14
+1505463402	172.27.12.71	E	rsync:server				782
+1505463593	172.27.12.71	E	rsync:server				785
+1505463943	172.27.12.71	E	rsync:server				772
+1505719826	172.27.12.71	E	rsync:server				459
+1505722362	172.27.12.71	E	rsync:server				452
+1505786624	172.27.12.71	E	rsync:server				-194
+1505786663	172.27.12.71	E	rsync:server				46
+1505802295	172.27.12.71	E	rsync:server				1720
+1505802327	172.27.12.71	E	rsync:server				31
+1505805356	172.27.12.71	E	rsync:server				504
+1505805388	172.27.12.71	E	rsync:server				202
+1505805501	172.27.12.71	E	rsync:server				148
+1505809430	172.27.12.71	E	rsync:server				184
+1505809720	172.27.12.71	E	rsync:server				120
+1505810065	172.27.12.71	E	rsync:server				863
+1505810140	172.27.12.71	E	rsync:server				8
+1505871080	172.27.12.71	E	rsync:server				-992
+1505877410	172.27.12.71	E	rsync:server				67
+1505877566	172.27.12.71	E	rsync:server		[Rsyncd Performance] 		79
+1505877617	172.27.12.71	E	rsync:server		[Rsync mechanism] 		82
+1505877920	172.27.12.71	E	rsync:server		[Rsync mechanism] 		103
+1505878075	172.27.12.71	E	rsync:server		[Rsync mechanism] 		600
+1505879408	172.27.12.71	E	rsync:server		[Rsync mechanism] 		1
+1505879420	172.27.12.71	E	rsync:server		[Rsync mechanism] 		1
+1505880292	172.27.12.71	E	rsync:server		[Rsync mechanism] 		1195
+1505889848	172.27.12.71	E	rsync:server		[Rsync mechanism] 		417
+1505890352	172.27.12.71	E	rsync:server		[Rsync mechanism] 		602
+1505894216	172.27.12.71	E	rsync:server				2430
+1505896726	172.27.12.71	E	rsync:server				2762
+1505899319	172.27.12.71	E	rsync:server		[Rsync mechanism] 		646
+1505982731	172.27.12.71	E	rsync:server		[Rsync mechanism] 		369
+1506310759	172.27.12.71	E	rsync:server		[Rsync mechanism] 		129
+1506421545	172.27.12.71	E	rsync:server		[Rsync mechanism] 		125
