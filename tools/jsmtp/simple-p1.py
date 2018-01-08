@@ -120,12 +120,12 @@ def is_str(s):
 def extract_from(line, sender):
     items = line.split('\\t')
     title, mail = items[2].split(None, 1)
-    #return "From: =?%s?B?%s?= <%s>\r\n" % (items[1], base64Encoding(title, items[1]), mail.strip())
-    return "From: =?%s?B?%s?= <%s>\r\n" % (items[1], base64Encoding(title, items[1]), sender.strip())
+    return "From: =?%s?B?%s?= <%s>\r\n" % (items[1], base64Encoding(title, items[1]), mail.strip())
+    #return "From: =?%s?B?%s?= <%s>\r\n" % (items[1], base64Encoding(title, items[1]), sender.strip())
 
 def extract_to(line, receiver):
     if line == "":
-        return "To: =?%s?B?%s?= <%s>\r\n" % ("UTF-8", base64Encoding(line.strip(), "UTF-8"), receiver)
+        return "To: <%s>\r\n" % (receiver)
     else:
         items = line.split('\\t')
         return "To: =?%s?B?%s?= <%s>\r\n" % (items[1], base64Encoding(items[2].strip(), items[1]), receiver)
@@ -164,7 +164,7 @@ def construct_header(sender, receiver, header_file, body_file):
 
     header = extract_from(Fromline, sender)
     header += extract_to(Toline, receiver)
-    #header += convert_date(Dateline)
+    header += convert_date(Dateline)
     header += extract_subject(Subjectline)
     header += 'MIME-Version: 1.0\r\n'
     header += 'Content-Type: multipart/alternative; boundary=boundary421234\r\n'
