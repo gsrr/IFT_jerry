@@ -1,4 +1,12 @@
-a:21:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:3:"FAQ";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2047:"
+a:21:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:3:"FAQ";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2261:"
+Q4 : --exclude=/20180222 與--exclude=20180222的差別為何?
+Ans :
+--exclude=20180222
+--> 會排除pathname是20180222的檔案(directory).
+
+--exclude=/20180222
+--> 只會排除root of transfer底下的20180222
+
 Q3 : rsync備份過去, 為什麼mask都變成空的?
 Ans :
 因為rsync 會一邊建空資料夾, 一邊進行備份, 而新建的空資料夾其mask會是空的.
@@ -76,7 +84,7 @@ chmod A+user:aa:read_data/write_data:allow test
 Q : security issue:
 Ans :
 remove root password --> passed -d root
-";i:1;N;i:2;N;}i:2;i:24;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:2081;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:20:"Sync Acl with EonNAS";i:1;i:1;i:2;i:2081;}i:2;i:2081;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:2081;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:9520:"
+";i:1;N;i:2;N;}i:2;i:24;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:2295;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:20:"Sync Acl with EonNAS";i:1;i:1;i:2;i:2295;}i:2;i:2295;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:2295;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:9520:"
 # modified files:
 1. acl.c
 2. options.c
@@ -375,7 +383,7 @@ drw-------  2 root     root           2 Apr  5 14:30 test123
                user:500:rw-p----------:-------:allow
               user:1004:r--p----------:-------:allow
              user:65534:--------------:-------:allow
-";i:1;N;i:2;N;}i:2;i:2121;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:11650;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:18:"Sync Acl with Syno";i:1;i:1;i:2;i:11650;}i:2;i:11650;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:11650;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:917:"
+";i:1;N;i:2;N;}i:2;i:2335;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:11864;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:18:"Sync Acl with Syno";i:1;i:1;i:2;i:11864;}i:2;i:11864;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:11864;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:917:"
 [rsync server]
 [root@nas_8744965_a test]# rsync -aAX /Pool-1/Volume_1/share1/test/ admin@172.27.112.150::Test
 Password:
@@ -392,7 +400,7 @@ rsync: ACLs are not supported on this server
 rsync error: syntax or usage error (code 1) at main.c(1786) [server=3.0.9]
 rsync: connection unexpectedly closed (0 bytes received so far) [sender]
 rsync error: error in rsync protocol data stream (code 12) at io.c(605) [sender=3.0.9]
-";i:1;N;i:2;N;}i:2;i:11688;}i:12;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:11688;}i:13;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:51:"Q : Sync Acl with QNAP (Source : GS, Target : QNAP)";}i:2;i:12617;}i:14;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:12674;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1090:"
+";i:1;N;i:2;N;}i:2;i:11902;}i:12;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:11902;}i:13;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:51:"Q : Sync Acl with QNAP (Source : GS, Target : QNAP)";}i:2;i:12831;}i:14;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:12888;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1090:"
 Command:
 (ssh protocol) 
 rsync -aAX /Pool-1/Volume_1/share1/test/ admin@172.27.112.154:/share/test002
@@ -458,7 +466,7 @@ user:guest:---
 group::rwx
 mask::rwx
 other::rwx
-";i:1;N;i:2;N;}i:2;i:12674;}i:16;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:586:"
+";i:1;N;i:2;N;}i:2;i:12888;}i:16;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:586:"
 Q : Why not define the role of EonNAS is third party?
 Ans:
 設計上會比較複雜, 因為舊的EonNAS:
@@ -469,7 +477,7 @@ Ans:
 如果是EonNAS的話就走user = admin, ssh protocol的路.
 如果是GS的話就走user = root, ssh protocol的路.
 (但是一個是solaris, 一個是linux, 兩邊的ACL真的可以完全sync到一致嗎?)
-";i:1;N;i:2;N;}i:2;i:13780;}i:17;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:861:"
+";i:1;N;i:2;N;}i:2;i:13994;}i:17;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:861:"
 Q : 現在GS -> Third Party, 備份過去後的ACL會長什麼樣子?
 Ans : 
 1. target folder的owner跟group會被source的owner跟group蓋掉. (但其餘entry還在)
@@ -494,7 +502,7 @@ target :
 * solaris還有一些extended acl不會出來.
 * file會繼承target folder的原有acl entry.
 
-";i:1;N;i:2;N;}i:2;i:14381;}i:18;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:424:"
+";i:1;N;i:2;N;}i:2;i:14595;}i:18;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:424:"
 Q : GS -> EonNAS , 可以做到ACL備份嗎?
 Ans:
 沒有辦法, 因為EonNAS的source code有被更改過, 只適用於EonNAS -> EonNAS (--zfs-acl), 若只加上-A參數的話, 會變成:
@@ -512,4 +520,4 @@ target :
 ----------  1 1000     1000           4 Mar 21 11:16 file1
               user:1001:rw-p----------:-------:allow
 
-";i:1;N;i:2;N;}i:2;i:15257;}i:19;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:15689;}i:20;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:15689;}}
+";i:1;N;i:2;N;}i:2;i:15471;}i:19;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:15903;}i:20;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:15903;}}

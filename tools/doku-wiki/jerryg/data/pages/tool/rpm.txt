@@ -1,6 +1,23 @@
 [Reference]
 
-https://www.puritys.me/docs-blog/article-71-%E4%BD%BF%E7%94%A8-RPM-Build-%EF%BC%8C%E5%9C%A8Linux-%E6%89%93%E5%8C%85-Package.html
+1. https://www.puritys.me/docs-blog/article-71-%E4%BD%BF%E7%94%A8-RPM-Build-%EF%BC%8C%
+E5%9C%A8Linux-%E6%89%93%E5%8C%85-Package.html
+
+2. rpmbuild reference
+http://ftp.rpm.org/max-rpm/ch-rpm-b-command.html#S2-RPM-B-COMMAND-SHORT-CIRCUIT-OPTION
+
+3. spec syntax
+https://fedoraproject.org/wiki/How_to_create_an_RPM_package/zh-tw#.25install_.E5.8D.80.E6.AE.B5
+
+====== rpmbuild from source rpm ======
+<file>
+yum install yum-utils
+yumdownloader –source xxx
+rpm -ivh xxx.rpm
+rpmbuild -bp ~/rpmbuild/SPECS/xxx
+cd ~/rpmbuild/BUILD/xxx
+</file>
+
 
 ====== ift rpm package flow ======
 <file>

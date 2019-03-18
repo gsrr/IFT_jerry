@@ -1,0 +1,5 @@
+<file>
+# Enter folder
+1. Traverse folders/execute files
+2. List folders/read data
+</file>

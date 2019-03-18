@@ -1,11 +1,1 @@
-a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1503626875;s:8:"modified";i:1503626875;}s:11:"last_change";a:8:{s:4:"date";i:1503626875;s:2:"ip";s:14:"10.141.141.101";s:4:"type";s:1:"C";s:2:"id";s:10:"linux:time";s:4:"user";s:0:"";s:3:"sum";s:7:"created";s:5:"extra";s:0:"";s:10:"sizechange";i:504;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:489:"# 修改mtime
-[root@nas_8716691_a ~]# stat source/file1.txt
-  File: ‘source/file1.txt’
-  Size: 6               Blocks: 8          IO Block: 4096   regular file
-Device: fd01h/64769d    Inode: 10557046    Links: 1
-Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
-Access: 2017-08-25 09:57:52.047363908 +0800
-Modify: 2017-08-25 09:58:36.650362706 +0800
-Change: 2017-08-25 09:59:56.403360558 +0800
-
-touch -m -d '2017-08-25 09:58:36.650362706 +0800' /source/file1.txt";}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:1:{s:7:"created";i:1503626875;}s:11:"last_change";a:8:{s:4:"date";i:1503626875;s:2:"ip";s:14:"10.141.141.101";s:4:"type";s:1:"C";s:2:"id";s:10:"linux:time";s:4:"user";s:0:"";s:3:"sum";s:7:"created";s:5:"extra";s:0:"";s:10:"sizechange";i:504;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}
+a:2:{s:7:"current";a:7:{s:4:"date";s:0:"";s:11:"last_change";s:0:"";s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"internal";s:0:"";s:11:"description";s:0:"";s:8:"relation";s:0:"";}s:10:"persistent";a:4:{s:4:"date";a:1:{s:7:"created";i:1503626875;}s:11:"last_change";a:8:{s:4:"date";i:1503626875;s:2:"ip";s:14:"10.141.141.101";s:4:"type";s:1:"C";s:2:"id";s:10:"linux:time";s:4:"user";s:0:"";s:3:"sum";s:7:"created";s:5:"extra";s:0:"";s:10:"sizechange";i:504;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

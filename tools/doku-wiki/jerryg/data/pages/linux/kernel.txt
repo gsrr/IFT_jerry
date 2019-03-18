@@ -1,0 +1,49 @@
+====== dentry ======
+<file>
+# structure
+
+</file>
+====== sys call======
+<file>
+Q4 : system call of access
+Ans :
+access(user space) -->access(kernel space, open.c) --> faccessat(open.c)
+
+Q3 : 在link_path_walk裡面, 一開始的nd是working directory, 這會導致連/lib/..的path也都跑到ift_inode_permission.
+Ans :
+後來改法是... 直接改在path_walk外面, 當有fail時, walk again without rcu mode.
+
+
+Q2 : ls的flow為何?
+Ans : 
+1. filename_lookup --> path_lookupat --> link_path_walk --> may_lookup (namei.c) --> (wrong)
+
+2. SYSCALL_DEFINE4(open.c) --> do_sys_open --> do_filp_open(nami.c) --> path_openat(nami.c, LOOKUP_RCU) -->  link_path_walk --> may_lookup -->
+
+[explaination]
+1. do_flip_open
+Ans:
+1. do_flip_open的作用主要是在解析文件路徑並新建一個file structure.
+2. do_flip_open : input為path name, output為file structure.
+filp是翻動, 所以等於是一直翻動路徑來進行open.
+3. nameidata类型的nd在整个路径查找过程中充当中间变量，它既可以为当前查找输入数据，又可以保存本次查找的结果
+
+Q1 : How to map from user-space to kernel-space?
+Ans :
+假使我們從user space看到一個system call為openat, 
+從unistd.h可以看到這個define of this system call:
+__SYSCALL(288, sys_openat, 4)
+
+然後搜尋SYSCALL_DEFINE4, 可以在open.c中看到該function:
+SYSCALL_DEFINE4(openat, int, dfd, const char __user *, filename, int, flags, umode_t, mode)
+
+</file>
+
+====== iattr ======
+<file>
+</file>
+
+====== user_namespace ======
+<file>
+
+</file>

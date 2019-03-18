@@ -1,5 +1,74 @@
 
-<h1 class="sectionedit1" id="frequently_asked_questions">Frequently Asked Questions</h1>
+<h1 class="sectionedit1" id="folder_rsync">Folder Rsync</h1>
+<div class="level1">
+<pre class="file">Q : How to run expect file manually?
+Ans:
+/usr/bin/python /usr/local/NAS/misc/agent/python/backup/rsyncAgent.py startRR /tmp/RR_20180606100758.exp 3 30
+</pre>
+
+</div>
+<!-- EDIT1 SECTION "Folder Rsync" [1-197] -->
+<h1 class="sectionedit2" id="iftacl">IFTACL</h1>
+<div class="level1">
+<pre class="file">Q: How to enable iftacl for volume?
+Ans:
+1. /usr/local/iftacl_vol /Pool-1/volume_1/ -e
+2. getfattr -d -m - /Pool-1/volume_1/
+getfattr: Removing leading &#039;/&#039; from absolute path names
+# file: Pool-1/volume_1/
+security.iftacl=0sAQARAQAAAAAAAAAAjAQACwAAAAMAAwAfAf8BAAAAAAADABIAqQIAAAAAAAMAEgCpAwAAAAA=
+security.iftacl_vol
+trusted.volname=&quot;volume_1&quot;
+
+Q: How to show the debug message of iftacl?
+Ans:
+1. /usr/local/iftacl_dbg
+2. dmesg -w
+[20777.216456] ++++iftacl_debug_enable+++, 1
+
+0 --&gt; close
+1 --&gt; open
+
+Q: How to switch between iftacl and posix-acl?
+Ans:
+1. /usr/local/iftacl_switch
+2. dmesg -w
+[20034.958464] ++++ift_switch+++, 0
+
+0 --&gt; close (switch to posix-acl)
+1 --&gt; open (switch to iftacl)
+</pre>
+
+</div>
+<!-- EDIT2 SECTION "IFTACL" [198-929] -->
+<h1 class="sectionedit3" id="user_group">user / group</h1>
+<div class="level1">
+<pre class="file">
+[Question]
+Q: How to add group relation between nt-group and unix-group?
+Ans:
+Example: 
+/usr/bin/net groupmap add ntgroup=&#039;uesrs&#039; unixgroup=&#039;users&#039; rid=513 type=local
+
+Description:
+This example have two steps:
+1. Add a nt group named &quot;users&quot; with rid 513.
+2. Create relation between ntgroup and unixgroup.
+
+[Question]
+Q: How to remove group relation between nt-group and unix-group?
+Ans:
+Example: 
+/usr/bin/net groupmap delete ntgroup=&#039;users&#039;
+
+Description:
+This example will remove the ntgroup named users.
+
+ </pre>
+
+</div>
+<!-- EDIT3 SECTION "user / group" [930-1484] -->
+<h1 class="sectionedit4" id="frequently_asked_questions">Frequently Asked Questions</h1>
 <div class="level1">
 <ul>
 <li class="level1"><div class="li"> <a href="/jerryg/doku.php?id=nas:faq:gmodel_ctrlab" class="wikilink1" title="nas:faq:gmodel_ctrlab">Gui send A/B controller in G-Model, How to handle it?</a></div>
@@ -14,8 +83,9 @@
 </li>
 <li class="level1"><div class="li"> <a href="/jerryg/doku.php?id=nas:faq:export_import_ldap_server" class="wikilink1" title="nas:faq:export_import_ldap_server">ldap server export and import mechanism</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="/jerryg/doku.php?id=nas:faq:mount_root_filesystem_byiscsi" class="wikilink2" title="nas:faq:mount_root_filesystem_byiscsi" rel="nofollow">mount root filesystem by iscsi</a></div>
+<li class="level1"><div class="li"> <a href="/jerryg/doku.php?id=nas:faq:mount_root_filesystem_byiscsi" class="wikilink1" title="nas:faq:mount_root_filesystem_byiscsi">mount root filesystem by iscsi</a></div>
 </li>
 </ul>
 
 </div>
+<!-- EDIT4 SECTION "Frequently Asked Questions" [1485-] -->

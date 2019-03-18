@@ -1,3 +1,71 @@
+====== Folder Rsync ======
+<file>
+Q : How to run expect file manually?
+Ans:
+/usr/bin/python /usr/local/NAS/misc/agent/python/backup/rsyncAgent.py startRR /tmp/RR_20180606100758.exp 3 30
+
+</file>
+
+
+====== IFTACL ======
+<file>
+Q: How to enable iftacl for volume?
+Ans:
+1. /usr/local/iftacl_vol /Pool-1/volume_1/ -e
+2. getfattr -d -m - /Pool-1/volume_1/
+getfattr: Removing leading '/' from absolute path names
+# file: Pool-1/volume_1/
+security.iftacl=0sAQARAQAAAAAAAAAAjAQACwAAAAMAAwAfAf8BAAAAAAADABIAqQIAAAAAAAMAEgCpAwAAAAA=
+security.iftacl_vol
+trusted.volname="volume_1"
+
+Q: How to show the debug message of iftacl?
+Ans:
+1. /usr/local/iftacl_dbg
+2. dmesg -w
+[20777.216456] ++++iftacl_debug_enable+++, 1
+
+0 --> close
+1 --> open
+
+Q: How to switch between iftacl and posix-acl?
+Ans:
+1. /usr/local/iftacl_switch
+2. dmesg -w
+[20034.958464] ++++ift_switch+++, 0
+
+0 --> close (switch to posix-acl)
+1 --> open (switch to iftacl)
+
+</file>
+
+====== user / group ======
+
+<file>
+
+[Question]
+Q: How to add group relation between nt-group and unix-group?
+Ans:
+Example: 
+/usr/bin/net groupmap add ntgroup='uesrs' unixgroup='users' rid=513 type=local
+
+Description:
+This example have two steps:
+1. Add a nt group named "users" with rid 513.
+2. Create relation between ntgroup and unixgroup.
+
+[Question]
+Q: How to remove group relation between nt-group and unix-group?
+Ans:
+Example: 
+/usr/bin/net groupmap delete ntgroup='users'
+
+Description:
+This example will remove the ntgroup named users.
+
+ 
+</file>
+
 ====== Frequently Asked Questions ======
 
   * [[nas:faq:gmodel_ctrlab|Gui send A/B controller in G-Model, How to handle it?]]

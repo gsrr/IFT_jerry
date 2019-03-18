@@ -1,3 +1,12 @@
+====== tab ======
+<file>
+# retab whole file
+:set expandtab
+:retab!    --> !代表強制
+:w!
+
+</file>
+
 ====== command line window ======
 
 <file>

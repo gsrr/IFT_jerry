@@ -339,3 +339,9 @@ anonymousgid
 anonymousuid
 clientfornfs
 segmentation
+groupmapping
+000000000005
+getattribute
+subclasshook
+getgrouplist
+improvements

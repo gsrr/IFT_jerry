@@ -142,3 +142,17 @@ encryption:base64
 python:string
 python:module
 linux:xattr
+tool:opengrok
+nas:samba
+nas:user
+python:ctypes
+note:all
+linux:kernel
+samba:ntacl:behavior
+linux:reference
+linux:build_kernel
+python:test_program
+python:algorithm
+util:python
+util:linux
+nas:acl_improvement

@@ -1,15 +1,16 @@
-a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1484127287;s:8:"modified";i:1511983500;}s:11:"last_change";a:8:{s:4:"date";i:1511983500;s:2:"ip";s:14:"10.141.141.102";s:4:"type";s:1:"E";s:2:"id";s:22:"samba:ntacl:samba-tool";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:-518;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:14:"Basic commands";s:11:"description";a:2:{s:15:"tableofcontents";a:1:{i:0;a:4:{s:3:"hid";s:14:"basic_commands";s:5:"title";s:14:"Basic commands";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:617:"FAQ
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1484127287;s:8:"modified";i:1518056154;}s:11:"last_change";a:8:{s:4:"date";i:1518056154;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:22:"samba:ntacl:samba-tool";s:4:"user";s:0:"";s:3:"sum";s:6:"[FAQ] ";s:5:"extra";s:0:"";s:10:"sizechange";i:693;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:3:"FAQ";s:11:"description";a:2:{s:15:"tableofcontents";a:9:{i:0;a:4:{s:3:"hid";s:3:"faq";s:5:"title";s:3:"FAQ";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:22:"summary_-_ntacl_parser";s:5:"title";s:22:"Summary - NTACL Parser";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:2;a:4:{s:3:"hid";s:28:"summary_-_generate_rpc_files";s:5:"title";s:28:"Summary - Generate rpc files";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:3;a:4:{s:3:"hid";s:19:"summary_-_test_case";s:5:"title";s:19:"Summary - test case";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:4;a:4:{s:3:"hid";s:29:"summary_-_get_acl_from_python";s:5:"title";s:29:"Summary - get acl from python";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:5;a:4:{s:3:"hid";s:32:"summary_-_xacl_structure_parsing";s:5:"title";s:32:"Summary - xacl structure parsing";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:6;a:4:{s:3:"hid";s:36:"summary_-_get_acl_from_share_library";s:5:"title";s:36:"Summary - get acl from share library";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:7;a:4:{s:3:"hid";s:7:"summary";s:5:"title";s:7:"Summary";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:8;a:4:{s:3:"hid";s:14:"basic_commands";s:5:"title";s:14:"Basic commands";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:803:"FAQ
 
 
-Q7 : 在load parameter時,會發生segmentation fault?
+Q20 : Slow speed when set ntacl repeatly?
+Ans:
+從strace觀察(-ttt), 發現到是因為samba在setxattr之前先做了一次removexattr的動作, 才導致效能變慢.
+(這有可能是因為file system還沒有將removexattr的動作flush掉.)
+而samba為什麼要進行這樣的動作?
+從samba的行為可以看到, samba在設定posix-acl後就將security.NTACL移除掉, 而做這樣的動作是因為:
+設定完posix-acl後, 還要進行4~5個動作才會設定security.NTACL, 此時如果中途有另外一個人來存取檔案的話, 
+就會造成權限上的race condition.
+所以為了避免這樣的狀況, 我們才會在posix-acl設定完之後同步將security.NTACL移除掉.
+
+Q19 : flow of set nt-acl?
 Ans :
-花了不少時間進行確認, 看了4.2.3與4.4在load parameter時的code都相同.
---> 最後看到是pytalloc中的pytalloc_steal code有所不一樣. (pytalloc 2.1.2 and pytalloc 2.1.9)
---> 兩邊python所得到的pyObject size也不相同. (.__sizeof__())
-
-試著裝了libtalloc 2.1.6 與pytalloc 2.1.6進行測試 --> 結果ok.
-1. pytalloc 2.1.6
---> http://rpm.pbone.net/index.php3/stat/4/idpl/35491718/dir/centos_7/com/pytalloc-2.1.6-1.el7.x86_64.rpm.html
-
-2. libtalloc 2.1.6
---> http://rpm.pbone.net/index.php3/stat/4/idpl/35045440/dir/s…";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1484127287;s:8:"modified";i:1511983500;}s:11:"last_change";a:8:{s:4:"date";i:1511983500;s:2:"ip";s:14:"10.141.141.102";s:4:"type";s:1:"E";s:2:"id";s:22:"samba:ntacl:samba-tool";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:-518;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}
+fset_nt_acl_common -> set_nt_acl -> create_canon_ace_lists -> set_can…";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1484127287;s:8:"modified";i:1518056154;}s:11:"last_change";a:8:{s:4:"date";i:1518056154;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:22:"samba:ntacl:samba-tool";s:4:"user";s:0:"";s:3:"sum";s:6:"[FAQ] ";s:5:"extra";s:0:"";s:10:"sizechange";i:693;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

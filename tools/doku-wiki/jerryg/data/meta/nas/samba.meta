@@ -1,0 +1,18 @@
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1513562098;s:8:"modified";i:1513734959;}s:11:"last_change";a:8:{s:4:"date";i:1513734959;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:9:"nas:samba";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:308;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:7:"Summary";s:11:"description";a:2:{s:15:"tableofcontents";a:1:{i:0;a:4:{s:3:"hid";s:7:"summary";s:5:"title";s:7:"Summary";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:505:"Summary
+
+
+2. map unix group to samba group
+Ans :
+需透過net groupmap 將unixgroup map到ntgroup
+example : 
+1. net groupmap add ntgroup="group01" unixgroup=group01 rid=50001 type=l
+2. net groupmap delete ntgroup="group01"
+ref : https://www.samba.org/samba/docs/man/Samba-HOWTO-Collection/groupmapping.html#id2598232
+
+1. "admin user" for smb.conf
+Ans :
+[Share1]
+    admin user = user1    # user1 will has the admin privilege in Share1.
+
+[Share2]
+    admin user = AD_Domain\user2   # setting for ad user…";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1513562098;s:8:"modified";i:1513734959;}s:11:"last_change";a:8:{s:4:"date";i:1513734959;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:9:"nas:samba";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:308;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

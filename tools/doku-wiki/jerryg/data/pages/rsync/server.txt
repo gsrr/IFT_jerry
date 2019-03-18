@@ -1,4 +1,12 @@
 
+====== Summary ======
+<file>
+1. Why -v (verbose) options is useless for rsync daemon mode?
+Ans :
+1. The -v option is useless because the default setting of "max verbosity" is 1. (int /etc/rsyncd.conf)
+2. Change the number of "max verbosity", then we can control verbose level of server by client.
+</file>
+
 
 ====== Rsyncd Performance ======
 ===== Compare with ftp =====

@@ -31,3 +31,50 @@
 1511982310	10.141.141.102	E	samba:ntacl:samba-tool				159
 1511983361	10.141.141.102	E	samba:ntacl:samba-tool				1008
 1511983500	10.141.141.102	E	samba:ntacl:samba-tool				-518
+1511990896	10.141.141.107	E	samba:ntacl:samba-tool				205
+1511992098	10.141.141.107	E	samba:ntacl:samba-tool				107
+1511992265	10.141.141.107	E	samba:ntacl:samba-tool				13
+1511992554	10.141.141.107	E	samba:ntacl:samba-tool				686
+1512096812	172.27.12.71	E	samba:ntacl:samba-tool				183
+1512102555	172.27.12.71	E	samba:ntacl:samba-tool				73
+1512108623	172.27.12.71	E	samba:ntacl:samba-tool				75
+1512350658	172.27.12.71	E	samba:ntacl:samba-tool				64
+1512350715	172.27.12.71	E	samba:ntacl:samba-tool				5
+1512356159	172.27.12.71	E	samba:ntacl:samba-tool				57
+1512367329	172.27.12.71	E	samba:ntacl:samba-tool				340
+1512367804	172.27.12.71	E	samba:ntacl:samba-tool				288
+1512382714	172.27.12.71	E	samba:ntacl:samba-tool				4013
+1512382755	172.27.12.71	E	samba:ntacl:samba-tool				88
+1512384273	172.27.12.71	E	samba:ntacl:samba-tool				1863
+1512440214	172.27.12.71	E	samba:ntacl:samba-tool				-1656
+1512441119	172.27.12.71	E	samba:ntacl:samba-tool				213
+1512444304	172.27.12.71	E	samba:ntacl:samba-tool				223
+1512444501	172.27.12.71	E	samba:ntacl:samba-tool				65
+1512452345	172.27.12.71	E	samba:ntacl:samba-tool				167
+1512524443	172.27.12.71	E	samba:ntacl:samba-tool				240
+1512539894	172.27.12.71	E	samba:ntacl:samba-tool				224
+1512609545	172.27.12.71	E	samba:ntacl:samba-tool				8
+1512609600	172.27.12.71	E	samba:ntacl:samba-tool		[Summary - xacl structure parsing] 		60
+1512609663	172.27.12.71	E	samba:ntacl:samba-tool		[Summary - get acl from python] 		177
+1512609728	172.27.12.71	E	samba:ntacl:samba-tool		[Summary - get acl from python] 		328
+1512609879	172.27.12.71	E	samba:ntacl:samba-tool				10
+1512609913	172.27.12.71	E	samba:ntacl:samba-tool				11
+1512609979	172.27.12.71	E	samba:ntacl:samba-tool		[Summary] 		-280
+1512610015	172.27.12.71	E	samba:ntacl:samba-tool		[Basic commands] 		-495
+1512627637	172.27.12.71	E	samba:ntacl:samba-tool		[Summary - get acl from share library] 		705
+1512963832	172.27.12.71	E	samba:ntacl:samba-tool		[FAQ] 		45
+1513045565	172.27.12.71	E	samba:ntacl:samba-tool		[Summary - get acl from python] 		442
+1513046778	172.27.12.71	E	samba:ntacl:samba-tool		[Summary - test case] 		28
+1513317540	172.27.12.71	E	samba:ntacl:samba-tool		[FAQ] 		113
+1513326511	172.27.12.71	E	samba:ntacl:samba-tool		[FAQ] 		130
+1513580398	172.27.12.71	E	samba:ntacl:samba-tool		[FAQ] 		167
+1513769594	172.27.12.71	E	samba:ntacl:samba-tool		[Summary - Generate rpc files] 		1894
+1513834655	172.27.12.71	E	samba:ntacl:samba-tool				110
+1513834823	172.27.12.71	E	samba:ntacl:samba-tool		[Summary - NTACL Parser] 		329
+1516299075	10.141.141.119	E	samba:ntacl:samba-tool		[FAQ] 		319
+1516587461	172.27.12.71	E	samba:ntacl:samba-tool		[FAQ] 		69
+1516731060	10.141.141.118	E	samba:ntacl:samba-tool				72
+1516732012	10.141.141.118	E	samba:ntacl:samba-tool				22
+1516733025	10.141.141.118	E	samba:ntacl:samba-tool				22
+1516733088	10.141.141.118	E	samba:ntacl:samba-tool		[FAQ] 		14
+1518056154	172.27.12.71	E	samba:ntacl:samba-tool		[FAQ] 		693

@@ -1,18 +1,18 @@
-a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1489139314;s:8:"modified";i:1490943440;}s:11:"last_change";a:8:{s:4:"date";i:1490943440;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:8:"tool:rpm";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:953;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:20:"ift rpm package flow";s:11:"description";a:2:{s:15:"tableofcontents";a:4:{i:0;a:4:{s:3:"hid";s:20:"ift_rpm_package_flow";s:5:"title";s:20:"ift rpm package flow";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:7:"example";s:5:"title";s:7:"example";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:2;a:4:{s:3:"hid";s:9:"rpm_usage";s:5:"title";s:9:"rpm usage";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:3;a:4:{s:3:"hid";s:22:"content_of_examplespec";s:5:"title";s:23:"content of example.spec";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:503:"[Reference]
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1489139314;s:8:"modified";i:1527842625;}s:11:"last_change";a:8:{s:4:"date";i:1527842625;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:8:"tool:rpm";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:226;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:24:"rpmbuild from source rpm";s:11:"description";a:2:{s:15:"tableofcontents";a:5:{i:0;a:4:{s:3:"hid";s:24:"rpmbuild_from_source_rpm";s:5:"title";s:24:"rpmbuild from source rpm";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:20:"ift_rpm_package_flow";s:5:"title";s:20:"ift rpm package flow";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:2;a:4:{s:3:"hid";s:7:"example";s:5:"title";s:7:"example";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:3;a:4:{s:3:"hid";s:9:"rpm_usage";s:5:"title";s:9:"rpm usage";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:4;a:4:{s:3:"hid";s:22:"content_of_examplespec";s:5:"title";s:23:"content of example.spec";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:505:"[Reference]
 
-<https://www.puritys.me/docs-blog/article-71-%E4%BD%BF%E7%94%A8-RPM-Build-%EF%BC%8C%E5%9C%A8Linux-%E6%89%93%E5%8C%85-Package.html>
+1. <https://www.puritys.me/docs-blog/article-71-%E4%BD%BF%E7%94%A8-RPM-Build-%EF%BC%8C%>
+E5%9C%A8Linux-%E6%89%93%E5%8C%85-Package.html
 
-ift rpm package flow
+2. rpmbuild reference
+<http://ftp.rpm.org/max-rpm/ch-rpm-b-command.html#S2-RPM-B-COMMAND-SHORT-CIRCUIT-OPTION>
+
+3. spec syntax
+<https://fedoraproject.org/wiki/How_to_create_an_RPM_package/zh-tw#.25install_.E5.8D.80.E6.AE.B5>
+
+rpmbuild from source rpm
 
 
-#1 create rpmbuild environment
-mkdir -p /root/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-
-#2 deploy the file to package
-2.1 cd /root/rpmbuild/SOURCES
-2.2 mkdir nvr-1.0
-2.3 cp /root/vms-20170322.tar.gz ./nvr-1.0/
-2.4 tar -zcvf nvr.tar.gz nvr-1.0
-2.5 cp nvr.spec /root/rpmbuild/SPECS/
-2.6 cp /root/rpmbuild/SPECS/ 
-2.7 rpmbuild -bb nvr…";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1489139314;s:8:"modified";i:1490943440;}s:11:"last_change";a:8:{s:4:"date";i:1490943440;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:8:"tool:rpm";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:953;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}
+yum install yum-utils
+yumdownloader –source xxx
+rpm -ivh xxx.rpm
+rpmbuild -bp ~/rpmbuild/SPECS/xxx…";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1489139314;s:8:"modified";i:1527842625;}s:11:"last_change";a:8:{s:4:"date";i:1527842625;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:8:"tool:rpm";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:226;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

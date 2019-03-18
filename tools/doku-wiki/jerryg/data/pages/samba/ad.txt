@@ -4,6 +4,80 @@
 https://wiki.samba.org/index.php/Setting_up_Samba_as_a_Domain_Member#Testing_the_Winbindd_Connectivity
 </file>
 
+
+====== [QMS] GS can't get groups from AD domain ======
+<file>
+[Reference]
+1. https://wiki.samba.org/index.php/Samba_4.2_Features_added/changed
+2. https://git.centos.org/blob/rpms!!samba.git/848ca4f68d306440271cfd1c7fdaa12042cc5b9a/SOURCES!samba-4.2.10-s3-winbind-make-sure-domain-member-can-talk-to-trust.patch
+
+[Error Message]
+[2018/05/31 14:34:38.330229, 10, pid=2741, effective(0, 0), real(0, 0), class=winbind] ../source3/winbindd/winbindd_cm.c:384(winbind_msg_domain_online)
+  Domain INFRA1 is marked as online now.
+[2018/05/31 14:34:39.705035,  1, pid=2741, effective(0, 0), real(0, 0)] ../librpc/ndr/ndr.c:439(ndr_print_function_debug)
+       wbint_LookupGroupMembers: struct wbint_LookupGroupMembers
+          out: struct wbint_LookupGroupMembers
+              members                  : *
+                  members: struct wbint_Principals
+                      num_principals           : 0
+                      principals: ARRAY(0)
+              result                   : NT_STATUS_DOWNGRADE_DETECTED
+[2018/05/31 14:34:39.717674,  5, pid=2741, effective(0, 0), real(0, 0), class=winbind] ../source3/winbindd/winbindd_getgrent.c:149(winbindd_getgrent_recv)
+  getgrent failed: NT_STATUS_DOWNGRADE_DETECTED
+[2018/05/31 14:34:39.721212, 10, pid=2741, effective(0, 0), real(0, 0), class=winbind] ../source3/winbindd/winbindd.c:787(wb_request_done)
+  wb_request_done[2804:GETGRENT]: NT_STATUS_DOWNGRADE_DETECTED
+
+[Error Code]
+NT_STATUS_DOWNGRADE_DETECTED
+
+[Analysis]
+在winbind的getent passwd / getent group流程是這樣:
+for domain in all-domains:
+    1. winbind會先連到AD domain, get user information.
+    2. 逐一跟所有AD domain進行連接, 在達到250筆時就會先回傳.
+    3. 若遇到fail狀況則停止.
+
+此時若重新getent group會沒有抓新的資料, 因為user information並沒有改變.
+
+而這個問題經確認後, 似乎是該AD-trust domain無法支援加密式的連接, 導致每次在跟這個domain要資訊時會fail掉.
+
+從[1]:
+Winbind now requires secured connections
+To improve protection against rogue domain controllers we now require that when we connect to an AD DC in our forest, that the connection be signed using SMB Signing. Set 'client signing = off' in the smb.conf to disable.
+
+Also and DCE/RPC pipes must be sealed, set 'require strong key = false' and 'winbind sealed pipes = false' to disable.
+
+Finally, the default for 'client ldap sasl wrapping' has been set to 'sign', to ensure the integrity of LDAP connections. Set 'client ldap sasl wrapping = plain' to disable.
+
+從[1]:
+Winbindd/Netlogon improvements
+The whole concept of maintaining the netlogon secure channel to (other) domain controllers was rewritten in order to maintain global state in a netlogon_creds_cli.tdb. This is the proper fix for a large number of bugs:
+
+ https://bugzilla.samba.org/show_bug.cgi?id=10860
+ https://bugzilla.samba.org/show_bug.cgi?id=6563
+ https://bugzilla.samba.org/show_bug.cgi?id=7944
+ https://bugzilla.samba.org/show_bug.cgi?id=7945
+ https://bugzilla.samba.org/show_bug.cgi?id=7568
+ https://bugzilla.samba.org/show_bug.cgi?id=8599
+In addition a strong session key is now required by default, which means that communication to older servers or clients might be rejected by default.
+
+For the client side we have the following new options:
+"require strong key" (yes by default), "reject md5 servers" (no by default). E.g. for Samba 3.0.37 you need "require strong key = no" and
+for NT4 DCs you need "require strong key = no" and "client NTLMv2 auth = no",
+
+On the server side (as domain controller) we have the following new options:
+"allow nt4 crypto" (no by default), "reject md5 client" (no by default). E.g. in order to allow Samba < 3.0.27 or NT4 members to work you need "allow nt4 crypto = yes"
+winbindd does not list group memberships for display purposes (e.g. getent group <domain\<group>) anymore by default.
+The new default is "winbind expand groups = 0" now, the reason for this is the same as for "winbind enum users = no" and "winbind enum groups = no". Providing this information is not always reliably possible, e.g. if there are trusted domains.
+
+[Correlation]
+1. 將winbind的連接取消加密方式.
+2. Modify /etc/samba/smb.conf and /etc/samba/net_smb.conf
+require strong key = no
+winbind sealed pipes = no
+
+</file>
+
 ====== login samba server by kerberos auth ======
 <file>
 這個問題大概有兩個面向:
@@ -194,6 +268,11 @@ net ads leave -S WIN-2012R2ADC.winadntp.evt -U administrator%ABcd_1234
 
 ====== Error Message ======
 <file>
+# port 445 is blocked
+Failed to join domain: failed to lookup DC info for domain 'DVT.CANEAD.INFORTREND' over rpc: {Device Timeout} The specified I/O operation on %hs was not completed before the time-out period expired.
+
+
+
 # can not get user information (MIS , England)
 getent group : 3m40 + 3m37
 

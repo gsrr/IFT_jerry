@@ -7,6 +7,33 @@ Ans:
 
 </file>
 
+====== Status ======
+<file>
+# git ignore untracked files
+git status -uno
+</file>
+
+
+
+====== Commit ======
+<file>
+# difference for a commit
+git diff $commit^ $commit
+
+# list all files in a commit
+git diff-tree --no-commit-id --name-only -r $commit
+
+# add a file to last commit and do not change the commit message
+git add $file
+git commit --amend --no-edit
+
+# modify commit message (before push)
+git commit --amend
+
+# modify commit message in cherry-pick
+git cherry-pick -e $hash
+</file>
+
 ====== config related ======
 <file>
 # Reference
@@ -40,6 +67,16 @@ git merge hotfix --squash
 </file>
 ====== Difference ======
 <file>
+# ignore crlf
+1. git diff --ignore-space-at-eol
+
+# Visualize per-character differences diff file?
+1. git diff --word-diff-regex=.
+2. git diff --color-words=.
+
+# Difference in file
+git diff HEAD^^ HEAD main.c
+
 # Difference in commit 
 git diff $commit $commit^
 
@@ -64,6 +101,9 @@ git diff master...topic will show us the difference between B and T
 # checkout a remote branch
 git pull
 git checkout -b test origin/test
+
+# create a local branch
+git branch <new_branch_name>
 
 # create a remote branch
 git checkout -b <branch-name>

@@ -15,7 +15,7 @@ function tmux-ssh() { tmux new -s $1 "ssh root@$1"; }
 |set length of session name|  set -g status-left-length 20 [[http://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/]]|
 
 ====== cmd list ======
-|session operation|||
+|session operation|bash command|tmux command|
 |put the session to background|tmux detach|C-b, d|
 |put the session to foreground|tmux attach| |
 |list all session|tmux ls| |

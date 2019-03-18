@@ -1,0 +1,8 @@
+<file>
+http://linux2fork.blogspot.tw/2012/02/linux-vma-virtual-memory-address.html
+
+
+crash:
+1. https://people.redhat.com/anderson/crash_whitepaper/
+2. http://d3s.mff.cuni.cz/teaching/crash_dump_analysis/slides/09-crash.pdf
+</file>

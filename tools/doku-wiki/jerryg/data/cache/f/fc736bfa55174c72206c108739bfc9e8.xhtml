@@ -1,6 +1,8 @@
 <ul>
 <li class="level1"><div class="li"> <a href="/jerryg/doku.php?id=tool:python:time_module" class="wikilink1" title="tool:python:time_module">Usage of time module</a></div>
 </li>
+<li class="level1"><div class="li"> <a href="/jerryg/doku.php?id=tool:python:string" class="wikilink2" title="tool:python:string" rel="nofollow">string</a></div>
+</li>
 </ul>
 
 <h1 class="sectionedit1" id="get_reference_count_from_gdb">get reference count from gdb</h1>
@@ -46,7 +48,7 @@ $7 = &lt;HAServer(setInfoLock={&#039;NFSInfo&#039;: &lt;thread.lock at remote 0x
 $8 = {ob_refcnt = 26, ob_type = 0x241feb0}</pre>
 
 </div>
-<!-- EDIT1 SECTION "get reference count from gdb" [54-2099] -->
+<!-- EDIT1 SECTION "get reference count from gdb" [90-2135] -->
 <h1 class="sectionedit2" id="id_and_di">id and di</h1>
 <div class="level1">
 <pre class="file">import _ctypes
@@ -143,7 +145,7 @@ connecting to ./uds_socket
 [Errno 2] No such file or directory</pre>
 
 </div>
-<!-- EDIT2 SECTION "id and di" [2100-4388] -->
+<!-- EDIT2 SECTION "id and di" [2136-4424] -->
 <h1 class="sectionedit3" id="socket_exception">socket exception</h1>
 <div class="level1">
 <pre class="file">#client code
@@ -184,7 +186,7 @@ except Exception as ex:
         print traceback.format_tb(sys.exc_info()[2])</pre>
 
 </div>
-<!-- EDIT3 SECTION "socket exception" [4389-5347] -->
+<!-- EDIT3 SECTION "socket exception" [4425-5383] -->
 <h1 class="sectionedit4" id="structpack">struct.pack</h1>
 <div class="level1">
 <pre class="file"># pack string (char array)
@@ -204,7 +206,7 @@ except Exception as ex:
 (The packet should be padded if the char array is not divided by 2)</pre>
 
 </div>
-<!-- EDIT4 SECTION "struct.pack" [5348-5866] -->
+<!-- EDIT4 SECTION "struct.pack" [5384-5902] -->
 <h1 class="sectionedit5" id="trace_module">trace module</h1>
 <div class="level1">
 
@@ -215,7 +217,7 @@ except Exception as ex:
 python -m trace --listfuncs trace_example/main.py</pre>
 
 </div>
-<!-- EDIT5 SECTION "trace module" [5867-6034] -->
+<!-- EDIT5 SECTION "trace module" [5903-6070] -->
 <h1 class="sectionedit6" id="object_analysis">object analysis</h1>
 <div class="level1">
 <ul>
@@ -235,4 +237,4 @@ python -m trace --listfuncs trace_example/main.py</pre>
     print &quot;obj.%s = %s&quot; % (attr, getattr(obj, attr))</pre>
 
 </div>
-<!-- EDIT6 SECTION "object analysis" [6035-] -->
+<!-- EDIT6 SECTION "object analysis" [6071-] -->

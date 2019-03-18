@@ -1,3 +1,128 @@
+====== Test scope ======
+<file>
+[Samba]
+8. 在ntacl加入ldap user-->關掉ldap-->確認可以正常getntacl.
+--> 會map 到unix user, 所以看起來不會有問題.
+
+7. 在ntacl加入ad user-->關掉winbind-->確認可以正常getntacl.
+Info:
+因為不存在, 所以目前會顯示為sid:
+{"status": 0, "data": {"path": "/Pool-1/Volume_1/share1/sub1/file_1", "acl": {"DF": 32788, "aces": [{"u": "S-1-5-21-1204859101-1321558819-4221560078-2744", "am": 2032127, "at": 0, "af": 3}, {"u": 1000, "am": 2032127, "at": 0, "af": 3}], "G": 0, "O": 0}}}
+--> 增加error handle, 若不存在就回sid.
+
+1. 在samba上設定acl, 確認會產生security.iftacl的key, 並且可以正常parse出內容.
+2. 刪除security.NTACL, 再從windows觀看acl, 確認log會產生"NT key is not exist"
+3. Open acl from samba normally.
+4. 刪除security.NTACL-->設定security.iftacl-->確認從samba看的結果會與security.iftacl相同.
+Q1: fail, 無法從security.iftacl正常回報資料.
+Info:
+../source3/modules/ift_acl.h:177(iftacl_merge) uid 1000 -> sid S-18-0 -> sid (NULL SID)
+../source3/modules/ift_acl.h:178(iftacl_merge) uid 8 -> sid (SID ERR) -> sid (NULL SID)
+
+Ans:
+成功, 是因為有些時候samba會代null structure, 已經將這些case過濾掉.
+
+5. 設定security.NTACL-->修改security.iftacl並將dirty改為1-->確認從samba看的結果會與security.iftacl相同.  
+Info:
+[2018/01/30 13:24:46.854189,  0] ../source3/modules/ift_acl.h:177(iftacl_merge)
+
+6. 若security.iftacl與security.NTACL不一致時(security.NTACL不存在), 此時多加入一筆entry後, 會導致原先在posix裡面的資料也都跑出來.
+
+  owner of sd is null
+[2018/01/30 13:24:46.856030,  0] ../source3/modules/ift_acl.h:189(iftacl_merge)
+  group of sd is null
+[2018/01/30 13:24:46.857626,  0] ../source3/modules/ift_acl.h:215(iftacl_merge)
+  path:sub3, user of iftad.uid is:1000, sid = S-1-5-21-2896997548-2896997548-2896997548-1022
+
+Ans:
+因為samba在顯示acl時, 會將owner與group代為null, 只有aces丟進來, 但我之前判斷若owner為null時就會return.
+--> 跑出來似乎不是問題, 因為沒有NT key的關係, 所以重新設定後會變有繼承, 這時候會導致上層的acl被繼承下來.
+</file>
+
+====== Summary ======
+
+<file>
+# smb.conf
+1. acl_xattr: ignore system acls = True
+
+
+# posix acl
+1. set_cached_acl
+2. get_cached_acl
+
+# python
+1. uid to sid
+from samba.samba3 import smbd, passdb
+from samba.samba3 import param as s3param
+s3conf = s3param.get_context()
+s3conf.load("/etc/samba/smb.conf")
+pdb = passdb.PDB(s3conf.get("passdb backend"))
+pdb.uid_to_sid(100001)
+--> dom_sid('S-1-5-21-2896997548-2896997548-2896997548-100001')
+
+# security descriptor structure in python
+['__class__', '__cmp__', '__delattr__', '__doc__', '__format__', '__getattribute__', '__hash__', '__init__', '__ndr_pack__', '__ndr_print__', '__ndr_unpack__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'as_sddl', 'dacl', 'dacl_add', 'dacl_del', 'from_sddl', 'group_sid', 'owner_sid', 'revision', 'sacl', 'sacl_add', 'sacl_del', 'type']
+
+
+dacl : discretionary access control list 
+sacl : system access control list 
+
+
+# format
+# dacl_flags
+"P"                    --> SDDL_PROTECTED	        The SE_DACL_PROTECTED flag is set.
+"AR"                   --> SDDL_AUTO_INHERIT_REQ	The SE_DACL_AUTO_INHERIT_REQ flag is set.
+"AI"                   --> SDDL_AUTO_INHERITED	        The SE_DACL_AUTO_INHERITED flag is set.
+"NO_ACCESS_CONTROL"    --> SSDL_NULL_ACL	        The ACL is null.
+
+# account
+1. uid
+2. Create Owner  (CO, S-1-3-0)
+3. Create Group  (CG, S-1-3-1)
+4. Everyone      (WD, S-1-1-0)
+5. S-1-22-2-0    (S-1-22-2代表unix, 0為uid, 所以是root group)
+ref : https://msdn.microsoft.com/en-us/library/cc980032.aspx
+
+ace_type;ace_flags;rights;object_guid;inherit_object_guid;account_sid
+
+# ace_type
+A --> Allow
+D --> Deny
+
+# ace_flags
+OI --> Object inheritance
+CI --> Container inheritance
+IO --> Inheritance only
+ID --> Inherited
+
+# ace_type
+Allow    0x00
+Deny     0x01
+
+# ace_flags
+This folder and file = 0x01
+This folder and subfolders = 0x02
+NO_PROPAGATE_INHERIT = 0x04 (Only apply the permission to objects/containers within this folder.)
+No set this folder = 0x08
+This acl is inherited = 0x10
+    
+# access mask
+Full Control	               0x1f01ff	
+	
+List folders/READ data	       0x100001	 1048577
+Create files/Write data	       0x100002
+Create folders/Append data     0x100004
+Read extended attributes       0x100008
+Write attribute	               0x100100
+Write extended attribute       0x100010
+Traverse folders/execute files 0x100020
+Delete subfolders and files    0x100040
+READ Attribute	               0x100080
+Delete	                       0x110000
+Read permission	               0x120000
+Change permission	       0x140000  1310720
+take owner	               0x180000  1572864
+</file>
 ====== Installation ======
 <file>
 [FAQ]
@@ -23,19 +148,7 @@ domain_sid = security.dom_sid("S-1-5-21")
 **Access Right**
 
 {{:samba:ic493699.png?600|}}
-| bit | Access Right String  | 
-| 19 | WO |
-| 18 | WD |
-| 17 | RC |      
-| 16 | SD |  
-| 5 | RP | 0x00100010 |
-| 9 | CR | 0x00100100 |   
-| 3 | LC |  
-| 2 | DC |
-| 4 | SW |
-| 8 | LO |
-| 1 | CC |
-| 6 | WP | 0x00100020 |
+
 
 
 ====== FAQ ======

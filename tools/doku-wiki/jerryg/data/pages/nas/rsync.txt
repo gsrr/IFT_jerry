@@ -1,5 +1,13 @@
 ====== FAQ ======
 <file>
+Q4 : --exclude=/20180222 與--exclude=20180222的差別為何?
+Ans :
+--exclude=20180222
+--> 會排除pathname是20180222的檔案(directory).
+
+--exclude=/20180222
+--> 只會排除root of transfer底下的20180222
+
 Q3 : rsync備份過去, 為什麼mask都變成空的?
 Ans :
 因為rsync 會一邊建空資料夾, 一邊進行備份, 而新建的空資料夾其mask會是空的.

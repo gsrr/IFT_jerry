@@ -1,0 +1,83 @@
+====== bash ======
+<file>
+# Immutable Bit 
+A file with an immutable attribute can not be:
+
+a. Modified
+b. Deleted
+c. Renamed
+d. No soft or hard link created by anyone including root user.
+
+1. chattr +i /etc/shadow
+
+2. lsattr /etc/shadow
+----i-------- /etc/shadow
+
+3. chattr -i /etc/shadow
+
+# mount nfs file system
+mount -t nfs -o vers=3 XXX.XXX.XXX.XXX:/sample/nfs /mnt/nfs
+
+# is file writable
+1. find . -writable
+2. find -type f -maxdepth 1 -writable
+3. python -c "import os;os.access(file, os.W_OK)"
+
+# cpu information
+1. cat /proc/cpuinfo
+2. lscpu
+3. nproc
+
+# umask
+在/etc/profile裡面會設定umask of user.
+(/etc/profile 是指全體使用者環境變數設定檔.)
+
+if [ $UID -gt 199 ] && [ "`id -gn`" = "`id -un`" ]; then
+    umask 002
+else
+    umask 022
+fi
+
+像022就代表group與other會遮掉r權限.
+
+若輸入umask,會得到 0022
+The first bit is used to set special permission.
+
+0755  —- None of the special bits set
+1755  —- Sticky bit set
+2755  —- SGID bit set
+4755  —- SUID bit set
+
+# grep multiple pattan
+grep 'foo\|bar' *.txt
+
+# grep -F
+1. Equal to fgrep
+2. It will treat the special character as normal character.
+
+# change mtime of file
+
+[root@nas_8716691_a ~]# stat source/file1.txt
+  File: ‘source/file1.txt’
+  Size: 6               Blocks: 8          IO Block: 4096   regular file
+Device: fd01h/64769d    Inode: 10557046    Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2017-08-25 09:57:52.047363908 +0800
+Modify: 2017-08-25 09:58:36.650362706 +0800
+Change: 2017-08-25 09:59:56.403360558 +0800
+
+touch -m -d '2017-08-25 09:58:36.650362706 +0800' /source/file1.txt
+
+# list all extended attribute in file
+
+getfattr -d -m - <filename>
+
+# show git branch in prompt
+
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+
+</file>

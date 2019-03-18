@@ -1,4 +1,7 @@
   * [[tool:python:time_module|Usage of time module]]
+  * [[tool:python:string|string]]
+
+
 ====== get reference count from gdb ======
 <file>
 The reference count of each and every object is stored in the PyObject itself, in a variable called ob_refcnt.

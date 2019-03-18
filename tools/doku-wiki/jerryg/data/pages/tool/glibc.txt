@@ -17,6 +17,13 @@ yumdownloader --source glibc
 
 ====== getent group ======
 <file>
+Q11: 
+getent passwd/group, 照理說上次的資料沒要完時, timeout後再去下command還是會重新再要一次.
+那什麼樣的狀況會沒有重新去要就直接回傳?
+Ans:
+看起來等了55秒後就結束了, 那這樣應該是winbind回傳已經結束.
+
+
 Q10 : winbind在呼叫rpc要資料時, 是透過tevent傳給child去做事, 這時會需要先拿到一個child handle, 但若是child都在busy時, 會回傳一個NULL(find_idle_child)給 choose_domain_child, choose_domain_child會隨機選擇一個child來做事.
 Ans:
 ok.

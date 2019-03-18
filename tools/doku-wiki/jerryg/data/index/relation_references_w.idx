@@ -22,3 +22,4 @@ algorithm:algorithms:basic_algorithm
 algorithm:algorithms:integer_break
 algorithm:finite_state_machine
 nas:faq:mount_root_filesystem_byiscsi
+tool:python:string

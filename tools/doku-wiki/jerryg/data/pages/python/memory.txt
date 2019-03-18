@@ -1,10 +1,16 @@
 ====== Reference ======
 <file>
-https://docs.python.org/2/c-api/index.html
+1. https://docs.python.org/2/c-api/index.html
+2. http://drmingdrmer.github.io/tech/programming/2017/05/06/python-mem.html
+3. http://code.activestate.com/recipes/576515/
 
 [Tools]
 1. memory_profile
 2. guppy
+3. gdb-python
+4. pyrasite
+5. psutil 
+6. objgraph 
 </file>
 
 ====== Analysis ======

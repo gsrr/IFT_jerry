@@ -1,1 +1,2 @@
 1485247937	172.27.12.71	C	samba:ldap:add_user_ldap		created		10891
+1527758394	172.27.12.71	D	samba:ldap:add_user_ldap		removed		-10891

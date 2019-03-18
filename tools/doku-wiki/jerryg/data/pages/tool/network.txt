@@ -1,5 +1,8 @@
 ====== route related ======
 <file>
+# add default route
+route add default gw 192.168.0.1 
+
 # set route rule:
 ip route add default via 172.27.127.254 dev mgmt0
 

@@ -1,10 +1,19 @@
 
-<h1 class="sectionedit1" id="rsyncd_performance">Rsyncd Performance</h1>
+<h1 class="sectionedit1" id="summary">Summary</h1>
+<div class="level1">
+<pre class="file">1. Why -v (verbose) options is useless for rsync daemon mode?
+Ans :
+1. The -v option is useless because the default setting of &quot;max verbosity&quot; is 1. (int /etc/rsyncd.conf)
+2. Change the number of &quot;max verbosity&quot;, then we can control verbose level of server by client.</pre>
+
+</div>
+<!-- EDIT1 SECTION "Summary" [2-308] -->
+<h1 class="sectionedit2" id="rsyncd_performance">Rsyncd Performance</h1>
 <div class="level1">
 
 </div>
-<!-- EDIT1 SECTION "Rsyncd Performance" [3-35] -->
-<h2 class="sectionedit2" id="compare_with_ftp">Compare with ftp</h2>
+<!-- EDIT2 SECTION "Rsyncd Performance" [309-341] -->
+<h2 class="sectionedit3" id="compare_with_ftp">Compare with ftp</h2>
 <div class="level2">
 <pre class="file">ftp:
 [root@nas_852612_a src]# time python pftp.py
@@ -211,8 +220,8 @@ real   0m25.834s --&gt; 193.57 files/s
 </pre>
 
 </div>
-<!-- EDIT2 SECTION "Compare with ftp" [36-8814] -->
-<h1 class="sectionedit3" id="perf_-_delta_algorithm_w_o_delta_algorithm">perf - delta algorithm &amp; w/o delta algorithm</h1>
+<!-- EDIT3 SECTION "Compare with ftp" [342-9120] -->
+<h1 class="sectionedit4" id="perf_-_delta_algorithm_w_o_delta_algorithm">perf - delta algorithm &amp; w/o delta algorithm</h1>
 <div class="level1">
 <pre class="file">Q10 : rsync delta algorithm 與沒有delta algorithm的比較?
 Ans :
@@ -322,8 +331,8 @@ sys     0m7.860s
 </pre>
 
 </div>
-<!-- EDIT3 SECTION "perf - delta algorithm & w/o delta algorithm" [8815-12087] -->
-<h1 class="sectionedit4" id="rsync_mechanism">Rsync mechanism</h1>
+<!-- EDIT4 SECTION "perf - delta algorithm & w/o delta algorithm" [9121-12393] -->
+<h1 class="sectionedit5" id="rsync_mechanism">Rsync mechanism</h1>
 <div class="level1">
 <pre class="file">Q15 : 從server端看起來, 每次讀data之前都會先讀一個size, 但client在送的時候, 也是這樣送的嗎?
 Ans : 
@@ -535,8 +544,8 @@ Ans :
 </pre>
 
 </div>
-<!-- EDIT4 SECTION "Rsync mechanism" [12088-20513] -->
-<h1 class="sectionedit5" id="faq">FAQ</h1>
+<!-- EDIT5 SECTION "Rsync mechanism" [12394-20819] -->
+<h1 class="sectionedit6" id="faq">FAQ</h1>
 <div class="level1">
 <pre class="file">Q7 : rsync的hash與compare機制到底是?
 Ans : 
@@ -644,8 +653,8 @@ Ans:
 </pre>
 
 </div>
-<!-- EDIT5 SECTION "FAQ" [20514-24789] -->
-<h1 class="sectionedit6" id="flow_of_source_code">flow of source code</h1>
+<!-- EDIT6 SECTION "FAQ" [20820-25095] -->
+<h1 class="sectionedit7" id="flow_of_source_code">flow of source code</h1>
 <div class="level1">
 <pre class="file"># rsync client (for read)
 # rsync server-ssh (for write)
@@ -696,4 +705,4 @@ struct map_struct {
 readfd_unbuffered --&gt; read_timeout --&gt; read</pre>
 
 </div>
-<!-- EDIT6 SECTION "flow of source code" [24790-] -->
+<!-- EDIT7 SECTION "flow of source code" [25096-] -->

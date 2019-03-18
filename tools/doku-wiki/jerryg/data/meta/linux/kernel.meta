@@ -1,0 +1,24 @@
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1520417832;s:8:"modified";i:1523255029;}s:11:"last_change";a:8:{s:4:"date";i:1523255029;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:12:"linux:kernel";s:4:"user";s:0:"";s:3:"sum";s:11:"[sys call] ";s:5:"extra";s:0:"";s:10:"sizechange";i:200;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:6:"dentry";s:11:"description";a:2:{s:15:"tableofcontents";a:4:{i:0;a:4:{s:3:"hid";s:6:"dentry";s:5:"title";s:6:"dentry";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:8:"sys_call";s:5:"title";s:8:"sys call";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:2;a:4:{s:3:"hid";s:5:"iattr";s:5:"title";s:5:"iattr";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:3;a:4:{s:3:"hid";s:14:"user_namespace";s:5:"title";s:14:"user_namespace";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:573:"dentry
+
+
+# structure
+
+
+
+sys call
+
+
+Q4 : system call of access
+Ans :
+access(user space) -->access(kernel space, open.c) --> faccessat(open.c)
+
+Q3 : 在link_path_walk裡面, 一開始的nd是working directory, 這會導致連/lib/..的path也都跑到ift_inode_permission.
+Ans :
+後來改法是... 直接改在path_walk外面, 當有fail時, walk again without rcu mode.
+
+
+Q2 : ls的flow為何?
+Ans : 
+1. filename_lookup --> path_lookupat --> link_path_walk --> may_lookup (namei.c) --> (wrong)
+
+2. SYSCALL_DEFINE4(open.c) --> do_sys_open --> do_filp_open(nami.c) --> path…";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1520417832;s:8:"modified";i:1523255029;}s:11:"last_change";a:8:{s:4:"date";i:1523255029;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:12:"linux:kernel";s:4:"user";s:0:"";s:3:"sum";s:11:"[sys call] ";s:5:"extra";s:0:"";s:10:"sizechange";i:200;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

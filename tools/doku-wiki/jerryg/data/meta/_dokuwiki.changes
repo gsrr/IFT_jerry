@@ -1,38 +1,20 @@
-1511344664	172.27.12.71	E	linux:nfs		[Basic] 		315
-1511478989	10.141.141.104	E	linux:process				439
-1511479068	10.141.141.104	E	linux:process				11
-1511489075	172.27.12.71	C	linux:xattr		created		75
-1511718662	10.141.141.104	E	linux:nfs		[Basic] 		26
-1511719018	10.141.141.104	E	linux:nfs				226
-1511720170	10.141.141.104	E	linux:nfs				218
-1511720649	10.141.141.104	E	linux:nfs				37
-1511721234	10.141.141.104	E	linux:nfs				72
-1511763612	172.27.12.71	E	linux:nfs				80
-1511768727	172.27.12.71	E	linux:nfs				786
-1511776903	172.27.12.71	E	linux:nfs				184
-1511776946	172.27.12.71	E	linux:nfs				71
-1511778641	172.27.12.71	E	linux:nfs				323
-1511834473	172.27.12.71	E	samba:ntacl:samba-tool				86
-1511834543	172.27.12.71	E	samba:ntacl:samba-tool				77
-1511834781	172.27.12.71	E	samba:ntacl:samba-tool		[Basic commands] 		291
-1511834879	172.27.12.71	E	samba:ntacl:samba-tool				151
-1511835267	172.27.12.71	E	samba:ntacl:samba-tool				492
-1511837453	172.27.12.71	E	samba:ntacl:samba-tool				215
-1511838298	172.27.12.71	E	samba:ntacl:samba-tool				83
-1511838340	172.27.12.71	E	samba:ntacl:samba-tool				379
-1511839544	172.27.12.71	E	samba:ntacl:samba-tool				536
-1511840120	172.27.12.71	E	samba:ntacl:samba-tool				74
-1511840835	172.27.12.71	E	samba:ntacl:samba-tool				696
-1511848690	172.27.12.71	E	samba:ntacl:samba-tool				652
-1511848719	172.27.12.71	E	samba:ntacl:samba-tool				26
-1511858415	172.27.12.71	E	samba:ntacl:samba-tool				482
-1511864292	172.27.12.71	E	samba:ntacl:samba-tool				24
-1511981421	10.141.141.102	E	samba:ntacl:samba-tool				610
-1511981468	10.141.141.102	E	samba:ntacl:samba-tool				102
-1511981527	10.141.141.102	E	samba:ntacl:samba-tool				36
-1511981563	10.141.141.102	E	samba:ntacl:samba-tool				90
-1511981646	10.141.141.102	E	samba:ntacl:samba-tool				76
-1511982191	10.141.141.102	E	samba:ntacl:samba-tool				408
-1511982310	10.141.141.102	E	samba:ntacl:samba-tool				159
-1511983361	10.141.141.102	E	samba:ntacl:samba-tool				1008
-1511983500	10.141.141.102	E	samba:ntacl:samba-tool				-518
+1530684368	172.27.12.71	E	util:linux				449
+1530684375	172.27.12.71	D	linux:umask		removed		-455
+1530684408	172.27.12.71	E	util:linux				58
+1530684414	172.27.12.71	D	linux:systeminfo		removed		-83
+1530684530	172.27.12.71	E	util:linux				37
+1530684584	172.27.12.71	E	util:linux				85
+1530684851	172.27.12.71	E	util:linux				91
+1530684983	172.27.12.71	E	util:linux				264
+1530685410	172.27.12.71	E	util:python				488
+1539681102	172.27.12.71	C	nas:acl_improvement		created		19
+1539681168	172.27.12.71	E	nas:acl_improvement				28
+1539681238	172.27.12.71	E	nas:acl_improvement				11
+1539681743	172.27.12.71	E	nas:acl_improvement				84
+1539761709	172.27.12.71	E	nas:acl_improvement				197
+1539831538	172.27.12.71	E	nas:acl_improvement				606
+1539832110	172.27.12.71	E	nas:acl_improvement				936
+1539833194	172.27.12.71	E	nas:acl_improvement				529
+1539833239	172.27.12.71	E	nas:acl_improvement				43
+1539833752	172.27.12.71	E	nas:acl_improvement				128
+1550738147	172.27.12.119	E	tool:opengrok				-1570

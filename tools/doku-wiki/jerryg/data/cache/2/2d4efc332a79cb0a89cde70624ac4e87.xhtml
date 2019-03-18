@@ -1,0 +1,45 @@
+
+<h1 class="sectionedit1" id="ex1">Ex1</h1>
+<div class="level1">
+<ol>
+<li class="level1"><div class="li"> Int –&gt; types.c_int(1000)</div>
+</li>
+<li class="level1"><div class="li"> Pointer to a integer –&gt; num = ctypes.c_int(10) –&gt; pn = ctypes.pointer(num)</div>
+</li>
+<li class="level1"><div class="li"> Pointer to a string –&gt; ctypes.c_char_p(“Hello World”)</div>
+</li>
+<li class="level1"><div class="li"> Pointer to a integer array –&gt; arr = (ctypes.c_int * 10)() –&gt; gs = ctypes.cast(arr, ctypes.POINTER(ctypes.c_int))</div>
+</li>
+</ol>
+<pre class="file">
+import sys
+import pwd
+import ctypes
+
+def get_uid_groups(uid):
+    libc = ctypes.CDLL(&quot;libc.so.6&quot;)
+    pw = pwd.getpwuid(uid)
+    user = ctypes.c_char_p(pw.pw_name)
+    gid = ctypes.c_int(pw.pw_gid)
+    num = ctypes.c_int(10)
+    arr = (ctypes.c_int * 10)()
+    pn = ctypes.pointer(num)
+    gs = ctypes.cast(arr, ctypes.POINTER(ctypes.c_int))
+
+    while True:
+        ngroup = libc.getgrouplist(user, gid, gs, pn)
+        if ngroup == -1:
+            num = c_int(num.value * 2)
+            pn = ctypes.pointer(num)
+        elif ngroup &gt;= 0:
+            return (ngroup, gs)
+
+
+def main():
+    print get_uid_groups(100001)
+
+if __name__ == &quot;__main__&quot;:
+    main()
+    </pre>
+
+</div>

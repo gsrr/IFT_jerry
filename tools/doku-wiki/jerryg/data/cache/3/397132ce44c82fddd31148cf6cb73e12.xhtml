@@ -1,0 +1,72 @@
+
+<h1 class="sectionedit1" id="opengrok_in_windows">opengrok in windows</h1>
+<div class="level1">
+<pre class="file">[Installation]
+1. Tomcat 8 or higher
+https://tomcat.apache.org/download-80.cgi#8.5.24
+
+2. opengrok package
+https://github.com/OpenGrok/OpenGrok/wiki/How-to-install-OpenGrok
+https://github.com/OpenGrok/OpenGrok/releases/download/1.1-rc18/opengrok-1.1-rc18.tar.gz
+
+3. ctags package
+https://github.com/universal-ctags/ctags-win32/releases
+https://github.com/universal-ctags/ctags
+
+4. JDK 1.8 or higher
+
+[Procedure]
+1. Tomcat server test
+1.1 set JAVA_HOME=&quot;D:\Progs\jdk1.7.0_45_x64&quot;
+--&gt; set JAVA_HOME environment variable
+
+1.2 ..\apache-tomcat-8.5.24\bin&gt;startup.bat
+--&gt; start tomcat server
+
+1.3 http:\\127.0.0.1:8080
+--&gt; connect to tomcat server
+
+2. Steps for installing opengrok
+2.1 Download the OpenGrok binary from OpenGrok Binary.
+2.2 Unzip the tar to a location say &quot;G:\OpenGrok&quot;
+2.3 Download Ctags from Ctags Windows Binary.
+2.4 Extract Ctags to a location say &quot;G:\Ctags&quot;
+2.5 Download and install Tomcat.
+2.6 OpenGrok needs the following to run
+--&gt; A configuration.xml that is generated using the command in step 10.
+--&gt; Location to the source being indexed. (SRC_ROOT)
+--&gt; Location to the &quot;Ctag&quot; generated grokData, again refer to step 10.  (DATA_ROOT)
+
+2.7 Extract the &quot;war&quot; file in the &quot;lib&quot; folder in the extracted OpenGrok location. In this case  G:\opengrok\lib\
+2.8 Edit the WEB-INF\web.xml file to include the information
+--&gt; A configuration.xml
+--&gt; Location to the source being indexed. (SRC_ROOT)
+
+&lt;context-param&gt;  
+   &lt;param-name&gt;CONFIGURATION&lt;/param-name&gt;  
+   &lt;param-value&gt;G:\opengrok\configuration.xml&lt;/param-value&gt;  
+   &lt;description&gt;Full path to the configuration file where OpenGrok can read it&#039;s configuration&lt;/description&gt;  
+&lt;/context-param&gt;  
+  -------Added the below------  
+&lt;context-param&gt;    
+   &lt;param-name&gt;SRC_ROOT&lt;/param-name&gt;  
+   &lt;param-value&gt;G:\CodeSource&lt;/param-value&gt;  
+&lt;/context-param&gt;  
+&lt;context-param&gt;  
+   &lt;param-name&gt;DATA_ROOT&lt;/param-name&gt;  
+   &lt;param-value&gt;G:\opengrok-0.11.1\grokdata&lt;/param-value&gt;    
+&lt;/context-param&gt; 
+
+
+ 
+2.9 Copy the the extracted source.war with the modified web.xml to the tomcat webapps folder. 
+Index the source and generate the configuration.xml file using the below command (G:\opengrok-0.11.1\lib has the jar file)
+
+java -jar opengrok.jar -W G:\opengrok-0.11.1\configuration.xml -c G:\ctags58\ctags.exe -P -S -v -s G:\CodeSource -d G:\opengrok-0.11.1\grokdata
+  
+2.10 Launch Tomcat after the indexing in done. 
+--&gt; Open http://localhost:8080/source and wola you have a wicked fast source browser. 
+2.11 Reindex if you need to add new projects/pick new source etc.
+ </pre>
+
+</div>

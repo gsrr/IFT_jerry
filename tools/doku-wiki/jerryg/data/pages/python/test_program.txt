@@ -1,0 +1,29 @@
+====== Deadlock of subprocess.Popen ======
+<file>
+# Root cause
+The parent process communicate with subprocess through pipe, 
+and the pipe buffer will full if parent process doesn't read data from pipe.
+
+
+# execution
+python test.py
+
+# test.py
+import subprocess
+import time
+
+proc = subprocess.Popen("bash test.sh", shell = True, stdout = subprocess.PIPE)
+while True:
+        line = proc.stdout.readline()
+        print line
+        time.sleep(1)
+        
+# test.sh
+cnt=0
+while true
+do
+        sleep 0.1
+        echo "$cnt, Hello World...."
+        cnt=$((cnt+1))
+done
+</file>

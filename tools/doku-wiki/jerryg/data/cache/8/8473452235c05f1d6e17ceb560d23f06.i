@@ -1,4 +1,9 @@
-a:26:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:18:"Rsyncd Performance";i:1;i:1;i:2;i:3;}i:2;i:3;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3;}i:3;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:36;}i:4;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:16:"Compare with ftp";i:1;i:2;i:2;i:36;}i:2;i:36;}i:5;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:36;}i:6;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:5147:"
+a:30:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:7:"Summary";i:1;i:1;i:2;i:2;}i:2;i:2;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:2;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:269:"
+1. Why -v (verbose) options is useless for rsync daemon mode?
+Ans :
+1. The -v option is useless because the default setting of "max verbosity" is 1. (int /etc/rsyncd.conf)
+2. Change the number of "max verbosity", then we can control verbose level of server by client.
+";i:1;N;i:2;N;}i:2;i:29;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:309;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:18:"Rsyncd Performance";i:1;i:1;i:2;i:309;}i:2;i:309;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:309;}i:7;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:342;}i:8;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:16:"Compare with ftp";i:1;i:2;i:2;i:342;}i:2;i:342;}i:9;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:342;}i:10;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:5147:"
 ftp:
 [root@nas_852612_a src]# time python pftp.py
 
@@ -94,7 +99,7 @@ rsync:
   0.00    0.000010           3         4           clone
 ------ ----------- ----------- --------- --------- ----------------
 100.00    0.716020                 24320      5082 total
-";i:1;N;i:2;N;}i:2;i:71;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:3572:"
+";i:1;N;i:2;N;}i:2;i:377;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:3572:"
 Q1 : strace 的時間意思?
 Ans : 
 1. strace裡面所記錄的秒數是 : CPU time spent running in the kernel
@@ -203,7 +208,7 @@ real    0m16.427s --> 304.37 files/s
 [root@nas_8822956_a Volume_1]# time rsync -a --inplace src/ admin@87.87.87.10::dst
 real   0m25.834s --> 193.57 files/s
 
-";i:1;N;i:2;N;}i:2;i:5233;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:8815;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:44:"perf - delta algorithm & w/o delta algorithm";i:1;i:1;i:2;i:8815;}i:2;i:8815;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:8815;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:3199:"
+";i:1;N;i:2;N;}i:2;i:5539;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:9121;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:44:"perf - delta algorithm & w/o delta algorithm";i:1;i:1;i:2;i:9121;}i:2;i:9121;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:9121;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:3199:"
 Q10 : rsync delta algorithm 與沒有delta algorithm的比較?
 Ans :
 [root@nas_8739457_a Volume_2]# time rsync -aW --progress src/file50M admin@172.27.112.254::aaa
@@ -310,7 +315,7 @@ real    2m18.769s
 user    0m28.206s
 sys     0m7.860s
 
-";i:1;N;i:2;N;}i:2;i:8878;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:12088;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:15:"Rsync mechanism";i:1;i:1;i:2;i:12088;}i:2;i:12088;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:12088;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:8380:"
+";i:1;N;i:2;N;}i:2;i:9184;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:12394;}i:17;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:15:"Rsync mechanism";i:1;i:1;i:2;i:12394;}i:2;i:12394;}i:18;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:12394;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:8380:"
 Q15 : 從server端看起來, 每次讀data之前都會先讀一個size, 但client在送的時候, 也是這樣送的嗎?
 Ans : 
 是的, 會先傳一個size再傳後面的data
@@ -519,7 +524,7 @@ Ans :
 1. "quick  check" algorithm --> looks for files that have changed in size or  in  last-modified  time.
 2. delta-transfer algorithm
 
-";i:1;N;i:2;N;}i:2;i:12124;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:20514;}i:17;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:3:"FAQ";i:1;i:1;i:2;i:20514;}i:2;i:20514;}i:18;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:20514;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:4242:"
+";i:1;N;i:2;N;}i:2;i:12430;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:20820;}i:21;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:3:"FAQ";i:1;i:1;i:2;i:20820;}i:2;i:20820;}i:22;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:20820;}i:23;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:4242:"
 Q7 : rsync的hash與compare機制到底是?
 Ans : 
 1. wf_writeBufSize
@@ -624,7 +629,7 @@ total size is 10485760000  speedup is 1.00
 Q5 : what is sum_struct?
 Ans:
 
-";i:1;N;i:2;N;}i:2;i:20538;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:24790;}i:21;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:19:"flow of source code";i:1;i:1;i:2;i:24790;}i:2;i:24790;}i:22;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:24790;}i:23;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1712:"
+";i:1;N;i:2;N;}i:2;i:20844;}i:24;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:25096;}i:25;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:19:"flow of source code";i:1;i:1;i:2;i:25096;}i:2;i:25096;}i:26;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:25096;}i:27;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1712:"
 # rsync client (for read)
 # rsync server-ssh (for write)
 # rsync daemon (for writie)
@@ -672,4 +677,4 @@ struct map_struct {
 };
 -----------------------------------------------
 readfd_unbuffered --> read_timeout --> read
-";i:1;N;i:2;N;}i:2;i:24830;}i:24;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:26550;}i:25;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:26550;}}
+";i:1;N;i:2;N;}i:2;i:25136;}i:28;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:26856;}i:29;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:26856;}}

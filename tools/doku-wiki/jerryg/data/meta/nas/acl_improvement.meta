@@ -1,0 +1,28 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1539681102;s:8:"modified";i:1539833752;}s:11:"last_change";a:8:{s:4:"date";i:1539833752;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:19:"nas:acl_improvement";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:128;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:547:"FAQ
+
+
+
+Q6 : rcu_head?
+Ans :
+Typically, the rcu_head structure is embedded in the data structure that uses RCU for updating and lookup.
+
+Q1 : How vfs load file?
+Ans :
+func : inode_init_always
+file : fs/inode.c
+
+inode structure
+file : include/linux/fs.h
+
+
+Q2 : Change location of iftacl.h
+Ans:
+1. fs/open.c:36:21: fatal error: ift_acl.h: No such file or directory
+2. fs/namei.c: 
+3. fs/attr.c
+4. fs/xattr.c
+5. fs/nfsd/vfs.c:
+6. fs/xfs/xfs_iops.c
+7. 
+
+Q3 : 從rcu的說明, 在write cache的時候應該會先copy一份等待所有read的人都離…";}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1539681102;s:8:"modified";i:1539833752;}s:11:"last_change";a:8:{s:4:"date";i:1539833752;s:2:"ip";s:12:"172.27.12.71";s:4:"type";s:1:"E";s:2:"id";s:19:"nas:acl_improvement";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:128;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

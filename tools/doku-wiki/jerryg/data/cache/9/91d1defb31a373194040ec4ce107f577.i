@@ -1,10 +1,16 @@
-a:11:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:9:"Reference";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:80:"
-https://docs.python.org/2/c-api/index.html
+a:11:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:9:"Reference";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:256:"
+1. https://docs.python.org/2/c-api/index.html
+2. http://drmingdrmer.github.io/tech/programming/2017/05/06/python-mem.html
+3. http://code.activestate.com/recipes/576515/
 
 [Tools]
 1. memory_profile
 2. guppy
-";i:1;N;i:2;N;}i:2;i:30;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:120;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:8:"Analysis";i:1;i:1;i:2;i:120;}i:2;i:120;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:120;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2542:"
+3. gdb-python
+4. pyrasite
+5. psutil 
+6. objgraph 
+";i:1;N;i:2;N;}i:2;i:30;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:296;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:8:"Analysis";i:1;i:1;i:2;i:296;}i:2;i:296;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:296;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2542:"
 import copy
 import time
 import os
@@ -89,7 +95,7 @@ Partition of a set of 325561 objects. Total size = 15461872 bytes.
      8   1614   0   193680   1  14671168  95 function
      9    200   0   177912   1  14849080  96 type
 
-";i:1;N;i:2;N;}i:2;i:148;}i:8;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:847:"
+";i:1;N;i:2;N;}i:2;i:324;}i:8;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:847:"
 All Python objects (even Python integers) have a type and a reference count.
 An object’s type determines what kind of object it is
 "reference count" counts how many different places there are that have a reference to an object.
@@ -104,4 +110,4 @@ Q1 : 為什麼剛init一個object的reference count是2, 而不是1
 Ans:
 因為object在傳進getreference()時，reference count就會偷偷加1了。
 
-";i:1;N;i:2;N;}i:2;i:2705;}i:9;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3560;}i:10;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:3560;}}
+";i:1;N;i:2;N;}i:2;i:2881;}i:9;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3736;}i:10;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:3736;}}

@@ -1,7 +1,10 @@
 
 <h1 class="sectionedit1" id="route_related">route related</h1>
 <div class="level1">
-<pre class="file"># set route rule:
+<pre class="file"># add default route
+route add default gw 192.168.0.1 
+
+# set route rule:
 ip route add default via 172.27.127.254 dev mgmt0
 
 # delete routing rule
@@ -9,7 +12,7 @@ route del -net 169.254.0.0 netmask 255.255.0.0 dev eth0
 </pre>
 
 </div>
-<!-- EDIT1 SECTION "route related" [1-191] -->
+<!-- EDIT1 SECTION "route related" [1-246] -->
 <h1 class="sectionedit2" id="set_static_ip">set static ip</h1>
 <div class="level1">
 <pre class="file"># set config: /etc/sysconfig/network-scripts/ifcfg-mgmt0
@@ -39,4 +42,4 @@ systemctl restart network
 </pre>
 
 </div>
-<!-- EDIT2 SECTION "set static ip" [192-] -->
+<!-- EDIT2 SECTION "set static ip" [247-] -->
