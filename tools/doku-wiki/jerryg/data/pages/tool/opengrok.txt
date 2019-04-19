@@ -20,9 +20,10 @@ wget https://github.com/OpenGrok/OpenGrok/files/213268/opengrok-0.12.1.5.tar.gz
 tar -xvzf opengrok-0.12.1.5.tar.gz
 # 拷贝web app源文件
 cp opengrok-0.12.1.5/lib/source.war /opt/apache-tomcat-7.0.50/webapps/
-# 安装CTags
-dpkg -i exuberant-ctags_1%3a5.9~svn20110310-7ubuntu0.1_amd64.deb
-# 或者apt-get install ctags
+
+# 啟動tomcat
+systemctl start tomcat
+
 # 生成代码索引
 cd opengrok-0.12.1.5/bin
 ./OpenGrok index /opt/cecgw/csmp/nova

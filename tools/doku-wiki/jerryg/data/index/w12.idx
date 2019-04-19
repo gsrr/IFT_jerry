@@ -345,3 +345,5 @@ getattribute
 subclasshook
 getgrouplist
 improvements
+loopbackfile
+prioritizers
