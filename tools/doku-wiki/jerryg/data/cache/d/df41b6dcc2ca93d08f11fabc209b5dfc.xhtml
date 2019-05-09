@@ -1,0 +1,23 @@
+<pre class="file">[Command]
+1. discover
+iscsiadm -m discovery -t st -p 192.168.12.20
+
+2. login
+iscsiadm -m node -T iqn.2016-02.local.itzgeek.server:disk1 -p 192.168.12.20 -l
+
+3. umount
+umount /mnt
+
+4. logout
+iscsiadm -m node --targetname&quot; &quot;iqn.2010-10.synolog y-iscsi:newvirtualdisk.1&quot; --portal&quot; &quot;192.168.0.227:3260&quot; --logout
+
+[Installation]
+1.  yum install iscsi-initiator-utils
+
+[Reference]
+1. Configure iSCSI Target &amp; Initiator on CentOS 7 / RHEL7
+http://www.itzgeek.com/how-tos/linux/centos-how-tos/configure-iscsi-target-initiator-on-centos-7-rhel7.html
+
+2. Windows 7 Initiatior(iSCSI Client)
+http://linux-guys.blogspot.tw/2011/01/windows-7-initiatioriscsi-client.html
+</pre>

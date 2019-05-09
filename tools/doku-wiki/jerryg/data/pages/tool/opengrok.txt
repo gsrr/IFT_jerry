@@ -1,3 +1,11 @@
+====== Error Handle ======
+<file>
+Q : Indexing is a memory intensive process. 
+Ans:
+If you get "java.lang.OutOfMemoryError: Java heap space" error, try the -Xms<size></size> and -Xmx<size></size> options to java (Eg JAVA_OPTS="-Xms2048m -Xmx2048")
+
+</file>
+
 ====== opengrok in windows ======
 <file>
 [Reference]

@@ -1,0 +1,118 @@
+a:10:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:15:"iSCSI Initiator";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1764:"
+Reference:
+1. https://www.server-world.info/en/note?os=Ubuntu_18.04&p=iscsi&f=3
+
+[1]	Configure iSCSI Initiator.
+root@www:~# apt -y install open-iscsi
+root@www:~# vi /etc/iscsi/initiatorname.iscsi
+# change to the same IQN you set on the iSCSI target server
+InitiatorName=iqn.2018-05.world.srv:www.initiator01
+root@www:~# vi /etc/iscsi/iscsid.conf
+# line 56: uncomment
+node.session.auth.authmethod = CHAP
+# line 60,61: uncomment and specify the username and password you set on the iSCSI target
+node.session.auth.username = username
+node.session.auth.password = password
+root@www:~# systemctl restart iscsid open-iscsi
+# discover target
+root@www:~# iscsiadm -m discovery -t sendtargets -p 10.0.0.30 
+10.0.0.30:3260,1 iqn.2018-05.world.srv:dlp.target01
+# confirm status after discovery
+root@www:~# iscsiadm -m node -o show 
+# BEGIN RECORD 2.0-874
+node.name = iqn.2018-05.world.srv:dlp.target01
+node.tpgt = 1
+node.startup = manual
+node.leading_login = No
+.....
+.....
+node.conn[0].iscsi.IFMarker = No
+node.conn[0].iscsi.OFMarker = No
+# END RECORD
+
+# login to the target
+root@www:~# iscsiadm -m node --login 
+Logging in to [iface: default, target: iqn.2018-05.world.srv:dlp.target01, portal: 10.0.0.30,3260] (multiple)
+Login to [iface: default, target: iqn.2018-05.world.srv:dlp.target01, portal: 10.0.0.30,3260] successful.
+
+# confirm the established session
+root@www:~# iscsiadm -m session -o show 
+tcp: [1] 10.0.0.30:3260,1 iqn.2018-05.world.srv:dlp.target01 (non-flash)
+# confirm the partitions
+root@www:~# cat /proc/partitions 
+major minor  #blocks  name
+
+ 252        0   31457280 sda
+ 252        1   31455232 sda1
+ 253        0   30441472 dm-0
+ 253        1     999424 dm-1
+   8        0   10485760 sdb
+# added new device provided from the target server as [sdb]
+";i:1;N;i:2;N;}i:2;i:35;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:1809;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"iscsi target";i:1;i:1;i:2;i:1809;}i:2;i:1809;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1809;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2206:"
+Reference:
+1. https://www.server-world.info/en/note?os=Ubuntu_18.04&p=iscsi&f=2
+
+
+[1]	Install administration tools first.
+root@dlp:~# apt -y install tgt
+
+[2]	Configure iSCSI Target.
+For example, create an disk-image under the [/var/lib/iscsi_disks] directory and set it as a SCSI device.
+# create a disk-image
+root@dlp:~# mkdir /var/lib/iscsi_disks 
+root@dlp:~# dd if=/dev/zero of=/var/lib/iscsi_disks/disk01.img count=0 bs=1 seek=10G
+[root@dlp ~]# vi /etc/tgt/conf.d/target01.conf
+# create new
+# naming rule : [ iqn.(year)-(month).(reverse of domain name):(any name you like) ]
+<target iqn.2018-05.world.srv:dlp.target01>
+    # provided devicce as a iSCSI target
+    backing-store /var/lib/iscsi_disks/disk01.img
+    # iSCSI Initiator's IQN you allow to connect to this Target
+    initiator-name iqn.2018-05.world.srv:www.initiator01
+    # authentication info ( set any name you like for "username", "password" )
+    incominguser username password
+</target> 
+
+root@dlp:~# systemctl restart tgt
+# show status
+root@dlp:~# tgtadm --mode target --op show 
+Target 1: iqn.2018-05.world.srv:dlp.target01
+    System information:
+        Driver: iscsi
+        State: ready
+    I_T nexus information:
+    LUN information:
+        LUN: 0
+            Type: controller
+            SCSI ID: IET     00010000
+            SCSI SN: beaf10
+            Size: 0 MB, Block size: 1
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: null
+            Backing store path: None
+            Backing store flags:
+        LUN: 1
+            Type: disk
+            SCSI ID: IET     00010001
+            SCSI SN: beaf11
+            Size: 10737 MB, Block size: 512
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: rdwr
+            Backing store path: /var/lib/iscsi_disks/disk01.img
+            Backing store flags:
+    Account information:
+        username
+    ACL information:
+        ALL
+        iqn.2018-05.world.srv:www.initiator01
+";i:1;N;i:2;N;}i:2;i:1842;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:4056;}i:9;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:4056;}}

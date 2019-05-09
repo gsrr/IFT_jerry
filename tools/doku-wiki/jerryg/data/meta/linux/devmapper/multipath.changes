@@ -34,3 +34,34 @@
 1555655000	172.17.22.38	E	linux:devmapper:multipath				454
 1555666905	172.17.22.38	E	linux:devmapper:multipath				129
 1555667708	172.17.22.38	E	linux:devmapper:multipath				36
+1555712298	172.20.254.2	E	linux:devmapper:multipath				193
+1555760443	172.20.254.2	E	linux:devmapper:multipath				98
+1555806483	172.20.254.2	E	linux:devmapper:multipath				707
+1555900017	172.17.22.38	E	linux:devmapper:multipath				52
+1555900089	172.17.22.38	E	linux:devmapper:multipath				277
+1555900143	172.17.22.38	E	linux:devmapper:multipath				91
+1555900388	172.17.22.38	E	linux:devmapper:multipath				171
+1555900799	172.17.22.38	E	linux:devmapper:multipath				200
+1555903378	172.17.22.38	E	linux:devmapper:multipath				1345
+1555903652	172.17.22.38	E	linux:devmapper:multipath				144
+1555905016	172.17.22.38	E	linux:devmapper:multipath				245
+1555905724	172.17.22.38	E	linux:devmapper:multipath				289
+1555920726	172.17.22.38	E	linux:devmapper:multipath				642
+1556084873	172.17.22.38	E	linux:devmapper:multipath				198
+1556085324	172.17.22.38	E	linux:devmapper:multipath				303
+1556086613	172.17.22.38	E	linux:devmapper:multipath				149
+1556105171	172.17.22.38	E	linux:devmapper:multipath				18414
+1556160542	172.17.22.38	E	linux:devmapper:multipath				372
+1556265973	172.17.22.38	E	linux:devmapper:multipath				153
+1556266136	172.17.22.38	E	linux:devmapper:multipath		[Performance] 		61
+1556267770	172.17.22.38	E	linux:devmapper:multipath		[Performance] 		369
+1556269237	172.17.22.38	E	linux:devmapper:multipath		[Performance] 		524
+1556269394	172.17.22.38	E	linux:devmapper:multipath		[Performance] 		784
+1556269451	172.17.22.38	E	linux:devmapper:multipath		[Performance] 		260
+1556273651	172.17.22.38	E	linux:devmapper:multipath				19080
+1556273910	172.17.22.38	E	linux:devmapper:multipath		[Performance] 		874
+1556274017	172.17.22.38	E	linux:devmapper:multipath		[Performance] 		-2830
+1556274035	172.17.22.38	E	linux:devmapper:multipath		[Performance] 		8
+1556276867	172.17.22.38	E	linux:devmapper:multipath				6248
+1556324446	172.20.254.2	E	linux:devmapper:multipath		[Performance] 		-16265
+1556325481	172.20.254.2	E	linux:devmapper:multipath		[seq write] 		-2444

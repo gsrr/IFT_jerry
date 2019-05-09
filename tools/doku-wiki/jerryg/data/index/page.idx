@@ -158,3 +158,11 @@ util:linux
 nas:acl_improvement
 linux:devmapper:multipath
 linux:ubuntu
+qnap:weekly_report
+linux:scsi:iscsi
+linux:scsi
+samba:ntacl:test_scope
+linux:scsi:sata
+ubuntu:qemu
+linux:driver:mmio
+linux:udev

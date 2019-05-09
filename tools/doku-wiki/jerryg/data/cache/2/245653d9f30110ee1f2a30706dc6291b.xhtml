@@ -1,0 +1,238 @@
+
+<h1 class="sectionedit1" id="smartctl">smartctl</h1>
+<div class="level1">
+<pre class="file">[Installation]
+apt install smartmontools 
+
+[Usage]
+1. smartctl -i /dev/sda
+</pre>
+
+</div>
+<!-- EDIT1 SECTION "smartctl" [1-116] -->
+<h1 class="sectionedit2" id="fio">fio</h1>
+<div class="level1">
+<pre class="file">[Installation]
+1. apt-get install fio
+
+[Usage]
+1. fio --name=/mnt_ssd/file --ioengine=libaio --iodepth=1 --rw=write --bs=4k --direct=0 --size=5G  --unified_rw_reporting=1
+
+</pre>
+
+</div>
+<!-- EDIT2 SECTION "fio" [117-323] -->
+<h1 class="sectionedit3" id="systemtap">SystemTap</h1>
+<div class="level1">
+<pre class="file">Reference:
+1. Linux 自检和 SystemTap
+https://www.ibm.com/developerworks/cn/linux/l-systemtap/index.html
+
+Q2 : 如何使用SystemTap印出參數內容?
+Ans:
+以一個簡單的例子來說:
+stap -L &#039;kernel.function(&quot;vfs_read&quot;)&#039;
+
+會輸出該function所使用的parameter:
+kernel.function(&quot;vfs_read@fs/read_write.c:277&quot;) $file:struct file* $buf:char* $count:size_t $pos:loff_t*
+
+所以我們要讀取某個參數的值, 只要使用:
+$count
+
+若以我的script來說, 我先在要輸入scsi host_no, 而這是在Scsi_Host的structure裡面, 所以我的script會是:
+probe kernel.function(&quot;ata_scsi_queuecmd&quot;) {
+           printf (&quot;host number: %d\n&quot;,
+                   $shost-&gt;host_no);
+}
+
+接下來的例子展示了如何印出string, 以及使用for loop in systemTap
+
+probe kernel.function(&quot;ata_scsi_queuecmd&quot;) {
+           printf (&quot;host number: %x\n&quot;, $shost);
+           printf (&quot;host number: %x\n&quot;, $shost-&gt;hostt);
+           printf (&quot;host number: %d\n&quot;, $shost-&gt;hostt-&gt;this_id);
+           printf (&quot;host number: %c\n&quot;, $shost-&gt;hostt-&gt;name[0]);
+           printf (&quot;host number: %c\n&quot;, $shost-&gt;hostt-&gt;name[1]);
+           printf (&quot;host number: %c\n&quot;, $shost-&gt;hostt-&gt;name[2]);
+           printf (&quot;host number: %c\n&quot;, $shost-&gt;hostt-&gt;name[3]);
+           printf (&quot;host number: %d\n&quot;, $shost-&gt;hostt-&gt;name[4]);
+           printf (&quot;host number: %s\n&quot;, $shost-&gt;hostt-&gt;name$);
+           for (i = 0 ; i &lt; 5 ; i++)
+           {
+               printf(&quot;%c\n&quot;, $shost-&gt;hostt-&gt;name[i]);
+           }
+}
+
+Q1 : 如果撰寫script for SystemTap?
+Ans:
+1. 把下面這個內容存成xxx.stp
+
+global count=0
+
+probe kernel.function(&quot;vfs_rename&quot;) {
+  count++
+  printf( &quot;vfs_rename called %d times, currently by pid %d\n&quot;, count, pid );
+}
+
+2. 執行: stap xxx.stp
+</pre>
+
+</div>
+<!-- EDIT3 SECTION "SystemTap" [324-2112] -->
+<h1 class="sectionedit4" id="python_-_debug_with_gdb">python - debug with gdb</h1>
+<div class="level1">
+<pre class="file">[FAQ]
+[MAX_OUTPUT_LEN]
+1. in python-pdb.py
+2. 增加output 的長度
+
+Q4 : 可以用gdb改變程式的fd路徑嗎?
+Ans :
+
+Q3 : 如何設定break point?
+Ans : 
+1. break PyEval_EvalFrameEx if (strcmp((((PyStringObject *)(f-&gt;f_code-&gt;co_name))-&gt;ob_sval), &quot;foo&quot;) == 0)
+2. (參考 my-gdb.py)
+(gdb) py-bk Hello
+Breakpoint 1 at 0x7fd390fefb00: file Python/ceval.c, line 759.
+(gdb) c
+Continuing.
+stop
+
+Breakpoint 1, PyEval_EvalFrameEx (
+    f=f@entry=Frame 0x7fd3913c33e0, for file test.py, line 3, in Hello (name=&#039;Jerry&#039;, dic={&#039;test&#039;: 2, &#039;key&#039;: 1}),
+    throwflag=throwflag@entry=0) at Python/ceval.c:759
+759     Python/ceval.c: No such file or directory.
+(gdb)
+
+Q2 : 如何印出python的變數內容?
+Ans :
+
+Q1 : py-bt print出來的訊息會被truncated, 要如何印出完整的訊息?
+for example:
+#9 Frame 0x7f759788e578, for file /usr/local/NAS/misc/HAAgent/HAServer.py, line 2913, in main (sys=&lt;module at remote 0x7f75ab374bb0&gt;, server=&lt;HAServer(setInfoLock={&#039;NFSInfo&#039;: &lt;thread.lock at remote 0x7f75970f5710&gt;, &#039;WEBDAVInfo&#039;: &lt;thread.lock at remote 0x7f75970f57d0&gt;, &#039;FTPInfo&#039;: &lt;thread.lock at remote 0x7f75970f5750&gt;, &#039;ServiceInfo&#039;: &lt;thread.lock at remote 0x7f75970f5870&gt;, &#039;MonitorInfo&#039;: &lt;thread.lock at remote 0x7f75970f58d0&gt;, &#039;DiskInfo&#039;: &lt;thread.lock at remote 0x7f75970f5bf0&gt;, &#039;ShareInfo&#039;: &lt;thread.lock at remote 0x7f75970f5e70&gt;, &#039;MDInfo&#039;: &lt;thread.lock at remote 0x7f7594064270&gt;, &#039;AvInfo&#039;: &lt;thread.lock at remote 0x7f75940640d0&gt;, &#039;SystemInfo&#039;: &lt;thread.lock at remote 0x7f75970f5cf0&gt;, &#039;LVMInfo&#039;: &lt;thread.lock at remote 0x7f7594064430&gt;, &#039;UserInfo&#039;: &lt;thread.lock at remote 0x7f7594064390&gt;, &#039;RSYNCDInfo&#039;: &lt;thread.lock at remote 0x7f75970f5810&gt;, &#039;AFPInfo&#039;: &lt;thread.lock at remote 0x7f75970f5d50&gt;, &#039;PasswdManageInfo&#039;: &lt;thread.lock at remote 0x7f75970f5a50&gt;, &#039;NetworkInfo&#039;: &lt;thread.lock at remote 0x7f75940642d0&gt;, &#039;CIFSInfo&#039;: &lt;th...(truncated)
+
+Ans:
+需修改python-gdb裡面的參數:
+MAX_OUTPUT_LEN=1024
+
+[gdb-extension]
+1. source python-gdb.py
+https://raw.githubusercontent.com/WiserTogether/python27/master/python-gdb.py
+
+2. source py-fields.py
+https://gist.github.com/kouk/5c2e725bef8b54aae6e0
+
+[Installation]
+1. yum install gdb python-debuginfo
+2. yum install yum-utils
+3. debuginfo-install glibc
+4. debuginfo-install python
+
+[Reference]
+1. python - gdb support
+https://docs.python.org/devguide/gdb.html
+
+2. gdb python online document
+https://sourceware.org/gdb/onlinedocs/gdb/Breakpoints-In-Python.html#Breakpoints-In-Python
+
+3. DebuggingWithGdb
+https://wiki.python.org/moin/DebuggingWithGdb
+
+4. Extended gdb using python
+https://sourceware.org/gdb/onlinedocs/gdb/Python.html</pre>
+
+</div>
+<!-- EDIT4 SECTION "python - debug with gdb" [2113-4742] -->
+<h1 class="sectionedit5" id="gdb">gdb</h1>
+<div class="level1">
+<pre class="file">
+[gdb usage]
+# go to desired frame number
+1. frame frame-number
+
+# gdb print value of whole array
+(gdb) p *array@len
+
+(gdb) p/x *blob.data@468
+$21 = {0x4, 0x0, 0x4, 0x0, 0x0, 0x0, 0x2, 0x0, 0x4, 0x0, 0x2, 0x0, 0x1, 0x0, 0x26, 0x89, 0x39, 0xba, 0xdd, 0x76, 0x94, 0xf7, 0x30, 0x1e, 0x1e, 0x56, 0x8c,
+  0x14, 0x60, 0x73, 0xc5, 0x74, 0xd4, 0x11, 0x98, 0xb6, 0x23, 0xc6, 0xaa, 0xad, 0x6c, 0xa4, 0x58, 0xb3, 0x55, 0x65, 0x0 &lt;repeats 32 times&gt;, 0x70, 0x6f,
+  0x73, 0x69, 0x78, 0x5f, 0x61, 0x63, 0x6c, 0x0, 0x4, 0xaa, 0xf7, 0x3d, 0xda, 0x4e, 0xd3, 0x1, 0x76, 0xc4, 0xcc, 0xf8, 0xf8, 0x5b, 0x2a, 0x55, 0x86, 0xae,
+  0x49, 0x5b, 0xa1, 0x19, 0x27, 0x1d, 0x60, 0x8f, 0xfe, 0x81, 0x9d, 0x95, 0xa9, 0x6c, 0x18, 0x24, 0x35, 0x40, 0x33, 0x2c, 0xbc, 0x1, 0x0 &lt;repeats 32 times&gt;,
+  0x1, 0x0, 0x4, 0x9c, 0xb4, 0x0, 0x0, 0x0, 0xd0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xe0, 0x0, 0x0, 0x0, 0x1, 0x5, 0x0, 0x0, 0x0, 0x0, 0x0, 0x5, 0x15, 0x0,
+  0x0, 0x0, 0x9a, 0x51, 0xc0, 0xfd, 0x13, 0xe, 0x69, 0xd1, 0xe9, 0x71, 0xd2, 0xbc, 0xe8, 0x3, 0x0, 0x0, 0x1, 0x2, 0x0, 0x0, 0x0, 0x0, 0x0, 0x16, 0x2, 0x0,
+  0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x2, 0x0, 0xf4, 0x0, 0x9, 0x0, 0x0, 0x0, 0x0, 0x3, 0x24, 0x0, 0xff, 0x1, 0x1f, 0x0, 0x1, 0x5, 0x0, 0x0...}
+
+# gdb print hex value
+p/x var
+
+# print variable
+1. print variable-name
+2. p variable-name
+
+# backtrace
+1. bt
+2. bt full
+
+# x command
+Displays the memory contents at a given address using the specified format.
+
+# stop gdb
+1. q
+2. quit
+
+[Reference]
+1. gdb reference
+http://visualgdb.com/gdbreference
+
+2. Debugging with gdb
+https://sourceware.org/gdb/onlinedocs/gdb/
+
+3. debug for thread, multi-process
+http://www.study-area.org/cyril/opentools/opentools/x1265.html
+
+# command
+gdb /usr/bin/smbd path/to/the/core
+</pre>
+
+</div>
+<!-- EDIT5 SECTION "gdb" [4743-6499] -->
+<h1 class="sectionedit6" id="crash">crash</h1>
+<div class="level1">
+<pre class="file">[FAQ]
+
+[BASIC]
+# vma
+1. vma stands for &quot;virtual memory area&quot;.
+
+crash&gt; vm 24518 | more
+PID: 24518  TASK: ffff8802b20ddc00  CPU: 0   COMMAND: &quot;python&quot;
+       MM               PGD          RSS    TOTAL_VM
+ffff880067ee3200  ffff88023671d000  27160k  473304k
+      VMA           START       END     FLAGS FILE
+ffff88023d2d2ca8     400000     401000    875 /usr/bin/python2.7
+ffff88023d2d2bd0     600000     601000 100871 /usr/bin/python2.7
+ffff88023d2d2af8     601000     602000 100873 /usr/bin/python2.7
+ffff88023d2d2a20    1643000    2167000 100073
+ffff880273ec8798    2167000    2189000 100073
+
+ffff88023d2d2ca8 is a pointer address which refer to virtual memory area.
+It store the memory that start from 400000 to 401000.
+
+
+# memory information
+1. vm &lt;pid&gt;
+2. ps | grpe yas3 | awk &#039;{sum += $8} END {print sum}&#039;
+
+# stack of a process
+1. ps | grep rsync
+2. bt &lt;pid&gt;
+
+# process information
+1. ps
+
+# command
+1. crash vmcore vmlinux_kernel2017-10-24_180426_37bc122</pre>
+
+</div>
+<!-- EDIT6 SECTION "crash" [6500-] -->

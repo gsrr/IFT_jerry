@@ -9,3 +9,5 @@
 1521452904	172.27.12.71	E	linux:kernel		[sys call] 		136
 1522659130	172.27.12.71	E	linux:kernel				49
 1523255029	172.27.12.71	E	linux:kernel		[sys call] 		200
+1555036688	127.0.0.1	E	linux:kernel		external edit		0
+1555921924	172.17.22.38	E	linux:kernel				116

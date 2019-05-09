@@ -1,39 +1,63 @@
-1555465313	172.17.22.38	C	linux:devmapper:multipath		created		389
-1555465618	172.17.22.38	E	linux:devmapper:multipath				328
-1555466446	172.17.22.38	E	linux:devmapper:multipath				1805
-1555468917	172.17.22.38	E	linux:devmapper:multipath				110
-1555468955	172.17.22.38	E	linux:devmapper:multipath				128
-1555468967	172.17.22.38	E	linux:devmapper:multipath				1
-1555469053	172.17.22.38	E	linux:devmapper:multipath				81
-1555469108	172.17.22.38	C	linux:ubuntu		created		56
-1555469247	172.17.22.38	E	linux:ubuntu				48
-1555469270	172.17.22.38	E	linux:ubuntu				26
-1555469841	172.17.22.38	E	linux:devmapper:multipath				33
-1555469883	172.17.22.38	E	linux:devmapper:multipath				20
-1555470870	172.17.22.38	E	linux:devmapper:multipath		[module functions] 		332
-1555471370	172.17.22.38	E	linux:devmapper:multipath				231
-1555471539	172.17.22.38	E	linux:devmapper:multipath				168
-1555471666	172.17.22.38	E	linux:devmapper:multipath				12
-1555483330	172.17.22.38	E	linux:devmapper:multipath		[module functions] 		44
-1555483601	172.17.22.38	E	linux:devmapper:multipath		[module functions] 		102
-1555559780	172.17.22.38	E	linux:devmapper:multipath				1454
-1555560056	172.17.22.38	E	linux:devmapper:multipath		[module functions] 		545
-1555576597	172.17.22.38	E	linux:devmapper:multipath				288
-1555639058	172.17.22.38	E	linux:devmapper:multipath				219
-1555640876	172.17.22.38	E	linux:devmapper:multipath				83
-1555641629	172.17.22.38	E	linux:devmapper:multipath				83
-1555641720	172.17.22.38	E	linux:devmapper:multipath				3
-1555642161	172.17.22.38	E	linux:devmapper:multipath				117
-1555642191	172.17.22.38	E	linux:devmapper:multipath				13
-1555642283	172.17.22.38	E	linux:devmapper:multipath				80
-1555642512	172.17.22.38	E	linux:devmapper:multipath				48
-1555642593	172.17.22.38	E	linux:devmapper:multipath				45
-1555642743	172.17.22.38	E	linux:devmapper:multipath				58
-1555642816	172.17.22.38	E	linux:devmapper:multipath				97
-1555644163	172.17.22.38	E	linux:devmapper:multipath		[module functions] 		329
-1555645636	172.17.22.38	E	linux:devmapper:multipath				210
-1555645825	172.17.22.38	E	linux:devmapper:multipath				327
-1555652940	172.17.22.38	E	linux:devmapper:multipath		[module functions] 		181
-1555655000	172.17.22.38	E	linux:devmapper:multipath				454
-1555666905	172.17.22.38	E	linux:devmapper:multipath				129
-1555667708	172.17.22.38	E	linux:devmapper:multipath				36
+1556767500	172.17.22.38	E	linux:scsi:sata				442
+1556767901	172.17.22.38	E	linux:scsi:sata				294
+1556768640	172.17.22.38	E	linux:scsi:sata				318
+1556776512	172.17.22.38	E	linux:scsi:sata				56
+1556776590	172.17.22.38	E	linux:scsi:sata		[Error Handle in SATA] 		22
+1556781133	172.17.22.38	C	ubuntu:qemu		created		58
+1556781156	172.17.22.38	E	ubuntu:qemu				53
+1556782242	172.17.22.38	E	linux:scsi:sata				619
+1556782506	172.17.22.38	E	linux:scsi:sata				62
+1556788053	172.17.22.38	E	linux:scsi:sata				648
+1556788901	172.17.22.38	E	linux:scsi:sata		[Error Handle in SATA] 		29
+1556789084	172.17.22.38	E	linux:scsi:sata		[Error Handle in SATA] 		593
+1556790256	172.17.22.38	E	linux:scsi:sata		[Error Handle in SATA] 		1065
+1556790273	172.17.22.38	E	linux:scsi:sata		[Error Handle in SATA] 		1
+1556790438	172.17.22.38	E	linux:scsi:sata		[Error Handle in SATA] 		16
+1556790604	172.17.22.38	E	linux:scsi:sata		[Error Handle in SATA] 		22
+1556790641	172.17.22.38	E	linux:scsi:sata		[Error Handle in SATA] 		-8
+1556790693	172.17.22.38	E	linux:scsi:sata		[Error Handle in SATA] 		22
+1556792643	172.17.22.38	E	linux:scsi:sata		[Error Handle in SATA] 		129
+1556796506	172.17.22.38	E	linux:scsi:sata				15
+1556796626	172.17.22.38	E	linux:scsi:sata		[Error Handle in SATA] 		23
+1556849087	172.17.22.38	E	linux:scsi:sata		[Error Handle in SATA] 		281
+1556853959	172.17.22.38	E	linux:scsi:sata		[Error Handle in SATA] 		21
+1556854044	172.17.22.38	E	linux:scsi:sata		[Error Handle in SATA] 		70
+1556929830	172.20.254.2	E	linux:scsi:sata		[Error Handle in SATA] 		459
+1556929989	172.20.254.2	E	linux:scsi:sata		[Error Handle in SATA] 		41
+1556930334	172.20.254.2	E	linux:scsi:sata		[Error Handle in SATA] 		166
+1556930450	172.20.254.2	E	linux:scsi:sata		[Error Handle in SATA] 		39
+1556930636	172.20.254.2	E	linux:scsi:sata		[Error Handle in SATA] 		95
+1556930758	172.20.254.2	E	linux:scsi:sata		[Error Handle in SATA] 		111
+1556931098	172.20.254.2	E	linux:scsi:sata		[Error Handle in SATA] 		186
+1556931328	172.20.254.2	E	linux:scsi:sata		[Error Handle in SATA] 		205
+1556931667	172.20.254.2	E	linux:scsi:sata		[Error Handle in SATA] 		232
+1556931742	172.20.254.2	E	linux:scsi:sata		[Error Handle in SATA] 		127
+1556932791	172.20.254.2	E	linux:scsi:sata		[Error Handle in SATA] 		193
+1556932815	172.20.254.2	E	linux:scsi:sata		[Error Handle in SATA] 		1
+1556932937	172.20.254.2	E	linux:scsi:sata		[kernel message] 		20
+1557007321	172.20.254.2	E	linux:scsi:sata		[Error Handle in SATA] 		51
+1557015308	172.20.254.2	E	linux:scsi:sata		[kernel message] 		48
+1557015447	172.20.254.2	E	linux:scsi:sata				45
+1557015520	172.20.254.2	E	linux:scsi:sata		[Insert drive] 		122
+1557109119	172.17.22.38	E	tool:opengrok				258
+1557109894	172.17.22.38	C	linux:driver:mmio		created		91
+1557110007	172.17.22.38	E	linux:driver:mmio				397
+1557110017	172.17.22.38	E	linux:driver:mmio				1
+1557110486	172.17.22.38	E	linux:scsi:sata				89
+1557111042	172.17.22.38	E	linux:scsi:sata				113
+1557119579	172.17.22.38	E	linux:scsi:sata		[Error Handle in SATA] 		2280
+1557124161	172.17.22.38	C	linux:udev		created		352
+1557124189	172.17.22.38	E	linux:udev				80
+1557124199	172.17.22.38	E	linux:udev				-1
+1557125613	172.17.22.38	E	linux:debugtool				83
+1557125649	172.17.22.38	E	linux:debugtool		[fio] 		123
+1557125659	172.17.22.38	E	linux:debugtool		[fio] 		1
+1557125812	172.17.22.38	E	linux:debugtool				116
+1557126367	172.17.22.38	E	linux:udev				88
+1557284112	172.17.22.38	E	qnap:weekly_report				558
+1557284740	172.17.22.38	E	qnap:weekly_report				528
+1557370819	172.17.22.38	E	linux:debugtool		[SystemTap] 		53
+1557370992	172.17.22.38	E	linux:debugtool		[SystemTap] 		108
+1557371422	172.17.22.38	E	linux:debugtool		[SystemTap] 		250
+1557373702	172.17.22.38	E	linux:debugtool		[SystemTap] 		533
+1557384059	172.17.22.38	E	linux:debugtool		[SystemTap] 		805

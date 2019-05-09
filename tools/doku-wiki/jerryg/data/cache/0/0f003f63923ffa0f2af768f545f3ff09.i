@@ -1,4 +1,20 @@
-a:18:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:3:"FAQ";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2642:"
+a:22:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"FAQ for ubuntu";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:495:"
+[Error Message]
+Q1 : SSL error?
+
+root@jerry05-pc:/datapool/linux-4.18# make modules_install
+  INSTALL arch/x86/crypto/aegis128-aesni.ko
+At main.c:163:
+- SSL error:0909006C:PEM routines:get_name:no start line: ../crypto/pem/pem_lib.c:745
+sign-file: certs/signing_key.pem: Success
+make[1]: *** [scripts/Makefile.modinst:36: arch/x86/crypto/aegis128-aesni.ko] Error 1
+make: *** [Makefile:1234: _modinst_] Error 2
+
+Ans : 
+將另外一台的certs/signing_key.pem內容轉貼過來.
+(為什麼呢?)
+
+";i:1;N;i:2;N;}i:2;i:35;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:540;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"FAQ for CentOS";i:1;i:1;i:2;i:540;}i:2;i:540;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:540;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2642:"
 Reference:
 1. Command of grub shell
 https://www.gnu.org/software/grub/manual/grub/html_node/Command_002dline-and-menu-entry-commands.html
@@ -90,8 +106,8 @@ We can boot from grub shell:
 
 
 
-";i:1;N;i:2;N;}i:2;i:24;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:2676;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"Debug by GDB";i:1;i:1;i:2;i:2676;}i:2;i:2676;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:2676;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1:"
-";i:1;N;i:2;N;}i:2;i:2708;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:2720;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:5:"Tools";i:1;i:1;i:2;i:2720;}i:2;i:2720;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:2720;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:204:"
+";i:1;N;i:2;N;}i:2;i:574;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3226;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"Debug by GDB";i:1;i:1;i:2;i:3226;}i:2;i:3226;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3226;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1:"
+";i:1;N;i:2;N;}i:2;i:3258;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3270;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:5:"Tools";i:1;i:1;i:2;i:3270;}i:2;i:3270;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3270;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:204:"
 # Get ip address from booting.
 1. /etc/sysconfig/network-scripts/ifcfg-ens192
 2. ONBOOT=yes
@@ -100,7 +116,7 @@ We can boot from grub shell:
 1. ssh-keygen
 2. ssh-copy-id -i ~/.ssh/id_rsa.pub remote-host
 3. ssh remote-host
-";i:1;N;i:2;N;}i:2;i:2745;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:2959;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:6:"Kernel";i:1;i:1;i:2;i:2959;}i:2;i:2959;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:2959;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1281:"
+";i:1;N;i:2;N;}i:2;i:3295;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3509;}i:17;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:6:"Kernel";i:1;i:1;i:2;i:3509;}i:2;i:3509;}i:18;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3509;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1281:"
 [Reference]
 1. https://wiki.centos.org/zh-tw/HowTos/Custom_Kernel
 2. https://wiki.centos.org/zh-tw/HowTos/I_need_the_Kernel_Source
@@ -131,4 +147,4 @@ kernel-devel包只包含用于内核开发环境所需的内核头文件以及Ma
 2. kernel-source
 kernel-souce包含所有内核源代码。
 
-";i:1;N;i:2;N;}i:2;i:2986;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:4275;}i:17;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:4275;}}
+";i:1;N;i:2;N;}i:2;i:3536;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:4825;}i:21;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:4825;}}

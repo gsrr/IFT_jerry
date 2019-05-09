@@ -1,0 +1,580 @@
+
+<h1 class="sectionedit1" id="faq">FAQ</h1>
+<div class="level1">
+<pre class="file">Q20 : Slow speed when set ntacl repeatly?
+Ans:
+從strace觀察(-ttt), 發現到是因為samba在setxattr之前先做了一次removexattr的動作, 才導致效能變慢.
+(這有可能是因為file system還沒有將removexattr的動作flush掉.)
+而samba為什麼要進行這樣的動作?
+從samba的行為可以看到, samba在設定posix-acl後就將security.NTACL移除掉, 而做這樣的動作是因為:
+設定完posix-acl後, 還要進行4~5個動作才會設定security.NTACL, 此時如果中途有另外一個人來存取檔案的話, 
+就會造成權限上的race condition.
+所以為了避免這樣的狀況, 我們才會在posix-acl設定完之後同步將security.NTACL移除掉.
+
+Q19 : flow of set nt-acl?
+Ans :
+fset_nt_acl_common -&gt; set_nt_acl -&gt; create_canon_ace_lists -&gt; set_canon_ace_list(set posix-acl) 
+
+Q18 : flow of inherit acl?
+Ans :
+xfs_vn_mknod -&gt; xfs_inherit_acl -&gt;
+
+Q17 : posix acl無法設定超過20個?
+Ans :
+1. https://access.redhat.com/solutions/2197311
+這是Redhat 6的限制, 若想要建超過20個, 必須使用redhat7, 且在mount filesystem時, 需使用下列參數:
+mkfs.xfs -m crc=1 /dev/sda2
+
+Q16 : samba的NTACL只會存設定的那一個, 並不會將posix_acl搬一份過來.
+Ans :
+看起來並不是這樣, 在設定NTACL時, 會把原先的內容全部覆蓋一次.
+ 
+Ans :
+Q15 : How to leverage code of samba rpc --&gt; ndr_xattr.c
+Ans :
+ndr_pull_xattr_NTACL --&gt; in ndr_xattr.c
+ndr_pull_align --&gt; in librpc/ndr/ndr_basic.c
+struct xattr_NTACL --&gt; in librpc/idl/xattr.h
+
+Q15.1 What is structure &quot;struct ndr_pull&quot;?
+Ans :
+
+Q14 : 從samba會看到user group的權限, 但實際上並沒有把user group加入到samba清單裏面?
+Ans :
+1. 從NTACL看到S-1-22-2-100, 這裡的S-1-22-2是指什麼意思?
+2. Synology是否可以從samba設定local group的權限?
+
+需透過net groupmap 將unixgroup map到ntgroup
+example : 
+1. net groupmap add ntgroup=&quot;group01&quot; unixgroup=group01 rid=50001 type=l
+2. net groupmap delete ntgroup=&quot;group01&quot;
+ref : https://www.samba.org/samba/docs/man/Samba-HOWTO-Collection/groupmapping.html#id2598232
+
+Q13 : What is the meaning for &quot;access_desired&quot; and &quot;access_granted&quot;?
+Ans :
+1. access_desired is (access_mask &amp; ~do_not_check_mask)
+2. access_granted is rejected_mask
+
+Q12 : flow of access check?
+Ans :
+1. path : libcli/security/access_check.c
+
+smbd_smb2_create_send --&gt; smbd_calculate_access_mask --&gt; smbd_calculate_maximum_allowed_access --&gt; 
+se_file_access_check --&gt; se_access_check --&gt; 
+
+open_file --&gt; smbd_check_access_rights --&gt; se_file_access_check
+
+Q11 : flow of system call?
+Ans :
+write --&gt; sys_write --&gt;
+Q10 : vfs permission check flow?
+Ans :
+sysfs_init_inode --&gt; sysfs_inode_operations --&gt; sysfs_permission --&gt; generic_permission (in fs/namei.c)
+
+Q9 : Can I use the rpc library directly?
+Ans :
+
+[gcc command]
+gcc -I /usr/include/samba-4.0 -o test_ndr test_ndr.c -ldl
+
+[so file]
+root@localhost /lib64 $ ls -al /lib64/libndr.so
+lrwxrwxrwx. 1 root root 15 Jun  5 04:31 /lib64/libndr.so -&gt; libndr.so.0.0.5
+
+Q9.1 : 缺乏talloc_stackframe()?
+root@localhost ~/test $ gcc -I /usr/include/samba-4.0 -o test_ndr test_ndr.c -ldl
+/tmp/ccOtKjVP.o: In function `main&#039;:
+test_ndr.c:(.text+0xab): undefined reference to `_talloc_stackframe&#039;
+collect2: error: ld returned 1 exit status
+
+Ans : 
+1. #define talloc_stackframe() _talloc_stackframe(__location__)
+2. talloc_stackframe.c 包含在libsamba-util.so裡面.
+
+Q9.2 : 找不到ndr_pull_xattr_NTACL
+root@localhost ~/test $ gcc -I /usr/include/samba-4.0 -o test_ndr test_ndr.c -ldl -lsamba-util
+root@localhost ~/test $ ./test_ndr
+/lib64/libndr.so: undefined symbol: ndr_pull_xattr_NTACL
+
+Ans : 
+
+
+Q8 : flow for parsing acl?
+Ans :
+get_nt_acl_common -&gt; get_nt_acl_internal -&gt; get_acl_blob -&gt; smb_vfs_call_getxattr -&gt; vfswrap_getxattr -&gt; parse_acl_blob -&gt; ndr_pull_struct_blob -&gt; ndr_pull_xattr_NTACL(in idl file) -&gt;
+
+# compile decrpc(.idl file)
+../../pidl/pidl --ndr-parser --samba3-ndr-client --samba3-ndr-server -- *.idl
+
+# code segment of ndr_pull_xattr_NTACL
+_PUBLIC_ enum ndr_err_code ndr_pull_xattr_NTACL(struct ndr_pull *ndr, int ndr_flags, struct xattr_NTACL *r)
+{
+    NDR_PULL_CHECK_FLAGS(ndr, ndr_flags);
+    if (ndr_flags &amp; NDR_SCALARS) {
+        NDR_CHECK(ndr_pull_align(ndr, 5));
+        NDR_CHECK(ndr_pull_uint16(ndr, NDR_SCALARS, &amp;r-&gt;version));
+        NDR_CHECK(ndr_pull_set_switch_value(ndr, &amp;r-&gt;info, r-&gt;version));
+        NDR_CHECK(ndr_pull_xattr_NTACL_Info(ndr, NDR_SCALARS, &amp;r-&gt;info));
+        NDR_CHECK(ndr_pull_trailer_align(ndr, 5));
+    }
+    if (ndr_flags &amp; NDR_BUFFERS) {
+        NDR_CHECK(ndr_pull_xattr_NTACL_Info(ndr, NDR_BUFFERS, &amp;r-&gt;info));
+    }
+    return NDR_ERR_SUCCESS;
+}
+
+Q7 : 在load parameter時,會發生segmentation fault?
+Ans :
+花了不少時間進行確認, 看了4.2.3與4.4在load parameter時的code都相同.
+--&gt; 最後看到是pytalloc中的pytalloc_steal code有所不一樣. (pytalloc 2.1.2 and pytalloc 2.1.9)
+--&gt; 兩邊python所得到的pyObject size也不相同. (.__sizeof__())
+
+試著裝了libtalloc 2.1.6 與pytalloc 2.1.6進行測試 --&gt; 結果ok.
+1. pytalloc 2.1.6
+--&gt; http://rpm.pbone.net/index.php3/stat/4/idpl/35491718/dir/centos_7/com/pytalloc-2.1.6-1.el7.x86_64.rpm.html
+
+2. libtalloc 2.1.6
+--&gt; http://rpm.pbone.net/index.php3/stat/4/idpl/35045440/dir/scientific_linux_7/com/libtalloc-2.1.6-1.el7.x86_64.rpm.html
+
+3. install from rpm
+rpm -ivh --force &lt;package name&gt;
+
+Reference:
+1. What is pyalloc?
+--&gt; https://download.samba.org/pub/unpacked/talloc/pytalloc_guide.txt
+
+2. Build Samba from source
+--&gt; https://wiki.samba.org/index.php/Build_Samba_from_Source
+
+
+Q6 : get_acl.py for samba ntacl
+Ans :
+The code segment below can work fine in my machine, but it will segmentation fault in GS.
+
+from samba.samba3 import param as s3param
+from samba.dcerpc import security
+from samba.samba3 import smbd
+
+s3conf = s3param.get_context()
+s3conf.load(&quot;/etc/samba/smb.conf&quot;)
+
+raw_input()
+print smbd.get_nt_acl(&quot;/tmp/abcd/f2&quot;, security.SECINFO_OWNER | security.SECINFO_GROUP | security.SECINFO_DACL | security.SECINFO_SACL, service=None)
+--- The code ---
+
+
+#flow
+lpcfg_load --&gt; 
+
+Q5 : flow of get_nt_acl?
+Ans :
+若使用以下的code進行測試, 會發生fail:
+mkdir failed on directory : No such file or directory
+No builtin nor plugin backend for  found
+PANIC: pdb_get_methods: failed to get pdb methods for backend
+
+--- code ---
+from samba.dcerpc import security
+from samba.samba3 import smbd
+raw_input()
+smbd.get_nt_acl(&quot;/tmp/abcd/f2&quot;, security.SECINFO_OWNER | security.SECINFO_GROUP | security.SECINFO_DACL | security.SECINFO_SACL, service=None)
+--- code ---
+
+這是因為沒有load parameter, 導致執行lp_profile_acls()時會fail.
+
+# flow
+get_nt_acl_conn --&gt; vfswrap_get_nt_acl --&gt; posix_get_nt_acl --&gt; posix_get_nt_acl_common --&gt; lp_profile_acls
+
+Q4 : import error for &quot;from samba.samba3 import smbd&quot;
+Traceback (most recent call last):
+  File &quot;smb-ntacl.py&quot;, line 2, in &lt;module&gt;
+    from samba.netcmd.ntacl import cmd_ntacl_get
+  File &quot;/usr/lib64/python2.7/site-packages/samba/netcmd/ntacl.py&quot;, line 22, in &lt;module&gt;
+    from samba.ntacls import setntacl, getntacl
+  File &quot;/usr/lib64/python2.7/site-packages/samba/ntacls.py&quot;, line 26, in &lt;module&gt;
+    from samba.samba3 import smbd
+ImportError: /usr/lib64/samba/libgse-samba4.so: symbol krb5_get_init_creds_opt_set_pac_request, version krb5_3_MIT not defined in file libkrb5.so.3 with link time reference
+
+Ans : 
+krb5-libs.x86_64的version為1.13, 最新為1.15
+--&gt; yum update krb5-libs.x86_64
+
+Q3 : import error for xattr_native
+Traceback (most recent call last):
+  File &quot;smb-ntacl.py&quot;, line 2, in &lt;module&gt;
+    from samba.netcmd.ntacl import cmd_ntacl_get
+  File &quot;/usr/lib64/python2.7/site-packages/samba/netcmd/ntacl.py&quot;, line 22, in &lt;module&gt;
+    from samba.ntacls import setntacl, getntacl
+  File &quot;/usr/lib64/python2.7/site-packages/samba/ntacls.py&quot;, line 23, in &lt;module&gt;
+    import samba.xattr_native, samba.xattr_tdb, samba.posix_eadb
+ImportError: No module named xattr_native
+
+Ans :
+--&gt; 註解掉 import samba.xattr_native, samba.xattr_tdb, samba.posix_eadb
+
+Q2 : import ldb error
+[root@nas_8716691_a samba-tool]# python smb-ntacl.py ntacl_get /Pool-1/Volume_1/d1/file1
+Traceback (most recent call last):
+  File &quot;smb-ntacl.py&quot;, line 2, in &lt;module&gt;
+    from samba.netcmd.ntacl import cmd_ntacl_get
+  File &quot;/usr/lib64/python2.7/site-packages/samba/__init__.py&quot;, line 49, in &lt;module&gt;
+    import ldb
+ImportError: No module named ldb
+
+Ans :
+缺少 ldb module.
+--&gt; yum install pyldb
+
+Q1 : import error in gs
+[root@nas_8716691_a samba-tool]# python smb-ntacl.py ntacl_get /Pool-1/Volume_1/d1/file1
+Traceback (most recent call last):
+  File &quot;smb-ntacl.py&quot;, line 2, in &lt;module&gt;
+    from samba.netcmd.ntacl import cmd_ntacl_get
+  File &quot;/usr/lib64/python2.7/site-packages/samba/__init__.py&quot;, line 27, in &lt;module&gt;
+    import samba.param
+ImportError: /lib64/libpytalloc-util.so.2: version `PYTALLOC_UTIL_2.1.6&#039; not found (required by /usr/lib64/python2.7/site-packages/samba/param.so)
+
+Ans : 
+[root@nas_8716691_a samba-tool]# strings /usr/lib64/python2.7/site-packages/samba/param.so | grep 2.1.6
+PYTALLOC_UTIL_2.1.6
+所以要支援param.so, 至少需要PYTALLOC_UTIL_2.1.6, 但目前GS的版本只在2.1.2
+目前的pytalloc為2.1.9, 所以直接進行update即可.
+--&gt; yum update pytalloc
+
+</pre>
+
+</div>
+<!-- EDIT1 SECTION "FAQ" [1-9242] -->
+<h1 class="sectionedit2" id="summary_-_ntacl_parser">Summary - NTACL Parser</h1>
+<div class="level1">
+<pre class="file">0x04000400000002000400020001001499a4623e195f118da8a88186a543d63a4609ff0f6a5e2a0c9286c8aade7fca0000000000000000000000000000000000000000000000000000000000000000706f7369785f61636c00e8033930f472d30185551d6e9629855211d0e6bcfaf01beabe2ccc8ab4f02cc12c25da3121bbe403000000000000000000000000000000000000000000000000000000000000000001001494b4000000d000000000000000ec0000000105000000000005150000006834d1998b138a87a8ecc9ffe90300000105000000000005150000006834d1998b138a87a8ecc9ff0102000004002c000100000000002400ff011f000105000000000005150000006834d1998b138a87a8ecc9ffe9030000
+
+0x0400(2bytes, version, level) 
+0400(2bytes, version, _level)
+00000200 (4bytes, ptr_sd_hs4, 0 --&gt; sd_hs4 is null)
+04000200 (4bytes, ptr_sd, 0 --&gt; sd is null)
+0100 (2bytes, hashtype)
+1499a4623e195f11
+8da8a88186a543d6
+3a4609ff0f6a5e2a
+0c9286c8aade7fca
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000 (64bytes, hash)
+706f7369785f61636c00(10 bytes, &quot;posix_acl\0&quot;)
+e8033930f472d301 (8 bytes, NTTIME)
+85551d6e96298552
+11d0e6bcfaf01bea
+be2ccc8ab4f02cc1
+2c25da3121bbe403
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000 (64bytes, acl_hash)
+01 (1byte, sd-&gt;revision)
+00  (161, align to 2 bytes --&gt; 162)
+1494 (2bytes, sd-&gt;type)
+b4000000 (4bytes, 180--&gt; offset of owner_sid)
+d0000000 (4bytes, 208--&gt; offset of group_sid)
+00000000 (4bytes, offset of sacl, 0 is null)
+ec000000 (4bytes, 236--&gt; offset of dacl)
+01 (1byte, sid_rev_num)
+05 (1byte, num_auths)
+000000000005 (6 bytes, id_auth)
+15000000 (4bytes, sub_auths[0], num_auths)
+6834d199 (4bytes, sub_auths[1])
+8b138a87 (4bytes, sub_auths[2])
+a8ecc9ff (4bytes, sub_auths[3])
+e9030000 (4bytes, sub_auths[4])
+01 (1byte, sid_rev_num)
+05 (1byte, num_auths)
+000000000005 
+15000000
+6834d199
+8b138a87
+a8ecc9ff
+01020000
+0400 (2 bytes, revision)
+2c00 (2 bytes, size)
+01000000 (4 bytes, num_aces)
+00 (1 byte, type)
+00 (1 byte, ace_flags)
+2400 (2 bytes, size)
+ff011f00 (4 bytes, access_mask)
+01 (1byte, sid_rev_num)
+05 (1byte, num_auths)
+000000000005 (6 bytes, id_auth)
+15000000 (4bytes, sub_auths[0], num_auths)
+6834d199 (4bytes, sub_auths[1])
+8b138a87 (4bytes, sub_auths[2])
+a8ecc9ff (4bytes, sub_auths[3])
+e9030000 (4bytes, sub_auths[4])</pre>
+
+</div>
+<!-- EDIT2 SECTION "Summary - NTACL Parser" [9243-11465] -->
+<h1 class="sectionedit3" id="summary_-_generate_rpc_files">Summary - Generate rpc files</h1>
+<div class="level1">
+<pre class="file"># generate header file
+../../pidl/pidl --header --samba3-ndr-client --samba3-ndr-server -- security.idl
+
+</pre>
+
+</div>
+<!-- EDIT3 SECTION "Summary - Generate rpc files" [11466-11631] -->
+<h1 class="sectionedit4" id="summary_-_test_case">Summary - test case</h1>
+<div class="level1">
+<pre class="file">1. acl example
+O:S-1-5-21-2580624488-2273973131-4291423400-1000G:S-1-22-2-0D:AI(A;OICI;0x001f01ff;;;S-1-5-21-2580624488-2273973131-4291423400-1001)(A;OICIID;0x001f01ff;;;S-1-5-21-2580624488-2273973131-4291423400-50001)
+
+# test case
+1. set acl for file
+2. set acl for sub-folder
+3. set acl from ntacl to posix-acl
+4. get acl from file
+5. get acl from folder
+6. get acl from posix-acl to ntacl
+7. source file of acl entry</pre>
+
+</div>
+<!-- EDIT4 SECTION "Summary - test case" [11632-12101] -->
+<h1 class="sectionedit5" id="summary_-_get_acl_from_python">Summary - get acl from python</h1>
+<div class="level1">
+<pre class="file">[Usage]
+1. get acl
+&gt;&gt;&gt; import posix1e
+&gt;&gt;&gt; acl1 = posix1e.ACL(file=&quot;file.txt&quot;) 
+&gt;&gt;&gt; print acl1
+user::rw-
+group::rw-
+other::r--
+
+2. set acl
+&gt;&gt;&gt; b = posix1e.ACL(text=&quot;u::rx,g::-,o::-&quot;)
+&gt;&gt;&gt; print b
+user::r-x
+group::---
+other::---
+&gt;&gt;&gt;
+&gt;&gt;&gt; b.applyto(&quot;file.txt&quot;)
+&gt;&gt;&gt; print posix1e.ACL(file=&quot;file.txt&quot;)
+user::r-x
+group::---
+other::---
+
+[Reference]
+1. pylibacl
+http://www.chiark.greenend.org.uk/doc/python-pylibacl/html/module.html
+
+[Installation]
+1. yum install libacl-devel.x86_64 
+2. yum install pylibacl.x86_64</pre>
+
+</div>
+<!-- EDIT5 SECTION "Summary - get acl from python" [12102-12666] -->
+<h1 class="sectionedit6" id="summary_-_xacl_structure_parsing">Summary - xacl structure parsing</h1>
+<div class="level1">
+<pre class="file">(gdb) print *xacl.info.sd_hs4.sd.dacl
+$10 = {revision = SECURITY_ACL_REVISION_NT4, size = 80, num_aces = 2, aces = 0x6321d0}
+(gdb) print *xacl.info.sd_hs4.sd.dacl.aces
+$11 = {type = SEC_ACE_TYPE_ACCESS_ALLOWED, flags = 0 &#039;\000&#039;, size = 36, access_mask = 2032127, object = {object = {flags = 0, type = {type = {
+          time_low = 6496592, time_mid = 0, time_hi_and_version = 0, clock_seq = &lt;incomplete sequence \354&gt;, node = &quot;\000\000\000\000\000&quot;}},
+      inherited_type = {inherited_type = {time_low = 0, time_mid = 0, time_hi_and_version = 0, clock_seq = &quot;\021.&quot;, node = &quot;\001\000\000\000\000&quot;}}}},
+  trustee = {sid_rev_num = 1 &#039;\001&#039;, num_auths = 5 &#039;\005&#039;, id_auth = &quot;\000\000\000\000\000\005&quot;, sub_auths = {21, 2580624488, 2273973131, 4291423400, 1001,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}}
+
+(gdb) print *(xacl.info.sd_hs4.sd.dacl.aces + 1)
+$12 = {type = SEC_ACE_TYPE_ACCESS_ALLOWED, flags = 3 &#039;\003&#039;, size = 36, access_mask = 2032127, object = {object = {flags = 0, type = {type = {time_low = 0,
+          time_mid = 0, time_hi_and_version = 0, clock_seq = &quot;\000&quot;, node = &quot;\000\000\000\000\000&quot;}}, inherited_type = {inherited_type = {time_low = 0,
+          time_mid = 0, time_hi_and_version = 0, clock_seq = &quot;\000&quot;, node = &quot;\000\000\000\000\000&quot;}}}}, trustee = {sid_rev_num = 1 &#039;\001&#039;,
+    num_auths = 5 &#039;\005&#039;, id_auth = &quot;\000\000\000\000\000\005&quot;, sub_auths = {21, 2580624488, 2273973131, 4291423400, 1002, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}}
+</pre>
+
+</div>
+<!-- EDIT6 SECTION "Summary - xacl structure parsing" [12667-14180] -->
+<h1 class="sectionedit7" id="summary_-_get_acl_from_share_library">Summary - get acl from share library</h1>
+<div class="level1">
+<pre class="file">## source code for getting acl ##
+
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;dlfcn.h&gt;
+#include &quot;ndr.h&quot;
+#include &quot;xattr.h&quot;
+#include &quot;util/talloc_stack.h&quot;
+
+#define XATTR_SIZE 10000
+
+enum ndr_err_code (*ndr_pull_xattr_NTACL)(struct ndr_pull *ndr, int ndr_flags, struct xattr_NTACL *r);
+enum ndr_err_code (*ndr_push_xattr_NTACL)(struct ndr_push *ndr, int ndr_flags, const union xattr_NTACL_Info *r);
+
+void dump_xacl(struct xattr_NTACL xacl)
+{
+    int i = 0;
+    printf(&quot;version:%d\n&quot;, xacl.version);
+    printf(&quot;type:%d\n&quot;, xacl.info.sd_hs4-&gt;sd-&gt;type | SEC_DESC_SELF_RELATIVE);
+
+    int num_aces = xacl.info.sd_hs4-&gt;sd-&gt;dacl-&gt;num_aces;
+    printf(&quot;num aces:%d\n&quot;, xacl.info.sd_hs4-&gt;sd-&gt;dacl-&gt;num_aces);
+    for( i = 0 ; i &lt; num_aces; i++)
+    {
+        printf(&quot;uid:%d\n&quot;, (xacl.info.sd_hs4-&gt;sd-&gt;dacl-&gt;aces + i)-&gt;trustee.sub_auths[4]);
+        printf(&quot;type(access = 0 | deny != 0):%d\n&quot;, (xacl.info.sd_hs4-&gt;sd-&gt;dacl-&gt;aces-&gt;type));
+        printf(&quot;access:%x\n&quot;, (xacl.info.sd_hs4-&gt;sd-&gt;dacl-&gt;aces + i)-&gt;access_mask);
+    }
+}
+
+
+void xacl2blob(DATA_BLOB *blob, struct xattr_NTACL *xacl)
+{
+    TALLOC_CTX *ctx = talloc_tos();
+    ndr_push_struct_blob(blob, ctx, xacl, (ndr_push_flags_fn_t)ndr_push_xattr_NTACL);
+
+}
+
+void blob2xacl(DATA_BLOB *blob, struct xattr_NTACL *xacl)
+{
+    TALLOC_CTX *frame = talloc_stackframe();
+    ndr_pull_struct_blob(blob, frame, xacl, (ndr_pull_flags_fn_t)ndr_pull_xattr_NTACL);
+}
+
+void get_blob_from_path(DATA_BLOB *blob, char *value, char *path)
+{
+    printf(&quot;path = %s\n&quot;, path);
+    int valueLen = getxattr(path, &quot;security.NTACL&quot;, value, XATTR_SIZE);
+    blob-&gt;data = value;
+    blob-&gt;length = valueLen;
+}
+
+int main(int argc, char **argv) {
+    void *handle;
+    handle = dlopen (&quot;/lib64/samba/vfs/acl_xattr.so&quot;, RTLD_LAZY);
+    ndr_pull_xattr_NTACL = dlsym(handle, &quot;ndr_pull_xattr_NTACL&quot;);
+    ndr_push_xattr_NTACL = dlsym(handle, &quot;ndr_push_xattr_NTACL&quot;);
+
+    DATA_BLOB blob;
+    char value[XATTR_SIZE];
+    struct xattr_NTACL xacl;
+    int i;
+
+    get_blob_from_path(&amp;blob, value, argv[1]);
+    blob2xacl(&amp;blob, &amp;xacl);
+    dump_xacl(xacl);
+
+    DATA_BLOB blob2;
+    xacl2blob(&amp;blob2, &amp;xacl);
+    for(i = 0 ; i &lt; blob2.length ; i++)
+    {
+        printf(&quot;%x,&quot;, blob2.data[i]);
+    }
+
+    return 0;
+}
+
+
+# compile
+gcc -I /usr/include/samba-4.0 -o test_ndr test_ndr.c -lsamba-util -lndr -ldl
+
+花了一些功夫, 終於可以透過share libary來存取samba ntacl.
+Q5 : ndr_pull_xattr_NTACL在winrpc的library裡面, 如何看到他的source code?
+Ans :
+1. path : samba-4.2.3/librpc/idl
+2. rpcgen : ../../pidl/pidl --ndr-parser --samba3-ndr-client --samba3-ndr-server -- *.idl
+
+Q4 : 要如何include 相關head file?
+Ans :
+gcc -I /usr/local/include
+
+Q3 : 如何判斷各個檔案在哪些share libary?
+Ans :
+可以透過 /ift-utils/samba-4.1.12/librpc/wscript_build 這個檔案去判斷.
+
+
+Q2 : how to link share library?
+Ans :
+# Ref 
+http://tldp.org/HOWTO/Program-Library-HOWTO/dl-libraries.html
+
+1. static:
+若share library有prefix lib, 則:
+gcc -o test main.c -lfoo
+
+若libxxx不在系統預設路徑上 --&gt; 需設定 LD_LIBRARY_PATH
+--&gt; export LD_LIBRARY_PATH=/home/username/foo:$LD_LIBRARY_PATH
+
+
+2. dynamic:
+# code
+enum ndr_err_code (*ndr_pull_xattr_NTACL)(struct ndr_pull *ndr, int ndr_flags, struct xattr_NTACL *r);
+void *handle;
+handle = dlopen (&quot;/lib64/samba/vfs/acl_xattr.so&quot;, RTLD_LAZY);
+ndr_pull_xattr_NTACL = dlsym(handle, &quot;ndr_pull_xattr_NTACL&quot;);
+
+# compile
+在gcc後需加上-ldl
+
+
+
+Q1 : what is uint8_t?
+Ans :
+uint8_t 可以對照成unsigned char, 同理:
+uint16_t --&gt; unsigned short
+uint32_t --&gt; unsigned int
+
+ref : https://pinglinblog.wordpress.com/2014/01/16/ctype-uint8_t-uint16_t-uint32_t-uint64_t/
+
+</pre>
+
+</div>
+<!-- EDIT7 SECTION "Summary - get acl from share library" [14181-17902] -->
+<h1 class="sectionedit8" id="summary">Summary</h1>
+<div class="level1">
+<pre class="file"># getntacl and setntacl script
+from samba.samba3 import param as s3param
+from samba.dcerpc import security
+from samba.samba3 import smbd
+
+
+def getntacl():
+        s3conf = s3param.get_context()
+        s3conf.load(&quot;/etc/samba/smb.conf&quot;)
+
+        acl = smbd.get_nt_acl(&quot;/Pool-1/Volume_1/d12/file1.txt&quot;, security.SECINFO_OWNER | security.SECINFO_GROUP | security.SECINFO_DACL | security.SECINFO_SACL, service=None)
+        print acl.as_sddl()
+        return acl.as_sddl()
+
+def setntacl(sddl):
+        sd = security.descriptor.from_sddl(sddl, security.dom_sid())
+        print sd
+        s3conf = s3param.get_context()
+        s3conf.load(&quot;/etc/samba/smb.conf&quot;)
+
+        smbd.set_nt_acl(&quot;/Pool-1/Volume_1/d12/file2.txt&quot;, security.SECINFO_OWNER | security.SECINFO_GROUP | security.SECINFO_DACL | security.SECINFO_SACL, sd, service = None)
+
+sddl = getntacl()
+setntacl(sddl)
+
+# Requirement for porting to GS
+1. rpm -ivh --force libtalloc-2.1.6-1.el7.x86_64.rpm
+2. rpm -ivh --force pytalloc-2.1.6-1.el7.x86_64.rpm
+3. yum install pyldb</pre>
+
+</div>
+<!-- EDIT8 SECTION "Summary" [17903-18968] -->
+<h1 class="sectionedit9" id="basic_commands">Basic commands</h1>
+<div class="level1">
+<pre class="file"># dump all extended attribute
+1. getfattr --dump filename 
+--&gt; only to dumps the user.*
+
+2. getfattr -d -m &quot;&quot; /Pool-1/Volume_1/d1/file1
+
+3. xattr in python
+[root@nas_8716691_a ~]# function geteas() { echo -e &quot;import xattr\nes = xattr.xattr(&#039;$1&#039;).list()\nprint es\n&quot; | python; }
+[root@nas_8716691_a ~]# geteas /Pool-1/Volume_1/d1/file1
+[u&#039;user.DOSATTRIB&#039;, u&#039;trusted.SGI_ACL_FILE&#039;, u&#039;security.NTACL&#039;, u&#039;system.posix_acl_access&#039;]
+[root@nas_8716691_a ~]# geteas &quot;/Pool-1/Volume_1/d1/file 1&quot;
+[u&#039;user.DOSATTRIB&#039;, u&#039;trusted.SGI_ACL_FILE&#039;, u&#039;security.NTACL&#039;, u&#039;system.posix_acl_access&#039;]</pre>
+
+</div>
+<!-- EDIT9 SECTION "Basic commands" [18969-] -->

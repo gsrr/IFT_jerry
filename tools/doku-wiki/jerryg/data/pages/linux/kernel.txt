@@ -1,3 +1,8 @@
+====== Kernel io ======
+<file>
+Q1 : 有辦法trace出整個io的路嗎? (從file system 到driver寫進io)
+</file>
+
 ====== dentry ======
 <file>
 # structure

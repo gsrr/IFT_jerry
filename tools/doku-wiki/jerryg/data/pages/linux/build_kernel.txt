@@ -1,4 +1,23 @@
-====== FAQ ======
+====== FAQ for ubuntu ======
+<file>
+[Error Message]
+Q1 : SSL error?
+
+root@jerry05-pc:/datapool/linux-4.18# make modules_install
+  INSTALL arch/x86/crypto/aegis128-aesni.ko
+At main.c:163:
+- SSL error:0909006C:PEM routines:get_name:no start line: ../crypto/pem/pem_lib.c:745
+sign-file: certs/signing_key.pem: Success
+make[1]: *** [scripts/Makefile.modinst:36: arch/x86/crypto/aegis128-aesni.ko] Error 1
+make: *** [Makefile:1234: _modinst_] Error 2
+
+Ans : 
+將另外一台的certs/signing_key.pem內容轉貼過來.
+(為什麼呢?)
+
+</file>
+
+====== FAQ for CentOS ======
 <file>
 Reference:
 1. Command of grub shell

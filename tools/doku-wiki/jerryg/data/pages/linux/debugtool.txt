@@ -1,102 +1,80 @@
-====== test case for nt-acl ======
-
-1. Basic setting from EonOne
+====== smartctl ======
 <file>
-  1.1 確認設定是否符合正確行為: (從CIFS進行確認)
-    a. ACE scope (This folder / subfolder / files)
-    b. 設定ACE + "只需在此資料夾裡的物件與/或容器來套用權限"
-    c. 設定ACE + "用此資料夾的物件繼承權取代所有子物件繼承權"
-    d. Creator Owner / Creator Group   
+[Installation]
+apt install smartmontools 
+
+[Usage]
+1. smartctl -i /dev/sda
+
 </file>
 
-2. 檔案權限操作 (透過cifs)
-|Operation|Synology| IFT |
-|進入資料夾/列出檔案| 周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單| 周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單| 
-|讀取檔案內容|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取延伸的屬性 | 周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取延伸的屬性| 
-|寫入檔案內容|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取延伸的屬性 + 讀取權限 + 建立檔案/讀取檔案 + 建立資料夾/附加資料 + 寫入屬性延伸| 周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取延伸的屬性 + 讀取權限 + 建立檔案/讀取檔案 + 建立資料夾/附加資料 + 寫入屬性延伸+寫入屬性| 
-|讀取屬性| -- | | 
-|寫入屬性| -- | | 
-|讀取延伸屬性| | | 
-|寫入延伸屬性| | | 
-|讀取權限|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 |周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 | 
-|寫入權限|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 + 改變權限 |周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 + 改變權限 + 建立檔案/讀取檔案 |
-|變更使用者|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 + 接管管理者|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 + 接管管理者 |
-|刪除檔案|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 刪除|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 刪除 |
 
-2.1 檔案權限操作(透過nfs)
-|Operation|Synology| IFT |
-|進入資料夾(cd)| 周遊資料夾/執行檔案| | 
-|列出檔案(ls)| 資料夾/讀取資料夾清單| | 
-|讀取檔案內容|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 | | 
-|寫入檔案內容|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 建立檔案/讀取檔案 + 建立資料夾/附加資料| | 
-|讀取屬性| Not support| | 
-|寫入屬性| Not support| | 
-|讀取延伸屬性| Not support| | 
-|寫入延伸屬性| Not support| | 
-|讀取權限|Not support | | 
-|寫入權限|Not support | |
-|變更使用者(限root)|無關權限||
-|刪除檔案|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 刪除| |
+====== fio ======
+<file>
+[Installation]
+1. apt-get install fio
 
-2.1.1 檔案權限操作(透過file explorer)
-|Operation|預期權限 | File explorer |
-|進入資料夾(cd)| 周遊資料夾/執行檔案| | 
-|列出檔案(ls)| 資料夾/讀取資料夾清單| | 
-|下載檔案|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單| | 
-|上傳檔案|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 建立檔案/讀取檔案 + 建立資料夾/附加資料| | 
-|讀取權限|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限| | 
-|寫入權限|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 + 改變權限 | |
-|變更使用者|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 + 變更使用者| |
-|刪除檔案|周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 刪除| |
-
-2.2 繼承權限確認 (Propagate)
-| | subfolder| files|
-|This folder|(N, -)|(N,-)|
-|Sub folder|(Y, This folder/Sub folder)|(N,-)|
-|files|(Y, files)|(Y,-)|
-|This folder/Sub folder|(Y, This folder/Sub folder)|(N,-)|
-|This folder/files|(Y, files)|(Y,-)|
-|Sub folder/files|(Y, This folder/Sub folder/files)|(Y,-)|
-|This folder/Sub folder/files|(Y, This folder/Sub folder/files)|(Y,-)|
-
-2.3 繼承權限確認 (No Propagate)
-| | subfolder| files|
-|This folder|(N, -)|(N,-)|
-|Sub folder|(Y, This folder)|(N,-)|
-|files|(N, -)|(Y,-)|
-|This folder/Sub folder|(Y, This folder)|(N,-)|
-|This folder/files|(N, -)|(Y,-)|
-|Sub folder/files|(Y, This folder)|(Y,-)|
-|This folder/Sub folder/files|(Y, This folder)|(Y,-)|
-
-3. 特殊acl設定(透過nfs)
-|Operation|Expected behavior|
-|chmod| 視為只對owner, group, everyone進行設定, 只會保留這三個entry權限.|
-|chown| 更改owner, acl內容不改變 |
-|setfacl|不可執行此項操作|
-|setfattrl|不可執行此項操作|
-
-4. 權限檢查(透過nfs)
-  4.1 若acl只apply到files, 則該權限不在folder生效.
-  4.2 Deny有優先權判斷.
-  4.3 user / group / everyone為合併進來進行權限判斷.
-
-5. Behavior of move/copy
-| -- |Samba|Syno|linux(file explorer)|nfs|ftp|
-|cp|owner改變, 繼承destination folder權限|owner改變, 繼承destination folder權限|owner改變, 繼承destination folder權限|owner改變, 權限不繼承(chmod) | No FTP command |
-|move(same share folder)|owner不變, 限定權限 + 繼承destination folder權限|owner不變, 限定權限 + 繼承destination folder權限|owner不變, 權限不變(same volume)| owner不變, 權限不變(same volume)| owner不變, 權限不變|
-|move(different share folder)|owner改變, 繼承destination folder權限|owner不變, 繼承destination folder權限|owner不變, 權限不變(different volume)| owner不變, 權限不繼承(會執行chmod)|  Rename failed. |
-
-6. Integrated test with domain
-|Operation|AD|LDAP|
-|設定domain user的權限| | |
-|設定domain group的權限| | |
-|login samba, 確認權限顯示符合預期| | |
-|login file explorer, 確認權限顯示符合預期| | |
-|login samba, 確認權限操作符合預期| | |
-|login file explorer, 確認權限操作符合預期| | |
+[Usage]
+1. fio --name=/mnt_ssd/file --ioengine=libaio --iodepth=1 --rw=write --bs=4k --direct=0 --size=5G  --unified_rw_reporting=1
 
 
+</file>
+
+====== SystemTap ======
+<file>
+Reference:
+1. Linux 自检和 SystemTap
+https://www.ibm.com/developerworks/cn/linux/l-systemtap/index.html
+
+Q2 : 如何使用SystemTap印出參數內容?
+Ans:
+以一個簡單的例子來說:
+stap -L 'kernel.function("vfs_read")'
+
+會輸出該function所使用的parameter:
+kernel.function("vfs_read@fs/read_write.c:277") $file:struct file* $buf:char* $count:size_t $pos:loff_t*
+
+所以我們要讀取某個參數的值, 只要使用:
+$count
+
+若以我的script來說, 我先在要輸入scsi host_no, 而這是在Scsi_Host的structure裡面, 所以我的script會是:
+probe kernel.function("ata_scsi_queuecmd") {
+           printf ("host number: %d\n",
+                   $shost->host_no);
+}
+
+接下來的例子展示了如何印出string, 以及使用for loop in systemTap
+
+probe kernel.function("ata_scsi_queuecmd") {
+           printf ("host number: %x\n", $shost);
+           printf ("host number: %x\n", $shost->hostt);
+           printf ("host number: %d\n", $shost->hostt->this_id);
+           printf ("host number: %c\n", $shost->hostt->name[0]);
+           printf ("host number: %c\n", $shost->hostt->name[1]);
+           printf ("host number: %c\n", $shost->hostt->name[2]);
+           printf ("host number: %c\n", $shost->hostt->name[3]);
+           printf ("host number: %d\n", $shost->hostt->name[4]);
+           printf ("host number: %s\n", $shost->hostt->name$);
+           for (i = 0 ; i < 5 ; i++)
+           {
+               printf("%c\n", $shost->hostt->name[i]);
+           }
+}
+
+Q1 : 如果撰寫script for SystemTap?
+Ans:
+1. 把下面這個內容存成xxx.stp
+
+global count=0
+
+probe kernel.function("vfs_rename") {
+  count++
+  printf( "vfs_rename called %d times, currently by pid %d\n", count, pid );
+}
+
+2. 執行: stap xxx.stp
+
+</file>
 ====== python - debug with gdb ======
 <file>
 [FAQ]

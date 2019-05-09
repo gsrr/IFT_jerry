@@ -60,3 +60,15 @@
 1526874681	172.27.12.71	E	linux:debugtool				95
 1526874809	172.27.12.71	E	linux:debugtool				120
 1528775939	172.27.12.71	E	linux:debugtool				6
+1555036688	127.0.0.1	E	linux:debugtool		external edit		0
+1556612591	172.17.22.38	E	linux:debugtool				-5912
+1556612651	172.17.22.38	E	linux:debugtool				39
+1557125613	172.17.22.38	E	linux:debugtool				83
+1557125649	172.17.22.38	E	linux:debugtool		[fio] 		123
+1557125659	172.17.22.38	E	linux:debugtool		[fio] 		1
+1557125812	172.17.22.38	E	linux:debugtool				116
+1557370819	172.17.22.38	E	linux:debugtool		[SystemTap] 		53
+1557370992	172.17.22.38	E	linux:debugtool		[SystemTap] 		108
+1557371422	172.17.22.38	E	linux:debugtool		[SystemTap] 		250
+1557373702	172.17.22.38	E	linux:debugtool		[SystemTap] 		533
+1557384059	172.17.22.38	E	linux:debugtool		[SystemTap] 		805

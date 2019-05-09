@@ -128,7 +128,7 @@ io snoop
 yas3fs out of memory
 
 
-test case for nt-acl
+smartctl
 
 Questions
 
@@ -142,19 +142,27 @@ FAQ
 
 
 
-opengrok in windows
+Error Handle
 Summary
 
 Ex1
 
-dentry
+Kernel io
 
 
-FAQ
+FAQ for ubuntu
 Deadlock of subprocess.Popen
 
 FAQ
 bash
 
-module functions
+seq write
 
+
+iSCSI Initiator
+What is SCSI and What is SAS?
+test case for nt-acl
+Task file in SATA
+
+What is MMIO
+What is udev?

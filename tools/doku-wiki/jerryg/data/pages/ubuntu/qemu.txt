@@ -1,0 +1,8 @@
+<file>
+[source code]
+https://www.qemu.org/download/#source
+
+[Installation]
+apt install libpixman-1-dev
+
+</file>

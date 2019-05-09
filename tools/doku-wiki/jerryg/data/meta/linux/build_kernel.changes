@@ -13,3 +13,5 @@
 1528707655	172.27.12.71	E	linux:build_kernel		[Kernel] 		44
 1528707767	172.27.12.71	E	linux:build_kernel		[Kernel] 		189
 1528786795	172.27.12.71	E	linux:build_kernel				44
+1555036688	127.0.0.1	E	linux:build_kernel		external edit		0
+1556002406	172.17.22.38	E	linux:build_kernel				550

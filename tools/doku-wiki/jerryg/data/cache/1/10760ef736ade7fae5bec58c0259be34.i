@@ -1,4 +1,9 @@
-a:6:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:19:"opengrok in windows";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:895:"
+a:10:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"Error Handle";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:216:"
+Q : Indexing is a memory intensive process. 
+Ans:
+If you get "java.lang.OutOfMemoryError: Java heap space" error, try the -Xms<size></size> and -Xmx<size></size> options to java (Eg JAVA_OPTS="-Xms2048m -Xmx2048")
+
+";i:1;N;i:2;N;}i:2;i:33;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:259;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:19:"opengrok in windows";i:1;i:1;i:2;i:259;}i:2;i:259;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:259;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:895:"
 [Reference]
 1. Opengrok部署 --> https://gtcsq.readthedocs.io/en/latest/openstack/opengrok_xp.html
 2. 
@@ -34,4 +39,4 @@ rm -rf /var/opengrok
 
 [開啟opengrok webpage]
 http://172.27.122.95:8080/source
-";i:1;N;i:2;N;}i:2;i:40;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:943;}i:5;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:943;}}
+";i:1;N;i:2;N;}i:2;i:298;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:1201;}i:9;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:1201;}}

@@ -1,5 +1,25 @@
 
-<h1 class="sectionedit1" id="faq">FAQ</h1>
+<h1 class="sectionedit1" id="faq_for_ubuntu">FAQ for ubuntu</h1>
+<div class="level1">
+<pre class="file">[Error Message]
+Q1 : SSL error?
+
+root@jerry05-pc:/datapool/linux-4.18# make modules_install
+  INSTALL arch/x86/crypto/aegis128-aesni.ko
+At main.c:163:
+- SSL error:0909006C:PEM routines:get_name:no start line: ../crypto/pem/pem_lib.c:745
+sign-file: certs/signing_key.pem: Success
+make[1]: *** [scripts/Makefile.modinst:36: arch/x86/crypto/aegis128-aesni.ko] Error 1
+make: *** [Makefile:1234: _modinst_] Error 2
+
+Ans : 
+將另外一台的certs/signing_key.pem內容轉貼過來.
+(為什麼呢?)
+</pre>
+
+</div>
+<!-- EDIT1 SECTION "FAQ for ubuntu" [1-539] -->
+<h1 class="sectionedit2" id="faq_for_centos">FAQ for CentOS</h1>
 <div class="level1">
 <pre class="file">Reference:
 1. Command of grub shell
@@ -94,14 +114,14 @@ We can boot from grub shell:
 </pre>
 
 </div>
-<!-- EDIT1 SECTION "FAQ" [1-2675] -->
-<h1 class="sectionedit2" id="debug_by_gdb">Debug by GDB</h1>
+<!-- EDIT2 SECTION "FAQ for CentOS" [540-3225] -->
+<h1 class="sectionedit3" id="debug_by_gdb">Debug by GDB</h1>
 <div class="level1">
 <pre class="file"></pre>
 
 </div>
-<!-- EDIT2 SECTION "Debug by GDB" [2676-2719] -->
-<h1 class="sectionedit3" id="tools">Tools</h1>
+<!-- EDIT3 SECTION "Debug by GDB" [3226-3269] -->
+<h1 class="sectionedit4" id="tools">Tools</h1>
 <div class="level1">
 <pre class="file"># Get ip address from booting.
 1. /etc/sysconfig/network-scripts/ifcfg-ens192
@@ -113,8 +133,8 @@ We can boot from grub shell:
 3. ssh remote-host</pre>
 
 </div>
-<!-- EDIT3 SECTION "Tools" [2720-2958] -->
-<h1 class="sectionedit4" id="kernel">Kernel</h1>
+<!-- EDIT4 SECTION "Tools" [3270-3508] -->
+<h1 class="sectionedit5" id="kernel">Kernel</h1>
 <div class="level1">
 <pre class="file">[Reference]
 1. https://wiki.centos.org/zh-tw/HowTos/Custom_Kernel
@@ -148,4 +168,4 @@ kernel-souce包含所有内核源代码。
 </pre>
 
 </div>
-<!-- EDIT4 SECTION "Kernel" [2959-] -->
+<!-- EDIT5 SECTION "Kernel" [3509-] -->

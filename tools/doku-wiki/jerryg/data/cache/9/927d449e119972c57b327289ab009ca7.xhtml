@@ -1,0 +1,63 @@
+
+<h1 class="sectionedit1" id="kernel_io">Kernel io</h1>
+<div class="level1">
+<pre class="file">Q1 : 有辦法trace出整個io的路嗎? (從file system 到driver寫進io)</pre>
+
+</div>
+<!-- EDIT1 SECTION "Kernel io" [1-116] -->
+<h1 class="sectionedit2" id="dentry">dentry</h1>
+<div class="level1">
+<pre class="file"># structure
+</pre>
+
+</div>
+<!-- EDIT2 SECTION "dentry" [117-165] -->
+<h1 class="sectionedit3" id="sys_call">sys call</h1>
+<div class="level1">
+<pre class="file">Q4 : system call of access
+Ans :
+access(user space) --&gt;access(kernel space, open.c) --&gt; faccessat(open.c)
+
+Q3 : 在link_path_walk裡面, 一開始的nd是working directory, 這會導致連/lib/..的path也都跑到ift_inode_permission.
+Ans :
+後來改法是... 直接改在path_walk外面, 當有fail時, walk again without rcu mode.
+
+
+Q2 : ls的flow為何?
+Ans : 
+1. filename_lookup --&gt; path_lookupat --&gt; link_path_walk --&gt; may_lookup (namei.c) --&gt; (wrong)
+
+2. SYSCALL_DEFINE4(open.c) --&gt; do_sys_open --&gt; do_filp_open(nami.c) --&gt; path_openat(nami.c, LOOKUP_RCU) --&gt;  link_path_walk --&gt; may_lookup --&gt;
+
+[explaination]
+1. do_flip_open
+Ans:
+1. do_flip_open的作用主要是在解析文件路徑並新建一個file structure.
+2. do_flip_open : input為path name, output為file structure.
+filp是翻動, 所以等於是一直翻動路徑來進行open.
+3. nameidata类型的nd在整个路径查找过程中充当中间变量，它既可以为当前查找输入数据，又可以保存本次查找的结果
+
+Q1 : How to map from user-space to kernel-space?
+Ans :
+假使我們從user space看到一個system call為openat, 
+從unistd.h可以看到這個define of this system call:
+__SYSCALL(288, sys_openat, 4)
+
+然後搜尋SYSCALL_DEFINE4, 可以在open.c中看到該function:
+SYSCALL_DEFINE4(openat, int, dfd, const char __user *, filename, int, flags, umode_t, mode)
+</pre>
+
+</div>
+<!-- EDIT3 SECTION "sys call" [166-1568] -->
+<h1 class="sectionedit4" id="iattr">iattr</h1>
+<div class="level1">
+<pre class="file"></pre>
+
+</div>
+<!-- EDIT4 SECTION "iattr" [1569-1604] -->
+<h1 class="sectionedit5" id="user_namespace">user_namespace</h1>
+<div class="level1">
+<pre class="file"></pre>
+
+</div>
+<!-- EDIT5 SECTION "user_namespace" [1605-] -->

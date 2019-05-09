@@ -1,0 +1,267 @@
+
+<h1 class="sectionedit1" id="test_case_for_nt-acl">test case for nt-acl</h1>
+<div class="level1">
+
+<p>
+1. Basic setting from EonOne
+</p>
+<pre class="file">  1.1 確認設定是否符合正確行為: (從CIFS進行確認)
+    a. ACE scope (This folder / subfolder / files)
+    b. 設定ACE + &quot;只需在此資料夾裡的物件與/或容器來套用權限&quot;
+    c. 設定ACE + &quot;用此資料夾的物件繼承權取代所有子物件繼承權&quot;
+    d. Creator Owner / Creator Group   </pre>
+
+<p>
+2. 檔案權限操作 (透過cifs)
+</p>
+<div class="table sectionedit2"><table class="inline">
+	<tr class="row0">
+		<td class="col0">Operation</td><td class="col1">Synology</td><td class="col2"> IFT </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0">進入資料夾/列出檔案</td><td class="col1"> 周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單</td><td class="col2"> 周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">讀取檔案內容</td><td class="col1">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取延伸的屬性 </td><td class="col2"> 周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取延伸的屬性</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">寫入檔案內容</td><td class="col1">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取延伸的屬性 + 讀取權限 + 建立檔案/讀取檔案 + 建立資料夾/附加資料 + 寫入屬性延伸</td><td class="col2"> 周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取延伸的屬性 + 讀取權限 + 建立檔案/讀取檔案 + 建立資料夾/附加資料 + 寫入屬性延伸+寫入屬性</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">讀取屬性</td><td class="col1"> – </td><td class="col2"> </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">寫入屬性</td><td class="col1"> – </td><td class="col2"> </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">讀取延伸屬性</td><td class="col1"> </td><td class="col2"> </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0">寫入延伸屬性</td><td class="col1"> </td><td class="col2"> </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0">讀取權限</td><td class="col1">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 </td><td class="col2">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0">寫入權限</td><td class="col1">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 + 改變權限 </td><td class="col2">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 + 改變權限 + 建立檔案/讀取檔案 </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0">變更使用者</td><td class="col1">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 + 接管管理者</td><td class="col2">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 + 接管管理者 </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0">刪除檔案</td><td class="col1">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 刪除</td><td class="col2">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 刪除 </td>
+	</tr>
+</table></div>
+<!-- EDIT2 TABLE [442-2100] -->
+<p>
+2.1 檔案權限操作(透過nfs)
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<tr class="row0">
+		<td class="col0">Operation</td><td class="col1">Synology</td><td class="col2"> IFT </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0">進入資料夾(cd)</td><td class="col1"> 周遊資料夾/執行檔案</td><td class="col2"> </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">列出檔案(ls)</td><td class="col1"> 資料夾/讀取資料夾清單</td><td class="col2"> </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">讀取檔案內容</td><td class="col1">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 </td><td class="col2"> </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">寫入檔案內容</td><td class="col1">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 建立檔案/讀取檔案 + 建立資料夾/附加資料</td><td class="col2"> </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">讀取屬性</td><td class="col1"> Not support</td><td class="col2"> </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">寫入屬性</td><td class="col1"> Not support</td><td class="col2"> </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0">讀取延伸屬性</td><td class="col1"> Not support</td><td class="col2"> </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0">寫入延伸屬性</td><td class="col1"> Not support</td><td class="col2"> </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0">讀取權限</td><td class="col1">Not support </td><td class="col2"> </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0">寫入權限</td><td class="col1">Not support </td><td class="col2"> </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0">變更使用者(限root)</td><td class="col1" colspan="2">無關權限</td>
+	</tr>
+	<tr class="row12">
+		<td class="col0">刪除檔案</td><td class="col1">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 刪除</td><td class="col2"> </td>
+	</tr>
+</table></div>
+<!-- EDIT3 TABLE [2136-2848] -->
+<p>
+2.1.1 檔案權限操作(透過file explorer)
+</p>
+<div class="table sectionedit4"><table class="inline">
+	<tr class="row0">
+		<td class="col0">Operation</td><td class="col1">預期權限 </td><td class="col2"> File explorer </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0">進入資料夾(cd)</td><td class="col1"> 周遊資料夾/執行檔案</td><td class="col2"> </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">列出檔案(ls)</td><td class="col1"> 資料夾/讀取資料夾清單</td><td class="col2"> </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">下載檔案</td><td class="col1">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單</td><td class="col2"> </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">上傳檔案</td><td class="col1">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 建立檔案/讀取檔案 + 建立資料夾/附加資料</td><td class="col2"> </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">讀取權限</td><td class="col1">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限</td><td class="col2"> </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">寫入權限</td><td class="col1">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 + 改變權限 </td><td class="col2"> </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0">變更使用者</td><td class="col1">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 讀取權限 + 變更使用者</td><td class="col2"> </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0">刪除檔案</td><td class="col1">周遊資料夾/執行檔案 + 資料夾/讀取資料夾清單 + 刪除</td><td class="col2"> </td>
+	</tr>
+</table></div>
+<!-- EDIT4 TABLE [2896-3680] -->
+<p>
+2.2 繼承權限確認 (Propagate)
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><td class="col1"> subfolder</td><td class="col2"> files</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0">This folder</td><td class="col1">(N, -)</td><td class="col2">(N,-)</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">Sub folder</td><td class="col1">(Y, This folder/Sub folder)</td><td class="col2">(N,-)</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">files</td><td class="col1">(Y, files)</td><td class="col2">(Y,-)</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">This folder/Sub folder</td><td class="col1">(Y, This folder/Sub folder)</td><td class="col2">(N,-)</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">This folder/files</td><td class="col1">(Y, files)</td><td class="col2">(Y,-)</td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">Sub folder/files</td><td class="col1">(Y, This folder/Sub folder/files)</td><td class="col2">(Y,-)</td>
+	</tr>
+	<tr class="row7">
+		<td class="col0">This folder/Sub folder/files</td><td class="col1">(Y, This folder/Sub folder/files)</td><td class="col2">(Y,-)</td>
+	</tr>
+</table></div>
+<!-- EDIT5 TABLE [3717-4063] -->
+<p>
+2.3 繼承權限確認 (No Propagate)
+</p>
+<div class="table sectionedit6"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><td class="col1"> subfolder</td><td class="col2"> files</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0">This folder</td><td class="col1">(N, -)</td><td class="col2">(N,-)</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">Sub folder</td><td class="col1">(Y, This folder)</td><td class="col2">(N,-)</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">files</td><td class="col1">(N, -)</td><td class="col2">(Y,-)</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">This folder/Sub folder</td><td class="col1">(Y, This folder)</td><td class="col2">(N,-)</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">This folder/files</td><td class="col1">(N, -)</td><td class="col2">(Y,-)</td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">Sub folder/files</td><td class="col1">(Y, This folder)</td><td class="col2">(Y,-)</td>
+	</tr>
+	<tr class="row7">
+		<td class="col0">This folder/Sub folder/files</td><td class="col1">(Y, This folder)</td><td class="col2">(Y,-)</td>
+	</tr>
+</table></div>
+<!-- EDIT6 TABLE [4103-4385] -->
+<p>
+3. 特殊acl設定(透過nfs)
+</p>
+<div class="table sectionedit7"><table class="inline">
+	<tr class="row0">
+		<td class="col0">Operation</td><td class="col1">Expected behavior</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0">chmod</td><td class="col1"> 視為只對owner, group, everyone進行設定, 只會保留這三個entry權限.</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">chown</td><td class="col1"> 更改owner, acl內容不改變 </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">setfacl</td><td class="col1">不可執行此項操作</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">setfattrl</td><td class="col1">不可執行此項操作</td>
+	</tr>
+</table></div>
+<!-- EDIT7 TABLE [4417-4651] -->
+<p>
+4. 權限檢查(透過nfs)
+</p>
+<pre class="code">4.1 若acl只apply到files, 則該權限不在folder生效.
+4.2 Deny有優先權判斷.
+4.3 user / group / everyone為合併進來進行權限判斷.</pre>
+
+<p>
+5. Behavior of move/copy
+</p>
+<div class="table sectionedit8"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> – </td><td class="col1">Samba</td><td class="col2">Syno</td><td class="col3">linux(file explorer)</td><td class="col4">nfs</td><td class="col5">ftp</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0">cp</td><td class="col1">owner改變, 繼承destination folder權限</td><td class="col2">owner改變, 繼承destination folder權限</td><td class="col3">owner改變, 繼承destination folder權限</td><td class="col4">owner改變, 權限不繼承(chmod) </td><td class="col5"> No <abbr title="File Transfer Protocol">FTP</abbr> command </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">move(same share folder)</td><td class="col1">owner不變, 限定權限 + 繼承destination folder權限</td><td class="col2">owner不變, 限定權限 + 繼承destination folder權限</td><td class="col3">owner不變, 權限不變(same volume)</td><td class="col4"> owner不變, 權限不變(same volume)</td><td class="col5"> owner不變, 權限不變</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">move(different share folder)</td><td class="col1">owner改變, 繼承destination folder權限</td><td class="col2">owner不變, 繼承destination folder權限</td><td class="col3">owner不變, 權限不變(different volume)</td><td class="col4"> owner不變, 權限不繼承(會執行chmod)</td><td class="col5 rightalign">  Rename failed. </td>
+	</tr>
+</table></div>
+<!-- EDIT8 TABLE [4862-5576] -->
+<p>
+6. Integrated test with domain
+</p>
+<div class="table sectionedit9"><table class="inline">
+	<tr class="row0">
+		<td class="col0">Operation</td><td class="col1">AD</td><td class="col2">LDAP</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0">設定domain user的權限</td><td class="col1"> </td><td class="col2"> </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">設定domain group的權限</td><td class="col1"> </td><td class="col2"> </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">login samba, 確認權限顯示符合預期</td><td class="col1"> </td><td class="col2"> </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">login file explorer, 確認權限顯示符合預期</td><td class="col1"> </td><td class="col2"> </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">login samba, 確認權限操作符合預期</td><td class="col1"> </td><td class="col2"> </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">login file explorer, 確認權限操作符合預期</td><td class="col1"> </td><td class="col2"> </td>
+	</tr>
+</table></div>
+<!-- EDIT9 TABLE [5609-5911] -->
+</div>
