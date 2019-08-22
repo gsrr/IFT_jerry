@@ -1,0 +1,16 @@
+a:2:{s:7:"current";a:8:{s:4:"date";a:2:{s:7:"created";i:1560215992;s:8:"modified";i:1560505861;}s:11:"last_change";a:8:{s:4:"date";i:1560505861;s:2:"ip";s:12:"172.17.22.38";s:4:"type";s:1:"E";s:2:"id";s:17:"qnap:daily_report";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:671;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:8:"20190614";s:11:"description";a:2:{s:15:"tableofcontents";a:8:{i:0;a:4:{s:3:"hid";s:15:"section20190614";s:5:"title";s:8:"20190614";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:30:"ahci_--_dumpstack_in_scsi_done";s:5:"title";s:34:"1. ahci --> dumpstack in scsi_done";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:2;a:4:{s:3:"hid";s:57:"marvell_--_time_compare_between_scsi_done_and_irq-handler";s:5:"title";s:61:"2. marvell --> time compare between scsi_done and irq-handler";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:3;a:4:{s:3:"hid";s:25:"build_command_for_da_util";s:5:"title";s:28:"3. build command for da_util";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:4;a:4:{s:3:"hid";s:15:"section20190611";s:5:"title";s:8:"20190611";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:5;a:4:{s:3:"hid";s:28:"booting_issueqts_cannot_boot";s:5:"title";s:35:"1. Booting issue : QTS cannot boot.";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:6;a:4:{s:3:"hid";s:33:"sas_template_implementation_24-50";s:5:"title";s:38:"2. SAS template implementation (24-50)";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:7;a:4:{s:3:"hid";s:34:"filelock_when_read_write_data_file";s:5:"title";s:38:"3. filelock when read/write data file.";s:4:"type";s:2:"ul";s:5:"level";i:3;}}s:8:"abstract";s:503:"20190614
+
+1. ahci --> dumpstack in scsi_done
+
+
+[  643.592190]  <IRQ>
+[  643.592196]  dump_stack+0x46/0x5e
+[  643.592203]  ? scsi_device_from_queue+0x60/0x60
+[  643.592208]  scsi_done+0x9/0x20
+[  643.592215]  ata_scsi_qc_complete+0x156/0x4d0
+[  643.592224]  ? ahci_qc_fill_rtf+0x41/0x80
+[  643.592230]  ata_qc_complete_multiple+0x86/0xd0
+[  643.592236]  ahci_handle_port_interrupt+0x99/0x510
+[  643.592243]  ahci_handle_port_intr+0x68/0xb0
+[  643.592250]  ahci_single_level_irq_intr+0x36/0x50
+[  643.5…";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1560215992;s:8:"modified";i:1560505861;}s:11:"last_change";a:8:{s:4:"date";i:1560505861;s:2:"ip";s:12:"172.17.22.38";s:4:"type";s:1:"E";s:2:"id";s:17:"qnap:daily_report";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:671;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

@@ -72,3 +72,10 @@
 1557371422	172.17.22.38	E	linux:debugtool		[SystemTap] 		250
 1557373702	172.17.22.38	E	linux:debugtool		[SystemTap] 		533
 1557384059	172.17.22.38	E	linux:debugtool		[SystemTap] 		805
+1557384956	172.17.22.38	E	linux:debugtool		[SystemTap] 		110
+1557385119	172.17.22.38	E	linux:debugtool		[SystemTap] 		71
+1558941003	172.17.22.38	E	linux:debugtool		[fio] 		156
+1558941030	172.17.22.38	E	linux:debugtool				91
+1565677737	172.17.22.38	E	linux:debugtool				1306
+1565678073	172.17.22.38	E	linux:debugtool		[segfaulting] 		274
+1565686628	172.17.22.38	E	linux:debugtool		[segfaulting] 		856

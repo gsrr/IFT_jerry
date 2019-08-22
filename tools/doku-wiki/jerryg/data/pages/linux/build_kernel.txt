@@ -1,5 +1,32 @@
 ====== FAQ for ubuntu ======
 <file>
+Q4 : 之前想到的一個問題, 因為東西都是存在Disk裡面, 作業系統起來前又沒有driver, 那怎麼去Disk讀取東西?
+Ans:
+
+
+Q3 : Download Linux archive
+Ans :
+1. https://www.kernel.org/
+2. https://jerrynest.io/ubuntu-16-04-compile-linux-kernel/
+[Installation]
+1. apt-get install build-essential ncurses-dev libssl-dev build-essential ncurses-dev xz-utils kernel-package
+2. apt install libelf-dev
+3. copy config:
+  3.1 cp /boot/config-4.4.0-21-generic .
+  3.2 make menuconfig
+
+4. build:
+  4.1 make -j 4
+  4.2 make modules -j 4
+  4.3 make modules_install
+  4.4 make install
+
+
+Q2 : 修改grup, 改變開機的kernel版本.
+Ans:
+1. GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 4.14.24-041424-generic"
+2. update-grub
+
 [Error Message]
 Q1 : SSL error?
 

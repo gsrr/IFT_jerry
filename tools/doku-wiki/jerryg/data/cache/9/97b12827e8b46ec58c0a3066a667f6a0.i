@@ -1,8 +1,78 @@
-a:18:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:17:"Task file in SATA";i:1;i:1;i:2;i:2;}i:2;i:2;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:2;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:154:"
+a:26:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:8:"Register";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:71:"
+http://samfreetime.blogspot.com/2011/04/ahciahci-port-registers.html
+
+";i:1;N;i:2;N;}i:2;i:29;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:110;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:7:"marvell";i:1;i:1;i:2;i:110;}i:2;i:110;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:110;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2997:"
+Q6 : 在sata_process_command後, 到scsi_softirq_done, 會有下面的stack:
+[  744.578829]  dump_stack+0x46/0x5e
+[  744.578830]  scsi_done+0x9/0x20
+[  744.578835]  hba_req_callback+0x17/0x30 [mv14xx]
+[  744.578840]  io_chip_complete_requests+0xaf/0x160 [mv14xx]
+[  744.578842]  ? irq_finalize_oneshot+0xe0/0xe0
+[  744.578847]  Core_QueueInterruptHandler+0xd6/0x140 [mv14xx]
+[  744.578851]  mv_msix_intr_handler+0x20/0x30 [mv14xx]
+[  744.578852]  irq_thread_fn+0x14/0x30
+[  744.578854]  irq_thread+0x131/0x190
+[  744.578856]  ? wake_threads_waitq+0x30/0x30
+[  744.578857]  ? irq_thread_check_affinity+0x50/0x50
+[  744.578858]  kthread+0x10a/0x140
+[  744.578860]  ? __kthread_parkme+0x70/0x70
+[  744.578861]  ret_from_fork+0x35/0x40
+
+Q5 : Where is the link error?
+Ans:
+全部就只有在 mv-6.0.0.1009N/core/pm/core_pm.h 看到有定義 PM_PSCR_SERROR, 但這個是我想找的那個SCR_ERROR嗎?
+PM指的是甚麼?
+--> PM感覺像是port manager?
+
+
+Q4 : 在 sata_handle_taskfile_error裡面看到他從register裡面讀取status 與error, 這個register是?
+Ans : 
+1.看起來是屬於Device to Host的register
+2. FIS --> Frame Information Structure.
+3. 這個frame總共有16個bytes, 第一個byte是error, 第二個byt是status...
+--> 看起來ata command error可以從這裡判斷, 現在問題是link error是在哪裡!!!!?
+
+Q3 : SCR_ERROR到底是甚麼意思?
+Ans:
+1. SCR叫做Status and Control Registers (Serial ATA Status and Control Registers)
+
+Q2 : 從marvell的code沒辦法很明確地看出link error是在哪裡, 但我想應該要有地方去拿到這個資訊才是,
+回過頭來說, 在ahci controller是從哪裡拿到serror?
+Ans :
+ahci_handle_port_intr --> ahci_error_intr
+在裡面會去讀取SCR_ERROR這個register, 只是有一點疑問的是:
+1. 讀register時, 會先read出到value, 再將value write回去register, 這樣做的用意是?
+2. 在存取register時, 看起來是對memory做操作, 但是memory的address是甚麼時候跟register綁定在一起?
+3. 是屬於host adapter register
+
+ata_host_activate (devm_request_irq) --> ahci_error_handler
+
+Q1 : What is the stack information of sata_handle_taskfile_error?
+Ans:
+
+4,1705,58634930,-; dump_stack+0x46/0x5e
+4,1706,58638657,-; sata_handle_taskfile_error+0xb2/0x3c0 [mv14xx]
+4,1707,58644904,-; sata_process_command+0x2b6/0x300 [mv14xx]
+4,1708,58650662,-; io_chip_handle_cmpl_queue+0x2bf/0x5b0 [mv14xx]
+4,1709,58656897,-; ? irq_finalize_oneshot+0xe0/0xe0
+4,1710,58661789,-; Core_QueueInterruptHandler+0x7a/0x140 [mv14xx]
+4,1711,58668027,-; mv_msix_intr_handler+0x20/0x30 [mv14xx]
+4,1712,58673578,-; irq_thread_fn+0x14/0x30
+4,1713,58677574,-; irq_thread+0x131/0x190
+4,1714,58681477,-; ? wake_threads_waitq+0x30/0x30
+4,1715,58686153,-; ? irq_thread_check_affinity+0x50/0x50
+4,1716,58691509,-; kthread+0x10a/0x140
+4,1717,58695117,-; ? __kthread_parkme+0x70/0x70
+4,1718,58699600,-; ret_from_fork+0x35/0x40
+
+mv_linux_queue_command -> HBA_ModuleSendRequest -> sata_process_command ->  sata_handle_taskfile_error
+
+
+";i:1;N;i:2;N;}i:2;i:137;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3143;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:17:"Task file in SATA";i:1;i:1;i:2;i:3143;}i:2;i:3143;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3143;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:154:"
 * The task file is in the ATA device.
 * 在Host端的command register與Control register通稱為shadow register.
 --> 在device端則通稱為task file.
-";i:1;N;i:2;N;}i:2;i:39;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:203;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"kernel message";i:1;i:1;i:2;i:203;}i:2;i:203;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:203;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:5936:"
+";i:1;N;i:2;N;}i:2;i:3180;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3344;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"kernel message";i:1;i:1;i:2;i:3344;}i:2;i:3344;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3344;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:5936:"
 # identify command
 May  2 16:43:08 jerrie-pc kernel: [ 7399.269348] ata_scsi_dump_cdb: CDB (4:0,0,0) 85 08 0e 00 00 00 00 00 00
 May  2 16:43:08 jerrie-pc kernel: [ 7399.270475] ata_scsi_dump_cdb: CDB (4:0,0,0) 00 00 00 00 00 00 00 00 00
@@ -99,7 +169,7 @@ May  2 10:43:39 jerrie-pc kernel: [847360.036888] sd 4:0:0:0: [sdc] Synchronizin
 May  2 10:43:39 jerrie-pc kernel: [847360.036955] sd 4:0:0:0: [sdc] Synchronize Cache(10) failed: Result: hostbyte=DID_BAD_TARGET driverbyte=DRIVER_OK
 May  2 10:43:39 jerrie-pc kernel: [847360.036956] sd 4:0:0:0: [sdc] Stopping disk
 May  2 10:43:39 jerrie-pc kernel: [847360.036960] sd 4:0:0:0: [sdc] Start/Stop Unit failed: Result: hostbyte=DID_BAD_TARGET driverbyte=DRIVER_OK
-";i:1;N;i:2;N;}i:2;i:239;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:6186;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"Insert drive";i:1;i:2;i:2;i:6186;}i:2;i:6186;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:6186;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1568:"
+";i:1;N;i:2;N;}i:2;i:3380;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:9327;}i:17;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"Insert drive";i:1;i:2;i:2;i:9327;}i:2;i:9327;}i:18;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:9327;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1568:"
 # 當我插入drive時, kernel顯示的訊息為:
 May  2 10:38:59 jerrie-pc kernel: [847079.735591] ata3: link is slow to respond, please be patient (ready=0)
 May  2 10:39:00 jerrie-pc kernel: [847081.295647] ata3: SATA link up 6.0 Gbps (SStatus 133 SControl 300)
@@ -119,7 +189,47 @@ May  2 10:39:00 jerrie-pc kernel: [847081.427894] sd 3:0:0:0: [sdb] Attached SCS
 sata_link_hardreset --> ata_wait_ready --> 印出 link is slow to respond...
 ata_std_postreset --> sata_print_link_status --> 印出 ata3: SATA link up 6.0 Gbps...
 
-";i:1;N;i:2;N;}i:2;i:6216;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:7794;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:20:"Error Handle in SATA";i:1;i:2;i:2;i:7794;}i:2;i:7794;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:7794;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:6588:"
+";i:1;N;i:2;N;}i:2;i:9357;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:10935;}i:21;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:20:"Error Handle in SATA";i:1;i:2;i:2;i:10935;}i:2;i:10935;}i:22;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:10935;}i:23;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:8555:"
+Q12 : 既然ata_port都已經紀錄他是第幾個port了, 那從link沒辦法知道是哪一個device嗎? (scsi address)
+Ans:
+看起來應該是可以的, 從ata_eh_context裡的ata_eh_info, 可以得到offending device, 而ata device又有scsi_device的資訊, 
+所以好像是可能拿得到scsi address,
+
+Q11 : 我印出ata_link_err資訊時, 前面會顯示ata3 (表示第3個插槽), 這個3的資訊是從哪裡來的?
+Ans:
+從link->ap->print_id 這裡得到.
+
+Q10 : 一般從scsi layer到sata layer, 如果失敗會進行sata error handle, 其stack為:
+Ans:
+4,2282,434034058,-; dump_stack+0x46/0x5e
+4,2283,434034062,-; ata_eh_report+0x84/0xa50
+4,2284,434034066,-; sata_pmp_error_handler+0x21/0x9b0
+4,2285,434034071,-; ? flush_work+0x2e/0x170
+4,2286,434034074,-; ? rb_erase_cached+0x35e/0x3f0
+4,2287,434034077,-; ? ata_wait_register+0x3b/0x90
+4,2288,434034080,-; ahci_error_handler+0x1e/0x50
+4,2289,434034082,-; ata_scsi_port_error_handler+0x431/0x760
+4,2290,434034085,-; ata_scsi_error+0x7c/0xa0
+4,2291,434034088,-; scsi_error_handler+0xc5/0x500
+4,2292,434034091,-; ? __schedule+0x1e8/0x5f0
+4,2293,434034094,-; ? scsi_eh_get_sense+0x220/0x220
+4,2294,434034097,-; kthread+0x10a/0x140
+4,2295,434034099,-; ? __kthread_parkme+0x70/0x70
+4,2296,434034102,-; ? call_usermodehelper_exec_async+0x12d/0x140
+4,2297,434034104,-; ret_from_fork+0x35/0x40
+Q9 : ata pass through與sense data
+Ans:
+當sata driver收到一個ata pass through command時, 會產生sense data的條件如下:
+1. 是ATA pass through command.
+2. cdb[2]的CK_COND flag有拉起來(拉起來代表是sense command?)
+或是
+1. 是ATA pass through command.
+2. 有error發生.
+
+但是當CK_COND被拉起來時, 這時就算執行成功也會產生sense data.
+為了處理這個case, sata driver在成功的狀況下, 會將sense key設為RECOVERED_ERROR.
+這時當回到上層時, 看到sense key為RECOVERED_ERROR的話, 就會判定為成功.
+
 Q8 : ata command timeout的case會怎麼跑?
 Ans:
 
@@ -191,7 +301,7 @@ Q1 : sata driver 是甚麼時候會進到error handle的function裡面?
 Ans:
 ata_scsi_queuecmd --> __ata_scsi_queuecmd --> ata_scsi_translate (設定ata_scsi_qc_complete) --> ata_scsi_qc_complete
 --> ata_qc_done --> scsi_done --> scsi_softirq_done --> scsi_eh_wakeup (wake_up_process(shost->ehandler))
---> scsi_eh_scmd_add --> scsi_error_handler --> ata_scsi_error?
+--> scsi_eh_scmd_add --> scsi_error_handler --> ata_scsi_error(define in scsi_transport_template) --> ata_eh_link_report
 
 ** 在scsi_eh_scmd_add會把cmd加到host的error handle queue裡面
 
@@ -218,4 +328,4 @@ ps1:
  * scsi命令在libata driver里面分两部分执行，一种是真的转换为ata命令称作translate，一种是借用ata命令执行完的结果填充相应命令的返回参数称作simulate.
  * 对于simulate而言不会牵涉到qc的处理，而translate类型的命令，调用ata_qc_new_init()来分配qc，并且scsi命令会转换为qc，转换完成后，ata_qc_issue()函数会将qc发送到ata设备，当qc完成后qc->complete_fn()回调函数里qc->scsidone()会通知scsi middle layer。
 
-";i:1;N;i:2;N;}i:2;i:7833;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:14429;}i:17;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:14429;}}
+";i:1;N;i:2;N;}i:2;i:10974;}i:24;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:19537;}i:25;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:19537;}}

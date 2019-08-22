@@ -1,4 +1,102 @@
-a:26:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:9:"seq write";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:3765:"
+a:38:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:7:"Summary";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:185:"
+# fail path
+dmsetup message test-multi 0 "fail_path" 7:2
+
+# failover
+一條path 一個group.
+
+# multibus
+多條path 同一個group, 裡面的path會根據group poicy來進行分配io
+
+";i:1;N;i:2;N;}i:2;i:28;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:223;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:21:"multipath prio 確認";i:1;i:1;i:2;i:223;}i:2;i:223;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:223;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1645:"
+const --> 將所有path的priority都設為1
+sysfs --> Use  the  sysfs  attributes  access_state  and  preferred_path  to generate the path priority. This prioritizer accepts the optional prio_arg exclusive_pref_bit.
+path_latency --> Generate the path priority based on a latency algorithm.  Requires prio_args keyword.
+
+[args]
+
+path_latency --> Needs a value of the form "io_num=<20> base_num=<10>"
+
+    io_num:The number of read IOs sent to the current path continuously, used to calculate the average  path  latency. Valid  Values:Integer, [2, 200].
+
+    base_num: The  base number value of logarithmic scale, used to partition different priority ranks. Valid Values: Integer, [2, 10]. And Max average latency value is 100s, min average latency value is 1us.  For example: If base_num=10, the paths will be grouped in  priority  groups  with path latency <=1us, (1us, 10us], (10us, 100us], (100us, 1ms], (1ms, 10ms], (10ms, 100ms], (100ms,1s], (1s, 10s], (10s, 100s], >100s.
+
+
+目前確認結果, 大部分的參數都跟hardware有關係, 大概只有兩個參數可以使用: sysfs & path_latency
+sysfs會根據sysfs attribute "access_state" 與 "preferred_path", 
+從code看起來sas有實作這兩個attribute, 但nvme沒有.
+
+path_latency則是根據latency algorithm來進行區分, 需指定io_num與base_num.
+主要是根據io_num所算出來的latency來決定將該path放在哪個priority區間.
+
+exclusive_pref_bit看起來是實作在Hardware裡面的機制.
+(http://www.pearsonitcertification.com/articles/article.aspx?p=2819032)
+
+若在nvme的device下設定prio "alua", 最後結果會建立不起來(顯示alua not support)
+";i:1;N;i:2;N;}i:2;i:264;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:1920;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:27:"Nvme in multipath - summary";i:1;i:1;i:2;i:1920;}i:2;i:1920;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1920;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:3021:"
+[Environment]
+* QTS : multipath-tools (0.4.9) + linux kernel (4.14-24)
+- Fail to create multipath
+
+* ubuntu : multipath-tools (0.7.4) + linux kernel (4.14-24)
+- Create successfully
+- request-based multipath
+- failback/failover test ok.
+
+
+[Verify file test in ubuntu]
+"command"
+fio --name=/mnt/file2 --iodepth=16 --rw=write --bs=128k --direct=1 --verify=md5 --size=5G
+
+"result"
+/mnt/file2: (groupid=0, jobs=1): err= 0: pid=12954: Tue Jun 25 21:53:01 2019
+
+
+[Performance test in ubuntu]
+"Block device performance"
+root@jerrie-QW67:~# sh test.sh (no multipath)
+read:      IOPS=6566,      BW=821MiB/s (861MB/s)(10.0GiB/12476msec)
+randread:  IOPS=12.7k,     BW=49.7MiB/s (52.2MB/s)(5120MiB/102930msec)
+write:     IOPS=5407,      BW=676MiB/s (709MB/s)(10.0GiB/15148msec)
+randwrite: IOPS=27.1k,     BW=106MiB/s (111MB/s)(5120MiB/48422msec)
+  
+root@jerrie-QW67:~# sh test_eui.sh with multipath(failover)
+read:      IOPS=6531,       BW=816MiB/s (856MB/s)(10.0GiB/12543msec)
+randread:  IOPS=12.1k,      BW=47.1MiB/s (49.4MB/s)(5120MiB/108651msec)
+write:     IOPS=5276,       BW=660MiB/s (692MB/s)(10.0GiB/15525msec)
+randwrite: IOPS=23.0k,      BW=90.0MiB/s (94.4MB/s)(5120MiB/56879msec)
+  
+root@jerrie-QW67:~# sh test_eui.sh with multipath(multibus)
+read:      IOPS=5623,       BW=703MiB/s (737MB/s)(10.0GiB/14568msec)
+randread:  IOPS=11.9k,      BW=46.3MiB/s (48.6MB/s)(5120MiB/110550msec)
+write:     IOPS=4660,       BW=583MiB/s (611MB/s)(10.0GiB/17579msec)
+randwrite: IOPS=21.7k,      BW=84.9MiB/s (89.1MB/s)(5120MiB/60288msec)
+
+
+"test command"
+fio --name=/mnt/file1 --iodepth=32 --rw=read      --bs=128k  --direct=1 --size=10G 
+fio --name=/mnt/file1 --iodepth=32 --rw=randread  --bs=4k    --direct=1 --size=5G
+fio --name=/mnt/file1 --iodepth=32 --rw=write     --bs=128k  --direct=1 --size=10G 
+fio --name=/mnt/file1 --iodepth=32 --rw=randwrite --bs=4k    --direct=1 --size=5G
+
+"multibus"
+read:      IOPS=6311,  BW=789MiB/s  (827MB/s)  (10.0GiB/12980msec)                                                                                                       
+randread:  IOPS=11.3k, BW=44.2MiB/s (46.4MB/s) (5120MiB/115776msec)                                                                                                   
+write:     IOPS=1664,  BW=208MiB/s  (218MB/s)  (10.0GiB/49223msec)                                                                                                       
+randwrite: IOPS=19.6k, BW=76.5MiB/s (80.2MB/s) (5120MiB/66965msec)
+
+"failover"
+read:      IOPS=6914,  BW=864MiB/s  (906MB/s)  (10.0GiB/11848msec)
+randread:  IOPS=14.0k, BW=54.9MiB/s (57.5MB/s) (5120MiB/93327msec)
+write:     IOPS=1644,  BW=206MiB/s  (216MB/s)  (10.0GiB/49808msec)
+randwrite: IOPS=21.5k, BW=83.8MiB/s (87.9MB/s) (5120MiB/61071msec)
+
+"no multipath"
+read:      IOPS=7508,  BW=939MiB/s  (984MB/s)  (10.0GiB/10910msec)
+randread:  IOPS=16.4k, BW=63.9MiB/s (66.0MB/s) (5120MiB/80148msec)
+write:     IOPS=2966,  BW=371MiB/s  (389MB/s)  (10.0GiB/27612msec)
+randwrite: IOPS=26.5k, BW=103MiB/s  (108MB/s)  (5120MiB/49550msec)
+";i:1;N;i:2;N;}i:2;i:1967;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:4998;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:9:"seq write";i:1;i:1;i:2;i:4998;}i:2;i:4998;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:4998;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:3765:"
 multibus round-robin 0
 fio --name=/mnt_ssd/file --ioengine=libaio --iodepth=1 --rw=write --bs=4k --direct=0 --size=5G  --unified_rw_reporting=1 | grep mixed
   mixed: IOPS=116k, BW=453MiB/s (475MB/s)(5120MiB/11308msec)
@@ -54,7 +152,7 @@ fio --name=/mnt_sas/file --ioengine=libaio --iodepth=1 --rw=write --bs=4k --dire
   mixed: IOPS=53.4k, BW=209MiB/s (219MB/s)(5120MiB/24532msec)
   mixed: IOPS=51.4k, BW=201MiB/s (210MB/s)(5120MiB/25515msec)
 
-";i:1;N;i:2;N;}i:2;i:31;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3805;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:11:"Performance";i:1;i:1;i:2;i:3805;}i:2;i:3805;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3805;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2977:"
+";i:1;N;i:2;N;}i:2;i:5028;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:8802;}i:17;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:11:"Performance";i:1;i:1;i:2;i:8802;}i:2;i:8802;}i:18;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:8802;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2977:"
 multibus round-robin 0
 fio --name=/mnt_ssd/file --ioengine=libaio --iodepth=1 --rw=randwrite --bs=4k --direct=0 --size=5G  --unified_rw_reporting=1 | grep mixed
   mixed: IOPS=108k, BW=422MiB/s (443MB/s)(5120MiB/12122msec)
@@ -95,7 +193,7 @@ fio --name=/mnt_ssd/file --ioengine=libaio --iodepth=1 --rw=randwrite --bs=4k --
   mixed: IOPS=101k, BW=394MiB/s (413MB/s)(5120MiB/12991msec)
 fio --name=/mnt_sas/file --ioengine=libaio --iodepth=1 --rw=randwrite --bs=4k --direct=0 --size=5G  --unified_rw_reporting=1 | grep mixed
   mixed: IOPS=2970, BW=11.6MiB/s (12.2MB/s)(5120MiB/441185msec)
-";i:1;N;i:2;N;}i:2;i:3836;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:6823;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"multipath.conf";i:1;i:1;i:2;i:6823;}i:2;i:6823;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:6823;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:328:"
+";i:1;N;i:2;N;}i:2;i:8833;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:11820;}i:21;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"multipath.conf";i:1;i:1;i:2;i:11820;}i:2;i:11820;}i:22;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:11820;}i:23;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:328:"
 root@jerrie-pc:~# cat /etc/multipath.conf
 defaults {
         path_grouping_policy "failover"
@@ -108,7 +206,7 @@ defaults {
     prio_args "devname sdb 10 sde 5"
     failback "immediate"
 }
-";i:1;N;i:2;N;}i:2;i:6857;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:7195;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:13:"path_no_retry";i:1;i:1;i:2;i:7195;}i:2;i:7195;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:7195;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:18371:"
+";i:1;N;i:2;N;}i:2;i:11854;}i:24;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:12192;}i:25;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:13:"path_no_retry";i:1;i:1;i:2;i:12192;}i:2;i:12192;}i:26;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:12192;}i:27;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:18371:"
 Apr 24 19:23:16 | uevent 'remove' from '/devices/pci0000:00/0000:00:1c.0/0000:01:00.0/host0/port-0:17/expander-0:17/port-0:17:0/end_device-0:17:0/target0:0:51/0:0:51:0/block/sdb'
 Apr 24 19:23:16 | Forwarding 1 uevents
 Apr 24 19:23:16 | sdb: remove path (uevent)
@@ -387,7 +485,7 @@ Thread 9 "multipathd" hit Breakpoint 1, set_no_path_retry (conf=<optimized out>,
 #5  0x00007f2c1512f164 in start_thread (arg=<optimized out>) at pthread_create.c:486
 #6  0x00007f2c14b17def in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
 
-";i:1;N;i:2;N;}i:2;i:7228;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:25610;}i:17;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:16:"module functions";i:1;i:1;i:2;i:25610;}i:2;i:25610;}i:18;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:25610;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:11097:"
+";i:1;N;i:2;N;}i:2;i:12225;}i:28;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:30607;}i:29;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:16:"module functions";i:1;i:1;i:2;i:30607;}i:2;i:30607;}i:30;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:30607;}i:31;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:11097:"
 Q11 : 在multipathd裡面的check_path做了一堆事情, 到底有甚麼好做的, 不就是check path的狀態而已嗎?
 Ans :
   Q11-1 : 裡面還先呼叫到path_offline? 這個用意是?
@@ -641,7 +739,7 @@ argv = "0 0 2 1 service-time 0 1 2 7:0 1 1 service-time 0 1 2 7:1 1 1"
 
 output :
 
-";i:1;N;i:2;N;}i:2;i:25647;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:36754;}i:21;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:4:"MISC";i:1;i:1;i:2;i:36754;}i:2;i:36754;}i:22;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:36754;}i:23;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2509:"
+";i:1;N;i:2;N;}i:2;i:30644;}i:32;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:41751;}i:33;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:4:"MISC";i:1;i:1;i:2;i:41751;}i:2;i:41751;}i:34;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:41751;}i:35;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2509:"
 [parameter for creating multipath]
 
 # path_grouping_policy "multibus"
@@ -719,4 +817,4 @@ root@jerrie-pc:/tmp# dmsetup remove test-multi
 # insert時則需先insert dm-multipath, 再insert dm-service-time
 >> insmod dm-multipath.ko
 >> insmod dm-service-time.ko
-";i:1;N;i:2;N;}i:2;i:36779;}i:24;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:39296;}i:25;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:39296;}}
+";i:1;N;i:2;N;}i:2;i:41776;}i:36;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:44293;}i:37;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:44293;}}

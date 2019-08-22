@@ -1,5 +1,115 @@
 
-<h1 class="sectionedit1" id="seq_write">seq write</h1>
+<h1 class="sectionedit1" id="summary">Summary</h1>
+<div class="level1">
+<pre class="file"># fail path
+dmsetup message test-multi 0 &quot;fail_path&quot; 7:2
+
+# failover
+一條path 一個group.
+
+# multibus
+多條path 同一個group, 裡面的path會根據group poicy來進行分配io
+</pre>
+
+</div>
+<!-- EDIT1 SECTION "Summary" [1-222] -->
+<h1 class="sectionedit2" id="multipath_prio_確認">multipath prio 確認</h1>
+<div class="level1">
+<pre class="file">const --&gt; 將所有path的priority都設為1
+sysfs --&gt; Use  the  sysfs  attributes  access_state  and  preferred_path  to generate the path priority. This prioritizer accepts the optional prio_arg exclusive_pref_bit.
+path_latency --&gt; Generate the path priority based on a latency algorithm.  Requires prio_args keyword.
+
+[args]
+
+path_latency --&gt; Needs a value of the form &quot;io_num=&lt;20&gt; base_num=&lt;10&gt;&quot;
+
+    io_num:The number of read IOs sent to the current path continuously, used to calculate the average  path  latency. Valid  Values:Integer, [2, 200].
+
+    base_num: The  base number value of logarithmic scale, used to partition different priority ranks. Valid Values: Integer, [2, 10]. And Max average latency value is 100s, min average latency value is 1us.  For example: If base_num=10, the paths will be grouped in  priority  groups  with path latency &lt;=1us, (1us, 10us], (10us, 100us], (100us, 1ms], (1ms, 10ms], (10ms, 100ms], (100ms,1s], (1s, 10s], (10s, 100s], &gt;100s.
+
+
+目前確認結果, 大部分的參數都跟hardware有關係, 大概只有兩個參數可以使用: sysfs &amp; path_latency
+sysfs會根據sysfs attribute &quot;access_state&quot; 與 &quot;preferred_path&quot;, 
+從code看起來sas有實作這兩個attribute, 但nvme沒有.
+
+path_latency則是根據latency algorithm來進行區分, 需指定io_num與base_num.
+主要是根據io_num所算出來的latency來決定將該path放在哪個priority區間.
+
+exclusive_pref_bit看起來是實作在Hardware裡面的機制.
+(http://www.pearsonitcertification.com/articles/article.aspx?p=2819032)
+
+若在nvme的device下設定prio &quot;alua&quot;, 最後結果會建立不起來(顯示alua not support)</pre>
+
+</div>
+<!-- EDIT2 SECTION "multipath prio 確認" [223-1919] -->
+<h1 class="sectionedit3" id="nvme_in_multipath_-_summary">Nvme in multipath - summary</h1>
+<div class="level1">
+<pre class="file">[Environment]
+* QTS : multipath-tools (0.4.9) + linux kernel (4.14-24)
+- Fail to create multipath
+
+* ubuntu : multipath-tools (0.7.4) + linux kernel (4.14-24)
+- Create successfully
+- request-based multipath
+- failback/failover test ok.
+
+
+[Verify file test in ubuntu]
+&quot;command&quot;
+fio --name=/mnt/file2 --iodepth=16 --rw=write --bs=128k --direct=1 --verify=md5 --size=5G
+
+&quot;result&quot;
+/mnt/file2: (groupid=0, jobs=1): err= 0: pid=12954: Tue Jun 25 21:53:01 2019
+
+
+[Performance test in ubuntu]
+&quot;Block device performance&quot;
+root@jerrie-QW67:~# sh test.sh (no multipath)
+read:      IOPS=6566,      BW=821MiB/s (861MB/s)(10.0GiB/12476msec)
+randread:  IOPS=12.7k,     BW=49.7MiB/s (52.2MB/s)(5120MiB/102930msec)
+write:     IOPS=5407,      BW=676MiB/s (709MB/s)(10.0GiB/15148msec)
+randwrite: IOPS=27.1k,     BW=106MiB/s (111MB/s)(5120MiB/48422msec)
+  
+root@jerrie-QW67:~# sh test_eui.sh with multipath(failover)
+read:      IOPS=6531,       BW=816MiB/s (856MB/s)(10.0GiB/12543msec)
+randread:  IOPS=12.1k,      BW=47.1MiB/s (49.4MB/s)(5120MiB/108651msec)
+write:     IOPS=5276,       BW=660MiB/s (692MB/s)(10.0GiB/15525msec)
+randwrite: IOPS=23.0k,      BW=90.0MiB/s (94.4MB/s)(5120MiB/56879msec)
+  
+root@jerrie-QW67:~# sh test_eui.sh with multipath(multibus)
+read:      IOPS=5623,       BW=703MiB/s (737MB/s)(10.0GiB/14568msec)
+randread:  IOPS=11.9k,      BW=46.3MiB/s (48.6MB/s)(5120MiB/110550msec)
+write:     IOPS=4660,       BW=583MiB/s (611MB/s)(10.0GiB/17579msec)
+randwrite: IOPS=21.7k,      BW=84.9MiB/s (89.1MB/s)(5120MiB/60288msec)
+
+
+&quot;test command&quot;
+fio --name=/mnt/file1 --iodepth=32 --rw=read      --bs=128k  --direct=1 --size=10G 
+fio --name=/mnt/file1 --iodepth=32 --rw=randread  --bs=4k    --direct=1 --size=5G
+fio --name=/mnt/file1 --iodepth=32 --rw=write     --bs=128k  --direct=1 --size=10G 
+fio --name=/mnt/file1 --iodepth=32 --rw=randwrite --bs=4k    --direct=1 --size=5G
+
+&quot;multibus&quot;
+read:      IOPS=6311,  BW=789MiB/s  (827MB/s)  (10.0GiB/12980msec)                                                                                                       
+randread:  IOPS=11.3k, BW=44.2MiB/s (46.4MB/s) (5120MiB/115776msec)                                                                                                   
+write:     IOPS=1664,  BW=208MiB/s  (218MB/s)  (10.0GiB/49223msec)                                                                                                       
+randwrite: IOPS=19.6k, BW=76.5MiB/s (80.2MB/s) (5120MiB/66965msec)
+
+&quot;failover&quot;
+read:      IOPS=6914,  BW=864MiB/s  (906MB/s)  (10.0GiB/11848msec)
+randread:  IOPS=14.0k, BW=54.9MiB/s (57.5MB/s) (5120MiB/93327msec)
+write:     IOPS=1644,  BW=206MiB/s  (216MB/s)  (10.0GiB/49808msec)
+randwrite: IOPS=21.5k, BW=83.8MiB/s (87.9MB/s) (5120MiB/61071msec)
+
+&quot;no multipath&quot;
+read:      IOPS=7508,  BW=939MiB/s  (984MB/s)  (10.0GiB/10910msec)
+randread:  IOPS=16.4k, BW=63.9MiB/s (66.0MB/s) (5120MiB/80148msec)
+write:     IOPS=2966,  BW=371MiB/s  (389MB/s)  (10.0GiB/27612msec)
+randwrite: IOPS=26.5k, BW=103MiB/s  (108MB/s)  (5120MiB/49550msec)</pre>
+
+</div>
+<!-- EDIT3 SECTION "Nvme in multipath - summary" [1920-4997] -->
+<h1 class="sectionedit4" id="seq_write">seq write</h1>
 <div class="level1">
 <pre class="file">multibus round-robin 0
 fio --name=/mnt_ssd/file --ioengine=libaio --iodepth=1 --rw=write --bs=4k --direct=0 --size=5G  --unified_rw_reporting=1 | grep mixed
@@ -58,8 +168,8 @@ fio --name=/mnt_sas/file --ioengine=libaio --iodepth=1 --rw=write --bs=4k --dire
 </pre>
 
 </div>
-<!-- EDIT1 SECTION "seq write" [1-3804] -->
-<h1 class="sectionedit2" id="performance">Performance</h1>
+<!-- EDIT4 SECTION "seq write" [4998-8801] -->
+<h1 class="sectionedit5" id="performance">Performance</h1>
 <div class="level1">
 <pre class="file">multibus round-robin 0
 fio --name=/mnt_ssd/file --ioengine=libaio --iodepth=1 --rw=randwrite --bs=4k --direct=0 --size=5G  --unified_rw_reporting=1 | grep mixed
@@ -103,8 +213,8 @@ fio --name=/mnt_sas/file --ioengine=libaio --iodepth=1 --rw=randwrite --bs=4k --
   mixed: IOPS=2970, BW=11.6MiB/s (12.2MB/s)(5120MiB/441185msec)</pre>
 
 </div>
-<!-- EDIT2 SECTION "Performance" [3805-6822] -->
-<h1 class="sectionedit3" id="multipathconf">multipath.conf</h1>
+<!-- EDIT5 SECTION "Performance" [8802-11819] -->
+<h1 class="sectionedit6" id="multipathconf">multipath.conf</h1>
 <div class="level1">
 <pre class="file">root@jerrie-pc:~# cat /etc/multipath.conf
 defaults {
@@ -120,8 +230,8 @@ defaults {
 }</pre>
 
 </div>
-<!-- EDIT3 SECTION "multipath.conf" [6823-7194] -->
-<h1 class="sectionedit4" id="path_no_retry">path_no_retry</h1>
+<!-- EDIT6 SECTION "multipath.conf" [11820-12191] -->
+<h1 class="sectionedit7" id="path_no_retry">path_no_retry</h1>
 <div class="level1">
 <pre class="file">Apr 24 19:23:16 | uevent &#039;remove&#039; from &#039;/devices/pci0000:00/0000:00:1c.0/0000:01:00.0/host0/port-0:17/expander-0:17/port-0:17:0/end_device-0:17:0/target0:0:51/0:0:51:0/block/sdb&#039;
 Apr 24 19:23:16 | Forwarding 1 uevents
@@ -403,8 +513,8 @@ Thread 9 &quot;multipathd&quot; hit Breakpoint 1, set_no_path_retry (conf=&lt;op
 </pre>
 
 </div>
-<!-- EDIT4 SECTION "path_no_retry" [7195-25609] -->
-<h1 class="sectionedit5" id="module_functions">module functions</h1>
+<!-- EDIT7 SECTION "path_no_retry" [12192-30606] -->
+<h1 class="sectionedit8" id="module_functions">module functions</h1>
 <div class="level1">
 <pre class="file">Q11 : 在multipathd裡面的check_path做了一堆事情, 到底有甚麼好做的, 不就是check path的狀態而已嗎?
 Ans :
@@ -661,8 +771,8 @@ output :
 </pre>
 
 </div>
-<!-- EDIT5 SECTION "module functions" [25610-36753] -->
-<h1 class="sectionedit6" id="misc">MISC</h1>
+<!-- EDIT8 SECTION "module functions" [30607-41750] -->
+<h1 class="sectionedit9" id="misc">MISC</h1>
 <div class="level1">
 <pre class="file">[parameter for creating multipath]
 
@@ -743,4 +853,4 @@ root@jerrie-pc:/tmp# dmsetup remove test-multi
 &gt;&gt; insmod dm-service-time.ko</pre>
 
 </div>
-<!-- EDIT6 SECTION "MISC" [36754-] -->
+<!-- EDIT9 SECTION "MISC" [41751-] -->

@@ -1,0 +1,41 @@
+1560215992	172.17.22.38	C	qnap:daily_report		created		38
+1560217962	172.17.22.38	E	qnap:daily_report				292
+1560217988	172.17.22.38	E	qnap:daily_report				-14
+1560217997	172.17.22.38	E	qnap:daily_report				11
+1560218057	172.17.22.38	E	qnap:daily_report				73
+1560219708	172.17.22.38	E	qnap:daily_report				327
+1560219879	172.17.22.38	E	qnap:daily_report				42
+1560219889	172.17.22.38	E	qnap:daily_report				1
+1560219897	172.17.22.38	E	qnap:daily_report				1
+1560222787	172.17.22.38	E	qnap:daily_report				158
+1560223164	172.17.22.38	E	qnap:daily_report				15
+1560223197	172.17.22.38	E	qnap:daily_report				0
+1560223258	172.17.22.38	E	qnap:daily_report				2
+1560223269	172.17.22.38	E	qnap:daily_report				11
+1560223306	172.17.22.38	E	qnap:daily_report		[2. SAS template implementation (24-50)] 		41
+1560223624	172.17.22.38	E	qnap:daily_report		[2. SAS template implementation (24-50)] 		132
+1560303314	172.17.22.38	E	qnap:daily_report		[2. SAS template implementation (24-50)] 		285
+1560303345	172.17.22.38	E	qnap:daily_report		[3. filelock when read/write data file.] 		90
+1560303421	172.17.22.38	E	qnap:daily_report		[3. filelock when read/write data file.] 		102
+1560304289	172.17.22.38	E	qnap:daily_report		[2. SAS template implementation (24-50)] 		804
+1560306307	172.17.22.38	E	qnap:daily_report		[2. SAS template implementation (24-50)] 		1608
+1560307805	172.17.22.38	E	qnap:daily_report				673
+1560390657	172.17.22.38	E	qnap:daily_report		[2. SAS template implementation (24-50)] 		183
+1560391723	172.17.22.38	E	qnap:daily_report		[2. SAS template implementation (24-50)] 		1330
+1560391966	172.17.22.38	E	qnap:daily_report		[2. SAS template implementation (24-50)] 		623
+1560393065	172.17.22.38	E	qnap:daily_report		[2. SAS template implementation (24-50)] 		400
+1560393179	172.17.22.38	E	qnap:daily_report				207
+1560478302	172.17.22.38	E	qnap:daily_report				565
+1560501960	172.17.22.38	E	qnap:daily_report		[20190614] 		723
+1560502075	172.17.22.38	E	qnap:daily_report				114
+1560502633	172.17.22.38	E	qnap:daily_report				140
+1560502651	172.17.22.38	E	qnap:daily_report				21
+1560502700	172.17.22.38	E	qnap:daily_report				8
+1560502710	172.17.22.38	E	qnap:daily_report				11
+1560502736	172.17.22.38	E	qnap:daily_report				-12
+1560502755	172.17.22.38	E	qnap:daily_report				426
+1560502780	172.17.22.38	E	qnap:daily_report		[1. ahci --> dumpstack in scsi_done] 		11
+1560502802	172.17.22.38	E	qnap:daily_report		[20190614] 		-10
+1560502814	172.17.22.38	E	qnap:daily_report				2
+1560505794	172.17.22.38	E	qnap:daily_report				784
+1560505861	172.17.22.38	E	qnap:daily_report				671

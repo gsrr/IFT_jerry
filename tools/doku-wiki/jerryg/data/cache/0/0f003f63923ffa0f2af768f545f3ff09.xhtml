@@ -1,7 +1,34 @@
 
 <h1 class="sectionedit1" id="faq_for_ubuntu">FAQ for ubuntu</h1>
 <div class="level1">
-<pre class="file">[Error Message]
+<pre class="file">Q4 : 之前想到的一個問題, 因為東西都是存在Disk裡面, 作業系統起來前又沒有driver, 那怎麼去Disk讀取東西?
+Ans:
+
+
+Q3 : Download Linux archive
+Ans :
+1. https://www.kernel.org/
+2. https://jerrynest.io/ubuntu-16-04-compile-linux-kernel/
+[Installation]
+1. apt-get install build-essential ncurses-dev libssl-dev build-essential ncurses-dev xz-utils kernel-package
+2. apt install libelf-dev
+3. copy config:
+  3.1 cp /boot/config-4.4.0-21-generic .
+  3.2 make menuconfig
+
+4. build:
+  4.1 make -j 4
+  4.2 make modules -j 4
+  4.3 make modules_install
+  4.4 make install
+
+
+Q2 : 修改grup, 改變開機的kernel版本.
+Ans:
+1. GRUB_DEFAULT=&quot;Advanced options for Ubuntu&gt;Ubuntu, with Linux 4.14.24-041424-generic&quot;
+2. update-grub
+
+[Error Message]
 Q1 : SSL error?
 
 root@jerry05-pc:/datapool/linux-4.18# make modules_install
@@ -18,7 +45,7 @@ Ans :
 </pre>
 
 </div>
-<!-- EDIT1 SECTION "FAQ for ubuntu" [1-539] -->
+<!-- EDIT1 SECTION "FAQ for ubuntu" [1-1288] -->
 <h1 class="sectionedit2" id="faq_for_centos">FAQ for CentOS</h1>
 <div class="level1">
 <pre class="file">Reference:
@@ -114,13 +141,13 @@ We can boot from grub shell:
 </pre>
 
 </div>
-<!-- EDIT2 SECTION "FAQ for CentOS" [540-3225] -->
+<!-- EDIT2 SECTION "FAQ for CentOS" [1289-3974] -->
 <h1 class="sectionedit3" id="debug_by_gdb">Debug by GDB</h1>
 <div class="level1">
 <pre class="file"></pre>
 
 </div>
-<!-- EDIT3 SECTION "Debug by GDB" [3226-3269] -->
+<!-- EDIT3 SECTION "Debug by GDB" [3975-4018] -->
 <h1 class="sectionedit4" id="tools">Tools</h1>
 <div class="level1">
 <pre class="file"># Get ip address from booting.
@@ -133,7 +160,7 @@ We can boot from grub shell:
 3. ssh remote-host</pre>
 
 </div>
-<!-- EDIT4 SECTION "Tools" [3270-3508] -->
+<!-- EDIT4 SECTION "Tools" [4019-4257] -->
 <h1 class="sectionedit5" id="kernel">Kernel</h1>
 <div class="level1">
 <pre class="file">[Reference]
@@ -168,4 +195,4 @@ kernel-souce包含所有内核源代码。
 </pre>
 
 </div>
-<!-- EDIT5 SECTION "Kernel" [3509-] -->
+<!-- EDIT5 SECTION "Kernel" [4258-] -->

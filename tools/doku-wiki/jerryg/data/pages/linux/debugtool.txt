@@ -1,3 +1,66 @@
+====== segfaulting ======
+<file>
+# What does segfaulting programs mean?
+segfault at 0 ip 0000000000401271 sp 00007fff2ce4d210 error 4 in testp[400000+98000]
+
+- 'testp[19288]' is the faulting program and its PID
+
+- 'segfault at 0' tells us the memory address (in hex) that caused the segfault when the program tried to access it. Here the address is 0, so we have a null dereference of some sort.
+
+- ip 0000000000401271' is the value of the instruction pointer at the time of the fault. This should be the instruction that attempted to do the invalid memory access. In 64-bit x86, this will be register %rip (useful for inspecting things in GDB and elsewhere).
+
+- 'sp 00007fff2ce4d210' is the value of the stack pointer. In 64-bit x86, this will be %rsp.
+'error 4' is the page fault error code bits from traps.h in hex, as usual, and will almost always be at least 4 (which means 'user-mode access'). A value of 4 means it was a read of an unmapped area, such as address 0, while a value of 6 (4+2) means it was a write of an unmapped area.
+
+- 'in testp[400000+98000]' tells us the specific virtual memory area that the instruction pointer is in, specifying which file it is (here it's the executable), the starting address that VMA is mapped at (0x400000), and the size of the mapping (0x98000).
+
+
+# 如果pointer的對象是一個structure.
+struct Test {
+      int a;
+      int b;
+};
+
+假設pointer指向0, 若要存取a時, 會顯示:
+segfault at 0 ip xxxx
+
+但若是要存取b時, 則會顯示:
+segfault at 4 ip xxxx (對照structure的資訊, 位移了4個bytes.)
+
+
+
+####  Kernel  ####
++	# The structure of symbol at this point is:
++	#   [name]+[offset]/[total length]
++	#
++	# For example:
++	#   do_basic_setup+0x9c/0xbf
+
+[  233.583965]  kernfs_get_inode+0x91/0x110
+[  233.587882]  kernfs_iop_lookup+0x60/0x90
+[  233.591798]  lookup_slow+0x91/0x140
+[  233.595277]  walk_component+0x220/0x600
+[  233.599104]  ? path_init+0x1da/0x300
+[  233.602669]  path_lookupat+0x63/0x200
+[  233.606324]  filename_lookup+0xa4/0x160
+[  233.610149]  ? do_filp_open+0x99/0xf0
+[  233.613803]  ? compact_node.isra.39+0x90/0xc0
+[  233.618154]  ? locked_inode_to_wb_and_lock_list+0x48/0x100
+[  233.623627]  ? cp_new_stat+0x141/0x160
+[  233.627367]  ? vfs_statx+0x5f/0xb0
+[  233.630758]  vfs_statx+0x5f/0xb0
+[  233.633978]  SYSC_newlstat+0x26/0x40
+[  233.637546]  do_syscall_64+0x83/0x2c0
+[  233.641200]  entry_SYSCALL_64_after_hwframe+0x3d/0xa2
+
+</file>
+
+====== Deploy tools ======
+<file>
+1. rsync -a root@172.17.22.57:/root/qtools/ ./
+
+</file>
+
 ====== smartctl ======
 <file>
 [Installation]
@@ -17,7 +80,8 @@ apt install smartmontools
 [Usage]
 1. fio --name=/mnt_ssd/file --ioengine=libaio --iodepth=1 --rw=write --bs=4k --direct=0 --size=5G  --unified_rw_reporting=1
 
-
+# fio with offset and size for block device
+fio --name=/dev/sdc --iodepth=32 --rw=read --bs=4k --direct=1 --time_based --runtime=10 --size=10k --offset=100k
 </file>
 
 ====== SystemTap ======
@@ -25,6 +89,11 @@ apt install smartmontools
 Reference:
 1. Linux 自检和 SystemTap
 https://www.ibm.com/developerworks/cn/linux/l-systemtap/index.html
+2. SystemTap Beginners Guide
+https://sourceware.org/systemtap/SystemTap_Beginners_Guide/targetvariables.html
+3. systemtap能做什么？第一篇
+https://vcpu.me/systemtap-skills/
+
 
 Q2 : 如何使用SystemTap印出參數內容?
 Ans:

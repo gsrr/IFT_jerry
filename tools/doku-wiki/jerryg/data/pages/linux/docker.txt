@@ -1,3 +1,10 @@
+====== 修改docker image ======
+<file>
+1. docker image ls
+
+</file>
+
+
 <file>
 Q1 : docker exec -it command returns following error "cannot enable tty mode on non tty input"
 Ans : 

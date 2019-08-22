@@ -1,0 +1,6 @@
+<pre class="file"># Add a SCSI Device back
+echo &quot;- - -&quot; &gt; /sys/class/scsi_host/host&lt;h&gt;/scan
+
+# Deletion of a SCSI Device
+echo 1 &gt; /sys/class/scsi_device/h:c:t:l/device/delete
+</pre>

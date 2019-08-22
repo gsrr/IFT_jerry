@@ -166,3 +166,13 @@ linux:scsi:sata
 ubuntu:qemu
 linux:driver:mmio
 linux:udev
+qnap:ulink_proj
+qnap:build_server
+qnap:disk_info
+qnap:daily_report
+qnap:ubuntu
+qnap_bug_226031
+qnap:ulink:commands
+linux:scsi:commands
+linux:kernfs
+qnap:bug226215

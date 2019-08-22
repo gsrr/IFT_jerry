@@ -1,0 +1,8 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1565575558;s:8:"modified";i:1565663821;}s:11:"last_change";a:8:{s:4:"date";i:1565663821;s:2:"ip";s:12:"172.17.22.38";s:4:"type";s:1:"E";s:2:"id";s:15:"qnap_bug_226031";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:15;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:503:"count : 37
+
+
+[  230.448059] ext4_init_reserve_inode_table0: dm-0, 5554
+[  230.453188] ext4_init_reserve_inode_table2: dm-0, 5554, 0, 0, 4096
+[  230.459595] EXT4-fs (dm-0): mounted filesystem with ordered data mode. Opts: usrjquota=aquota.user,jqfmt=vfsv0,user_xattr,data=ordered,data_err=abort,delalloc,nopriv,nodiscard,noacl
+[  230.696711] device-mapper: tier: set allocation tier failed
+[  231.307942] Adding 16777212k swap on /share/CACHEDEV1_DATA/.swap/qnap_swap.  Priority:-5 extents:16 across:1…";}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1565575558;s:8:"modified";i:1565663821;}s:11:"last_change";a:8:{s:4:"date";i:1565663821;s:2:"ip";s:12:"172.17.22.38";s:4:"type";s:1:"E";s:2:"id";s:15:"qnap_bug_226031";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:15;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

@@ -3,14 +3,61 @@
 <div class="level1">
 <pre class="file">Q : Indexing is a memory intensive process. 
 Ans:
-If you get &quot;java.lang.OutOfMemoryError: Java heap space&quot; error, try the -Xms&lt;size&gt;&lt;/size&gt; and -Xmx&lt;size&gt;&lt;/size&gt; options to java (Eg JAVA_OPTS=&quot;-Xms2048m -Xmx2048&quot;)
+If you get &quot;java.lang.OutOfMemoryError: Java heap space&quot; error, try the -Xms&lt;size&gt;&lt;/size&gt; and -Xmx&lt;size&gt;&lt;/size&gt; options to java (Eg JAVA_OPTS=&quot;-Xms2048m -Xmx2048m&quot;)
+
+-Xmssize Specifies the initial heap size.
+
+-Xmxsize Specifies the maximum heap size.
 </pre>
 
 </div>
-<!-- EDIT1 SECTION "Error Handle" [1-258] -->
+<!-- EDIT1 SECTION "Error Handle" [1-345] -->
 <h1 class="sectionedit2" id="opengrok_in_windows">opengrok in windows</h1>
 <div class="level1">
-<pre class="file">[Reference]
+<pre class="file">[20190708]
+之前是使用舊版的opengrok, 使用上有些bug, 現在改用新版的opengrok, 但安裝上跟之前的差很多,
+害我花了一些時間處理.
+
+== Installation ==
+1. Install tomcat8
+--&gt; apt install tomcat8
+
+2. universal ctags
+- https://github.com/universal-ctags/ctags
+$ ./autogen.sh # 需要安裝autogen工具，apt-get或者自行解決
+$ ./configure
+$ make
+$ make install
+
+3. opengrok
+- https://github.com/oracle/opengrok/releases
+- 複製source.war到Tomcat的webapp目錄
+- 建立index
+java -Djava.util.logging.config.file=[opengrok_解壓目錄]/doc/logging.properties \ 
+-jar [opengrok_解壓目錄]/lib/opengrok.jar \ 
+-c /usr/local/bin/ctags \ 
+--depth 10 \ 
+-s [SOURCE_ROOT] -d [WORK_ROOT]/data -P -S -G \ 
+-W [WORK_ROOT]/etc/configuration.xml -U http://localhost:8080/source 2&gt;&amp;1
+
+4. 修改 Tomcat/webapp/source/WEB-INF/web.xml裡面的configuration path
+
+Reference: https://luomuxiaoxiao.com/?p=56
+
+[20190704]
+為了解決資料夾太多而佈署太慢的問題, 我將opengrok的環境弄成可以各別進行建立index.
+但也花了一些時間, 主要動作是:
+1. 將原先的/var/opengrok/的路徑改成/var/opengrok/repo/
+  1.1 在建立index前設定環境變數: export OPENGROK_INSTANCE_BASE=/var/opengrok/repo
+  1.2 更改source.war中讀取web.xml的路徑: 
+    - unzip source.war WEB-INF/web.xml
+    - modify the path from &quot;/var/opengrok/etc/xxx.xml&quot; to &quot;/var/opengrok/repo/etc/xxx.xml&quot;
+    - zip -u source.war WEB-INF/web.xml
+
+2. 建立source資料夾, 並分別將source repo link 到這個資料夾裡面.
+3. 開始對source資料夾建立index.
+
+[Reference]
 1. Opengrok部署 --&gt; https://gtcsq.readthedocs.io/en/latest/openstack/opengrok_xp.html
 2. 
 
@@ -47,4 +94,4 @@ rm -rf /var/opengrok
 http://172.27.122.95:8080/source</pre>
 
 </div>
-<!-- EDIT2 SECTION "opengrok in windows" [259-] -->
+<!-- EDIT2 SECTION "opengrok in windows" [346-] -->

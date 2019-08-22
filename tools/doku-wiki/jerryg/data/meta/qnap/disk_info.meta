@@ -1,0 +1,8 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1558000943;s:8:"modified";i:1558000951;}s:11:"last_change";a:8:{s:4:"date";i:1558000951;s:2:"ip";s:12:"172.17.22.38";s:4:"type";s:1:"E";s:2:"id";s:14:"qnap:disk_info";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:3;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:490:"== Show type of file-system ==
+[~] # blkid
+/dev/sdc1: UUID="90a34014-e609-4965-b6b4-95f277bfdf23" TYPE="ext2"
+/dev/sdc2: LABEL="QTS_BOOT_PART2" UUID="2f7f160e-aa9c-4463-8557-82fd65867b18" TYPE="ext2"
+/dev/sdc3: LABEL="QTS_BOOT_PART3" UUID="effc89d0-cd67-427e-82fe-1c6f59772ea5" TYPE="ext2"
+/dev/sdc5: UUID="ba5d6eee-24a9-43bc-b861-8f4ebfbcd2c7" TYPE="ext2"
+/dev/sdc6: UUID="c5a5224c-2a7e-46b4-b98c-e87b07fd65f9" TYPE="ext2"
+/dev/sdb1: UUID="a03c19bc-b38d-4142-84ce-a34e13459463" TYPE="ext4"";}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1558000943;s:8:"modified";i:1558000951;}s:11:"last_change";a:8:{s:4:"date";i:1558000951;s:2:"ip";s:12:"172.17.22.38";s:4:"type";s:1:"E";s:2:"id";s:14:"qnap:disk_info";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:3;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

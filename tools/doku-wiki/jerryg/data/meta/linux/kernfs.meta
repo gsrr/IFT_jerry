@@ -1,0 +1,10 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1565603786;s:8:"modified";i:1565652855;}s:11:"last_change";a:8:{s:4:"date";i:1565652855;s:2:"ip";s:12:"172.20.254.2";s:4:"type";s:1:"E";s:2:"id";s:12:"linux:kernfs";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:49;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:239:"Reference:
+1. https://blog.csdn.net/chenying126/article/details/78079942
+2. https://www.itread01.com/content/1517157631.html
+3. https://www.cnblogs.com/Ph-one/p/5034926.html
+
+
+
+1. kernfs is pseudo filesystem decoupled from vfs locking.
+
+2.";}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:4:{s:4:"date";a:2:{s:7:"created";i:1565603786;s:8:"modified";i:1565652855;}s:11:"last_change";a:8:{s:4:"date";i:1565652855;s:2:"ip";s:12:"172.20.254.2";s:4:"type";s:1:"E";s:2:"id";s:12:"linux:kernfs";s:4:"user";s:0:"";s:3:"sum";s:0:"";s:5:"extra";s:0:"";s:10:"sizechange";i:49;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

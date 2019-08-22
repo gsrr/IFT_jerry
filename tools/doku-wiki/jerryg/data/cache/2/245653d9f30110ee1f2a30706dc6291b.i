@@ -1,22 +1,85 @@
-a:26:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:8:"smartctl";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:77:"
+a:34:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:11:"segfaulting";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2395:"
+# What does segfaulting programs mean?
+segfault at 0 ip 0000000000401271 sp 00007fff2ce4d210 error 4 in testp[400000+98000]
+
+- 'testp[19288]' is the faulting program and its PID
+
+- 'segfault at 0' tells us the memory address (in hex) that caused the segfault when the program tried to access it. Here the address is 0, so we have a null dereference of some sort.
+
+- ip 0000000000401271' is the value of the instruction pointer at the time of the fault. This should be the instruction that attempted to do the invalid memory access. In 64-bit x86, this will be register %rip (useful for inspecting things in GDB and elsewhere).
+
+- 'sp 00007fff2ce4d210' is the value of the stack pointer. In 64-bit x86, this will be %rsp.
+'error 4' is the page fault error code bits from traps.h in hex, as usual, and will almost always be at least 4 (which means 'user-mode access'). A value of 4 means it was a read of an unmapped area, such as address 0, while a value of 6 (4+2) means it was a write of an unmapped area.
+
+- 'in testp[400000+98000]' tells us the specific virtual memory area that the instruction pointer is in, specifying which file it is (here it's the executable), the starting address that VMA is mapped at (0x400000), and the size of the mapping (0x98000).
+
+
+# 如果pointer的對象是一個structure.
+struct Test {
+      int a;
+      int b;
+};
+
+假設pointer指向0, 若要存取a時, 會顯示:
+segfault at 0 ip xxxx
+
+但若是要存取b時, 則會顯示:
+segfault at 4 ip xxxx (對照structure的資訊, 位移了4個bytes.)
+
+
+
+####  Kernel  ####
++	# The structure of symbol at this point is:
++	#   [name]+[offset]/[total length]
++	#
++	# For example:
++	#   do_basic_setup+0x9c/0xbf
+
+[  233.583965]  kernfs_get_inode+0x91/0x110
+[  233.587882]  kernfs_iop_lookup+0x60/0x90
+[  233.591798]  lookup_slow+0x91/0x140
+[  233.595277]  walk_component+0x220/0x600
+[  233.599104]  ? path_init+0x1da/0x300
+[  233.602669]  path_lookupat+0x63/0x200
+[  233.606324]  filename_lookup+0xa4/0x160
+[  233.610149]  ? do_filp_open+0x99/0xf0
+[  233.613803]  ? compact_node.isra.39+0x90/0xc0
+[  233.618154]  ? locked_inode_to_wb_and_lock_list+0x48/0x100
+[  233.623627]  ? cp_new_stat+0x141/0x160
+[  233.627367]  ? vfs_statx+0x5f/0xb0
+[  233.630758]  vfs_statx+0x5f/0xb0
+[  233.633978]  SYSC_newlstat+0x26/0x40
+[  233.637546]  do_syscall_64+0x83/0x2c0
+[  233.641200]  entry_SYSCALL_64_after_hwframe+0x3d/0xa2
+
+";i:1;N;i:2;N;}i:2;i:32;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:2437;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"Deploy tools";i:1;i:1;i:2;i:2437;}i:2;i:2437;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:2437;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:49:"
+1. rsync -a root@172.17.22.57:/root/qtools/ ./
+
+";i:1;N;i:2;N;}i:2;i:2469;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:2528;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:8:"smartctl";i:1;i:1;i:2;i:2528;}i:2;i:2528;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:2528;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:77:"
 [Installation]
 apt install smartmontools 
 
 [Usage]
 1. smartctl -i /dev/sda
 
-";i:1;N;i:2;N;}i:2;i:29;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:117;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:3:"fio";i:1;i:1;i:2;i:117;}i:2;i:117;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:117;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:174:"
+";i:1;N;i:2;N;}i:2;i:2556;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:2644;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:3:"fio";i:1;i:1;i:2;i:2644;}i:2;i:2644;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:2644;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:330:"
 [Installation]
 1. apt-get install fio
 
 [Usage]
 1. fio --name=/mnt_ssd/file --ioengine=libaio --iodepth=1 --rw=write --bs=4k --direct=0 --size=5G  --unified_rw_reporting=1
 
-
-";i:1;N;i:2;N;}i:2;i:140;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:324;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:9:"SystemTap";i:1;i:1;i:2;i:324;}i:2;i:324;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:324;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1751:"
+# fio with offset and size for block device
+fio --name=/dev/sdc --iodepth=32 --rw=read --bs=4k --direct=1 --time_based --runtime=10 --size=10k --offset=100k
+";i:1;N;i:2;N;}i:2;i:2667;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3007;}i:17;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:9:"SystemTap";i:1;i:1;i:2;i:3007;}i:2;i:3007;}i:18;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3007;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1932:"
 Reference:
 1. Linux 自检和 SystemTap
 https://www.ibm.com/developerworks/cn/linux/l-systemtap/index.html
+2. SystemTap Beginners Guide
+https://sourceware.org/systemtap/SystemTap_Beginners_Guide/targetvariables.html
+3. systemtap能做什么？第一篇
+https://vcpu.me/systemtap-skills/
+
 
 Q2 : 如何使用SystemTap印出參數內容?
 Ans:
@@ -66,7 +129,7 @@ probe kernel.function("vfs_rename") {
 
 2. 執行: stap xxx.stp
 
-";i:1;N;i:2;N;}i:2;i:353;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:2113;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:23:"python - debug with gdb";i:1;i:1;i:2;i:2113;}i:2;i:2113;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:2113;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2577:"
+";i:1;N;i:2;N;}i:2;i:3036;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:4977;}i:21;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:23:"python - debug with gdb";i:1;i:1;i:2;i:4977;}i:2;i:4977;}i:22;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:4977;}i:23;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2577:"
 [FAQ]
 [MAX_OUTPUT_LEN]
 1. in python-pdb.py
@@ -127,7 +190,7 @@ https://wiki.python.org/moin/DebuggingWithGdb
 
 4. Extended gdb using python
 https://sourceware.org/gdb/onlinedocs/gdb/Python.html
-";i:1;N;i:2;N;}i:2;i:2156;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:4743;}i:17;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:3:"gdb";i:1;i:1;i:2;i:4743;}i:2;i:4743;}i:18;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:4743;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1725:"
+";i:1;N;i:2;N;}i:2;i:5020;}i:24;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:7607;}i:25;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:3:"gdb";i:1;i:1;i:2;i:7607;}i:2;i:7607;}i:26;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:7607;}i:27;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1725:"
 
 [gdb usage]
 # go to desired frame number
@@ -176,7 +239,7 @@ http://www.study-area.org/cyril/opentools/opentools/x1265.html
 # command
 gdb /usr/bin/smbd path/to/the/core
 
-";i:1;N;i:2;N;}i:2;i:4766;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:6500;}i:21;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:5:"crash";i:1;i:1;i:2;i:6500;}i:2;i:6500;}i:22;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:6500;}i:23;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:960:"
+";i:1;N;i:2;N;}i:2;i:7630;}i:28;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:9364;}i:29;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:5:"crash";i:1;i:1;i:2;i:9364;}i:2;i:9364;}i:30;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:9364;}i:31;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:960:"
 [FAQ]
 
 [BASIC]
@@ -211,4 +274,4 @@ It store the memory that start from 400000 to 401000.
 
 # command
 1. crash vmcore vmlinux_kernel2017-10-24_180426_37bc122
-";i:1;N;i:2;N;}i:2;i:6525;}i:24;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:7493;}i:25;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:7493;}}
+";i:1;N;i:2;N;}i:2;i:9389;}i:32;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:10357;}i:33;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:10357;}}

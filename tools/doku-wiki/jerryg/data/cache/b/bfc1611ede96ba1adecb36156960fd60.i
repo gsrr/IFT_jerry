@@ -1,0 +1,126 @@
+a:7:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:7:"VIS2888";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1952:"
+[Summary]
+1. Set up building environment
+ - apt-get install git fakeroot build-essential ncurses-dev xz-utils kernel-package bison flex libssl-dev libelf-dev
+
+2. Download Marvell code(Modified for Kernel version 4.18 and 5.0.0) package from Jira task
+ - tar -zxvf qnap_mv14xx.tar
+ - cd mv14xx
+ - make
+ - insmod mv14xx.ko
+ - mkdir /lib/modules/`uname -r`/kernel/drivers/mv14xx
+ - cp mv14xx.ko /lib/modules/`uname -r`/kernel/drivers/mv14xx/
+ - Download mv14xx.sh from Jira task
+ - cp mv14xx.sh /etc/init.d/
+ - chmod +x /etc/init.d/mv14xx.sh 
+ - ln -s /etc/init.d/mv14xx.sh /etc/rc2.d/S01mv14xx
+
+3. Download AQC code package from Jira task (atlantic.tar.gz inside)
+ - tar -zxvf atlantic.tar.gz
+ - cd Linux
+ - make
+ - rmmod atlantic
+ - insmod /lib/modules/`uname -r`/kernel/lib/crc-itu-t.ko
+ - insmod atlantic.ko
+ - cp atlantic.ko /lib/modules/4.18.0-15-generic/kernel/drivers/net/ethernet/aquantia/atlantic/atlantic.ko
+
+4. reboot (optional)
+
+Q3 : get linux kernel source code
+Ans:
+1. apt-cache search linux-source  (find a list of current source package versions)
+2. apt-get source linux-image-$(uname -r)
+=========
+1. apt-get install git fakeroot build-essential ncurses-dev xz-utils kernel-package
+2. apt install bison flex libssl-dev libelf-dev
+3. wget https://mirrors.edge.kernel.org/pub/linux/kernel/v4.x/linux-4.18.10.tar.gz
+4. tar xvf linux-4.18.10.tar.gz
+4. cp /boot/config-$(uname -r) .config
+5. make menuconfig
+#6. fakeroot make-kpkg --initrd kernel_image kernel_headers
+7. sh build.sh
+
+=== build.sh ===
+make -j 4
+make modules -j 4
+make modules_install
+#(strip kernel modules)
+cd /lib/modules/<new_kernel>
+find . -name *.ko -exec strip --strip-unneeded {} +
+cd -
+make install
+=== build.sh ===
+
+Q1 : E: You must put some 'source' URIs in your sources.list
+Ans:
+1. apt-get update
+2. ensure that the deb-src lines are not commented out. (/etc/apt/sources.list)
+
+Q2 : Check if the 'dpkg-dev' package is installed.
+Ans:
+1. apt-get install dpkg-dev
+
+";i:1;N;i:2;N;}i:2;i:28;}i:4;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2930:"
+因為公司用的系統是架構在ubuntu之上來進行延伸.
+所以免不了需要架設一些ubuntu的環境, 方便進行一些測試.
+
+目前主要是想在linux 4.14上測試multipath這個功能, 但遇到的問題是...
+ubuntu並沒有一個版本是對應到linux4.14的.
+目前看到的是:
+18.04 --> linux 4.18 (multipath-tools is 0.7.4)
+17.10 --> linux 4.13 (multipath-tools is 0.6.4)
+從QTS裡面可以看到有一個multipath 0.4.9的版本, 不過對應到目前的kernel在使用上會不會有問題?
+另外從kernel config看起來dm-multipath是built-in在kernel裡面, 所以我只要本multipath-tools丟進去就可以用了?
+
+1. 不管怎麼樣, 現在已經弄好一個ubuntu linux4.14的環境, 接下來就是用這個環境測試nvme with multipath.
+2. Build出一個support multipath 0.4.9的qts image, 安裝後確認是否可以正常運作.
+
+--> 用ubuntu linux4.14測試後, 目前是可以正常建起來, 後面就用這個dm建一個filesystem, 然後測試看看是不是可以正常進行failover/failback.
+
+--> 已經build出一個包含multipath-tools 0.4.9的qts image, 但使用multipath無法正常建立出nvme的dm. 不過用loop device加上
+dmsetup是可以建出來multipath, 所以看起來kernel已經有支援. 後面可能換成multipath-tools 0.7.4進行測試看看?
+
+Q5 : 如何存ubuntu downgrade/upgrade kernel?
+Ans:
+Reference: 
+1. http://www.yourownlinux.com/2018/12/how-to-install-linux-kernel-4-14-0.html
+2. https://kernel.ubuntu.com/~kernel-ppa/mainline/
+
+1.1 Download the .deb packages.
+$ wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14/linux-headers-4.14.0-041400_4.14.0-041400.201711122031_all.deb
+$ wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14/linux-headers-4.14.0-041400-generic_4.14.0-041400.201711122031_amd64.deb
+$ wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14/linux-image-4.14.0-041400-generic_4.14.0-041400.201711122031_amd64.deb
+
+1.2 Install
+sudo dpkg -i linux-headers-4.14.0*.deb linux-image-4.14.0*.deb
+
+1.3 Reboot
+
+1.4 uninstall
+sudo apt-get remove 'linux-headers-4.14.0*' 'linux-image-4.14.0*'
+
+
+Q4 : 從windows製作usb開機硬碟一直錯誤?
+Ans:
+改從linux進行處理, 只要使用dd將iso file寫進來就好了.
+
+Q3 : 安裝17.10後, 無法使用apt install?
+Ans:
+因為17.10已經phrase out, 但可以將source list改到ubuntu的舊server.
+1. You can change fr.archive.ubuntu.com to old-releases.ubuntu.com in /etc/apt/sources.list
+2. sudo apt update
+3. sudo apt upgrade
+
+Q2 : 怎麼看ubuntu所對應的kernel?
+Ans:
+可以從wiki page看到 --> https://zh.wikipedia.org/wiki/Ubuntu%E5%8F%91%E8%A1%8C%E7%89%88%E5%88%97%E8%A1%A8
+不過有些部分似乎有點不太正確. (像18.04應該要是linux 4.18)
+
+Q1 : 一開始遇到的問題是怎麼去看linux kernel各個部份的source code.
+Ans:
+linux 整個source code是在linus trovalds 的github上, 
+可以從tag version去切到不同的版本來看.
+
+
+
+";i:1;N;i:2;N;}i:2;i:1995;}i:5;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:4933;}i:6;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:4933;}}

@@ -1,0 +1,8 @@
+====== NVMe ======
+<file>
+# self test log page
+nvme get-log /dev/nvme0n1 -n 1 -i 06 -l 564
+
+
+
+</file>

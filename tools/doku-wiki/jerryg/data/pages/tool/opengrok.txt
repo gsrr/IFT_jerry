@@ -2,12 +2,59 @@
 <file>
 Q : Indexing is a memory intensive process. 
 Ans:
-If you get "java.lang.OutOfMemoryError: Java heap space" error, try the -Xms<size></size> and -Xmx<size></size> options to java (Eg JAVA_OPTS="-Xms2048m -Xmx2048")
+If you get "java.lang.OutOfMemoryError: Java heap space" error, try the -Xms<size></size> and -Xmx<size></size> options to java (Eg JAVA_OPTS="-Xms2048m -Xmx2048m")
+
+-Xmssize Specifies the initial heap size.
+
+-Xmxsize Specifies the maximum heap size.
 
 </file>
 
 ====== opengrok in windows ======
 <file>
+[20190708]
+之前是使用舊版的opengrok, 使用上有些bug, 現在改用新版的opengrok, 但安裝上跟之前的差很多,
+害我花了一些時間處理.
+
+== Installation ==
+1. Install tomcat8
+--> apt install tomcat8
+
+2. universal ctags
+- https://github.com/universal-ctags/ctags
+$ ./autogen.sh # 需要安裝autogen工具，apt-get或者自行解決
+$ ./configure
+$ make
+$ make install
+
+3. opengrok
+- https://github.com/oracle/opengrok/releases
+- 複製source.war到Tomcat的webapp目錄
+- 建立index
+java -Djava.util.logging.config.file=[opengrok_解壓目錄]/doc/logging.properties \ 
+-jar [opengrok_解壓目錄]/lib/opengrok.jar \ 
+-c /usr/local/bin/ctags \ 
+--depth 10 \ 
+-s [SOURCE_ROOT] -d [WORK_ROOT]/data -P -S -G \ 
+-W [WORK_ROOT]/etc/configuration.xml -U http://localhost:8080/source 2>&1
+
+4. 修改 Tomcat/webapp/source/WEB-INF/web.xml裡面的configuration path
+
+Reference: https://luomuxiaoxiao.com/?p=56
+
+[20190704]
+為了解決資料夾太多而佈署太慢的問題, 我將opengrok的環境弄成可以各別進行建立index.
+但也花了一些時間, 主要動作是:
+1. 將原先的/var/opengrok/的路徑改成/var/opengrok/repo/
+  1.1 在建立index前設定環境變數: export OPENGROK_INSTANCE_BASE=/var/opengrok/repo
+  1.2 更改source.war中讀取web.xml的路徑: 
+    - unzip source.war WEB-INF/web.xml
+    - modify the path from "/var/opengrok/etc/xxx.xml" to "/var/opengrok/repo/etc/xxx.xml"
+    - zip -u source.war WEB-INF/web.xml
+
+2. 建立source資料夾, 並分別將source repo link 到這個資料夾裡面.
+3. 開始對source資料夾建立index.
+
 [Reference]
 1. Opengrok部署 --> https://gtcsq.readthedocs.io/en/latest/openstack/opengrok_xp.html
 2. 

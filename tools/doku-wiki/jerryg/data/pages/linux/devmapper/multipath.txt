@@ -1,3 +1,111 @@
+====== Summary ======
+<file>
+# fail path
+dmsetup message test-multi 0 "fail_path" 7:2
+
+# failover
+一條path 一個group.
+
+# multibus
+多條path 同一個group, 裡面的path會根據group poicy來進行分配io
+
+</file>
+
+====== multipath prio 確認 ======
+<file>
+const --> 將所有path的priority都設為1
+sysfs --> Use  the  sysfs  attributes  access_state  and  preferred_path  to generate the path priority. This prioritizer accepts the optional prio_arg exclusive_pref_bit.
+path_latency --> Generate the path priority based on a latency algorithm.  Requires prio_args keyword.
+
+[args]
+
+path_latency --> Needs a value of the form "io_num=<20> base_num=<10>"
+
+    io_num:The number of read IOs sent to the current path continuously, used to calculate the average  path  latency. Valid  Values:Integer, [2, 200].
+
+    base_num: The  base number value of logarithmic scale, used to partition different priority ranks. Valid Values: Integer, [2, 10]. And Max average latency value is 100s, min average latency value is 1us.  For example: If base_num=10, the paths will be grouped in  priority  groups  with path latency <=1us, (1us, 10us], (10us, 100us], (100us, 1ms], (1ms, 10ms], (10ms, 100ms], (100ms,1s], (1s, 10s], (10s, 100s], >100s.
+
+
+目前確認結果, 大部分的參數都跟hardware有關係, 大概只有兩個參數可以使用: sysfs & path_latency
+sysfs會根據sysfs attribute "access_state" 與 "preferred_path", 
+從code看起來sas有實作這兩個attribute, 但nvme沒有.
+
+path_latency則是根據latency algorithm來進行區分, 需指定io_num與base_num.
+主要是根據io_num所算出來的latency來決定將該path放在哪個priority區間.
+
+exclusive_pref_bit看起來是實作在Hardware裡面的機制.
+(http://www.pearsonitcertification.com/articles/article.aspx?p=2819032)
+
+若在nvme的device下設定prio "alua", 最後結果會建立不起來(顯示alua not support)
+</file>
+
+
+====== Nvme in multipath - summary ======
+<file>
+[Environment]
+* QTS : multipath-tools (0.4.9) + linux kernel (4.14-24)
+- Fail to create multipath
+
+* ubuntu : multipath-tools (0.7.4) + linux kernel (4.14-24)
+- Create successfully
+- request-based multipath
+- failback/failover test ok.
+
+
+[Verify file test in ubuntu]
+"command"
+fio --name=/mnt/file2 --iodepth=16 --rw=write --bs=128k --direct=1 --verify=md5 --size=5G
+
+"result"
+/mnt/file2: (groupid=0, jobs=1): err= 0: pid=12954: Tue Jun 25 21:53:01 2019
+
+
+[Performance test in ubuntu]
+"Block device performance"
+root@jerrie-QW67:~# sh test.sh (no multipath)
+read:      IOPS=6566,      BW=821MiB/s (861MB/s)(10.0GiB/12476msec)
+randread:  IOPS=12.7k,     BW=49.7MiB/s (52.2MB/s)(5120MiB/102930msec)
+write:     IOPS=5407,      BW=676MiB/s (709MB/s)(10.0GiB/15148msec)
+randwrite: IOPS=27.1k,     BW=106MiB/s (111MB/s)(5120MiB/48422msec)
+  
+root@jerrie-QW67:~# sh test_eui.sh with multipath(failover)
+read:      IOPS=6531,       BW=816MiB/s (856MB/s)(10.0GiB/12543msec)
+randread:  IOPS=12.1k,      BW=47.1MiB/s (49.4MB/s)(5120MiB/108651msec)
+write:     IOPS=5276,       BW=660MiB/s (692MB/s)(10.0GiB/15525msec)
+randwrite: IOPS=23.0k,      BW=90.0MiB/s (94.4MB/s)(5120MiB/56879msec)
+  
+root@jerrie-QW67:~# sh test_eui.sh with multipath(multibus)
+read:      IOPS=5623,       BW=703MiB/s (737MB/s)(10.0GiB/14568msec)
+randread:  IOPS=11.9k,      BW=46.3MiB/s (48.6MB/s)(5120MiB/110550msec)
+write:     IOPS=4660,       BW=583MiB/s (611MB/s)(10.0GiB/17579msec)
+randwrite: IOPS=21.7k,      BW=84.9MiB/s (89.1MB/s)(5120MiB/60288msec)
+
+
+"test command"
+fio --name=/mnt/file1 --iodepth=32 --rw=read      --bs=128k  --direct=1 --size=10G 
+fio --name=/mnt/file1 --iodepth=32 --rw=randread  --bs=4k    --direct=1 --size=5G
+fio --name=/mnt/file1 --iodepth=32 --rw=write     --bs=128k  --direct=1 --size=10G 
+fio --name=/mnt/file1 --iodepth=32 --rw=randwrite --bs=4k    --direct=1 --size=5G
+
+"multibus"
+read:      IOPS=6311,  BW=789MiB/s  (827MB/s)  (10.0GiB/12980msec)                                                                                                       
+randread:  IOPS=11.3k, BW=44.2MiB/s (46.4MB/s) (5120MiB/115776msec)                                                                                                   
+write:     IOPS=1664,  BW=208MiB/s  (218MB/s)  (10.0GiB/49223msec)                                                                                                       
+randwrite: IOPS=19.6k, BW=76.5MiB/s (80.2MB/s) (5120MiB/66965msec)
+
+"failover"
+read:      IOPS=6914,  BW=864MiB/s  (906MB/s)  (10.0GiB/11848msec)
+randread:  IOPS=14.0k, BW=54.9MiB/s (57.5MB/s) (5120MiB/93327msec)
+write:     IOPS=1644,  BW=206MiB/s  (216MB/s)  (10.0GiB/49808msec)
+randwrite: IOPS=21.5k, BW=83.8MiB/s (87.9MB/s) (5120MiB/61071msec)
+
+"no multipath"
+read:      IOPS=7508,  BW=939MiB/s  (984MB/s)  (10.0GiB/10910msec)
+randread:  IOPS=16.4k, BW=63.9MiB/s (66.0MB/s) (5120MiB/80148msec)
+write:     IOPS=2966,  BW=371MiB/s  (389MB/s)  (10.0GiB/27612msec)
+randwrite: IOPS=26.5k, BW=103MiB/s  (108MB/s)  (5120MiB/49550msec)
+</file>
+
 ====== seq write ======
 
 <file>

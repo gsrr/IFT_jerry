@@ -1,4 +1,31 @@
-a:22:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"FAQ for ubuntu";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:495:"
+a:22:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"FAQ for ubuntu";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1244:"
+Q4 : 之前想到的一個問題, 因為東西都是存在Disk裡面, 作業系統起來前又沒有driver, 那怎麼去Disk讀取東西?
+Ans:
+
+
+Q3 : Download Linux archive
+Ans :
+1. https://www.kernel.org/
+2. https://jerrynest.io/ubuntu-16-04-compile-linux-kernel/
+[Installation]
+1. apt-get install build-essential ncurses-dev libssl-dev build-essential ncurses-dev xz-utils kernel-package
+2. apt install libelf-dev
+3. copy config:
+  3.1 cp /boot/config-4.4.0-21-generic .
+  3.2 make menuconfig
+
+4. build:
+  4.1 make -j 4
+  4.2 make modules -j 4
+  4.3 make modules_install
+  4.4 make install
+
+
+Q2 : 修改grup, 改變開機的kernel版本.
+Ans:
+1. GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 4.14.24-041424-generic"
+2. update-grub
+
 [Error Message]
 Q1 : SSL error?
 
@@ -14,7 +41,7 @@ Ans :
 將另外一台的certs/signing_key.pem內容轉貼過來.
 (為什麼呢?)
 
-";i:1;N;i:2;N;}i:2;i:35;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:540;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"FAQ for CentOS";i:1;i:1;i:2;i:540;}i:2;i:540;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:540;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2642:"
+";i:1;N;i:2;N;}i:2;i:35;}i:4;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:1289;}i:5;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"FAQ for CentOS";i:1;i:1;i:2;i:1289;}i:2;i:1289;}i:6;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1289;}i:7;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:2642:"
 Reference:
 1. Command of grub shell
 https://www.gnu.org/software/grub/manual/grub/html_node/Command_002dline-and-menu-entry-commands.html
@@ -106,8 +133,8 @@ We can boot from grub shell:
 
 
 
-";i:1;N;i:2;N;}i:2;i:574;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3226;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"Debug by GDB";i:1;i:1;i:2;i:3226;}i:2;i:3226;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3226;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1:"
-";i:1;N;i:2;N;}i:2;i:3258;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3270;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:5:"Tools";i:1;i:1;i:2;i:3270;}i:2;i:3270;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3270;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:204:"
+";i:1;N;i:2;N;}i:2;i:1323;}i:8;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3975;}i:9;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"Debug by GDB";i:1;i:1;i:2;i:3975;}i:2;i:3975;}i:10;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3975;}i:11;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1:"
+";i:1;N;i:2;N;}i:2;i:4007;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:4019;}i:13;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:5:"Tools";i:1;i:1;i:2;i:4019;}i:2;i:4019;}i:14;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:4019;}i:15;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:204:"
 # Get ip address from booting.
 1. /etc/sysconfig/network-scripts/ifcfg-ens192
 2. ONBOOT=yes
@@ -116,7 +143,7 @@ We can boot from grub shell:
 1. ssh-keygen
 2. ssh-copy-id -i ~/.ssh/id_rsa.pub remote-host
 3. ssh remote-host
-";i:1;N;i:2;N;}i:2;i:3295;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:3509;}i:17;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:6:"Kernel";i:1;i:1;i:2;i:3509;}i:2;i:3509;}i:18;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:3509;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1281:"
+";i:1;N;i:2;N;}i:2;i:4044;}i:16;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:4258;}i:17;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:6:"Kernel";i:1;i:1;i:2;i:4258;}i:2;i:4258;}i:18;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:4258;}i:19;a:3:{i:0;s:4:"file";i:1;a:3:{i:0;s:1281:"
 [Reference]
 1. https://wiki.centos.org/zh-tw/HowTos/Custom_Kernel
 2. https://wiki.centos.org/zh-tw/HowTos/I_need_the_Kernel_Source
@@ -147,4 +174,4 @@ kernel-devel包只包含用于内核开发环境所需的内核头文件以及Ma
 2. kernel-source
 kernel-souce包含所有内核源代码。
 
-";i:1;N;i:2;N;}i:2;i:3536;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:4825;}i:21;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:4825;}}
+";i:1;N;i:2;N;}i:2;i:4285;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:5574;}i:21;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:5574;}}

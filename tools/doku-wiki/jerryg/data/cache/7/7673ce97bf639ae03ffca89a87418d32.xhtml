@@ -1,0 +1,62 @@
+
+<h1 class="sectionedit1" id="related_files">Related files</h1>
+<div class="level1">
+<pre class="file">[1]+  Stopped                 vim drivers/scsi/scsi_lib.c
+[2]   Stopped                 vim include/scsi/scsi_host.h
+[3]-  Stopped                 vim drivers/ata/libata-scsi.c
+[4]   Stopped                 vim include/linux/libata.h</pre>
+
+</div>
+<!-- EDIT1 SECTION "Related files" [1-278] -->
+<h1 class="sectionedit2" id="project_summary">Project Summary</h1>
+<div class="level1">
+<pre class="file">[SATA command layer]
+--&gt; 會走到qc_complete
+入口點為scsi, 再來會接到sata的queue command, 進來後會有兩條路, 一個是將scsi 轉換成sata command,
+另一個則是用現有的sata drive 資訊來模擬.
+結束後都會走到scsi_softirq_done, 這裡會有兩個狀況, 一個是有qc command (經過scsi轉sata command的過程), 
+另一個是沒有qc command(用sata drive 資訊來模擬).
+而還有一個case要判斷的是invalid command, 這時候會產生sense data --&gt; sense_key = ILLEGAL_REQUEST, acc = 0x20 (0x20代表invalid command)
+(reference : https://www.tldp.org/HOWTO/archived/SCSI-Programming-HOWTO/SCSI-Programming-HOWTO-22.html)
+
+# error state:
+## determine by qc-&gt;result_tf.feature 
+1. &quot;Interface CRC Error (ICRC) Count&quot;
+2. &quot;Uncorrectable Error (UNC) Count&quot;
+3. &quot;ID Not Found (IDNF) Count&quot;
+4. &quot;Command Aborted (ABRT) Count&quot;
+5. &quot;Address Mark Not Found (AMNF) Count&quot;
+
+## determine by qc-&gt;result_tf.command 
+23.1 Drive Not Ready Failure
+
+## scsi layer--&gt; retry case and scsi command type
+22.1 Write Retry Count
+22.2 Read Retry Count
+22.3 Other Command Retry Count
+
+## scsi layer--&gt; fail case and scsi command type
+23.2 Drive Write Operation Failure
+23.3 Drive Read Operation Failure 
+23.4 IDENTIFY Failure
+23.5 Other Drive Failure
+
+ 
+
+[SATA link layer]
+--&gt; link層發生錯誤, 基本上不會走到qc_complete, 會在scsi層發生timeout而呼叫scsi_times_out --&gt; ata_scsi_timed_out
+
+1. &quot;SATA Handshake Error (H) (Bit 22) Count&quot;
+2. &quot;SATA CRC Error (C) (Bit 21) Count&quot;
+3. &quot;SATA Disparity Error (D) (Bit 20) Count&quot;
+4. &quot;SATA 10B to 8B Decode Error (B) (Bit 19) Count&quot;
+5. &quot;SATA Internal Error (E) (Bit 11) Count&quot;
+6. &quot;SATA Protocol Error (P) (Bit 10) Count&quot;
+7. &quot;SATA Persistent Communication Error (C) (Bit 9) Count&quot;
+8. &quot;SATA Transient Data Integrity Error (T) (Bit 8) Count&quot;
+9. &quot;SATA Recovered Communications Error (M) (Bit 1) Count&quot;
+10. &quot;SATA Recovered Data Integrity Error (I) (Bit 0) Count&quot;
+</pre>
+
+</div>
+<!-- EDIT2 SECTION "Project Summary" [279-] -->

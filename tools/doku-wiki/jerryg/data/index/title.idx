@@ -87,7 +87,7 @@ Usage
 
 
 
-linux tools
+byobu
 
 Basic
 
@@ -119,7 +119,7 @@ vim
 io snoop
 
 
-
+修改docker image
 
 
 
@@ -128,7 +128,7 @@ io snoop
 yas3fs out of memory
 
 
-smartctl
+segfaulting
 
 Questions
 
@@ -156,13 +156,23 @@ Deadlock of subprocess.Popen
 FAQ
 bash
 
-seq write
+Summary
 
-
+20190826
 iSCSI Initiator
 What is SCSI and What is SAS?
 test case for nt-acl
-Task file in SATA
+Register
 
 What is MMIO
 What is udev?
+Related files
+hal_app
+
+20190614
+VIS2888
+
+NVMe
+
+
+
